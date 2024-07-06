@@ -1,6 +1,6 @@
-﻿using WardrobeManager.Api.Database.Enums;
+﻿using WardrobeManager.Shared.Enums;
 
-namespace WardrobeManager.Api.Database.Models;
+namespace WardrobeManager.Shared.Models;
 
 public class ClothingItem(string name, ClothingCategory category, Guid? imageGuid)
 {

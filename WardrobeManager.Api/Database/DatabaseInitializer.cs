@@ -1,4 +1,5 @@
-﻿using WardrobeManager.Api.Database.Models;
+﻿using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Api.Database;
 
@@ -12,8 +13,8 @@ public class DatabaseInitializer
         var clothingItems = new List<ClothingItem>
         {
             // Creating two base clothing items
-            new ClothingItem("Test Clothing 1", Enums.ClothingCategory.TShirt, null),
-            new ClothingItem("Test Clothing 2", Enums.ClothingCategory.Sweatpants, null)
+            new ClothingItem("Test Clothing 1", ClothingCategory.TShirt, null),
+            new ClothingItem("Test Clothing 2", ClothingCategory.Sweatpants, null)
         };
 
 

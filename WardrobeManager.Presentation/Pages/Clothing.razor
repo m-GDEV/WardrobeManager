@@ -1,11 +1,41 @@
 ﻿@page "/clothing"
 
 @using WardrobeManager.Presentation.Components
+@using WardrobeManager.Shared.Models
+@using WardrobeManager.Presentation.Services.Implementation
+@using WardrobeManager.Presentation.Services.Interfaces
+
+@inject IApiService ApiService
 
 <PageTitle>Clothing</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="flex flex-col justify-center items-center gap-14">
+    <h1 class="text-3xl">Create, view, and edit your clothing items here!</h1>
 
-Fucki me
+    <AddClothingItem />
 
-<AddClothingItem />
+    @if (clothing != null)
+    {
+        foreach (var clothingItem in clothing)
+        {
+            <div class="flex flex-row gap-5">
+                <p>@clothingItem.Name</p>
+                <p>@clothingItem.Category</p>
+                @if (clothingItem.ImageGuid != null)
+                {
+                    <img src=$"http://localhost:5054/{@clothingItem.Guid}" />
+                }
+            </div>
+        }
+    }
+</div>
+
+@code {
+    List<ClothingItem>? clothing = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        clothing = await ApiService.GetClothing();
+    }
+
+}

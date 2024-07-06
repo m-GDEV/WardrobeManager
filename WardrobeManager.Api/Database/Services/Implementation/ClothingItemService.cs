@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WardrobeManager.Api.Database.Models;
+using WardrobeManager.Shared.Models;
 using WardrobeManager.Api.Database.Services.Interfaces;
 
 namespace WardrobeManager.Api.Database.Services.Implementation;

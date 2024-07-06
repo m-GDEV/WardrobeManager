@@ -1,7 +1,42 @@
 ﻿@namespace WardrobeManager.Presentation.Components
 
-<h3>AddClothingItem</h3>
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+
+<div class="flex flex-col w-4/6 ">
+    <h1 class="pb-4">Add Clothing Item</h1>
+    <EditForm model="@formItem" class="text-black flex flex-col" OnSubmit="FormSubmitted">
+        <InputText @bind-Value=formItem.Name placeholder="Name" class="form-input" required/>
+        <InputSelect @bind-Value=formItem.Category placeholder="Category" class="form-select" required>
+            @foreach (var category in Enum.GetValues(typeof(ClothingCategory)))
+            {
+                <option value="@category">@category</option>
+            }
+        </InputSelect>
+        <InputFile accept="image/*" capture OnChange="@UploadImage" placeholder="Image" />
+        <input type="submit" class="form-input"/>
+    </EditForm>
+</div>
+
+
 
 @code {
+    MemoryStream? img = null;
+    ClothingItem? formItem = null;
 
+    protected override async Task OnInitializedAsync()
+    {
+        formItem = new ClothingItem("", ClothingCategory.TShirt, null);
+    }
+
+    async Task UploadImage(InputFileChangeEventArgs e)
+    {
+        img = new MemoryStream();
+        await e.File.OpenReadStream().CopyToAsync(img);
+    }
+
+    async Task FormSubmitted()
+    {
+        // do stuff with api
+    }
 }

@@ -1,4 +1,4 @@
-﻿using WardrobeManager.Api.Database.Models;
+﻿using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Api.Database.Services.Interfaces;
 public interface IClothingItemService

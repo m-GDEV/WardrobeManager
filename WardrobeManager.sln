@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Presentation", "WardrobeManager.Presentation\WardrobeManager.Presentation.csproj", "{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeManager.Presentation", "WardrobeManager.Presentation\WardrobeManager.Presentation.csproj", "{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Api", "WardrobeManager.Api\WardrobeManager.Api.csproj", "{DEFC8752-FC25-451B-A215-07460F4B5AFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeManager.Api", "WardrobeManager.Api\WardrobeManager.Api.csproj", "{DEFC8752-FC25-451B-A215-07460F4B5AFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Shared", "WardrobeManager.Shared\WardrobeManager.Shared.csproj", "{54372FC1-AD71-4479-B919-1761EA4D8085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54372FC1-AD71-4479-B919-1761EA4D8085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54372FC1-AD71-4479-B919-1761EA4D8085}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54372FC1-AD71-4479-B919-1761EA4D8085}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54372FC1-AD71-4479-B919-1761EA4D8085}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-﻿namespace WardrobeManager.Api.Database.Enums;
+﻿namespace WardrobeManager.Shared.Enums;
 
 public enum ClothingCategory
 {
