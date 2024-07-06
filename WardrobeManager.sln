@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Presentation", "WardrobeManager.Presentation\WardrobeManager.Presentation.csproj", "{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Api", "WardrobeManager.Api\WardrobeManager.Api.csproj", "{DEFC8752-FC25-451B-A215-07460F4B5AFD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A0E1E6E-582D-4CFF-B72C-0B23A72A4D85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEFC8752-FC25-451B-A215-07460F4B5AFD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F359782-B209-4D6F-ACAC-BF471A79D5A2}
+	EndGlobalSection
+EndGlobal
