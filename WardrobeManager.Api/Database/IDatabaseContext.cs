@@ -4,5 +4,5 @@ using WardrobeManager.Shared.Models;
 namespace WardrobeManager.Api.Database;
 public interface IDatabaseContext
 {
-    DbSet<ClothingItem> ClothingItems { get; set; }
+    DbSet<ServerClothingItem> ClothingItems { get; set; }
 }

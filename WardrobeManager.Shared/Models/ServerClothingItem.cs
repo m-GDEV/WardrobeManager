@@ -2,7 +2,7 @@
 
 namespace WardrobeManager.Shared.Models;
 
-public class ClothingItem(string name, ClothingCategory category, Guid? imageGuid)
+public class ServerClothingItem(string name, ClothingCategory category, Guid? imageGuid)
 {
     public int Id { get; set; }
     public string Name { get; set; } = name;

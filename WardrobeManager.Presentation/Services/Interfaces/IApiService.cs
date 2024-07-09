@@ -4,5 +4,10 @@ namespace WardrobeManager.Presentation.Services.Interfaces;
 public interface IApiService
 {
     ValueTask DisposeAsync();
-    Task<List<ClothingItem>?> GetClothing();
+    Task<List<ServerClothingItem>?> GetClothing();
+    Task Add(ClientClothingItem clothing);
+    Task Delete(ServerClothingItem clothing);
+    Task Update(ClientClothingItem clothing);
+
+
 }

@@ -13,12 +13,12 @@ public class ClothingItemService : IClothingItemService
         _databaseContext = databaseContext;
     }
 
-    public async Task<List<ClothingItem>> GetClothes()
+    public async Task<List<ServerClothingItem>> GetClothes()
     {
         return await _databaseContext.ClothingItems.ToListAsync();
     }
 
-    public async Task AddClothingItem(ClothingItem item)
+    public async Task Add(ServerClothingItem item)
     {
         if (item == null)
         {
@@ -29,10 +29,34 @@ public class ClothingItemService : IClothingItemService
         await _databaseContext.SaveChangesAsync();
     }
 
-    public async Task DeleteClothingItem(ClothingItem item)
+    public async Task Delete(ServerClothingItem item)
     {
         _databaseContext.ClothingItems.Remove(item);
         await _databaseContext.SaveChangesAsync();
     }
+    public async Task Delete(int Id)
+    {
+        var item = await _databaseContext.ClothingItems.SingleOrDefaultAsync<ServerClothingItem>(s => s.Id == Id);
+        _databaseContext.ClothingItems.Remove(item);
+        await _databaseContext.SaveChangesAsync();
+    }
 
+    public async Task Update(ServerClothingItem item)
+    {
+        // throws exception if it finds more than one (good cus we serial number should be unique)
+        var oldItem = await _databaseContext.ClothingItems.SingleOrDefaultAsync(s => s.Id == item.Id);
+
+        if (oldItem != null)
+        {
+            await Delete(oldItem);
+
+            await _databaseContext.ClothingItems.AddAsync(item);
+
+            await _databaseContext.SaveChangesAsync();
+        }
+        else
+        {
+            throw new Exception("Item does not exist");
+        }
+    }
 }

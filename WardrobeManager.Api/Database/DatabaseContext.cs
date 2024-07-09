@@ -11,7 +11,7 @@ public class DatabaseContext : DbContext, IDatabaseContext
 
     }
 
-    public DbSet<ClothingItem> ClothingItems { get; set; }
+    public DbSet<ServerClothingItem> ClothingItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

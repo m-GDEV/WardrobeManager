@@ -10,11 +10,11 @@ public class DatabaseInitializer
         if (context.ClothingItems.Count() > 0) { return; }
 
 
-        var clothingItems = new List<ClothingItem>
+        var clothingItems = new List<ServerClothingItem>
         {
             // Creating two base clothing items
-            new ClothingItem("Test Clothing 1", ClothingCategory.TShirt, null),
-            new ClothingItem("Test Clothing 2", ClothingCategory.Sweatpants, null)
+            new ServerClothingItem("Test Clothing 1", ClothingCategory.TShirt, null),
+            new ServerClothingItem("Test Clothing 2", ClothingCategory.Sweatpants, null)
         };
 
 

@@ -3,6 +3,10 @@ using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Services.Interfaces;
 using WardrobeManager.Api.Database.Services.Implementation;
 using WardrobeManager.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
+using WardrobeManager.Shared.Services.Interfaces;
+using WardrobeManager.Shared.Services.Implementation;
+using System.Net.Mime;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +25,8 @@ builder.Services.AddSwaggerGen();
 // custom
 builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
+builder.Services.AddScoped<ISharedService, SharedService>();
+builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddCors();
 
 var app = builder.Build();
@@ -53,5 +59,85 @@ app.MapGet("/clothing", async Task<Array> (IClothingItemService clothingItemServ
 }).WithName("Get Clothes").WithOpenApi();
 
 
+app.MapDelete("/clothingitem", async Task<IResult> (int? Id, IClothingItemService clothingItemService) =>
+{
+    if (Id == null || Id == 0)
+    {
+        return Results.BadRequest("You must specify a clothing ID");
+    }
+
+    int properId = Id.Value;
+
+    try
+    {
+        await clothingItemService.Delete(properId);
+        return Results.Ok("Delete");
+    }
+    catch (Exception ex)
+    {
+        return Results.NotFound(ex); // change this later, don't wanna expose exception details
+    }
+}).WithName("Delete clothing item").WithOpenApi();
+
+
+app.MapPut("/clothingitem", async Task<IResult> ([FromBody] ClientClothingItem clothingItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
+{
+    if (!sharedService.IsValid(clothingItem))
+    {
+        return Results.NotFound("Item not found");
+    }
+
+    var newClothingItem = new ServerClothingItem
+    (
+        name: clothingItem.Name,
+        category: clothingItem.Category,
+        imageGuid: Guid.NewGuid()
+    );
+    newClothingItem.Id = clothingItem.Id; // so the db can find it to update it
+
+    // decode and save file to place on disk with guid as name
+    // make new obj of server clothing item and and use guid from before
+    // return "Created"
+    await fileService.SaveImage(newClothingItem.ImageGuid, clothingItem.ImageBase64);
+
+    await clothingItemService.Update(newClothingItem);
+
+    return Results.Ok();
+}).WithName("Edit an existing clothing item").WithOpenApi();
+
+app.MapPost("/clothingitem", async Task<IResult> ([FromBody] ClientClothingItem clothingItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) => 
+{
+    if (!sharedService.IsValid(clothingItem)) {
+        return Results.BadRequest("Invalid clothing item");
+    }
+
+    var newClothingItem = new ServerClothingItem
+    (
+        name: clothingItem.Name,
+        category: clothingItem.Category,
+        imageGuid: Guid.NewGuid()
+    );
+
+    // decode and save file to place on disk with guid as name
+    // make new obj of server clothing item and and use guid from before
+    // return "Created"
+    await fileService.SaveImage(newClothingItem.ImageGuid, clothingItem.ImageBase64);
+
+    await clothingItemService.Add(newClothingItem);
+
+
+    return Results.Created();
+
+}).WithName("Create Clothing Item").WithOpenApi();
+
+
+app.MapGet("/img/{*imagePath}", async Task<IResult> (string imagePath, IFileService fileService) =>
+{
+    return Results.File(await fileService.GetImage(imagePath));
+    
+    // should implement
+    //return Results.NotFound("Image not found");
+
+}).WithName("Get Image").WithOpenApi();
 
 app.Run();

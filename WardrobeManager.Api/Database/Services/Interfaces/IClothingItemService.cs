@@ -3,7 +3,10 @@
 namespace WardrobeManager.Api.Database.Services.Interfaces;
 public interface IClothingItemService
 {
-    Task AddClothingItem(ClothingItem item);
-    Task DeleteClothingItem(ClothingItem item);
-    Task<List<ClothingItem>> GetClothes();
+    Task Add(ServerClothingItem item);
+    Task Delete(ServerClothingItem item);
+    Task<List<ServerClothingItem>> GetClothes();
+    Task Delete(int Id);
+    Task Update(ServerClothingItem item);
+
 }
