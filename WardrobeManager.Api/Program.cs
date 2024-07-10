@@ -80,48 +80,46 @@ app.MapDelete("/clothingitem", async Task<IResult> (int? Id, IClothingItemServic
 }).WithName("Delete clothing item").WithOpenApi();
 
 
-app.MapPut("/clothingitem", async Task<IResult> ([FromBody] ClientClothingItem clothingItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
+app.MapPut("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
 {
-    if (!sharedService.IsValid(clothingItem))
+    if (!sharedService.IsValid(editedItem.ClothingItem))
     {
-        return Results.NotFound("Item not found");
+        return Results.NotFound("Item cannot be updated. It can either not be found or the provided data is invalid.");
     }
 
-    var newClothingItem = new ServerClothingItem
-    (
-        name: clothingItem.Name,
-        category: clothingItem.Category,
-        imageGuid: Guid.NewGuid()
-    );
-    newClothingItem.Id = clothingItem.Id; // so the db can find it to update it
+
+    if (editedItem.ImageBase64 != string.Empty)
+    {
+        // generate new guid since its a new image
+        editedItem.ClothingItem.ImageGuid = Guid.NewGuid();
+    }
 
     // decode and save file to place on disk with guid as name
     // make new obj of server clothing item and and use guid from before
-    // return "Created"
-    await fileService.SaveImage(newClothingItem.ImageGuid, clothingItem.ImageBase64);
+    await fileService.SaveImage(editedItem.ClothingItem.ImageGuid, editedItem.ImageBase64);
 
-    await clothingItemService.Update(newClothingItem);
+    await clothingItemService.Update(editedItem.ClothingItem);
 
     return Results.Ok();
 }).WithName("Edit an existing clothing item").WithOpenApi();
 
-app.MapPost("/clothingitem", async Task<IResult> ([FromBody] ClientClothingItem clothingItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) => 
+app.MapPost("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) => 
 {
-    if (!sharedService.IsValid(clothingItem)) {
+    if (!sharedService.IsValid(newItem.ClothingItem)) {
         return Results.BadRequest("Invalid clothing item");
     }
 
     var newClothingItem = new ServerClothingItem
     (
-        name: clothingItem.Name,
-        category: clothingItem.Category,
+        name: newItem.ClothingItem.Name,
+        category: newItem.ClothingItem.Category,
         imageGuid: Guid.NewGuid()
     );
 
     // decode and save file to place on disk with guid as name
     // make new obj of server clothing item and and use guid from before
     // return "Created"
-    await fileService.SaveImage(newClothingItem.ImageGuid, clothingItem.ImageBase64);
+    await fileService.SaveImage(newClothingItem.ImageGuid, newItem.ImageBase64);
 
     await clothingItemService.Add(newClothingItem);
 

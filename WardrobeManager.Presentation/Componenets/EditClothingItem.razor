@@ -7,8 +7,8 @@
 
 @inject IApiService ApiService;
 
-<details>
-    <summary>
+<details open=@IsOpen>
+    <summary class="flex flex-row gap-2">
         <svg class="feather feather-edit" fill="none" height="24" stroke="currentColor"
              stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"
              width="24" xmlns="http://www.w3.org/2000/svg">
@@ -17,9 +17,9 @@
         </svg>
     </summary>
     <p class="text-red-500 text-lg">@message</p>
-    <EditForm model="@newItem" OnSubmit="@(() => FormSubmitted())" class="text-black flex flex-col">
-        <InputText @bind-Value=newItem.Name placeholder="Name" class="form-input" required />
-        <InputSelect @bind-Value=newItem.Category placeholder="Category" class="form-select" required>
+    <EditForm model="@ClothingItem" OnSubmit="@(() => FormSubmitted())" class="text-black flex flex-col">
+        <InputText @bind-Value=ClothingItem.Name placeholder="Name" class="form-input" required />
+        <InputSelect @bind-Value=ClothingItem.Category placeholder="Category" class="form-select" required>
             @foreach (var category in Enum.GetValues(typeof(Shared.Enums.ClothingCategory)))
             {
                 <option value="@category">@category</option>
@@ -35,17 +35,17 @@
     [Parameter]
     public EventCallback RefreshHandler { get; set; }
     [Parameter]
-    public ServerClothingItem? ClothingItem { get; set; }
+    public ServerClothingItem ClothingItem { get; set; } // idk why theres a CS8618
 
+    NewOrEditedClothingItem? editedClothingItem { get; set; }
     MemoryStream? img = null;
-    // i'm creating a new object if we want to edit since we need to translate it to a ClientClothingItem
-    ClientClothingItem? newItem = null;
+
+    public bool IsOpen { get; set; } = false;
     string message = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
-        newItem = new ClientClothingItem(ClothingItem.Name, ClothingItem.Category, "");
-        newItem.Id = ClothingItem.Id;
+        editedClothingItem = new NewOrEditedClothingItem(ClothingItem, "");
     }
 
     async Task UploadImage(InputFileChangeEventArgs e)
@@ -54,9 +54,9 @@
         // max file size of 5 mebibytes
         await e.File.OpenReadStream(maxAllowedSize: 1024 * 5000).CopyToAsync(img);
 
-        newItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
+        editedClothingItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
 
-        if (newItem.ImageBase64 == string.Empty)
+        if (editedClothingItem.ImageBase64 == string.Empty)
         {
             message = "Image size too large, try again.";
         }
@@ -65,7 +65,8 @@
     async Task FormSubmitted()
     {
         // do stuff with api
-        await ApiService.Update(newItem);
+        await ApiService.Update(editedClothingItem);
         await RefreshHandler.InvokeAsync();
+        IsOpen = false;
     }
 }

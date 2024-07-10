@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WardrobeManager.Presentation;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.Services.Implementation;
+using WardrobeManager.Shared.Services.Interfaces;
 
 // No appsettings.json so just doing constants here
 string apiEndpoint = "http://localhost:5054";
@@ -14,6 +16,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddScoped<IApiService, ApiService>(s => new ApiService(apiEndpoint));
+builder.Services.AddScoped<ISharedService, SharedService>();
 
 
 await builder.Build().RunAsync();
