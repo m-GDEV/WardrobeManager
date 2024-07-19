@@ -8,6 +8,7 @@ using WardrobeManager.Shared.Services.Interfaces;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components;
 using WardrobeManager.Shared.Models;
+using static System.Net.WebRequestMethods;
 
 
 
@@ -23,6 +24,12 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
 // Auth0 api-auth (user can become authorized to use api)
+
+//builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
+//builder.Services.AddHttpClient("WebAPI",
+//        client => client.BaseAddress = new Uri(apiEndpoint))
+//    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+
 
 builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 builder.Services.AddHttpClient("WebAPI",

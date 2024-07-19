@@ -9,7 +9,7 @@
 
 
 @inject IApiService ApiService
-@inject HttpClient Http
+@* @inject HttpClient Http *@
 @inject IHttpClientFactory ClientFactory
 
 <PageTitle>Clothing</PageTitle>
@@ -67,6 +67,7 @@
         try
         {
             var client = ClientFactory.CreateClient("WebAPI");
+            
 
             clothing = await client.GetFromJsonAsync<List<ServerClothingItem>>("/clothing");
         }
