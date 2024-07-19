@@ -3,7 +3,7 @@
 
     <a class="flex flex-row gap-3 items-center" href="/">
         <img class="w-12 h-12" src="https://cdn-icons-png.flaticon.com/512/5996/5996124.png" />
-        <p class="subtitle-text text-neutral">Wardrobe Manager</p>
+        <p class="subtitle-text text-base-content">Wardrobe Manager</p>
     </a>
 
     <!-- Add logic to hid this if not authenticated -->
@@ -14,7 +14,7 @@
         <NavLink href="/logininfo" class="btn btn-secondary body-text text-secondary-content">Login Info</NavLink>
     </div>
 
-    <select data-choose-theme>
+    <select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-4 border-base-content">
         <option value="light">Light</option>
         <option value="dark">Dark</option>
         <option value="cupcake">Cupcake</option>
@@ -45,10 +45,21 @@
         <option value="coffee">Coffee</option>
     </select>
 
-    <a class="flex flex-row gap-3 items-center" href="profile">
-        <p class="subtitle-text text-neutral">Musa Ahmed</p>
-        <img class="w-12 h-12 rounded-full" src="https://upload.vps.connectwithmusa.com/file/ape-eagle-wolf" />
-    </a>
+
+    <AuthorizeView>
+        <Authorized>
+            <a class="flex flex-row gap-3 items-center" href="profile">
+                <p class="subtitle-text text-base-content">@context.User.Identity.Name</p>
+                <img class="w-12 h-12 rounded-full" src="https://upload.vps.connectwithmusa.com/file/ape-eagle-wolf" />
+            </a>
+        </Authorized>
+        <NotAuthorized>
+            <a class="flex flex-row gap-3 items-center" href="/authentication/login">
+                <p class="subtitle-text text-base-content">Log in</p>
+                <img class="w-12 h-12 rounded-full" src="https://dentistry.co.uk/app/uploads/2020/11/anonymous-avatar-icon-25.png" />
+            </a>
+        </NotAuthorized>
+    </AuthorizeView>
 </nav>
 
 

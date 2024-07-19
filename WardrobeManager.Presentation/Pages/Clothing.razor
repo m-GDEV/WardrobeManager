@@ -14,6 +14,9 @@
 
 <PageTitle>Clothing</PageTitle>
 
+
+<h1 class="subheading-text">@userid</h1>
+
 <div class="flex flex-col justify-center items-center gap-14">
     <h1 class="text-3xl">Create, view, and edit your clothing items here!</h1>
 
@@ -61,15 +64,18 @@
 
 @code {
     List<ServerClothingItem>? clothing = null;
+    string? userid;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             var client = ClientFactory.CreateClient("WebAPI");
-            
 
-            clothing = await client.GetFromJsonAsync<List<ServerClothingItem>>("/clothing");
+
+            // clothing = await client.GetFromJsonAsync<List<ServerClothingItem>>("/clothing");
+            userid = await client.GetStringAsync("/ping");
+            StateHasChanged();
         }
         catch (AccessTokenNotAvailableException exception)
         {

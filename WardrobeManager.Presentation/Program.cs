@@ -30,7 +30,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 //        client => client.BaseAddress = new Uri(apiEndpoint))
 //    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
 
-
+// https://learn.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/additional-scenarios?view=aspnetcore-8.0#custom-authorizationmessagehandler-class
 builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 builder.Services.AddHttpClient("WebAPI",
         client => client.BaseAddress = new Uri(apiEndpoint))

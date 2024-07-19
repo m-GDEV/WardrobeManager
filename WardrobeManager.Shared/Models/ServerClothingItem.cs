@@ -8,8 +8,9 @@ public class ServerClothingItem
     public ServerClothingItem() { } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
     // deserializer needs a way to create the object without any fields so it can assign them if they exist
 
-    public ServerClothingItem(string name, ClothingCategory category, Guid? imageGuid)
+    public ServerClothingItem(string userId, string name, ClothingCategory category, Guid? imageGuid)
     {
+        this.UserId = userId;
         this.Name = name;
         this.Category = category;
         this.ImageGuid = imageGuid;
@@ -30,6 +31,7 @@ public class ServerClothingItem
 
     // Only program modifies
     public int Id { get; set; }
+    public string UserId { get; set; } // Auth0 OIDC id, this is unique: https://auth0.com/docs/manage-users/user-accounts/identify-users
     public int TimesWornSinceWash { get; set; } = 0;
     public int TimesWornTotal { get; set; } = 0; // initialized at zero since the user can change this later
     public DateTime LastWorn { get; set; }

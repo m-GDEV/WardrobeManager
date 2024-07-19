@@ -9,6 +9,7 @@ using WardrobeManager.Shared.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -84,22 +85,43 @@ app.UseAuthorization();
 app.UseHttpsRedirection();
 
 // Initialize DB (only run if db doesn't exist)
-//using var scope = app.Services.CreateScope();
-//var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-//DatabaseInitializer.Initialize(context);
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+DatabaseInitializer.Initialize(context);
 
 // ----------------------------------
 // All clothing items
 // ----------------------------------
-app.MapGet("/ping", async Task<IResult> () =>
+app.MapGet("/ping", async Task<IResult> (HttpContext context) =>
 {
-    return Results.Ok($"{DateTime.Now} Service is active");
+
+    //var userId = context.User.FindFirst()
+    var userId = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+    string resp = "";
+    foreach (var iden in context.User.Identities)
+    {
+        resp += $"{iden.Name} - {iden.Label}\n";
+    }
+
+    var f = context.User;
+
+    resp += $"{DateTime.UtcNow} Service is active - user: {userId}";
+
+    return Results.Ok(resp);
 }).RequireAuthorization();
 
-app.MapGet("/ping2", async Task<IResult> () =>
+app.MapGet("/createuser", async Task<IResult> (HttpContext context) =>
 {
-    return Results.Ok($"{DateTime.Now} Service is active");
-}).RequireAuthorization("clothing:read-write");
+    var userId = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    
+    if (userId == null)
+    {
+        return Results.NotFound("No user ID");
+    }
+
+
+}).RequireAuthorization();
 
 
 
