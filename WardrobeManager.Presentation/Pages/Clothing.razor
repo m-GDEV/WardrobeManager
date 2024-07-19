@@ -1,11 +1,16 @@
 ﻿@page "/clothing"
+@attribute [Authorize]
 
 @using WardrobeManager.Presentation.Components
 @using WardrobeManager.Shared.Models
 @using WardrobeManager.Presentation.Services.Implementation
 @using WardrobeManager.Presentation.Services.Interfaces
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 
 @inject IApiService ApiService
+@inject HttpClient Http
+@inject IHttpClientFactory ClientFactory
 
 <PageTitle>Clothing</PageTitle>
 
@@ -59,12 +64,22 @@
 
     protected override async Task OnInitializedAsync()
     {
-        clothing = await ApiService.GetClothing();
+        try
+        {
+            var client = ClientFactory.CreateClient("WebAPI");
+
+            clothing = await client.GetFromJsonAsync<List<ServerClothingItem>>("/clothing");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
+
 
     public async Task Refresh()
     {
-        clothing = await ApiService.GetClothing();
+
         StateHasChanged();
     }
 

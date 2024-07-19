@@ -6,10 +6,10 @@ using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Presentation.Services.Implementation;
 
-public class ApiService(string apiEndpoint) : IAsyncDisposable, IApiService
+public class ApiService(string apiEndpoint, HttpClient httpClient) : IAsyncDisposable, IApiService
 {
     private readonly string _apiEndpoint = apiEndpoint;
-    private readonly HttpClient _httpClient = new HttpClient();
+    private readonly HttpClient _httpClient = httpClient;
 
     public async Task<List<ServerClothingItem>?> GetClothing()
     {

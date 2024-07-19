@@ -5,3 +5,29 @@
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+<!-- Open the modal using ID.showModal() method -->
+<button class="btn" onclick="my_modal_1.showModal()">open modal</button>
+<dialog id="my_modal_1" class="modal">
+    <div class="modal-box">
+        <h3 class="text-lg font-bold">Hello!</h3>
+        <p class="py-4">Press ESC key or click the button below to close</p>
+        <div class="modal-action">
+            <form method="dialog">
+                <!-- if there is a button in form, it will close the modal -->
+                <button class="btn btn-primary">Close</button>
+            </form>
+        </div>
+    </div>
+</dialog>
+
+
+<div class="m-5">
+    <h2 class="mb-4 text-2xl text-green-700 font-bold">Buttons</h2>
+    <button data-act-class="shadow-outline" data-set-theme="emerald" class="bg-green-700 focus:outline-none m-1 rounded p-2">Default</button>
+    <button data-act-class="shadow-outline" data-set-theme="light" class="bg-green-700 focus:outline-none m-1 rounded p-2">Dark</button>
+    <button data-act-class="shadow-outline" data-set-theme="dark" class="bg-green-700 focus:outline-none m-1 rounded p-2">Black</button>
+    <button data-act-class="shadow-outline" data-set-theme="cupcake" class="bg-green-700 focus:outline-none m-1 rounded p-2">🌸 Pink</button>
+    <button data-act-class="shadow-outline" data-set-theme="corporate" class="bg-green-700 focus:outline-none m-1 rounded p-2">🐬 Blue</button>
+    <button data-act-class="shadow-outline" data-set-theme="cyberpunk" class="bg-green-700 focus:outline-none m-1 rounded p-2">🐤 Yellow</button>
+</div>

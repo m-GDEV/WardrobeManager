@@ -6,7 +6,9 @@ using WardrobeManager.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Shared.Services.Interfaces;
 using WardrobeManager.Shared.Services.Implementation;
-using System.Net.Mime;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,19 +17,50 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
     options.UseSqlite("Data Source=database.dat")
 );
 
-// Add services to the container.
+// services added by me but created by microsft
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen();
+// builder.Services.AddAuthentication();
 
 //builder.WebHost.UseUrls("http://localhost:9865");
 
-// custom
+// custom services
 builder.Services.AddScoped<IDatabaseContext, DatabaseContext>();
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddScoped<IFileService, FileService>();
+
+// auth0
+var domain = $"https://{builder.Configuration["Auth0:Domain"]}/";
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
+    {
+        c.Authority = domain;
+        c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+        {
+            ValidAudience = builder.Configuration["Auth0:Audience"],
+            ValidIssuer = domain,
+        };
+    });
+//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+//    .AddJwtBearer(options =>
+//    {
+//        options.Authority = domain;
+//        options.Audience = builder.Configuration["Auth0:Audience"];
+//    });
+
+
+builder.Services.AddAuthorization(o =>
+{
+    o.AddPolicy("clothing:read-write", p => p.
+        RequireAuthenticatedUser().
+        RequireClaim("scope", "clothing:read-write"));
+});
+
 builder.Services.AddCors();
+
 
 var app = builder.Build();
 
@@ -43,23 +76,44 @@ if (app.Environment.IsDevelopment())
     );
 }
 
+// auth0
+app.UseAuthentication();
+app.UseAuthorization();
+
+
 app.UseHttpsRedirection();
 
 // Initialize DB (only run if db doesn't exist)
-using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-DatabaseInitializer.Initialize(context);
+//using var scope = app.Services.CreateScope();
+//var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+//DatabaseInitializer.Initialize(context);
+
+// ----------------------------------
+// All clothing items
+// ----------------------------------
+app.MapGet("/ping", async Task<IResult> () =>
+{
+    return Results.Ok($"{DateTime.Now} Service is active");
+}).RequireAuthorization();
+
+app.MapGet("/ping2", async Task<IResult> () =>
+{
+    return Results.Ok($"{DateTime.Now} Service is active");
+}).RequireAuthorization("clothing:read-write");
 
 
-app.MapGet("/clothing", async Task<Array> (IClothingItemService clothingItemService) =>
+
+app.MapGet("/clothing", [Authorize] async Task<Array> (IClothingItemService clothingItemService) =>
 {
     var clothes = await clothingItemService.GetClothes();
 
     return clothes.ToArray();   
 }).WithName("Get Clothes").WithOpenApi();
 
-
-app.MapDelete("/clothingitem", async Task<IResult> (int? Id, IClothingItemService clothingItemService) =>
+// ----------------------------------
+// GET, POST, PUT for one clothing item
+// ----------------------------------
+app.MapDelete("/clothingitem", [Authorize] async Task<IResult> (int? Id, IClothingItemService clothingItemService) =>
 {
     if (Id == null || Id == 0)
     {
@@ -80,7 +134,7 @@ app.MapDelete("/clothingitem", async Task<IResult> (int? Id, IClothingItemServic
 }).WithName("Delete clothing item").WithOpenApi();
 
 
-app.MapPut("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
+app.MapPut("/clothingitem", [Authorize] async Task<IResult> ([FromBody] NewOrEditedClothingItem editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
 {
     if (!sharedService.IsValid(editedItem.ClothingItem))
     {
@@ -103,7 +157,7 @@ app.MapPut("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingI
     return Results.Ok();
 }).WithName("Edit an existing clothing item").WithOpenApi();
 
-app.MapPost("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) => 
+app.MapPost("/clothingitem", [Authorize] async Task<IResult> ([FromBody] NewOrEditedClothingItem newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) => 
 {
     if (!sharedService.IsValid(newItem.ClothingItem)) {
         return Results.BadRequest("Invalid clothing item");
@@ -129,7 +183,10 @@ app.MapPost("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothing
 }).WithName("Create Clothing Item").WithOpenApi();
 
 
-app.MapGet("/img/{*imagePath}", async Task<IResult> (string imagePath, IFileService fileService) =>
+// ----------------------------------
+// Images
+// ----------------------------------
+app.MapGet("/img/{*imagePath}", [Authorize] async Task<IResult> (string imagePath, IFileService fileService) =>
 {
     return Results.File(await fileService.GetImage(imagePath));
     
@@ -137,5 +194,8 @@ app.MapGet("/img/{*imagePath}", async Task<IResult> (string imagePath, IFileServ
     //return Results.NotFound("Image not found");
 
 }).WithName("Get Image").WithOpenApi();
+
+
+
 
 app.Run();

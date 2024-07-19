@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WardrobeManager.Api.Database;
 
@@ -10,9 +11,11 @@ using WardrobeManager.Api.Database;
 namespace WardrobeManager.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240713001821_added new Fields")]
+    partial class addednewFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
@@ -41,15 +44,9 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<Guid?>("ImageGuid")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("LastWorn")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<int?>("Season")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("TimesWornSinceWash")
                         .HasColumnType("INTEGER");

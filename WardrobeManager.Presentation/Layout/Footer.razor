@@ -1,0 +1,29 @@
+﻿@inject NavigationManager Navigation
+
+@if (!IsAppPage())
+{
+    <footer class="flex flex-row justify-center w-full">
+        <p class="bg-base-100 text-neutral py-4 font-semibold">Wardrobe Manager - Built By Musa Ahmed | Since 2024</p>
+    </footer>
+}
+
+
+@code {
+    public bool IsAppPage()
+    {
+        string uri = Navigation.Uri.Substring(Navigation.BaseUri.Length - 1);
+
+        // These pages are publicly accesible so we want to show the footer
+        List<string> publicPages = new List<string> { "/", "/login", "/signup" };
+
+        foreach (var page in publicPages)
+        {
+            if (uri == page)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}

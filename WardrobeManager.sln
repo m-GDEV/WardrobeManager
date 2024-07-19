@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeManager.Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeManager.Api", "WardrobeManager.Api\WardrobeManager.Api.csproj", "{DEFC8752-FC25-451B-A215-07460F4B5AFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WardrobeManager.Shared", "WardrobeManager.Shared\WardrobeManager.Shared.csproj", "{54372FC1-AD71-4479-B919-1761EA4D8085}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WardrobeManager.Shared", "WardrobeManager.Shared\WardrobeManager.Shared.csproj", "{54372FC1-AD71-4479-B919-1761EA4D8085}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

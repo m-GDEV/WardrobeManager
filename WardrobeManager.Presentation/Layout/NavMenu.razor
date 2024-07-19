@@ -1,8 +1,56 @@
 ﻿<nav 
-    class="flex flex-row justify-center bg-gradient-to-r from-emerald-600 to-emerald-700
-    gap-12 h-24 mb-20 items-center text-white font-serif text-2xl"
->   
-    <a href="/" class="">Home</a> 
-    <a href="/clothing" class="">Clothing</a>
+    class="bg-base-100 w-full flex flex-row justify-between py-4 px-4">
+
+    <a class="flex flex-row gap-3 items-center" href="/">
+        <img class="w-12 h-12" src="https://cdn-icons-png.flaticon.com/512/5996/5996124.png" />
+        <p class="subtitle-text text-neutral">Wardrobe Manager</p>
+    </a>
+
+    <!-- Add logic to hid this if not authenticated -->
+    <div class="flex flex-row justify-center gap-5">
+        <NavLink href="/addclothing" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
+        <NavLink href="clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
+        <NavLink href="/login" class="btn btn-secondary body-text text-secondary-content">Outfit Suggestion</NavLink>
+        <NavLink href="/logininfo" class="btn btn-secondary body-text text-secondary-content">Login Info</NavLink>
+    </div>
+
+    <select data-choose-theme>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="cupcake">Cupcake</option>
+        <option value="bumblebee">Bumblebee</option>
+        <option value="emerald">Emerald</option>
+        <option value="corporate">Corporate</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="retro">Retro</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="valentine">Valentine</option>
+        <option value="halloween">Halloween</option>
+        <option value="garden">Garden</option>
+        <option value="forest">Forest</option>
+        <option value="aqua">Aqua</option>
+        <option value="lofi">Lofi</option>
+        <option value="pastel">Pastel</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="wireframe">Wireframe</option>
+        <option value="black">Black</option>
+        <option value="luxury">Luxury</option>
+        <option value="dracula">Dracula</option>
+        <option value="cmyk">CMYK</option>
+        <option value="autumn">Autumn</option>
+        <option value="business">Business</option>
+        <option value="acid">Acid</option>
+        <option value="lemonade">Lemonade</option>
+        <option value="night">Night</option>
+        <option value="coffee">Coffee</option>
+    </select>
+
+    <a class="flex flex-row gap-3 items-center" href="profile">
+        <p class="subtitle-text text-neutral">Musa Ahmed</p>
+        <img class="w-12 h-12 rounded-full" src="https://upload.vps.connectwithmusa.com/file/ape-eagle-wolf" />
+    </a>
 </nav>
+
+
+
 

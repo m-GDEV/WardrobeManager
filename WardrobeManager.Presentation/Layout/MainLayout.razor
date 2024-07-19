@@ -1,9 +1,28 @@
 ﻿@inherits LayoutComponentBase
-<div class="min-h-screen text-white 
-    bg-gradient-to-b from-emerald-700 to-emerald-900">
+@inject IJSRuntime JSRuntime
+
+<div class="h-full min-h-screen text-neutral flex flex-col">
     <NavMenu />
 
-    <main class="py-4 px-8">
+    <main class="flex flex-grow h-full min-h-full">
             @Body
     </main>
+
+
+        <Footer />
 </div>
+
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) // Only run on the initial render
+        {
+            // 1. Call your JavaScript function to initialize the theme switcher
+            await JSRuntime.InvokeVoidAsync("themeSelect");
+            await JSRuntime.InvokeVoidAsync("themeBtn");
+            await JSRuntime.InvokeVoidAsync("themeToggle");
+            await JSRuntime.InvokeVoidAsync("console.log", "theme-changel loaded");
+        }
+    }
+}

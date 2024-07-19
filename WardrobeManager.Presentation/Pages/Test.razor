@@ -1,0 +1,25 @@
+﻿@page "/test"
+@attribute [Authorize]
+
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WardrobeManager.Shared.Models
+@inject HttpClient Http
+
+<h3>Test</h3>
+
+@code {
+        List<ServerClothingItem>? clothing;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //👇 changed code
+        try
+        {
+            clothing = await Http.GetFromJsonAsync<List<ServerClothingItem>>("quiz");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+}
+}
