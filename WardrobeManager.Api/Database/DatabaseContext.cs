@@ -3,7 +3,7 @@ using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Api.Database;
 
-public class DatabaseContext : DbContext, IDatabaseContext
+public class DatabaseContext : DbContext
 {
 
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -11,10 +11,17 @@ public class DatabaseContext : DbContext, IDatabaseContext
 
     }
 
+    public DbSet<User> Users { get; set; }
     public DbSet<ServerClothingItem> ClothingItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<User>()
+            .HasMany(e=> e.ServerClothingItems)
+            .WithOne(e=> e.User)
+            .HasForeignKey(e=> e.UserId)
+            .IsRequired();
     }
 }

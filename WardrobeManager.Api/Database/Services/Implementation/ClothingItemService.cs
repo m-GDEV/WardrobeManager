@@ -13,7 +13,7 @@ public class ClothingItemService : IClothingItemService
         _databaseContext = databaseContext;
     }
 
-    public async Task CreateUser(string userId)
+    // public async Task CreateUser(string userId)
 
     public async Task<List<ServerClothingItem>> GetClothes()
     {

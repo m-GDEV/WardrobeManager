@@ -34,7 +34,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 builder.Services.AddHttpClient("WebAPI",
         client => client.BaseAddress = new Uri(apiEndpoint))
-    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+.AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
 
 //builder.Services.AddHttpClient("ServerAPI",
 //      client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
@@ -45,21 +45,21 @@ builder.Services.AddHttpClient("WebAPI",
 
 
 builder.Services.AddScoped<IApiService, ApiService>(serviceProvider =>
-{
-    //var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("ApiService");
+        {
+        //var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("ApiService");
 
-    return new ApiService(apiEndpoint, new HttpClient());
-});
+        return new ApiService(apiEndpoint, serviceProvider.GetRequiredService<IHttpClientFactory>());
+        });
 builder.Services.AddScoped<ISharedService, SharedService>();
 
 
 // Auth0 client-side auth (user can become authenticated)
 builder.Services.AddOidcAuthentication(options =>
-{
-    builder.Configuration.Bind("Auth0", options.ProviderOptions);
-    options.ProviderOptions.ResponseType = "code";
-    options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
-});
+        {
+        builder.Configuration.Bind("Auth0", options.ProviderOptions);
+        options.ProviderOptions.ResponseType = "code";
+        options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
+        });
 
 
 

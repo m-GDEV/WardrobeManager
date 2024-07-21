@@ -1,4 +1,9 @@
-﻿<nav 
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+
+<nav
     class="bg-base-100 w-full flex flex-row justify-between py-4 px-4">
 
     <a class="flex flex-row gap-3 items-center" href="/">
@@ -7,12 +12,18 @@
     </a>
 
     <!-- Add logic to hid this if not authenticated -->
-    <div class="flex flex-row justify-center gap-5">
-        <NavLink href="/addclothing" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
-        <NavLink href="clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
-        <NavLink href="/login" class="btn btn-secondary body-text text-secondary-content">Outfit Suggestion</NavLink>
-        <NavLink href="/logininfo" class="btn btn-secondary body-text text-secondary-content">Login Info</NavLink>
-    </div>
+    <AuthorizeView>
+        <Authorized>
+            <div class="flex flex-row justify-center gap-5">
+                <NavLink href="/addclothing" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
+                <NavLink href="clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
+                <NavLink href="/login" class="btn btn-secondary body-text text-secondary-content">Outfit Suggestion</NavLink>
+                <NavLink href="/logininfo" class="btn btn-secondary body-text text-secondary-content">Login Info</NavLink>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+        </NotAuthorized>
+    </AuthorizeView>
 
     <select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-4 border-base-content">
         <option value="light">Light</option>
@@ -48,10 +59,15 @@
 
     <AuthorizeView>
         <Authorized>
-            <a class="flex flex-row gap-3 items-center" href="profile">
-                <p class="subtitle-text text-base-content">@context.User.Identity.Name</p>
-                <img class="w-12 h-12 rounded-full" src="https://upload.vps.connectwithmusa.com/file/ape-eagle-wolf" />
-            </a>
+            <div class="flex flex-row gap-4 items-center">
+                <a class="flex flex-row gap-3 items-center" href="profile">
+                    <p class="subtitle-text text-base-content">@context.User.Identity.Name</p>
+                    <img class="w-12 h-12 rounded-full" src="https://upload.vps.connectwithmusa.com/file/ape-eagle-wolf" />
+                </a>
+                <div onclick=@(() => Navigation.NavigateToLogout("authentication/logout"))>
+                    <img class="w-12 h-12" src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png" />
+                </div>
+            </div>
         </Authorized>
         <NotAuthorized>
             <a class="flex flex-row gap-3 items-center" href="/authentication/login">

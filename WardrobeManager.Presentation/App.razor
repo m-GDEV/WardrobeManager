@@ -1,4 +1,6 @@
-﻿<CascadingAuthenticationState>
+﻿@using WardrobeManager.Presentation.Components.Public
+
+<CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
@@ -6,11 +8,9 @@
                     <p>Determining session state, please wait...</p>
                 </Authorizing>
                 <NotAuthorized>
-                    <h1>Sorry</h1>
-                    <p>You're not authorized to reach this page. You need to log in.</p>
+                    <NotAuthenticated />
                 </NotAuthorized>
             </AuthorizeRouteView>
-            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
         </Found>
         <NotFound>
             <PageTitle>Not found</PageTitle>

@@ -1,0 +1,53 @@
+﻿@page "/logininfo"
+
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
+
+
+<PageTitle>Login Info</PageTitle>
+
+<h1 class="heading-text text-base-content">Login Info</h1>
+
+<AuthorizeView>
+<Authorized>
+Hello, @context.User.Identity.Name!
+
+@if (context.User.Identity.IsAuthenticated)
+{
+var userIdClaim = context.User.FindFirst(c => c.Type == "sub");
+if (userIdClaim != null)
+{
+<button @onclick="@(async () => await thing(userIdClaim.Value))">
+    Do Something
+</button>
+}
+}
+
+
+<a href="#" @onclick="BeginSignOut">Log out</a>
+</Authorized>
+<NotAuthorized>
+<a href="authentication/login">Log in</a>
+</NotAuthorized>
+</AuthorizeView>
+
+@code {
+protected override async Task OnInitializedAsync()
+{
+
+}
+
+public async Task thing(string r)
+{
+await JSRuntime.InvokeVoidAsync("console.log", r);
+}
+
+private async Task BeginSignOut(MouseEventArgs args)
+{
+Navigation.NavigateToLogout("authentication/logout");
+}
+}

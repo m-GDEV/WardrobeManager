@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WardrobeManager.Api.Database;
 
@@ -10,9 +11,11 @@ using WardrobeManager.Api.Database;
 namespace WardrobeManager.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240720023611_AddedUserType")]
+    partial class AddedUserType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
@@ -48,6 +51,9 @@ namespace WardrobeManager.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("Season")
                         .HasColumnType("INTEGER");
 
@@ -57,12 +63,9 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<int>("TimesWornTotal")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("ClothingItems");
                 });
@@ -84,13 +87,13 @@ namespace WardrobeManager.Api.Migrations
 
             modelBuilder.Entity("WardrobeManager.Shared.Models.ServerClothingItem", b =>
                 {
-                    b.HasOne("WardrobeManager.Shared.Models.User", "User")
+                    b.HasOne("WardrobeManager.Shared.Models.User", "Owner")
                         .WithMany("ServerClothingItems")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("WardrobeManager.Shared.Models.User", b =>

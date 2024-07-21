@@ -8,6 +8,6 @@ public interface IApiService
     Task Add(NewOrEditedClothingItem clothing);
     Task Delete(ServerClothingItem clothing);
     Task Update(NewOrEditedClothingItem clothing);
-
-
+    Task<bool> IsUserInitialized();
+    Task CreateUser();
 }

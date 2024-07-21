@@ -1,19 +1,26 @@
 ﻿using System.Net.Http.Json;
+using System.Net;
 using System.Text.Json;
 using WardrobeManager.Presentation.Pages;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WardrobeManager.Presentation.Services.Implementation;
 
-public class ApiService(string apiEndpoint, HttpClient httpClient) : IAsyncDisposable, IApiService
+public class ApiService : IAsyncDisposable, IApiService
 {
-    private readonly string _apiEndpoint = apiEndpoint;
-    private readonly HttpClient _httpClient = httpClient;
+    private readonly string _apiEndpoint;
+    private readonly HttpClient _httpClient;
+
+    public ApiService(string apiEndpoint, IHttpClientFactory factory) {
+        _apiEndpoint = apiEndpoint;
+        _httpClient = factory.CreateClient("WebAPI");
+    }
 
     public async Task<List<ServerClothingItem>?> GetClothing()
     {
-        var clothing = await _httpClient.GetFromJsonAsync<List<ServerClothingItem>>(_apiEndpoint + "/clothing");
+        var clothing = await _httpClient.GetFromJsonAsync<List<ServerClothingItem>>( "/clothing");
         return clothing;
     }
 
@@ -25,21 +32,47 @@ public class ApiService(string apiEndpoint, HttpClient httpClient) : IAsyncDispo
 
 
 
-        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItem>(_apiEndpoint + "/clothingitem", clothing);
+        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItem>( "/clothingitem", clothing);
         res.EnsureSuccessStatusCode();
     }
 
     public async Task Update(NewOrEditedClothingItem clothing)
     {
-        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItem>(_apiEndpoint + "/clothingitem", clothing);
+        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItem>( "/clothingitem", clothing);
         res.EnsureSuccessStatusCode();
     }
 
     public async Task Delete(ServerClothingItem clothing)
     {
-        var res = await _httpClient.DeleteAsync(_apiEndpoint + $"/clothingitem?id={clothing.Id}");
+        var res = await _httpClient.DeleteAsync( "/clothingitem?id={clothing.Id}");
         res.EnsureSuccessStatusCode();
     }
+
+    [Authorize]
+    public async Task<bool> IsUserInitialized() {
+        // Exists in DB, not in auth0
+        var res = await _httpClient.GetAsync( "/userexists");
+
+        if (res.StatusCode == HttpStatusCode.OK) {
+            return true;
+        }
+        else if (res.StatusCode == HttpStatusCode.NotFound) {
+            return false;
+        }
+        else {
+            throw new Exception("Issue with request: " + res);
+        }
+    }
+
+    [Authorize]
+    public async Task CreateUser() {
+        var res = await _httpClient.GetAsync("/createuser");
+
+        if (res.StatusCode != HttpStatusCode.Created) {
+            throw new Exception("Could not create user on db: " + res);
+        }
+    }
+
 
     public async ValueTask DisposeAsync()
     {

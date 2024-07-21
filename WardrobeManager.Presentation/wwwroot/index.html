@@ -1,7 +1,6 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="emerald">
-
-<head>
+<!doctype html>
+<html lang="en" data-theme="emerald" class="h-full">
+  <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WardrobeManager.Presentation</title>
@@ -14,53 +13,64 @@
     <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
     <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 
-
     <!-- CSS/Styling -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
     <!--<script defer src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>-->
-    <script defer src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
-
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"
+    ></script>
 
     <!--<script href="./js/theme-change.js"></script>-->
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
     <link href="./css/custom.css" rel="stylesheet" type="text/css" />
-
 
     <!--<script src="./css/tailwind.js"></script>
     <link href="./css/daisyUI.css" rel="stylesheet" type="text/css" />-->
-</head>
+  </head>
 
-<body>
-
+  <body class="h-full">
     <!-- Change the contents of this div to customize the webassembly loading screen -->
-    <div id="app">
-        <div style="position:absolute; top:30vh; width:100%; text-align:center;  height:100%">
-            <h1>My application</h1>
-            <div style="display:flex; gap:10px; justify-content:center; align-items:center">
-                <svg class="animate-spin h-12 w-12 mr-3" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="45" stroke="black" stroke-width="10" fill="transparent" />
-                </svg>
-                The application is loading...
-            </div>
-        </div>
+    <div id="app" class="h-full">
+      <div class="h-full flex flex-row justify-center items-center">
+        <svg
+          class="animate-spin h-12 w-12 mr-3"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="50"
+            cy="50"
+            r="45"
+            stroke="lightgreen"
+            stroke-width="10"
+            fill="transparent"
+          />
+        </svg>
+        <p>Please wait while WardrobeManager loads...</p>
+      </div>
     </div>
 
     <div id="blazor-error-ui" class="hidden">
-        An unhandled error has occurred.
-        <a href="" class="reload">Reload</a>
-        <a class="dismiss">🗙</a>
+      An unhandled error has occurred.
+      <a href="" class="reload">Reload</a>
+      <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
-    <script>navigator.serviceWorker.register('service-worker.js');</script>
-
-
-
-
-</body>
-
+    <script>
+      navigator.serviceWorker.register("service-worker.js");
+    </script>
+  </body>
 </html>
