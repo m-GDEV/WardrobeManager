@@ -23,8 +23,8 @@ public class UserService : IUserService
 
             var sampleClothingItems = new List<ServerClothingItem>
             {
-                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, null),
-                    new ServerClothingItem("Example Pants", ClothingCategory.Jeans, null)
+                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall,  null),
+                    new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.Winter, null)
             };
             newUser.ServerClothingItems = sampleClothingItems;
 
@@ -40,12 +40,14 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<User> GetUser(string Auth0Id) {
+    public async Task<User?> GetUser(string Auth0Id) {
         var user = await context.Users.SingleOrDefaultAsync(user => user.Auth0Id == Auth0Id);
 
-        if (user == null) {
-            throw new UserNotFoundException();
-        }
+        return user;
+    }
+
+    public async Task<User?> GetUserWithClothingItems(string Auth0Id) {
+        var user = await context.Users.Include(x => x.ServerClothingItems).SingleOrDefaultAsync(user => user.Auth0Id == Auth0Id);
 
         return user;
     }

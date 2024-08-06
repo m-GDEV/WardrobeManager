@@ -14,178 +14,49 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +92 WardrobeManager.Api/Program.cs
-badd +15 WardrobeManager.Shared/Models/User.cs
-badd +1 .deepsource.toml
-badd +51 WardrobeManager.Presentation/Program.cs
-badd +48 WardrobeManager.Shared/Models/ServerClothingItem.cs
-badd +1 WardrobeManager.Api/Database/DatabaseContext.cs
-badd +1 WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
-badd +48 WardrobeManager.Api/Database/Services/Implementation/UserService.cs
-badd +1 WardrobeManager.Presentation/Pages/Dashboard.razor
-badd +35 WardrobeManager.Presentation/Pages/Authenticated/Dashboard.razor
-badd +85 WardrobeManager.Presentation/Pages/Authenticated/Clothing.razor
-badd +5 WardrobeManager.Presentation/Pages/Authenticated/LoginInfo.razor
-badd +1 WardrobeManager.Presentation/Pages/Public/Authentication.razor
-badd +15 WardrobeManager.Presentation/Pages/Public/LoginInfo.razor
-badd +13 WardrobeManager.Presentation/Pages/Public/Index.razor
-badd +49 WardrobeManager.Presentation/Services/Implementation/ApiService.cs
-badd +10 WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs
-badd +11 WardrobeManager.Presentation/Services/Interfaces/IApiService.cs
-badd +1 WardrobeManager.Shared/Exceptions/UserNotFoundException.cs
-badd +10 WardrobeManager.Api/Database/DatabaseInitializer.cs
+badd +4 f.html
+badd +18 WardrobeManager.Presentation/Pages/Public/Index.razor
+badd +9 WardrobeManager.Presentation/App.razor
+badd +12 WardrobeManager.Presentation/_Imports.razor
+badd +4 WardrobeManager.Shared/Misc/Constants.cs
+badd +61 WardrobeManager.Presentation/Layout/NavMenu.razor
+badd +3 WardrobeManager.Shared/Exceptions/UserNotFoundException.cs
+badd +37 WardrobeManager.Api/Program.cs
+badd +15 WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
+badd +1 WardrobeManager.Api/Database/Services/Implementation/UserService.cs
+badd +13 WardrobeManager.Shared/Models/NewOrEditedClothingItem.cs
+badd +37 WardrobeManager.Shared/Models/ServerClothingItem.cs
+badd +17 WardrobeManager.Shared/Models/User.cs
+badd +1 WardrobeManager.Shared/Enums/Season.cs
+badd +11 WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs
+badd +12 WardrobeManager.Shared/Services/Implementation/SharedService.cs
+badd +8 WardrobeManager.Api/Database/DatabaseContext.cs
+badd +1 WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs
+badd +21 WardrobeManager.Presentation/Pages/Authenticated/Clothing.razor
+badd +42 WardrobeManager.Presentation/Componenets/AddClothingItem.razor
+badd +43 WardrobeManager.Presentation/wwwroot/index.html
+badd +1 WardrobeManager.Presentation/Layout/MainLayout.razor
+badd +1 WardrobeManager.Shared/Enums/ClothingCategory.cs
+badd +2 WardrobeManager.Presentation/wwwroot/css/custom.css
+badd +0 NERD_tree_4
+badd +0 WardrobeManager.Presentation/Componenets/FormItems/SwitchToggle.razor
+badd +0 WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor
+badd +0 WardrobeManager.Presentation/Componenets/Forms/EditClothingItem.razor
 argglobal
 %argdel
-$argadd WardrobeManager.Api/Program.cs
+$argadd f.html
 set stal=2
-tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabrewind
 edit WardrobeManager.Api/Program.cs
-argglobal
-balt WardrobeManager.Api/Database/DatabaseInitializer.cs
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 100 - ((10 * winheight(0) + 22) / 45)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 100
-normal! 018|
-tabnext
-edit WardrobeManager.Presentation/Pages/Public/Index.razor
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
 wincmd _ | wincmd |
-split
-1wincmd k
+vsplit
+1wincmd h
 wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe '1resize ' . ((&lines * 27 + 24) / 48)
-exe '2resize ' . ((&lines * 17 + 24) / 48)
-argglobal
-balt WardrobeManager.Presentation/Pages/Authenticated/Clothing.razor
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 13 - ((12 * winheight(0) + 13) / 27)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 13
-normal! 027|
-wincmd w
-argglobal
-if bufexists(fnamemodify("WardrobeManager.Presentation/Services/Implementation/ApiService.cs", ":p")) | buffer WardrobeManager.Presentation/Services/Implementation/ApiService.cs | else | edit WardrobeManager.Presentation/Services/Implementation/ApiService.cs | endif
-balt WardrobeManager.Presentation/Services/Interfaces/IApiService.cs
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 21 - ((3 * winheight(0) + 8) / 17)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 21
-normal! 021|
-wincmd w
-exe '1resize ' . ((&lines * 27 + 24) / 48)
-exe '2resize ' . ((&lines * 17 + 24) / 48)
-tabnext
-edit WardrobeManager.Shared/Models/User.cs
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-split
-1wincmd k
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe '1resize ' . ((&lines * 22 + 24) / 48)
-exe '2resize ' . ((&lines * 22 + 24) / 48)
-argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 16 - ((15 * winheight(0) + 11) / 22)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 16
-normal! 0
-wincmd w
-argglobal
-if bufexists(fnamemodify("WardrobeManager.Shared/Models/ServerClothingItem.cs", ":p")) | buffer WardrobeManager.Shared/Models/ServerClothingItem.cs | else | edit WardrobeManager.Shared/Models/ServerClothingItem.cs | endif
-balt WardrobeManager.Api/Program.cs
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 25 - ((0 * winheight(0) + 11) / 22)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 25
-normal! 083|
-wincmd w
-exe '1resize ' . ((&lines * 22 + 24) / 48)
-exe '2resize ' . ((&lines * 22 + 24) / 48)
-tabnext
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
 wincmd _ | wincmd |
 split
 wincmd _ | wincmd |
@@ -202,12 +73,16 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 15 + 24) / 48)
-exe '2resize ' . ((&lines * 14 + 24) / 48)
-exe '3resize ' . ((&lines * 16 + 24) / 48)
+exe '1resize ' . ((&lines * 45 + 25) / 50)
+exe 'vert 1resize ' . ((&columns * 99 + 104) / 209)
+exe '2resize ' . ((&lines * 14 + 25) / 50)
+exe 'vert 2resize ' . ((&columns * 109 + 104) / 209)
+exe '3resize ' . ((&lines * 13 + 25) / 50)
+exe 'vert 3resize ' . ((&columns * 109 + 104) / 209)
+exe '4resize ' . ((&lines * 16 + 25) / 50)
+exe 'vert 4resize ' . ((&columns * 109 + 104) / 209)
 argglobal
-terminal ++curwin ++cols=116 ++rows=15 
-let s:term_buf_41 = bufnr()
+balt WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -216,17 +91,153 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 4 - ((3 * winheight(0) + 7) / 15)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 37 - ((21 * winheight(0) + 22) / 45)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
+keepjumps 37
+normal! 029|
+wincmd w
+argglobal
+if bufexists(fnamemodify("WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs", ":p")) | buffer WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs | else | edit WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs | endif
+balt WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 37 - ((5 * winheight(0) + 7) / 14)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 37
+normal! 09|
+wincmd w
+argglobal
+if bufexists(fnamemodify("WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs", ":p")) | buffer WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs | else | edit WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs | endif
+balt WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 7 - ((2 * winheight(0) + 6) / 13)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 7
+normal! 0
+lcd /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager
+wincmd w
+argglobal
+if bufexists(fnamemodify("/mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs", ":p")) | buffer /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs | else | edit /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Api/Database/Services/Interfaces/IUserService.cs | endif
+balt /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 13 - ((12 * winheight(0) + 8) / 16)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 13
+normal! 0
+wincmd w
+exe '1resize ' . ((&lines * 45 + 25) / 50)
+exe 'vert 1resize ' . ((&columns * 99 + 104) / 209)
+exe '2resize ' . ((&lines * 14 + 25) / 50)
+exe 'vert 2resize ' . ((&columns * 109 + 104) / 209)
+exe '3resize ' . ((&lines * 13 + 25) / 50)
+exe 'vert 3resize ' . ((&columns * 109 + 104) / 209)
+exe '4resize ' . ((&lines * 16 + 25) / 50)
+exe 'vert 4resize ' . ((&columns * 109 + 104) / 209)
+tabnext
+edit /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Pages/Authenticated/Clothing.razor
+argglobal
+balt /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Shared/Enums/ClothingCategory.cs
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 40 - ((22 * winheight(0) + 22) / 45)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 40
+normal! 0
+tabnext
+edit /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/FormItems/SwitchToggle.razor
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe '1resize ' . ((&lines * 22 + 25) / 50)
+exe 'vert 1resize ' . ((&columns * 104 + 104) / 209)
+exe '2resize ' . ((&lines * 24 + 25) / 50)
+exe 'vert 2resize ' . ((&columns * 104 + 104) / 209)
+exe 'vert 3resize ' . ((&columns * 104 + 104) / 209)
+argglobal
+balt /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/EditClothingItem.razor
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 11 - ((10 * winheight(0) + 11) / 22)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 11
 normal! 0
 wincmd w
 argglobal
-terminal ++curwin ++cols=116 ++rows=14 
-let s:term_buf_42 = bufnr()
-balt \!/bin/bash
+if bufexists(fnamemodify("/mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/EditClothingItem.razor", ":p")) | buffer /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/EditClothingItem.razor | else | edit /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/EditClothingItem.razor | endif
+balt /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/FormItems/SwitchToggle.razor
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -235,17 +246,18 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 34 - ((10 * winheight(0) + 7) / 14)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 28 - ((1 * winheight(0) + 12) / 24)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 34
-normal! 0
+keepjumps 28
+normal! 05|
 wincmd w
 argglobal
-terminal ++curwin ++cols=116 ++rows=16 
-let s:term_buf_43 = bufnr()
-balt \!/bin/bash\ (1)
+if bufexists(fnamemodify("/mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor", ":p")) | buffer /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor | else | edit /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor | endif
+balt /mnt/FILEZ/Files/Documents/code/GITCLONE/my-stuff/WardrobeManager/WardrobeManager.Presentation/Componenets/FormItems/SwitchToggle.razor
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -254,17 +266,21 @@ setlocal fdl=0
 setlocal fml=1
 setlocal fdn=20
 setlocal fen
-let s:l = 4 - ((3 * winheight(0) + 8) / 16)
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 35 - ((34 * winheight(0) + 23) / 47)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 4
-normal! 030|
+keepjumps 35
+normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 15 + 24) / 48)
-exe '2resize ' . ((&lines * 14 + 24) / 48)
-exe '3resize ' . ((&lines * 16 + 24) / 48)
-tabnext 1
+exe '1resize ' . ((&lines * 22 + 25) / 50)
+exe 'vert 1resize ' . ((&columns * 104 + 104) / 209)
+exe '2resize ' . ((&lines * 24 + 25) / 50)
+exe 'vert 2resize ' . ((&columns * 104 + 104) / 209)
+exe 'vert 3resize ' . ((&columns * 104 + 104) / 209)
+tabnext 3
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

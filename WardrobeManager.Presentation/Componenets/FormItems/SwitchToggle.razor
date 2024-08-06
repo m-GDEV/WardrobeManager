@@ -1,0 +1,22 @@
+@namespace WardrobeManager.Presentation.Components.FormItems
+
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@using WardrobeManager.Shared.Services.Implementation;
+@using WardrobeManager.Shared.Services.Interfaces;
+
+<div class="flex flex-row jusitfy-between">
+    <label>@Label</label>
+    <input type="checkbox" class="toggle" checked=@Enabled />
+</div>
+
+@code {
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public bool Enabled { get; set; }
+}

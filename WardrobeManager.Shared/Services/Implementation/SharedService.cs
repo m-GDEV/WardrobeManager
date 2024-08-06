@@ -39,9 +39,10 @@ public class SharedService : ISharedService
     {
         return new ServerClothingItem
             (
-                name: "Default Name",
-                ClothingCategory.TShirt,
-                null
+             name: "Default Name",
+             ClothingCategory.TShirt,
+             Season.Fall,
+             null
             );
     }
 }

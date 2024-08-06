@@ -22,6 +22,12 @@
                 <option value="@category">@category</option>
             }
         </InputSelect>
+        <InputSelect @bind-Value=newItem.ClothingItem.Season  placeholder="Season" class="form-select" >
+            @foreach (var season in Enum.GetValues(typeof(Season)))
+            {
+                <option value="@season">@season</option>
+            }
+        </InputSelect>
         <InputFile accept="image/*" capture OnChange="@UploadImage" placeholder="Image" />
         <input type="submit" class="form-input"/>
     </EditForm>

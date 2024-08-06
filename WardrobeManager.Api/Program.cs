@@ -6,6 +6,7 @@ using WardrobeManager.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Shared.Services.Interfaces;
 using WardrobeManager.Shared.Exceptions;
+using System.Diagnostics;
 using WardrobeManager.Shared.Services.Implementation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -100,10 +101,10 @@ app.Use(async (HttpContext context, RequestDelegate next) => {
         if (Auth0Id != null)
         {
         await userService.CreateUser(Auth0Id);
-        }
-
+        Debug.Assert(await userService.DoesUserExist(Auth0Id) == true, "User finding/creating is broken");
         // pass along to controllers
         context.Items["Auth0Id"] = Auth0Id;
+        }
 
         await next(context);
         });
@@ -130,29 +131,37 @@ app.MapGet("/clothing", async Task<IResult> (HttpContext context, IUserService u
         {
         // assuming user exists in db because of middleware
         // assuming this exists because the user is logged in
-        var Auth0Id = context.Items["Auth0Id"].ToString();
+        string Auth0Id = context.Items["Auth0Id"].ToString() ?? string.Empty;
+        Debug.Assert(Auth0Id != string.Empty, "Cannot get Auth0Id");
 
-        var user = await userService.GetUser(Auth0Id);
+        var user = await userService.GetUserWithClothingItems(Auth0Id);
+        Debug.Assert(user != null, "User should not be null");
 
-        var clothes = await con.ClothingItems.Where(item => item.UserId == user.Id).ToListAsync();
-
-        return Results.Ok(clothes);
+        return Results.Ok(user.ServerClothingItems);
 
         }).RequireAuthorization();
 
 // ----------------------------------
 // GET, POST, PUT for one clothing item
 // ----------------------------------
-app.MapPost("/clothingitem",  async Task<IResult> ([FromBody] NewOrEditedClothingItem newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
+app.MapPost("/clothingitem",  async Task<IResult> ([FromBody] NewOrEditedClothingItem newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService, IUserService userService, HttpContext context, DatabaseContext _context) =>
         {
         if (!sharedService.IsValid(newItem.ClothingItem)) {
         return Results.BadRequest("Invalid clothing item");
         }
 
+        string Auth0Id = context.Items["Auth0Id"].ToString() ?? string.Empty;
+        Debug.Assert(Auth0Id != string.Empty, "Cannot get Auth0Id");
+
+        var user = await userService.GetUser(Auth0Id);
+        Debug.Assert(user != null, "User should not be null");
+
+
         var newClothingItem = new ServerClothingItem
         (
          name: newItem.ClothingItem.Name,
          category: newItem.ClothingItem.Category,
+         season: newItem.ClothingItem.Season,
          imageGuid: Guid.NewGuid()
         );
 
@@ -161,68 +170,88 @@ app.MapPost("/clothingitem",  async Task<IResult> ([FromBody] NewOrEditedClothin
         // return "Created"
         await fileService.SaveImage(newClothingItem.ImageGuid, newItem.ImageBase64);
 
-        await clothingItemService.Add(newClothingItem);
+        user.ServerClothingItems.Add(newClothingItem);
+        await _context.SaveChangesAsync();
 
 
         return Results.Created();
 
         }).RequireAuthorization();
 
-app.MapPut("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService) =>
+app.MapPut("/clothingitem", async Task<IResult> ([FromBody] NewOrEditedClothingItem editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService, DatabaseContext _context, IUserService userService, HttpContext context)  =>
         {
         if (!sharedService.IsValid(editedItem.ClothingItem))
         {
         return Results.NotFound("Item cannot be updated. It can either not be found or the provided data is invalid.");
         }
 
+        string Auth0Id = context.Items["Auth0Id"].ToString() ?? string.Empty;
+        Debug.Assert(Auth0Id != string.Empty, "Cannot get Auth0Id");
+
+        var user = await userService.GetUser(Auth0Id);
+        Debug.Assert(user != null, "User should not be null");
+
+        var dbRecord = await _context.ClothingItems.FindAsync(editedItem.ClothingItem.Id);
+
+        Debug.Assert(dbRecord != null, "If item is being edited old record must exist");
+        Debug.Assert(editedItem.ClothingItem.Id != dbRecord.Id, "Edited and Old item IDs should always match");
+        Debug.Assert(editedItem.ClothingItem.UserId != dbRecord.UserId, "Edited and Old item user IDs should always match");
+
 
         if (editedItem.ImageBase64 != string.Empty)
         {
-        // generate new guid since its a new image
-        editedItem.ClothingItem.ImageGuid = Guid.NewGuid();
+            // generate new guid since its a new image
+            editedItem.ClothingItem.ImageGuid = Guid.NewGuid();
         }
 
         // decode and save file to place on disk with guid as name
         // make new obj of server clothing item and and use guid from before
         await fileService.SaveImage(editedItem.ClothingItem.ImageGuid, editedItem.ImageBase64);
-
         await clothingItemService.Update(editedItem.ClothingItem);
 
         return Results.Ok();
         }).RequireAuthorization();
 
-app.MapDelete("/clothingitem", async Task<IResult> (int? Id, IClothingItemService clothingItemService) =>
+app.MapDelete("/clothingitem", async Task<IResult> (int Id, IClothingItemService clothingItemService, HttpContext context, IUserService userService, DatabaseContext _context) =>
         {
-        if (Id == null || Id == 0)
+        if (Id == 0)
         {
         return Results.BadRequest("You must specify a clothing ID");
         }
 
-        int properId = Id.Value;
+        string Auth0Id = context.Items["Auth0Id"].ToString() ?? string.Empty;
+        Debug.Assert(Auth0Id != string.Empty, "Cannot get Auth0Id");
 
-        try
-        {
-        await clothingItemService.Delete(properId);
-        return Results.Ok("Delete");
+        var user = await userService.GetUserWithClothingItems(Auth0Id);
+        Debug.Assert(user != null, "User should not be null");
+
+        var itemToDelete = user.ServerClothingItems.SingleOrDefault(x => x.Id == Id);
+        if (itemToDelete == null) {
+        return Results.NotFound("Could not find item to delete");
         }
-        catch (Exception ex)
-        {
-        return Results.NotFound(ex); // change this later, don't wanna expose exception details
-        }
+
+        _context.ClothingItems.Remove(itemToDelete);
+        await _context.SaveChangesAsync();
+
+        // await clothingItemService.Delete(Id);
+        return Results.Ok("Deleted");
+
         }).RequireAuthorization();
 
 
 // ----------------------------------
 // Images
 // ----------------------------------
-app.MapGet("/img/{*imagePath}", [Authorize] async Task<IResult> (string imagePath, IFileService fileService) =>
+
+// No authorization for this for right now since doing <img src="addfs" /> does not include the JWT token 
+app.MapGet("/img/{*imagePath}", async Task<IResult> (string imagePath, IFileService fileService) =>
         {
         return Results.File(await fileService.GetImage(imagePath));
 
         // should implement
         //return Results.NotFound("Image not found");
 
-        }).WithName("Get Image").WithOpenApi();
+        });
 
 
 

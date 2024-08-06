@@ -15,10 +15,10 @@ public class ClothingItemService : IClothingItemService
 
     // public async Task CreateUser(string userId)
 
-    public async Task<List<ServerClothingItem>> GetClothes()
-    {
-        return await _databaseContext.ClothingItems.ToListAsync();
-    }
+    // public async Task<List<ServerClothingItem>> GetClothes()
+    // {
+    //     return await _databaseContext.ClothingItems.ToListAsync();
+    // }
 
     public async Task Add(ServerClothingItem item)
     {
@@ -46,7 +46,7 @@ public class ClothingItemService : IClothingItemService
     public async Task Update(ServerClothingItem item)
     {
         // throws exception if it finds more than one (good cus we serial number should be unique)
-        var oldItem = await _databaseContext.ClothingItems.SingleOrDefaultAsync(s => s.Id == item.Id);
+        var oldItem = await _databaseContext.ClothingItems.FindAsync(item.Id);
 
         if (oldItem != null)
         {

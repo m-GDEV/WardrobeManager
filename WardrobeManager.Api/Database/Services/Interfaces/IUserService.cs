@@ -8,5 +8,6 @@ public interface IUserService
 {
     public Task CreateUser(string Auth0Id);
     public Task<bool> DoesUserExist(string Auth0Id);
-    public Task<User> GetUser(string Auth0Id);
+    public Task<User?> GetUser(string Auth0Id);
+    public Task<User?> GetUserWithClothingItems(string Auth0Id);
 }

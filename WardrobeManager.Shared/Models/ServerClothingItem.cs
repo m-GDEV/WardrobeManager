@@ -7,13 +7,17 @@ namespace WardrobeManager.Shared.Models;
 public class ServerClothingItem
 {
     public ServerClothingItem() { } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
-                                    // deserializer needs a way to create the object without any fields so it can assign them if they exist
 
-    public ServerClothingItem(string name, ClothingCategory category, Guid? imageGuid)
+    // deserializer needs a way to create the object without any fields so it can assign them if they exist
+
+    // This constructor will be used to create default objects or initial objects
+    // For now some of the other user editable fields will not be assigned here
+    // In the future you can add this functionality to the frontend and then change this
+    public ServerClothingItem(string name, ClothingCategory category, Season? season, Guid? imageGuid)
     {
-        // this.UserId = userId;
         this.Name = name;
         this.Category = category;
+        this.Season = season;
         this.ImageGuid = imageGuid;
     }
 
