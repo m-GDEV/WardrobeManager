@@ -4,6 +4,7 @@
 @using WardrobeManager.Presentation.Components
 @using WardrobeManager.Presentation.Components.FormItems
 @using WardrobeManager.Shared.Models
+@using WardrobeManager.Shared.Enums
 @using WardrobeManager.Presentation.Services.Implementation
 @using WardrobeManager.Presentation.Services.Interfaces
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
@@ -19,11 +20,11 @@
 @* <h1 class="subheading-text">@userid</h1> *@
 
 <div class="w-full flex flex-col items-center">
-    @if (error) {
+    @if (error == true) {
         <div class="toast toast-top toast-end">
             <div class="alert alert-error">
                 <span>@errorMessage</span>
-                <button class="w-5 h-5" onclick=@(() => error = false)><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
+                <button class="w-5 h-5" @onclick="Thing"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
             </div>
         </div>
     }
@@ -32,16 +33,58 @@
 
 
 
-    <div class="pb-10 px-8 gap-8 flex flex-row justify-center w-full h-full">
+    <div class="pb-10 px-8 gap-8 flex flex-row justify-center w-full grow">
+        @* Left Column *@
         <div class="w-1/4 flex flex-col items-center">
             <h3 class="subheading-text">Filters</h3>
-            <div class="rounded-xl bg-primary-content flex-grow w-full">
-                <SwitchToggle Label="Penis Muncher" Enabled=@enabled />
-                <p>thing</p>
+            <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
+
+                <EditForm Model="formModel" @onchange="Update">
+                    <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" />
+                    <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" />
+                    <SwitchToggle Label="Recently Added" />
+                    <DropDown Label="Category" TItem="@ClothingCategory" />
+                    <DropDown Label="Season" TItem="@Season" />
+                    <DatePicker Label="Date Added" />
+                    <DatePicker Label="Last Worn" />
+                    <DatePicker Label="Last Edited" />
+                    <Range Label="Times Worn" />
+                    <Range Label="Times Worn Since Wash" />
+                </EditForm>
             </div>
         </div>
-        <div class="w-3/4 bg-primary">Centre column</div>
-        <div class="w-1/4 bg-primary-content">Right column</div>
+        @* Centre Column *@
+        <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4">
+            <Search Width="1/6"/>
+        </div>
+        @* Right Column *@
+        <div class="w-1/4 flex flex-col items-center">
+            <h3 class="subheading-text">Preview</h3>
+            <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col">
+                @* Psuedo header *@
+                <div class="flex flex-row justify-between items-center pb-2">
+                    <p class="subtitle-text">Brown T-Shirt</p>
+                    <div class="flex flex-row gap-3 ">
+                        <span class="small-text badge badge-lg badge-secondary">T-Shirt</span>
+                        <span class="small-text badge badge-lg badge-accent">Fall</span>
+                        <span class="bi bi-star w-5 h-5"></span>
+                    </div>
+                </div>
+                @* Info *@
+                <ItemInfo Label="Last Edited" Data="June 10, 2024" />
+                <ItemInfo Label="Date Added" Data="June 10, 2024" />
+                <ItemInfo Label="Last Worn" Data="June 10, 2024" />
+                <ItemInfo Label="Desired Time Worn Before Wash" Data="5" />
+                <ItemInfo Label="Total Times Worn" Data="45" />
+                <div class="flex flex-row justify-center gap-5 pb-4">
+                    <button class=" btn btn-sm btn-accent">Wear</button>
+                    <button class="btn btn-sm  btn-accent">Wash</button>
+                </div>
+                <div class="flex flex-col justify-center rounded-xl">
+                    <img src="@ProjectConstants.DefaultItemImage" class="h-[13.5rem] object-contain"/>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -49,6 +92,7 @@
     List<ServerClothingItem>? clothing = null;
     bool error = false;
     string errorMessage = "";
+    public FormModel formModel = new FormModel();
 
     public bool enabled { get; set; } = false;
 
@@ -63,22 +107,47 @@
         {
             exception.Redirect();
         }
-        catch (HttpRequestException) {
+        catch (HttpRequestException ex) {
             error = true;
             errorMessage = "Cannot connect to API";
         }
 
     }
-    public async Task Refresh()
+    public async Task Update()
     {
-
-        StateHasChanged();
+        var obvj = formModel;
+        // StateHasChanged();
     }
+
 
     public async Task DeleteItem(ServerClothingItem item)
     {
         await ApiService.Delete(item);
-        await Refresh();
+        // await Refresh();
+    }
+
+    public async Task Thing()
+    {
+        error = false;
+        errorMessage = string.Empty;
+    }
+
+    public class FormModel
+    {
+        public bool HasImage { get; set; }
+        public bool Favourited { get; set; }
+        public bool RecentlyAdded { get; set;  }
+        public ClothingCategory Category { get; set;  }
+        public Season Season { get; set; }
+        public DateTime DateAddedFrom { get; set; }
+        public DateTime DateAddedTo { get; set; }
+        public DateTime LastWornFrom { get; set; }
+        public DateTime LastWornTo { get; set; }
+        public DateTime LastEditedFrom { get; set; }
+        public DateTime LastEditedTo { get; set; }
+        public int TimesWorn { get; set; }
+        public int TimeWornSinceWash { get; set; }
+
     }
 
 }

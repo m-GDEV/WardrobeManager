@@ -1,0 +1,19 @@
+@namespace WardrobeManager.Presentation.Components.FormItems
+
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@using WardrobeManager.Shared.Services.Implementation;
+@using WardrobeManager.Shared.Services.Interfaces;
+
+<div class="flex flex-row justify-between items-center py-3 px-4 rounded-2xl bg-base-200 @Width">
+    <input type="search" placeholder="'Green T-Shirt'" class="bg-base-200 outline-none border-none"/>
+    <span class="bi bi-search" />
+</div>
+
+@code {
+    [Parameter]
+    public string Width { get; set;  }
+}

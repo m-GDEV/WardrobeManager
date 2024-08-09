@@ -1,7 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
 
-<div class="h-full  text-base-content flex flex-col">
+<div class="h-full  text-base-content flex flex-col body-text">
     <NavMenu />
 
     <main class="flex flex-grow h-full ">
@@ -18,7 +18,8 @@
     {
         if (firstRender) // Only run on the initial render
         {
-            // 1. Call your JavaScript function to initialize the theme switcher
+            // Manually call theme-change js functions cus it tries to do it on page load and that
+            // doesn't jive with the blazor wasm system
             await JSRuntime.InvokeVoidAsync("themeSelect");
             await JSRuntime.InvokeVoidAsync("themeBtn");
             await JSRuntime.InvokeVoidAsync("themeToggle");

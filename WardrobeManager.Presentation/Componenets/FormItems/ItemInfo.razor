@@ -8,12 +8,11 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between pb-4">
+<div class="flex flex-row justify-between items-center pb-4">
     <label>
         @Label
     </label>
-    <input type="checkbox" checked="@Enabled" @onclick="OnEnabledChanged" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
-    />
+    <p>@Data</p>
 </div>
 
 @code {
@@ -21,13 +20,5 @@
     public string Label { get; set; }
 
     [Parameter]
-    public bool Enabled { get; set; }
-
-    [Parameter]
-    public EventCallback<bool> EnabledChanged { get; set; }
-
-    private async Task OnEnabledChanged()
-    {
-        await EnabledChanged.InvokeAsync(Enabled); // Notify the parent
-    }
+    public string Data { get; set; }
 }

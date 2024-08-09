@@ -41,3 +41,11 @@
     font-style: normal;
     font-size: 1rem;
 }
+
+.small-text{
+    font-family: "DM Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400; /* 100-1000 */
+    font-style: normal;
+    font-size: 0.7rem;
+}

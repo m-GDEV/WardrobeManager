@@ -8,12 +8,18 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between pb-4">
-    <label>
+@typeparam TItem
+
+<div class="flex flex-row justify-between pb-4 items-center">
+    <label class="text-primary">
         @Label
     </label>
-    <input type="checkbox" checked="@Enabled" @onclick="OnEnabledChanged" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
-    />
+    <select class="select rounded-md bg-primary text-primary-content w-2/4">
+        @foreach (var category in Enum.GetValues(typeof(TItem)))
+        {
+            <option value="@category">@category</option>
+        }
+    </select>
 </div>
 
 @code {
@@ -21,13 +27,5 @@
     public string Label { get; set; }
 
     [Parameter]
-    public bool Enabled { get; set; }
-
-    [Parameter]
-    public EventCallback<bool> EnabledChanged { get; set; }
-
-    private async Task OnEnabledChanged()
-    {
-        await EnabledChanged.InvokeAsync(Enabled); // Notify the parent
-    }
+    public TItem MyEnum { get; set; }
 }
