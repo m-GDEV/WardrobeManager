@@ -40,7 +40,8 @@
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
 
                 <EditForm Model="formModel" @onchange="Update">
-                    <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" />
+                    <LabelAndElement L
+                                     <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" />
                     <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" />
                     <SwitchToggle Label="Recently Added" />
                     <DropDown Label="Category" TItem="@ClothingCategory" />
@@ -56,6 +57,10 @@
         @* Centre Column *@
         <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4">
             <Search Width="1/6"/>
+            <div class="flex flex-row w-full gap-3 items-center">
+                <p class="subtitle-text text-primary-content">Sort By</p>
+                <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/>
+            </div>
         </div>
         @* Right Column *@
         <div class="w-1/4 flex flex-col items-center">
@@ -147,7 +152,6 @@
         public DateTime LastEditedTo { get; set; }
         public int TimesWorn { get; set; }
         public int TimeWornSinceWash { get; set; }
-
     }
 
 }

@@ -8,18 +8,11 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between items-center pb-4">
-    <label>
-        @Label
-    </label>
-    <div class="w-3/4 flex flex-row items-center justify-end text-sm gap-2">
-        <input type="date" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
-        <p>To</p>
-        <input type="date" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
-    </div>
+<div class="w-3/4 flex flex-row items-center justify-end text-sm gap-2">
+    <input type="date" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
+    <p>To</p>
+    <input type="date" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
 </div>
 
 @code {
-    [Parameter]
-    public string Label { get; set; }
 }

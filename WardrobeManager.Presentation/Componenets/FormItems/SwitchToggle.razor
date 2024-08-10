@@ -8,18 +8,10 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between pb-4">
-    <label>
-        @Label
-    </label>
-    <input type="checkbox" checked="@Enabled" @onclick="OnEnabledChanged" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
-    />
-</div>
+<input type="checkbox" checked="@Enabled" @onclick="OnEnabledChanged" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
+/>
 
 @code {
-    [Parameter]
-    public string Label { get; set; }
-
     [Parameter]
     public bool Enabled { get; set; }
 

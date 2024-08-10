@@ -8,18 +8,11 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between items-center pb-4">
-    <label>
-        @Label
-    </label>
-    <div class="w-1/2 flex flex-row gap-2">
-        <p>0</p>
-        <input type="range" min="0" max="100" value="0" class="range range-primary  bg-base-100" />
-        <p>100+</p>
-    </div>
+<div class="w-1/2 flex flex-row gap-2">
+    <p>0</p>
+    <input type="range" min="0" max="100" value="0" class="range range-primary  bg-base-100" />
+    <p>100+</p>
 </div>
 
 @code {
-    [Parameter]
-    public string Label { get; set; }
 }

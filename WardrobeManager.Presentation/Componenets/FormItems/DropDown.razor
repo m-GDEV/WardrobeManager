@@ -10,21 +10,18 @@
 
 @typeparam TItem
 
-<div class="flex flex-row justify-between pb-4 items-center">
-    <label class="text-primary">
-        @Label
-    </label>
-    <select class="select rounded-md bg-primary text-primary-content w-2/4">
-        @foreach (var category in Enum.GetValues(typeof(TItem)))
-        {
-            <option value="@category">@category</option>
-        }
-    </select>
-</div>
+<select class="select rounded-md bg-@bg text-@fg">
+    @foreach (var category in Enum.GetValues(typeof(TItem)))
+    {
+        <option value="@category">@category</option>
+    }
+</select>
 
 @code {
     [Parameter]
-    public string Label { get; set; }
+    public string bg { get; set; } = "primary";
+    [Parameter]
+    public string fg { get; set; } = "primary-content";
 
     [Parameter]
     public TItem MyEnum { get; set; }
