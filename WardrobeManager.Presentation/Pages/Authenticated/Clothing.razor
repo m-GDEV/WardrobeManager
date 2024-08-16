@@ -40,10 +40,10 @@
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
 
                 <EditForm Model="formModel" @onchange="Update">
-                    <LabelAndElement L
+                    @* <LabelAndElement L *@
                                      <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" />
                     <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" />
-                    <SwitchToggle Label="Recently Added" />
+                    <SwitchToggle Label="Recently Added" />k
                     <DropDown Label="Category" TItem="@ClothingCategory" />
                     <DropDown Label="Season" TItem="@Season" />
                     <DatePicker Label="Date Added" />

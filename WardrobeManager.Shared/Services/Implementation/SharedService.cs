@@ -21,7 +21,7 @@ public class SharedService : ISharedService
         return true;
     }
 
-    private bool IsValidBase64(string input)
+    public bool IsValidBase64(string input)
     {
         try
         {
@@ -37,12 +37,7 @@ public class SharedService : ISharedService
 
     public ServerClothingItem CreateDefaultServerClothingItem()
     {
-        return new ServerClothingItem
-            (
-             name: "Default Name",
-             ClothingCategory.TShirt,
-             Season.Fall,
-             null
-            );
+        return new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside, false, 5, null);
+
     }
 }

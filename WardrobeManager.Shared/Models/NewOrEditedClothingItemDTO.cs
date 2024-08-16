@@ -1,0 +1,38 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using WardrobeManager.Shared.Enums;
+
+namespace WardrobeManager.Shared.Models;
+
+/// <summary> DTO that client sends to create new clothing item </summary>
+public class NewOrEditedClothingItemDTO
+{
+    public NewOrEditedClothingItemDTO() { } // ONLY FOR DESERIALIZER. THIS SHIT BETTER HAVE NO REFERENCES
+
+
+    public NewOrEditedClothingItemDTO
+        (
+         string name, ClothingCategory category, Season season, bool favourited,
+         WearLocation wearLocation, int desiredTimesWornBeforeWash, string imageBase64
+        ) {
+            this.Name = name;
+            this.Category = category;
+            this.Season = season;
+            this.Favourited = favourited;
+            this.WearLocation = wearLocation;
+            this.DesiredTimesWornBeforeWash = desiredTimesWornBeforeWash;
+            this.ImageBase64 = imageBase64;
+        }
+
+    public string Name { get; set; }
+    public ClothingCategory Category { get; set; }
+    public Season Season { get; set; }
+    public bool Favourited { get; set; }
+    public WearLocation WearLocation { get; set; }
+    public int DesiredTimesWornBeforeWash { get; set; }
+    public string ImageBase64 { get; set; }
+}

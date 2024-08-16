@@ -16,7 +16,7 @@ public class FileService : IFileService
         string projectRootPath = AppDomain.CurrentDomain.BaseDirectory;
 
         // 2. Construct the Full File Path:
-        string uploadsFolderPath = Path.Combine(projectRootPath, "Uploads"); // "uploads" is the folder name 
+        string uploadsFolderPath = Path.Combine(projectRootPath, "Uploads"); // "uploads" is the folder name
 
         // 3. Create the folder if it doesn't exist:
         Directory.CreateDirectory(uploadsFolderPath); // sneaking it in so i don't have to later
@@ -26,7 +26,7 @@ public class FileService : IFileService
 
     public async Task SaveImage(Guid? guid, string ImageBase64)
     {
-        // we check on the client, but if the image is larger than our limit 
+        // we check on the client, but if the image is larger than our limit
         // the base64 could be empty
         if (guid == null || ImageBase64 == string.Empty)
         {
@@ -49,13 +49,13 @@ public class FileService : IFileService
 
         if (File.Exists(path))
         {
-            byte[] imageBytes = await File.ReadAllBytesAsync(path);                                       // 6. Serve the file 
+            byte[] imageBytes = await File.ReadAllBytesAsync(path);                                       // 6. Serve the file
             return imageBytes;
         }
 
         else
         {
-            byte[] imageBytes = await File.ReadAllBytesAsync(notFound);                                        // 6. Serve the file 
+            byte[] imageBytes = await File.ReadAllBytesAsync(notFound);                                        // 6. Serve the file
             return imageBytes;
         }
     }

@@ -23,8 +23,8 @@ public class UserService : IUserService
 
             var sampleClothingItems = new List<ServerClothingItem>
             {
-                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall,  null),
-                    new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.Winter, null)
+                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside, false, 5, null),
+                    new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall, WearLocation.HomeAndOutside, false, 20, null),
             };
             newUser.ServerClothingItems = sampleClothingItems;
 

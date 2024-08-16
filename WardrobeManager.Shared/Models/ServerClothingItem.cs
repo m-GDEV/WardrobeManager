@@ -13,15 +13,22 @@ public class ServerClothingItem
     // This constructor will be used to create default objects or initial objects
     // For now some of the other user editable fields will not be assigned here
     // In the future you can add this functionality to the frontend and then change this
-    public ServerClothingItem(string name, ClothingCategory category, Season? season, Guid? imageGuid)
-    {
-        this.Name = name;
-        this.Category = category;
-        this.Season = season;
-        this.ImageGuid = imageGuid;
-    }
+    public ServerClothingItem
+        (
+         string name, ClothingCategory category, Season season, WearLocation wearLocation,
+         bool favourited, int desiredTimesWornBeforeWash, Guid? imageGuid
+        )
+        {
+            this.Name = name;
+            this.Category = category;
+            this.Season = season;
+            this.WearLocation = wearLocation;
+            this.Favourited = favourited;
+            this.DesiredTimesWornBeforeWash = desiredTimesWornBeforeWash;
+            this.ImageGuid = imageGuid;
+        }
 
-    // EF Core modifies
+    // ---- EF Core modifies -----
     public int Id { get; set; }
 
     // represents a mandatory one-to-many relationship with a User as
@@ -31,11 +38,13 @@ public class ServerClothingItem
         public User User { get; set; } // navigation property
     public int UserId { get; set; }
 
-    // User modifies
+    // ---- User modifies -----
     public string Name { get; set; }
     public ClothingCategory Category { get; set; }
-    public Season? Season { get; set; } // doesn't have to be set
-    public Guid? ImageGuid { get; set; } // modified in spirit by the user, they change the image. program assigns guid
+    public Season Season { get; set; }
+    public WearLocation WearLocation { get; set; }
+    // modified in spirit by the user, they change the image. program assigns guid
+    public Guid? ImageGuid { get; set; }
     public bool Favourited { get; set; } = false;
 
     // # of times the user wants to wear a piece of clothing before washing it
@@ -44,12 +53,14 @@ public class ServerClothingItem
     public int DesiredTimesWornBeforeWash { get; set; } = 0;
 
 
-    // Only program modifies
+    // ---- Only program modifies ----
     public int TimesWornSinceWash { get; set; } = 0;
-    public int TimesWornTotal { get; set; } = 0; // initialized at zero since the user can change this later
+    // initialized at zero since the user can change this later
+    public int TimesWornTotal { get; set; } = 0;
     public DateTime LastWorn { get; set; }
     public DateTime DateAdded { get; set; } = DateTime.UtcNow;
-    public DateTime DateUpdated { get; set; } = DateTime.UtcNow; // will be updated directly. at init this is fine for default
+    // will be updated directly. at init this is fine for default
+    public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
 
     public void Wash()
     {
