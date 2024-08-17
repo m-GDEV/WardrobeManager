@@ -11,10 +11,8 @@ using WardrobeManager.Api.Database;
 namespace WardrobeManager.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240720052402_thin")]
-#pragma warning disable CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
-    partial class thin
-#pragma warning restore CS8981 // The type name only contains lower-cased ascii characters. Such names may become reserved for the language.
+    [Migration("20240817040741_AddedUserDetails")]
+    partial class AddedUserDetails
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,7 +51,7 @@ namespace WardrobeManager.Api.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("Season")
+                    b.Property<int>("Season")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("TimesWornSinceWash")
@@ -63,6 +61,9 @@ namespace WardrobeManager.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("WearLocation")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -79,6 +80,14 @@ namespace WardrobeManager.Api.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Auth0Id")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProfilePictureBase64")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

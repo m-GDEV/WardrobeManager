@@ -3,15 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace WardrobeManager.Shared.Models;
 public class User(string Auth0Id)
 {
+    // Because the user is created solely when we only know their Auth0Id,
+    // everything in this class has a sensisble default. When the user
+    // wants to change their profile details they may perform a PUT request
+    // with a DTO object
+
+
     // Personal info
     public int Id { get; set; }
-    public string Auth0Id { get; set; } = Auth0Id; // used to identify user from auth0
+    // used to identify user from auth0
+    public string Auth0Id { get; set; } = Auth0Id;
+    public string Name { get; set;  } = "Default Name";
+    // stored directly in db instead of file since there won't be many users & its convenient
+    public string ProfilePictureBase64 { get; set; } = string.Empty;
+    public DateTime AccountCreationDate = DateTime.Now;
 
     // Data relationships
     // 1-many relationship with serverclothingitems
+    // We don't care to return this info when return user info via api
+    [JsonIgnore]
     public List<ServerClothingItem> ServerClothingItems { get; set;} = new List<ServerClothingItem>();
 }

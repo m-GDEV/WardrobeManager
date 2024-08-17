@@ -12,19 +12,18 @@ namespace WardrobeManager.Api.Endpoints;
 
 public static class ImageEndpoints {
     public static void MapImageEndpoints(this IEndpointRouteBuilder app) {
-        var group = app.MapGroup("/images").RequireAuthorization();
+        // No authorization for this for right now since doing <img src="addfs" /> does not include the JWT token
+        var group = app.MapGroup("/images");
 
         group.MapGet("/{id}", GetImage);
     }
 
-    // No authorization for this for right now since doing <img src="addfs" /> does not include the JWT token
     public static async Task<IResult> GetImage(
-            string imageGuid, IFileService fileService
+            string id, IFileService fileService
             ){
-        return Results.File(await fileService.GetImage(imageGuid));
 
-        // should implement - maybe not idk
-        //return Results.NotFound("Image not found");
+        // maybe should implement a 404 response if the image is not found instead of just retruning a 'no image found' png
+        return Results.File(await fileService.GetImage(id));
     }
 }
 

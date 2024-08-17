@@ -114,6 +114,7 @@ app.UseExceptionHandler();
 
 
 // Mapping custom endpoints
+app.MapUserEndpoints();
 app.MapClothingEndpoints();
 app.MapImageEndpoints();
 app.MapMiscEndpoints();

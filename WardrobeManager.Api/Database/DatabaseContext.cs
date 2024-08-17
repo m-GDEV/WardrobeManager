@@ -22,6 +22,7 @@ public class DatabaseContext : DbContext
             .HasMany(e=> e.ServerClothingItems)
             .WithOne(e=> e.User)
             .HasForeignKey(e=> e.UserId)
+            .OnDelete(DeleteBehavior.Cascade) // deletes a user's clothing items when they are deleted
             .IsRequired();
     }
 }

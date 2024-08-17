@@ -50,6 +50,7 @@ public class ServerClothingItem
     // # of times the user wants to wear a piece of clothing before washing it
     // will be used to show something like '2 wears remaining' or 'worn 2 times extra'
     // this will be determine using this var and TimesWornSinceWash
+    // realizing this later but this is not that important, kinda just for the frontend
     public int DesiredTimesWornBeforeWash { get; set; } = 0;
 
 
@@ -68,6 +69,7 @@ public class ServerClothingItem
     }
     public void Wear()
     {
+        TimesWornSinceWash += 1;
         TimesWornTotal += 1;
         LastWorn = DateTime.UtcNow;
     }
