@@ -1,6 +1,6 @@
 version = 1
 
-exclude_patterns = ["Migrations/**"]
+exclude_patterns = ["WardrobeManager.Api/Migrations/**"]
 
 [[analyzers]]
 name = "csharp"
