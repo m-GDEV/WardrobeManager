@@ -21,7 +21,7 @@ public class User(string Auth0Id)
     public string Name { get; set;  } = "Default Name";
     // stored directly in db instead of file since there won't be many users & its convenient
     public string ProfilePictureBase64 { get; set; } = string.Empty;
-    public DateTime AccountCreationDate = DateTime.Now;
+    public DateTime AccountCreationDate = DateTime.UtcNow;
 
     // Data relationships
     // 1-many relationship with serverclothingitems

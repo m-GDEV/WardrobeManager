@@ -115,6 +115,9 @@ public class ClothingItemService : IClothingItemService
             case ActionType.Wash:
                 dbRecord.Wash();
                 break;
+            default:
+                // Here because if the enum expands this will be out of date
+                throw new Exception("Action not recognized");
         }
 
         _context.ClothingItems.Update(dbRecord);
