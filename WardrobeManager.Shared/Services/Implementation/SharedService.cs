@@ -40,4 +40,7 @@ public class SharedService : ISharedService
         return new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside, false, 5, null);
 
     }
+    public NewOrEditedClothingItemDTO CreateDefaultNewOrEditedClothingItemDTO() {
+        return new NewOrEditedClothingItemDTO("item", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
+    }
 }

@@ -24,21 +24,21 @@ public class ApiService : IAsyncDisposable, IApiService
         return clothing;
     }
 
-    public async Task Add(NewOrEditedClothingItem clothing)
+    public async Task Add(NewOrEditedClothingItemDTO clothing)
     {
         var serialized = JsonSerializer.Serialize(clothing);
-        var de_serialized = JsonSerializer.Deserialize<NewOrEditedClothingItem>(serialized);
+        var de_serialized = JsonSerializer.Deserialize<NewOrEditedClothingItemDTO>(serialized);
 
 
 
 
-        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItem>( "/clothingitem", clothing);
+        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothingitem", clothing);
         res.EnsureSuccessStatusCode();
     }
 
-    public async Task Update(NewOrEditedClothingItem clothing)
+    public async Task Update(NewOrEditedClothingItemDTO clothing)
     {
-        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItem>( "/clothingitem", clothing);
+        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothingitem", clothing);
         res.EnsureSuccessStatusCode();
     }
 

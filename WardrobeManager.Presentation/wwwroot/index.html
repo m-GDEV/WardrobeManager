@@ -44,26 +44,12 @@
     <body class="h-full text-base-content">
         <!-- Change the contents of this div to customize the webassembly loading screen -->
         <div id="app" class="h-full">
-            <div class="h-full flex flex-row justify-center items-center bg-base-100">
-                <style>
-.circlesvg { stroke: oklch(var(--pc)) }
-.wedgesvg { fill: oklch(var(--p)) }
-                </style>
-                <svg class="animate-spin h-12 w-12 mr-3"
-                     viewBox="0 0 100 100"
-                     xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50"
-                            cy="50"
-                            r="45"
-                            class="circlesvg" />
-                    <path d="M 50 50
-                    L 50 5
-                    A 45 45 0 0 1 95 50
-                    Z" class="wedgesvg" />
-                </svg>
-                <p>Please wait while WardrobeManager loads...</p>
+            <div class="h-full flex flex-col justify-center items-center bg-base-100 gap-5">
+                <h1 class="subtitle-text">Please wait while WardrobeManager loads...</h1>
+                <span class="loading loading-dots loading-lg text-primary-content"></span>
             </div>
         </div>
+        <!-- Change the contents of this div to customize the webassembly loading screen -->
 
         <div id="blazor-error-ui" class="hidden">
             An unhandled error has occurred.

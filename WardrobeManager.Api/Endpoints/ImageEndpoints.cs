@@ -13,6 +13,7 @@ namespace WardrobeManager.Api.Endpoints;
 public static class ImageEndpoints {
     public static void MapImageEndpoints(this IEndpointRouteBuilder app) {
         // No authorization for this for right now since doing <img src="addfs" /> does not include the JWT token
+        // Not going to fix this for now
         var group = app.MapGroup("/images");
 
         group.MapGet("/{id}", GetImage);

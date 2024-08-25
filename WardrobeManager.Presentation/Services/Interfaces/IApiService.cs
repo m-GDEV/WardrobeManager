@@ -5,9 +5,9 @@ public interface IApiService
 {
     ValueTask DisposeAsync();
     Task<List<ServerClothingItem>?> GetClothing();
-    Task Add(NewOrEditedClothingItem clothing);
+    Task Add(NewOrEditedClothingItemDTO clothing);
     Task Delete(ServerClothingItem clothing);
-    Task Update(NewOrEditedClothingItem clothing);
+    Task Update(NewOrEditedClothingItemDTO clothing);
     Task<bool> IsUserInitialized();
     Task CreateUser();
 }

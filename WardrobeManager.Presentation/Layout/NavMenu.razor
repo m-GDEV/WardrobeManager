@@ -4,78 +4,104 @@
 @inject NavigationManager Navigation
 
 <nav
-    class="bg-base-300 text-base-content  w-full flex flex-row justify-between py-4 px-4">
+    class="bg-base-300 text-base-content  w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
 
+    @* Left side  *@
     <a class="flex flex-row gap-3 items-center" href="/">
         <img class="w-12 h-12" src="https://cdn-icons-png.flaticon.com/512/5996/5996124.png" />
-        <p class="subtitle-text text-base-content">@ProjectConstants.Name</p>
+        <p class="subtitle-text text-base-content ">@ProjectConstants.Name</p>
     </a>
 
-    <!-- Add logic to hid this if not authenticated -->
+    @* Middle *@
     <AuthorizeView>
         <Authorized>
-            <div class="flex flex-row justify-center gap-5">
-                <NavLink href="/addclothing" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
-                <NavLink href="clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
-                <NavLink href="/login" class="btn btn-secondary body-text text-secondary-content">Outfit Suggestion</NavLink>
-                <NavLink href="/logininfo" class="btn btn-secondary body-text text-secondary-content">Login Info</NavLink>
+            <div class="hidden lg:flex flex-row justify-center gap-5">
+                <NavLink href="/add" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
+                <NavLink href="/clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
             </div>
         </Authorized>
         <NotAuthorized>
         </NotAuthorized>
     </AuthorizeView>
 
-    <select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-4 border-base-content">
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="cupcake">Cupcake</option>
-        <option value="bumblebee">Bumblebee</option>
-        <option value="emerald">Emerald</option>
-        <option value="corporate">Corporate</option>
-        <option value="synthwave">Synthwave</option>
-        <option value="retro">Retro</option>
-        <option value="cyberpunk">Cyberpunk</option>
-        <option value="valentine">Valentine</option>
-        <option value="halloween">Halloween</option>
-        <option value="garden">Garden</option>
-        <option value="forest">Forest</option>
-        <option value="aqua">Aqua</option>
-        <option value="lofi">Lofi</option>
-        <option value="pastel">Pastel</option>
-        <option value="fantasy">Fantasy</option>
-        <option value="wireframe">Wireframe</option>
-        <option value="black">Black</option>
-        <option value="luxury">Luxury</option>
-        <option value="dracula">Dracula</option>
-        <option value="cmyk">CMYK</option>
-        <option value="autumn">Autumn</option>
-        <option value="business">Business</option>
-        <option value="acid">Acid</option>
-        <option value="lemonade">Lemonade</option>
-        <option value="night">Night</option>
-        <option value="coffee">Coffee</option>
-    </select>
+    @* Right side *@
+    <div>
+        <div class="hidden lg:flex flex-row gap-2 items-center">
+            <AuthorizeView>
+                <Authorized>
+                    <div class="dropdown dropdown-hover dropdown-end">
+                        <a tabindex="0" role="button" class="flex flex-row gap-3 items-center text-base-content hover:bg-accent hover:text-accent-content px-3 py-2 rounded transition-all duration-300" href="profile">
+                            <p class="body-text font-bold">@context.User.Identity.Name</p>
+                            <div class="avatar online">
+                                <div class="w-12 rounded-full">
+                                    <img src="@ProjectConstants.ProfileImage" />
+                                </div>
+                            </div>
+                        </a>
+                        <div tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-4 shadow flex flex-col gap-5">
+                            <div onclick=@(() => Navigation.NavigateToLogout("authentication/logout"))>
+                                <img class="w-8 h-8" src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png" />
+                            </div>
+                            <select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-4 border-base-content">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="cupcake">Cupcake</option>
+                                <option value="bumblebee">Bumblebee</option>
+                                <option value="emerald">Emerald</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="synthwave">Synthwave</option>
+                                <option value="retro">Retro</option>
+                                <option value="cyberpunk">Cyberpunk</option>
+                                <option value="valentine">Valentine</option>
+                                <option value="halloween">Halloween</option>
+                                <option value="garden">Garden</option>
+                                <option value="forest">Forest</option>
+                                <option value="aqua">Aqua</option>
+                                <option value="lofi">Lofi</option>
+                                <option value="pastel">Pastel</option>
+                                <option value="fantasy">Fantasy</option>
+                                <option value="wireframe">Wireframe</option>
+                                <option value="black">Black</option>
+                                <option value="luxury">Luxury</option>
+                                <option value="dracula">Dracula</option>
+                                <option value="cmyk">CMYK</option>
+                                <option value="autumn">Autumn</option>
+                                <option value="business">Business</option>
+                                <option value="acid">Acid</option>
+                                <option value="lemonade">Lemonade</option>
+                                <option value="night">Night</option>
+                                <option value="coffee">Coffee</option>
+                            </select>
+                        </div>
+                    </div>
+                </Authorized>
 
 
-    <AuthorizeView>
-        <Authorized>
-            <div class="flex flex-row gap-4 items-center">
-                <a class="flex flex-row gap-3 items-center" href="profile">
-                    <p class="subtitle-text text-base-content">@context.User.Identity.Name</p>
-                    <img class="w-12 h-12 rounded-full" src="@ProjectConstants.ProfileImage" />
-                </a>
-                <div onclick=@(() => Navigation.NavigateToLogout("authentication/logout"))>
-                    <img class="w-12 h-12" src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png" />
+
+
+
+                <NotAuthorized>
+                    <a class="flex flex-row gap-3 items-center" href="/authentication/login">
+                        <p class="body-text text-base-content">Log in</p>
+                        <div class="avatar placeholder">
+                            <div class="bg-neutral text-neutral-content w-24 rounded-full">
+                                <span class="text-3xl">D</span>
+                            </div>
+                        </div>
+                    </a>
+                </NotAuthorized>
+            </AuthorizeView>
+        </div>
+        <div class="dropdown dropdown-bottom dropdown-end lg:hidden">
+            <div tabindex="0" role="button" class=""><span class="bi bi-list text-2xl text-accent"></span></div>
+            <div tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                <div class="flex flex-col justify-center gap-5">
+                    <NavLink href="/add" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
+                    <NavLink href="/clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
                 </div>
             </div>
-        </Authorized>
-        <NotAuthorized>
-            <a class="flex flex-row gap-3 items-center" href="/authentication/login">
-                <p class="subtitle-text text-base-content">Log in</p>
-                <img class="w-12 h-12 rounded-full" src="https://dentistry.co.uk/app/uploads/2020/11/anonymous-avatar-icon-25.png" />
-            </a>
-        </NotAuthorized>
-    </AuthorizeView>
+        </div>
+    </div>
 </nav>
 
 
