@@ -31,12 +31,23 @@ badd +5 WardrobeManager.Shared/Models/User.cs
 badd +4 WardrobeManager.Shared/Enums/WearLocation.cs
 badd +9 WardrobeManager.Shared/Services/Interfaces/ISharedService.cs
 badd +33 WardrobeManager.Api/Endpoints/ActionEndpoints.cs
-badd +22 WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
+badd +119 WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
 badd +7 WardrobeManager.Api/Database/Services/Interfaces/IClothingItemService.cs
 badd +10 WardrobeManager.Shared/Exceptions/Exceptions.cs
+badd +0 WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor
+badd +11 WardrobeManager.Shared/Misc/Constants.cs
+badd +10 ~/.vimrc
+badd +25 ~/.vim/coc-settings.json
+badd +11 WardrobeManager.Shared/Enums/ClothingCategory.cs
+badd +6 WardrobeManager.Shared/Enums/Season.cs
+badd +0 WardrobeManager.Presentation/App.razor
+badd +0 WardrobeManager.Presentation/wwwroot/index.html
 argglobal
 %argdel
 set stal=2
+tabnew +setlocal\ bufhidden=wipe
+tabnew +setlocal\ bufhidden=wipe
+tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
 tabnew +setlocal\ bufhidden=wipe
@@ -54,7 +65,7 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 129 - ((13 * winheight(0) + 13) / 27)
+let s:l = 129 - ((15 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -62,37 +73,6 @@ keepjumps 129
 normal! 0
 tabnext
 edit WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
-let s:save_splitbelow = &splitbelow
-let s:save_splitright = &splitright
-set splitbelow splitright
-wincmd _ | wincmd |
-vsplit
-1wincmd h
-wincmd w
-let &splitbelow = s:save_splitbelow
-let &splitright = s:save_splitright
-wincmd t
-let s:save_winminheight = &winminheight
-let s:save_winminwidth = &winminwidth
-set winminheight=0
-set winheight=1
-set winminwidth=0
-set winwidth=1
-exe 'vert 1resize ' . ((&columns * 20 + 104) / 209)
-exe 'vert 2resize ' . ((&columns * 188 + 104) / 209)
-argglobal
-enew
-file NERD_tree_tab_2
-balt WardrobeManager.Api/Database/Services/Implementation/ClothingItemService.cs
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal nofen
-wincmd w
 argglobal
 balt WardrobeManager.Api/Endpoints/ActionEndpoints.cs
 setlocal fdm=manual
@@ -105,15 +85,69 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 119 - ((31 * winheight(0) + 24) / 48)
+let s:l = 119 - ((8 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 119
 normal! 076|
-wincmd w
-exe 'vert 1resize ' . ((&columns * 20 + 104) / 209)
-exe 'vert 2resize ' . ((&columns * 188 + 104) / 209)
+tabnext
+edit WardrobeManager.Presentation/Componenets/Forms/AddClothingItem.razor
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 46 - ((19 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 46
+normal! 064|
+tabnext
+edit WardrobeManager.Presentation/App.razor
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 10 - ((9 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 10
+normal! 09|
+tabnext
+edit WardrobeManager.Presentation/wwwroot/index.html
+argglobal
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 46 - ((5 * winheight(0) + 15) / 31)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 46
+normal! 09|
 tabnext
 edit WardrobeManager.Api/Endpoints/ClothingEndpoints.cs
 let s:save_splitbelow = &splitbelow
@@ -140,14 +174,14 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 12 + 25) / 51)
-exe 'vert 1resize ' . ((&columns * 60 + 104) / 209)
-exe '2resize ' . ((&lines * 35 + 25) / 51)
-exe 'vert 2resize ' . ((&columns * 60 + 104) / 209)
-exe '3resize ' . ((&lines * 20 + 25) / 51)
-exe 'vert 3resize ' . ((&columns * 148 + 104) / 209)
-exe '4resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 4resize ' . ((&columns * 148 + 104) / 209)
+exe '1resize ' . ((&lines * 5 + 17) / 34)
+exe 'vert 1resize ' . ((&columns * 34 + 45) / 90)
+exe '2resize ' . ((&lines * 25 + 17) / 34)
+exe 'vert 2resize ' . ((&columns * 34 + 45) / 90)
+exe '3resize ' . ((&lines * 10 + 17) / 34)
+exe 'vert 3resize ' . ((&columns * 55 + 45) / 90)
+exe '4resize ' . ((&lines * 20 + 17) / 34)
+exe 'vert 4resize ' . ((&columns * 55 + 45) / 90)
 argglobal
 balt WardrobeManager.Api/Database/Services/Implementation/UserService.cs
 setlocal fdm=manual
@@ -160,11 +194,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 12 - ((6 * winheight(0) + 6) / 12)
+let s:l = 13 - ((2 * winheight(0) + 2) / 5)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 12
+keepjumps 13
 normal! 0
 wincmd w
 argglobal
@@ -180,7 +214,7 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 44 - ((16 * winheight(0) + 17) / 35)
+let s:l = 44 - ((7 * winheight(0) + 12) / 25)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -200,11 +234,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 22 - ((8 * winheight(0) + 10) / 20)
+let s:l = 24 - ((6 * winheight(0) + 5) / 10)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 22
+keepjumps 24
 normal! 0
 wincmd w
 argglobal
@@ -220,21 +254,21 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((5 * winheight(0) + 13) / 27)
+let s:l = 7 - ((4 * winheight(0) + 10) / 20)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 7
 normal! 05|
 wincmd w
-exe '1resize ' . ((&lines * 12 + 25) / 51)
-exe 'vert 1resize ' . ((&columns * 60 + 104) / 209)
-exe '2resize ' . ((&lines * 35 + 25) / 51)
-exe 'vert 2resize ' . ((&columns * 60 + 104) / 209)
-exe '3resize ' . ((&lines * 20 + 25) / 51)
-exe 'vert 3resize ' . ((&columns * 148 + 104) / 209)
-exe '4resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 4resize ' . ((&columns * 148 + 104) / 209)
+exe '1resize ' . ((&lines * 5 + 17) / 34)
+exe 'vert 1resize ' . ((&columns * 34 + 45) / 90)
+exe '2resize ' . ((&lines * 25 + 17) / 34)
+exe 'vert 2resize ' . ((&columns * 34 + 45) / 90)
+exe '3resize ' . ((&lines * 10 + 17) / 34)
+exe 'vert 3resize ' . ((&columns * 55 + 45) / 90)
+exe '4resize ' . ((&lines * 20 + 17) / 34)
+exe 'vert 4resize ' . ((&columns * 55 + 45) / 90)
 tabnext
 edit WardrobeManager.Shared/Models/User.cs
 argglobal
@@ -249,7 +283,7 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 24 - ((23 * winheight(0) + 24) / 48)
+let s:l = 24 - ((15 * winheight(0) + 15) / 31)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
@@ -273,13 +307,12 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe '1resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 1resize ' . ((&columns * 23 + 104) / 209)
-exe '2resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 2resize ' . ((&columns * 96 + 104) / 209)
+exe '1resize ' . ((&lines * 16 + 17) / 34)
+exe 'vert 1resize ' . ((&columns * 64 + 45) / 90)
+exe '2resize ' . ((&lines * 16 + 17) / 34)
+exe 'vert 2resize ' . ((&columns * 55 + 45) / 90)
 argglobal
 enew
-file NERD_tree_tab_1
 balt WardrobeManager.Shared/Exceptions/Exceptions.cs
 setlocal fdm=manual
 setlocal fde=0
@@ -301,18 +334,18 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 10 - ((5 * winheight(0) + 13) / 27)
+let s:l = 10 - ((3 * winheight(0) + 8) / 16)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
 keepjumps 10
 normal! 0
 wincmd w
-exe '1resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 1resize ' . ((&columns * 23 + 104) / 209)
-exe '2resize ' . ((&lines * 27 + 25) / 51)
-exe 'vert 2resize ' . ((&columns * 96 + 104) / 209)
-tabnext 2
+exe '1resize ' . ((&lines * 16 + 17) / 34)
+exe 'vert 1resize ' . ((&columns * 64 + 45) / 90)
+exe '2resize ' . ((&lines * 16 + 17) / 34)
+exe 'vert 2resize ' . ((&columns * 55 + 45) / 90)
+tabnext 4
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
   silent exe 'bwipe ' . s:wipebuf

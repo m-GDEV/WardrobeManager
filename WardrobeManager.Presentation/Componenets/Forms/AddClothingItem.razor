@@ -41,7 +41,9 @@
                                     .Select(m => m.Value);
 
                                 var withSpaces = string.Join(" ", words);
-                                <option value="@category">@withSpaces</option>
+                                var emoji = Constants.GetEmojiForClothingCategory(category);
+
+                                <option value="@category">@emoji  @withSpaces</option>
                             }
                         </InputSelect>
                     </div>

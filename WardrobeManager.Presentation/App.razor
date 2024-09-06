@@ -5,7 +5,12 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <Authorizing>
-                    <p class="text-base-content">Determining session state, please wait...</p>
+                    <div id="app" class="h-full">
+                        <div class="h-full flex flex-col justify-center items-center bg-base-100 gap-5">
+                            <h1 class="subtitle-text">Please wait while WardrobeManager loads...</h1>
+                            <span class="loading loading-dots loading-lg text-primary-content"></span>
+                        </div>
+                    </div>
                 </Authorizing>
                 <NotAuthorized>
                     <NotAuthenticated />
