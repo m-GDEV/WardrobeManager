@@ -11,6 +11,7 @@
 
 
 @inject IApiService ApiService
+@inject INotificationService _notificationService
 @* @inject HttpClient Http *@
 @* @inject IHttpClientFactory ClientFactory *@
 
@@ -20,6 +21,8 @@
 @* <h1 class="subheading-text">@userid</h1> *@
 
 <div class="w-full flex flex-col items-center">
+
+    <button class="btn btn-primary" @onclick="(Man)">Click me</button>
     @if (error == true) {
         <div class="toast toast-top toast-end">
             <div class="alert alert-error">
@@ -39,19 +42,19 @@
             <h3 class="subheading-text">Filters</h3>
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
 
-                <EditForm Model="formModel" @onchange="Update">
-                    @* <LabelAndElement L *@
-                                     <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" />
-                    <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" />
-                    <SwitchToggle Label="Recently Added" />k
-                    <DropDown Label="Category" TItem="@ClothingCategory" />
-                    <DropDown Label="Season" TItem="@Season" />
-                    <DatePicker Label="Date Added" />
-                    <DatePicker Label="Last Worn" />
-                    <DatePicker Label="Last Edited" />
-                    <Range Label="Times Worn" />
-                    <Range Label="Times Worn Since Wash" />
-                </EditForm>
+                @* <EditForm Model="formModel" @onchange="Update"> *@
+                @*     [> <LabelAndElement L <] *@
+                @*     <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" /> *@
+                @*     <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" /> *@
+                @*     <SwitchToggle Label="Recently Added" />k *@
+                @*     <DropDown Label="Category" TItem="@ClothingCategory" /> *@
+                @*     <DropDown Label="Season" TItem="@Season" /> *@
+                @*     <DatePicker Label="Date Added" /> *@
+                @*     <DatePicker Label="Last Worn" /> *@
+                @*     <DatePicker Label="Last Edited" /> *@
+                @*     <Range Label="Times Worn" /> *@
+                @*     <Range Label="Times Worn Since Wash" /> *@
+                @* </EditForm> *@
             </div>
         </div>
         @* Centre Column *@
@@ -59,7 +62,7 @@
             <Search Width="1/6"/>
             <div class="flex flex-row w-full gap-3 items-center">
                 <p class="subtitle-text text-primary-content">Sort By</p>
-                <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/>
+                @* <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/> *@
             </div>
         </div>
         @* Right Column *@
@@ -135,6 +138,10 @@
     {
         error = false;
         errorMessage = string.Empty;
+    }
+
+    public void Man() {
+        _notificationService.AddNotification("hello");
     }
 
     public class FormModel

@@ -8,17 +8,31 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<div class="flex flex-row justify-between items-center pb-4 w-full">
-    <label>
-        @Label
-    </label>
+@if (Orientation == "vertical" || Orientation == "Vertical") {
+    <div class="flex flex-col justify-between pb-4 gap-3 w-full ">
+        <label>
+            @Label
+        </label>
 
-    @ChildContent
-</div>
+        @ChildContent
+    </div>
+}
+else {
+    <div class="flex flex-row justify-between items-center pb-4 w-full">
+        <label>
+            @Label
+        </label>
+
+        @ChildContent
+    </div>
+}
 
 @code {
     [Parameter]
     public string Label { get; set; }
+
+    [Parameter]
+    public string Orientation { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }

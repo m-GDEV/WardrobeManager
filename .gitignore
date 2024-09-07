@@ -365,3 +365,4 @@ FodyWeavers.xsd
 /WardrobeManager.Api/database.dat-shm
 /WardrobeManager.Api/database.dat-wal
 .idea
+        *.Zone.Identifier*

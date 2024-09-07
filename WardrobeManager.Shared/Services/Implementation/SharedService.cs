@@ -21,6 +21,13 @@ public class SharedService : ISharedService
         return true;
     }
 
+    public bool IsValid(NewOrEditedClothingItemDTO item) {
+        if (item == null || item.Name == null) {
+            return false;
+        }
+        return true;
+    }
+
     public bool IsValidBase64(string input)
     {
         try
@@ -41,6 +48,6 @@ public class SharedService : ISharedService
 
     }
     public NewOrEditedClothingItemDTO CreateDefaultNewOrEditedClothingItemDTO() {
-        return new NewOrEditedClothingItemDTO("item", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
+        return new NewOrEditedClothingItemDTO("My Favourite Green T-Shrit", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
     }
 }

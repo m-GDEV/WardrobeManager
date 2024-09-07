@@ -4,15 +4,15 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd /mnt/d/Windows\ Shit/Visual\ Studio\ Projects/WardrobeManager
+cd /home/musa/GITCLONE/my-stuff/WardrobeManager/
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
-  let s:wipebuf = bufnr('%')
+    let s:wipebuf = bufnr('%')
 endif
 let s:shortmess_save = &shortmess
 if &shortmess =~ 'A'
-  set shortmess=aoOA
+    set shortmess=aoOA
 else
-  set shortmess=aoO
+    set shortmess=aoO
 endif
 badd +1 WardrobeManager.Api/Program.cs
 badd +13 WardrobeManager.Api/Endpoints/ClothingEndpoints.cs
@@ -348,7 +348,7 @@ exe 'vert 2resize ' . ((&columns * 55 + 45) / 90)
 tabnext 4
 set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0
-  silent exe 'bwipe ' . s:wipebuf
+    silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
@@ -357,7 +357,7 @@ let &winminheight = s:save_winminheight
 let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
-  exe "source " . fnameescape(s:sx)
+    exe "source " . fnameescape(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 nohlsearch

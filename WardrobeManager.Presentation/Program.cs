@@ -51,6 +51,7 @@ builder.Services.AddScoped<IApiService, ApiService>(serviceProvider =>
         return new ApiService(apiEndpoint, serviceProvider.GetRequiredService<IHttpClientFactory>());
         });
 builder.Services.AddScoped<ISharedService, SharedService>();
+builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 
 // Auth0 client-side auth (user can become authenticated)

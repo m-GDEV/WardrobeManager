@@ -1,6 +1,7 @@
 ﻿@page "/add"
 
 @namespace WardrobeManager.Presentation.Components
+@attribute [Authorize]
 
 @using WardrobeManager.Shared.Models;
 @using WardrobeManager.Shared.Enums;
@@ -16,21 +17,21 @@
 @inject IApiService ApiService;
 @inject ISharedService SharedService;
 
+
 <div class="w-full flex flex-col items-center">
     <div class="w-3/5 flex flex-col items-center">
         <h1 class="heading-text pt-14 pb-6">Add A Clothing Item</h1>
         <p class="subtitle-text pb-10">Clothing items can have multiple characteristics, allowing you to perfectly categorize your wardrobe!</p>
-        <div class="flex flex-row justify-center rounded-xl w-1/2 outline">
+        @* hidden overflow is to make child elements confrom to border radius *@
+        <div class="flex flex-row justify-center rounded-xl w-full max-w-[40rem] overflow-auto ">
             @*  Left Side *@
-            <div class="bg-primary p-6">
-                <EditForm model="@newItem">
-                    <div class="pb-4">
-                        <p class="body-text text-primary-content">Name</p>
+            <div class="bg-primary p-6 h-full w-full">
+                <EditForm model="@newItem" class=" flex flex-col h-full justify-around">
+                    <LabelAndElement Label="Name" Orientation="Vertical">
                         <InputText class="bg-primary-content text-primary p-3 rounded-2xl" @bind-Value="newItem.Name"
                                    placeholder="My favourite Green T-Shirt"/>
-                    </div>
-                    <div class="pb-4">
-                        <p class="body-text text-primary-content">Category</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Category" Orientation="Vertical">
                         <InputSelect @bind-Value=newItem.Category  placeholder="Category"
                                      class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                             @foreach (var category in Enum.GetValues(typeof(ClothingCategory)))
@@ -40,15 +41,15 @@
                                     .Cast<Match>()
                                     .Select(m => m.Value);
 
+                                var cat = (ClothingCategory)category;
                                 var withSpaces = string.Join(" ", words);
-                                var emoji = Constants.GetEmojiForClothingCategory(category);
+                                var emoji = ProjectConstants.GetEmojiForClothingCategory(cat);
 
                                 <option value="@category">@emoji  @withSpaces</option>
                             }
                         </InputSelect>
-                    </div>
-                    <div class="pb-4">
-                        <p class="body-text text-primary-content">Season</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Season" Orientation="Vertical">
                         <InputSelect @bind-Value=newItem.Season  placeholder="Season"
                                      class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                             @foreach (var season in Enum.GetValues(typeof(Season)))
@@ -58,17 +59,32 @@
                                     .Cast<Match>()
                                     .Select(m => m.Value);
 
+                                var sea = (Season)season;
                                 var withSpaces = string.Join(" ", words);
-                                <option value="@season">@withSpaces</option>
+                                var emoji = ProjectConstants.GetEmojiForSeason(sea);
+                                <option value="@season">@emoji @withSpaces</option>
                             }
                         </InputSelect>
-                    </div>
-                    @* <SwitchToggle Label="Favourited" Enabled="@newItem.Favourited" EnabledChanged="@(() => newItem.Favourited = !newItem.Favourited)" /> *@
+                    </LabelAndElement>
+                    <LabelAndElement Label="Favourited">
+                        <SwitchToggle Enabled="@newItem.Favourited" EnabledChanged="@(() => newItem.Favourited = !newItem.Favourited)" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Upload Image" Orientation="Vertical">
+                        <InputFile accept="image/*" capture OnChange="@UploadImage"  class="file-input file-input-md file-input-secondary w-full max-w-xs"/>
+                    </LabelAndElement>
                 </EditForm>
             </div>
 
             @*  Right Side *@
-            <div class="bg-primary-content">
+            <div class="bg-primary-content w-full h-full flex flex-col items-center justify-between py-6">
+                @if (newItem.ImageBase64 != string.Empty) {
+                    string src = $"data:image/png;base64, {newItem.ImageBase64}";
+                    <img src="@src" class="w-5/6 object-contain rounded-xl"/>
+                }
+                else {
+                    <img src="/defaultItem.png" class="w-5/6 object-contain rounded-xl"/>
+                }
+                <input type="submit" value="Add Clothing Item" onclick="@FormSubmitted" class="btn btn-accent " />
             </div>
         </div>
     </div>

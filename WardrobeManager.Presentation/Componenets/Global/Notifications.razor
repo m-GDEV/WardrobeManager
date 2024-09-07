@@ -1,0 +1,33 @@
+@namespace WardrobeManager.Presentation.Components.Global
+
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@inject INotificationService _notificationService
+
+
+<div class="toast toast-top toast-end">
+    @foreach (var notification in _notificationService.Notifications) {
+        <div class="alert alert-error">
+            <span>@notification</span>
+            <button class="w-5 h-5" @onclick="(() => Dismiss(notification))"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
+        </div>
+
+    }
+</div>
+
+@code {
+    protected override void OnInitialized() {
+        _notificationService.OnChange += StateHasChanged;
+    }
+
+    private void Dismiss(string notification)
+    {
+        _notificationService.RemoveNotification(notification);
+    }
+
+    public void Dispose()
+    {
+        _notificationService.OnChange -= StateHasChanged;
+    }
+}
