@@ -22,7 +22,7 @@
 
 <div class="w-full flex flex-col items-center">
 
-    <button class="btn btn-primary" @onclick="(Man)">Click me</button>
+    <button class="btn btn-primary" @onclick="(() => Man())">Click me</button>
     @if (error == true) {
         <div class="toast toast-top toast-end">
             <div class="alert alert-error">
@@ -101,6 +101,7 @@
     bool error = false;
     string errorMessage = "";
     public FormModel formModel = new FormModel();
+    public int f = 0;
 
     public bool enabled { get; set; } = false;
 
@@ -141,7 +142,7 @@
     }
 
     public void Man() {
-        _notificationService.AddNotification("hello");
+        _notificationService.AddNotification($"hello {f++}");
     }
 
     public class FormModel
