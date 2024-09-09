@@ -4,12 +4,12 @@ namespace WardrobeManager.Presentation.Services.Implementation;
 
 public class NotificationService : INotificationService
 {
-    private readonly List<string> _notifications = new List<string>();
+    private readonly List<NotificationMessage> _notifications = new List<NotificationMessage>();
     private readonly object _lock = new object();
 
     public event Action OnChange;
 
-    public List<string> Notifications
+    public List<NotificationMessage> Notifications
     {
         get
         {
@@ -20,16 +20,17 @@ public class NotificationService : INotificationService
         }
     }
 
-    public void AddNotification(string message)
+    public void AddNotification(string message, NotificationType type)
     {
         lock (_lock)
         {
-            _notifications.Add(message);
+            var notification = new NotificationMessage(message, type);
+            _notifications.Add(notification);
         }
         NotifyStateChanged();
     }
 
-    public void RemoveNotification(string message)
+    public void RemoveNotification(NotificationMessage message)
     {
         lock (_lock)
         {
@@ -39,4 +40,16 @@ public class NotificationService : INotificationService
     }
 
     private void NotifyStateChanged() => OnChange?.Invoke();
+}
+
+public class NotificationMessage(string Message, NotificationType Type) {
+    public string message = Message;
+    public NotificationType type = Type;
+}
+
+public enum NotificationType {
+    Info,
+    Success,
+    Warning,
+    Error
 }

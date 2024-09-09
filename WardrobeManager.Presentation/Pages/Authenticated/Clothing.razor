@@ -22,21 +22,21 @@
 
 <div class="w-full flex flex-col items-center">
 
-    <button class="btn btn-primary" @onclick="(() => Man())">Click me</button>
-    @if (error == true) {
-        <div class="toast toast-top toast-end">
-            <div class="alert alert-error">
-                <span>@errorMessage</span>
-                <button class="w-5 h-5" @onclick="Thing"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
-            </div>
-        </div>
-    }
+    @* <button class="btn btn-primary" @onclick="(() => Man())">Click me</button> *@
+    @* @if (error == true) { *@
+    @*     <div class="toast toast-top toast-end"> *@
+    @*         <div class="alert alert-error"> *@
+    @*             <span>@errorMessage</span> *@
+    @*             <button class="w-5 h-5" @onclick="Thing"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* } *@
 
     <h1 class="pt-14 pb-12 heading-text">Create, view, and edit your clothing items here!</h1>
 
 
 
-    <div class="pb-10 px-8 gap-8 flex flex-row justify-center w-full grow">
+    <div class="pb-10 px-8 gap-8 flex flex-row justify-center w-full overflow-scroll grow">
         @* Left Column *@
         <div class="w-1/4 flex flex-col items-center">
             <h3 class="subheading-text">Filters</h3>
@@ -58,11 +58,18 @@
             </div>
         </div>
         @* Centre Column *@
-        <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4">
+        <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4 overflow-scroll">
             <Search Width="1/6"/>
             <div class="flex flex-row w-full gap-3 items-center">
-                <p class="subtitle-text text-primary-content">Sort By</p>
+                <p class="subtitle-text text-primary-content">Sort Ly </p>
                 @* <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/> *@
+            </div>
+            <div class="overflow-scroll">
+                @if (clothing != null) {
+                    foreach (var Model in clothing) {
+                        <p>@Model.Name</p>
+                    }
+                }
             </div>
         </div>
         @* Right Column *@
@@ -141,9 +148,9 @@
         errorMessage = string.Empty;
     }
 
-    public void Man() {
-        _notificationService.AddNotification($"hello {f++}");
-    }
+    @* public void Man() { *@
+    @*     _notificationService.AddNotification($"hello {f++}"); *@
+    @* } *@
 
     public class FormModel
     {

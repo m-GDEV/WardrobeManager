@@ -1,16 +1,27 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime JSRuntime
 @using WardrobeManager.Presentation.Components.Global
-
+@using WardrobeManager.Presentation.Services.Interfaces;
+@using WardrobeManager.Presentation.Services.Implementation;
+@inject INotificationService _notificationService;
 
 <div class="h-full  text-base-content flex flex-col body-text transition-all duration-300">
     <NavMenu />
 
-    <main class="flex flex-grow h-full ">
-        @Body
-    </main>
+    <ErrorBoundary @ref="errorBoundary">
+        <ChildContent>
+            <main class="flex flex-grow h-full ">
+                @Body
+            </main>
+            <Footer />
+        </ChildContent>
+        <ErrorContent Context="ex">
+            @{
+                _notificationService.AddNotification(ex.Message, NotificationType.Error);
+            }
+        </ErrorContent>
+    </ErrorBoundary>
 
-    <Footer />
 </div>
 <Notifications />
 
@@ -27,5 +38,12 @@
             await JSRuntime.InvokeVoidAsync("themeToggle");
             await JSRuntime.InvokeVoidAsync("console.log", "theme-changel loaded");
         }
+    }
+
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
     }
 }

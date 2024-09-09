@@ -14,8 +14,9 @@
 
 @using System.Text.RegularExpressions;
 
-@inject IApiService ApiService;
-@inject ISharedService SharedService;
+@inject IApiService _apiService;
+@inject ISharedService _sharedService;
+@inject INotificationService _notificationService;
 
 
 <div class="w-full flex flex-col items-center">
@@ -97,7 +98,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        newItem = SharedService.CreateDefaultNewOrEditedClothingItemDTO();
+        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
     }
 
     async Task UploadImage(InputFileChangeEventArgs e)
@@ -116,7 +117,13 @@
     async Task FormSubmitted()
     {
         // do stuff with api
-        @* await ApiService.Add(newItem); *@
-        newItem = SharedService.CreateDefaultNewOrEditedClothingItemDTO();
+        try {
+            await _apiService.Add(newItem);
+            _notificationService.AddNotification("Clothing Item Added Successfully!", NotificationType.Success);
+        }
+        catch (Exception ex) {
+            _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
+        }
+        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
     }
 }

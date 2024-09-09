@@ -27,18 +27,14 @@ public class ApiService : IAsyncDisposable, IApiService
     public async Task Add(NewOrEditedClothingItemDTO clothing)
     {
         var serialized = JsonSerializer.Serialize(clothing);
-        var de_serialized = JsonSerializer.Deserialize<NewOrEditedClothingItemDTO>(serialized);
 
-
-
-
-        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothingitem", clothing);
+        var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothing", clothing);
         res.EnsureSuccessStatusCode();
     }
 
     public async Task Update(NewOrEditedClothingItemDTO clothing)
     {
-        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothingitem", clothing);
+        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothing", clothing);
         res.EnsureSuccessStatusCode();
     }
 
@@ -47,32 +43,6 @@ public class ApiService : IAsyncDisposable, IApiService
         var res = await _httpClient.DeleteAsync( "/clothingitem?id={clothing.Id}");
         res.EnsureSuccessStatusCode();
     }
-
-    [Authorize]
-    public async Task<bool> IsUserInitialized() {
-        // Exists in DB, not in auth0
-        var res = await _httpClient.GetAsync( "/userexists");
-
-        if (res.StatusCode == HttpStatusCode.OK) {
-            return true;
-        }
-        else if (res.StatusCode == HttpStatusCode.NotFound) {
-            return false;
-        }
-        else {
-            throw new Exception("Issue with request: " + res);
-        }
-    }
-
-    [Authorize]
-    public async Task CreateUser() {
-        var res = await _httpClient.GetAsync("/createuser");
-
-        if (res.StatusCode != HttpStatusCode.Created) {
-            throw new Exception("Could not create user on db: " + res);
-        }
-    }
-
 
     public async ValueTask DisposeAsync()
     {

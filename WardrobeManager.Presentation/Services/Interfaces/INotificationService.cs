@@ -1,11 +1,13 @@
-﻿namespace WardrobeManager.Presentation.Services.Interfaces;
+﻿using WardrobeManager.Presentation.Services.Implementation;
+
+namespace WardrobeManager.Presentation.Services.Interfaces;
 
 public interface INotificationService
 {
-    List<string> Notifications { get; }
+    List<NotificationMessage> Notifications { get; }
 
     event Action OnChange;
 
-    void AddNotification(string message);
-    void RemoveNotification(string message);
+    void AddNotification(string message, NotificationType type);
+    void RemoveNotification(NotificationMessage message);
 }

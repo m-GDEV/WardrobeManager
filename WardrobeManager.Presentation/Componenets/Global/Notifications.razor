@@ -8,8 +8,9 @@
 
 <div class="toast toast-top toast-end">
     @foreach (var notification in _notificationService.Notifications) {
-        <div class="alert alert-error">
-            <span>@notification</span>
+        var cssClass = GetNotificationCssClass(notification.type) ;
+        <div class="alert @cssClass">
+            <span>@notification.message</span>
             <button class="w-5 h-5" @onclick="(() => Dismiss(notification))"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
         </div>
 
@@ -21,7 +22,7 @@
         _notificationService.OnChange += StateHasChanged;
     }
 
-    private void Dismiss(string notification)
+    private void Dismiss(NotificationMessage notification)
     {
         _notificationService.RemoveNotification(notification);
     }
@@ -29,5 +30,17 @@
     public void Dispose()
     {
         _notificationService.OnChange -= StateHasChanged;
+    }
+
+    public string GetNotificationCssClass(NotificationType type)
+    {
+        return type switch
+        {
+            NotificationType.Info => "alert-info",
+            NotificationType.Success => "alert-success",
+            NotificationType.Warning => "alert-warning",
+            NotificationType.Error => "alert-error",
+            _ => ""
+        };
     }
 }
