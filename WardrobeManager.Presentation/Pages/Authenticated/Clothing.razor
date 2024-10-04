@@ -8,6 +8,7 @@
 @using WardrobeManager.Presentation.Services.Implementation
 @using WardrobeManager.Presentation.Services.Interfaces
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Text.RegularExpressions
 
 
 @inject IApiService ApiService
@@ -22,51 +23,88 @@
 
 <div class="w-full flex flex-col items-center">
 
-    @* <button class="btn btn-primary" @onclick="(() => Man())">Click me</button> *@
-    @* @if (error == true) { *@
-    @*     <div class="toast toast-top toast-end"> *@
-    @*         <div class="alert alert-error"> *@
-    @*             <span>@errorMessage</span> *@
-    @*             <button class="w-5 h-5" @onclick="Thing"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* } *@
 
     <h1 class="pt-14 pb-12 heading-text">Create, view, and edit your clothing items here!</h1>
 
 
 
-    <div class="pb-10 px-8 gap-8 flex flex-row justify-center w-full overflow-scroll grow">
+    <div class="pb-4 px-8 gap-8 flex flex-row justify-center w-full overflow-scroll grow">
         @* Left Column *@
         <div class="w-1/4 flex flex-col items-center">
             <h3 class="subheading-text">Filters</h3>
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
 
-                @* <EditForm Model="formModel" @onchange="Update"> *@
-                @*     [> <LabelAndElement L <] *@
-                @*     <SwitchToggle Label="Has Image" Enabled="@formModel.HasImage" EnabledChanged="@(() => formModel.HasImage = !formModel.HasImage)" /> *@
-                @*     <SwitchToggle Label="Favourited" Enabled="@formModel.Favourited" EnabledChanged="@(() => formModel.Favourited = !formModel.Favourited)" /> *@
-                @*     <SwitchToggle Label="Recently Added" />k *@
-                @*     <DropDown Label="Category" TItem="@ClothingCategory" /> *@
-                @*     <DropDown Label="Season" TItem="@Season" /> *@
-                @*     <DatePicker Label="Date Added" /> *@
-                @*     <DatePicker Label="Last Worn" /> *@
-                @*     <DatePicker Label="Last Edited" /> *@
-                @*     <Range Label="Times Worn" /> *@
-                @*     <Range Label="Times Worn Since Wash" /> *@
-                @* </EditForm> *@
+                <EditForm Model="formModel">
+                    @* Toggles *@
+                    <LabelAndElement Label="Has Image" Orientation="horizontal">
+                        <SwitchToggle @bind-Enabled="formModel.HasImage" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Favourited" Orientation="horizontal">
+                        <SwitchToggle @bind-Enabled="formModel.Favourited" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Recently Added" Orientation="horizontal">
+                        <SwitchToggle @bind-Enabled="formModel.RecentlyAdded" />
+                    </LabelAndElement>
+
+                    @* Selects *@
+                    <LabelAndElement Label="Category">
+                        <InputSelect @bind-Value="formModel.Category" class="select rounded-md bg-primary text-primary-content">
+                            @foreach (var category in Enum.GetValues<ClothingCategory>())
+                            {
+                                var words = Regex.Matches(category.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
+                                var cat = (ClothingCategory)category;
+                                var withSpaces = string.Join(" ", words);
+                                var emoji = ProjectConstants.GetEmojiForClothingCategory(cat);
+                                <option value="@category">@emoji  @withSpaces</option>
+                            }
+                        </InputSelect>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Season">
+                        <InputSelect @bind-Value="formModel.Season" class="select rounded-md bg-primary text-primary-content">
+                            @foreach (var season in Enum.GetValues<Season>())
+                            {
+                                var words = Regex.Matches(season.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
+                                var cat = (Season)season;
+                                var withSpaces = string.Join(" ", words);
+                                var emoji = ProjectConstants.GetEmojiForSeason(cat);
+                                <option value="@season">@emoji  @withSpaces</option>
+                            }
+                        </InputSelect>
+                    </LabelAndElement>
+
+                    @* Data Pickers *@
+                    <LabelAndElement Label="Date Added">
+                        <DatePicker @bind-FromDate="formModel.DateAddedFrom" @bind-ToDate="formModel.DateAddedTo" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Last Worn">
+                        <DatePicker @bind-FromDate="formModel.LastWornFrom" @bind-ToDate="formModel.LastWornTo" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Last Edited">
+                        <DatePicker @bind-FromDate="formModel.LastEditedFrom" @bind-ToDate="formModel.LastEditedTo" />
+                    </LabelAndElement>
+                    
+                    @* Ranges *@
+                    <LabelAndElement Label="Times Worn">
+                        <Range @bind-Count="formModel.TimesWorn" />
+                    </LabelAndElement>
+                    <LabelAndElement Label="Times Worn Since Wash">
+                        <Range @bind-Count="formModel.TimesWornSinceWash" />
+                    </LabelAndElement>
+                </EditForm>
             </div>
         </div>
         @* Centre Column *@
         <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4 overflow-scroll">
-            <Search Width="1/6"/>
+            <Search Width="1/6" />
             <div class="flex flex-row w-full gap-3 items-center">
                 <p class="subtitle-text text-primary-content">Sort Ly </p>
                 @* <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/> *@
             </div>
             <div class="overflow-scroll">
-                @if (clothing != null) {
-                    foreach (var Model in clothing) {
+                @if (clothing != null)
+                {
+                    foreach (var Model in clothing)
+                    {
                         <p>@Model.Name</p>
                     }
                 }
@@ -86,17 +124,30 @@
                     </div>
                 </div>
                 @* Info *@
-                <ItemInfo Label="Last Edited" Data="June 10, 2024" />
-                <ItemInfo Label="Date Added" Data="June 10, 2024" />
-                <ItemInfo Label="Last Worn" Data="June 10, 2024" />
-                <ItemInfo Label="Desired Time Worn Before Wash" Data="5" />
-                <ItemInfo Label="Total Times Worn" Data="45" />
+                <LabelAndElement Label="Last Edited">
+                    <p>June 10, 2024</p>
+                </LabelAndElement>
+                <LabelAndElement Label="Date Added">
+                    <p>June 10, 2024</p>
+                </LabelAndElement>
+
+                <LabelAndElement Label="Last Worn">
+                    <p>June 10, 2024</p>
+                </LabelAndElement>
+
+                <LabelAndElement Label="Desired Time Worn Before Wash">
+                    <p>5</p>
+                </LabelAndElement>
+
+                <LabelAndElement Label="Total Times Worn">
+                    <p>45</p>
+                </LabelAndElement>
                 <div class="flex flex-row justify-center gap-5 pb-4">
                     <button class=" btn btn-sm btn-accent">Wear</button>
                     <button class="btn btn-sm  btn-accent">Wash</button>
                 </div>
                 <div class="flex flex-col justify-center rounded-xl">
-                    <img src="@ProjectConstants.DefaultItemImage" class="h-[13.5rem] object-contain"/>
+                    <img src="@ProjectConstants.DefaultItemImage" class="h-[13.5rem] object-contain" />
                 </div>
             </div>
         </div>
@@ -105,12 +156,7 @@
 
 @code {
     List<ServerClothingItem>? clothing = null;
-    bool error = false;
-    string errorMessage = "";
     public FormModel formModel = new FormModel();
-    public int f = 0;
-
-    public bool enabled { get; set; } = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -123,18 +169,12 @@
         {
             exception.Redirect();
         }
-        catch (HttpRequestException ex) {
-            error = true;
-            errorMessage = "Cannot connect to API";
+        catch (HttpRequestException ex)
+        {
+            _notificationService.AddNotification($"Cannot fetch clothing: {ex.Message}", NotificationType.Error);
         }
 
     }
-    public async Task Update()
-    {
-        var obvj = formModel;
-        // StateHasChanged();
-    }
-
 
     public async Task DeleteItem(ServerClothingItem item)
     {
@@ -142,31 +182,21 @@
         // await Refresh();
     }
 
-    public async Task Thing()
-    {
-        error = false;
-        errorMessage = string.Empty;
-    }
-
-    @* public void Man() { *@
-    @*     _notificationService.AddNotification($"hello {f++}"); *@
-    @* } *@
-
     public class FormModel
     {
         public bool HasImage { get; set; }
         public bool Favourited { get; set; }
-        public bool RecentlyAdded { get; set;  }
-        public ClothingCategory Category { get; set;  }
+        public bool RecentlyAdded { get; set; }
+        public ClothingCategory Category { get; set; }
         public Season Season { get; set; }
-        public DateTime DateAddedFrom { get; set; }
-        public DateTime DateAddedTo { get; set; }
-        public DateTime LastWornFrom { get; set; }
-        public DateTime LastWornTo { get; set; }
-        public DateTime LastEditedFrom { get; set; }
-        public DateTime LastEditedTo { get; set; }
+        public DateTime DateAddedFrom { get; set; } = DateTime.UtcNow;
+        public DateTime DateAddedTo { get; set; } = DateTime.UtcNow;
+        public DateTime LastWornFrom { get; set; } = DateTime.UtcNow;
+        public DateTime LastWornTo { get; set; } = DateTime.UtcNow;
+        public DateTime LastEditedFrom { get; set; } = DateTime.UtcNow;
+        public DateTime LastEditedTo { get; set; } = DateTime.UtcNow;
         public int TimesWorn { get; set; }
-        public int TimeWornSinceWash { get; set; }
+        public int TimesWornSinceWash { get; set; }
     }
 
 }

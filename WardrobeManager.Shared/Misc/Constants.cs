@@ -4,8 +4,8 @@ namespace WardrobeManager.Shared.Misc;
 
 public static class ProjectConstants {
     public static string Name = "Wardrobe Manager";
-    public static string ProfileImage = "https://upload.vps.connectwithmusa.com/file/sloth-crow-zebra";
-    public static string DefaultItemImage = "https://upload.vps.connectwithmusa.com/file/spider-pig-squid";
+    public static string ProfileImage = "https://upload.internal.connectwithmusa.com/file/eel-pug-tiger";
+    public static string DefaultItemImage = "https://image.hm.com/assets/hm/a3/f5/a3f56f6e47160e931b78296bb9e479bfbcab3554.jpg?imwidth=2160";
 
     public static string GetEmojiForClothingCategory(ClothingCategory category) {
         return category switch {

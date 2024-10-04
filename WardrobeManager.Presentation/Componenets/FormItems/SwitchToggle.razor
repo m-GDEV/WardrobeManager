@@ -8,7 +8,7 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-<input type="checkbox" checked="@Enabled" @onclick="OnEnabledChanged" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
+<input type="checkbox" @bind="Enabled" class="toggle bg-primary-content [--tglbg:oklch(var(--p)/1)]"
 />
 
 @code {
@@ -18,8 +18,4 @@
     [Parameter]
     public EventCallback<bool> EnabledChanged { get; set; }
 
-    private async Task OnEnabledChanged()
-    {
-        await EnabledChanged.InvokeAsync(Enabled); // Notify the parent
-    }
 }

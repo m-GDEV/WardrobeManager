@@ -10,9 +10,29 @@
 
 <div class="w-1/2 flex flex-row gap-2">
     <p>0</p>
-    <input type="range" min="0" max="100" value="0" class="range range-primary  bg-base-100" />
+    <input type="range" @bind="CountInternal" min="0" max="100" class="range range-primary  bg-base-100" />
     <p>100+</p>
 </div>
 
 @code {
+    [Parameter]
+    public int Count { get; set; }
+
+    [Parameter]
+    public EventCallback<int> CountChanged { get; set; }
+
+    private int countInternal;
+    private int CountInternal
+    {
+        get => Count;
+        set
+        {
+            if (Count != value)
+            {
+                Count = value;
+                CountChanged.InvokeAsync(value); // Notify the parent component of the change
+            }
+        }
+    }
 }
+
