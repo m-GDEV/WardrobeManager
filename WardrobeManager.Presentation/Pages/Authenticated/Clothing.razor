@@ -103,7 +103,7 @@
                 {
                     foreach (var item in clothing)
                     {
-                        <ItemSummary Item="item" />
+                        <ItemSummary Item="item" ViewMethod="ChangeSelectedItem" />
                     }
                 }
             </div>
@@ -113,40 +113,43 @@
             <h3 class="subheading-text">Preview</h3>
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col">
                 @* Psuedo header *@
-                <div class="flex flex-row justify-between items-center pb-2">
-                    <p class="subtitle-text">Brown T-Shirt</p>
-                    <div class="flex flex-row gap-3 ">
-                        <span class="small-text badge badge-lg badge-secondary">T-Shirt</span>
-                        <span class="small-text badge badge-lg badge-accent">Fall</span>
-                        <span class="bi bi-star w-5 h-5"></span>
+                @if (selectedItem == null)
+                {
+                    <p class="subheading-text text-primary">Press 'view' to an item's details here!</p>
+                }
+                else
+                {
+                    <p class="subtitle-text">@selectedItem.Name</p>
+                    <div class="flex flex-row gap-3 py-4">
+                        <span class="small-text badge badge-lg badge-secondary">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
+                        <span class="small-text badge badge-lg badge-accent">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
+                        <span class="bi bi-stars text-xl text-accent"></span>
                     </div>
-                </div>
-                @* Info *@
-                <LabelAndElement Label="Last Edited">
-                    <p>June 10, 2024</p>
-                </LabelAndElement>
-                <LabelAndElement Label="Date Added">
-                    <p>June 10, 2024</p>
-                </LabelAndElement>
+                    @* Info *@
+                    <LabelAndElement Label="Last Edited">
+                        <p>@selectedItem.DateUpdated.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Date Added">
+                        <p>@selectedItem.DateAdded.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Last Worn">
+                        <p>@selectedItem.LastWorn.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Desired Time Worn Before Wash">
+                        <p>@selectedItem.DesiredTimesWornBeforeWash</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Total Times Worn">
+                        <p>@selectedItem.TimesWornTotal</p>
+                    </LabelAndElement>
+                    <div class="flex flex-row justify-center gap-5 pb-4">
+                        <button class=" btn btn-sm btn-accent">Wear fix!</button>
+                        <button class="btn btn-sm  btn-accent">Wash fix!</button>
+                    </div>
+                    <div class="flex flex-col justify-center rounded-xl">
+                        <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-[10rem] object-contain" />
+                    </div>
 
-                <LabelAndElement Label="Last Worn">
-                    <p>June 10, 2024</p>
-                </LabelAndElement>
-
-                <LabelAndElement Label="Desired Time Worn Before Wash">
-                    <p>5</p>
-                </LabelAndElement>
-
-                <LabelAndElement Label="Total Times Worn">
-                    <p>45</p>
-                </LabelAndElement>
-                <div class="flex flex-row justify-center gap-5 pb-4">
-                    <button class=" btn btn-sm btn-accent">Wear</button>
-                    <button class="btn btn-sm  btn-accent">Wash</button>
-                </div>
-                <div class="flex flex-col justify-center rounded-xl">
-                    <img src="@ProjectConstants.DefaultItemImage" class="h-[13.5rem] object-contain" />
-                </div>
+                }
             </div>
         </div>
     </div>
@@ -155,7 +158,9 @@
 @code {
     List<ServerClothingItem>? clothing = null;
     public FilterModel filterModel = new FilterModel();
+    public ServerClothingItem? selectedItem = null;
 
+    @* Blazor Override Stuff *@
     protected override async Task OnInitializedAsync()
     {
         try
@@ -174,12 +179,13 @@
 
     }
 
-    public async Task DeleteItem(ServerClothingItem item)
+    @* My Methods *@
+    public async Task ChangeSelectedItem(ServerClothingItem item)
     {
-        await ApiService.Delete(item);
-        // await Refresh();
+        selectedItem = item;
     }
 
+    @* Static Variables *@
     public class FilterModel
     {
         public bool HasImage { get; set; }

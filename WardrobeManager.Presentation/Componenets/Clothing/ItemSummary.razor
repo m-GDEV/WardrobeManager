@@ -33,7 +33,10 @@
     </div>
     @* Right section *@
     <div class="flex flex-col items-center justify-between w-1/6 h-full gap-3">
+        <div @onclick="HandleView">
         <SmallButton Label="View" AdditionalCss="text-accent-content bg-accent" />
+
+        </div>
         <SmallButton Label="Edit" AdditionalCss="text-primary-content bg-primary" />
         <SmallButton Label="Delete" AdditionalCss="text-secondary-content bg-secondary" />
     </div>
@@ -42,4 +45,14 @@
 @code {
     [Parameter]
     public ServerClothingItem Item { get; set; }
+
+
+    // This method is a callback from the parent that does stuff when the 'view' button is clicked
+    [Parameter]
+    public EventCallback<ServerClothingItem> ViewMethod { get; set; }
+
+    public async Task HandleView()
+    {
+        await ViewMethod.InvokeAsync(Item);
+    }
 }
