@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 @inject NavigationManager Navigation
+@inject IJSRuntime JsRuntime
 
 <nav
     class="bg-base-300 text-base-content  w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
@@ -30,7 +31,7 @@
             <AuthorizeView>
                 <Authorized>
                     <div class="dropdown dropdown-hover dropdown-end">
-                        <a tabindex="0" role="button" class="flex flex-row gap-3 items-center text-base-content hover:bg-accent hover:text-accent-content px-3 py-2 rounded transition-all duration-300" href="profile">
+                        <a tabindex="0" role="button" class="flex flex-row gap-3 items-center text-base-content hover:bg-accent hover:text-accent-content px-3 py-2 rounded transition-all duration-300" >
                             <p class="body-text font-bold">@context.User.Identity.Name</p>
                             <div class="avatar online">
                                 <div class="w-12 rounded-full">
@@ -103,7 +104,6 @@
         </div>
     </div>
 </nav>
-
-
-
+@code {
+}
 

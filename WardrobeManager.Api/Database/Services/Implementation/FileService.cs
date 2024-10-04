@@ -5,6 +5,13 @@ namespace WardrobeManager.Api.Database.Services.Implementation;
 
 public class FileService : IFileService
 {
+    private readonly IWebHostEnvironment _webHostEnvironment;
+
+    public FileService(IWebHostEnvironment webHostEnvironment)
+    {
+        _webHostEnvironment = webHostEnvironment;
+    }
+
     public string ParseGuid(Guid guid)
     {
         return guid.ToString().Replace("{", "").Replace("}", "");
@@ -12,11 +19,7 @@ public class FileService : IFileService
 
     public string GetDefaultUploadPath()
     {
-        // 1. Get the Project Root Directory (reliable approach):
-        string projectRootPath = AppDomain.CurrentDomain.BaseDirectory;
-
-        // 2. Construct the Full File Path:
-        string uploadsFolderPath = Path.Combine(projectRootPath, "Uploads"); // "uploads" is the folder name
+        string uploadsFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
 
         // 3. Create the folder if it doesn't exist:
         Directory.CreateDirectory(uploadsFolderPath); // sneaking it in so i don't have to later
@@ -45,7 +48,7 @@ public class FileService : IFileService
     public async Task<byte[]> GetImage(string guid)
     {
         string path = Path.Combine(GetDefaultUploadPath(), guid);
-        string notFound = Path.Combine(GetDefaultUploadPath(), "notfound.png");
+        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.jpg");
 
         if (File.Exists(path))
         {

@@ -1,0 +1,45 @@
+@namespace WardrobeManager.Presentation.Components.Clothing
+
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@using WardrobeManager.Shared.Services.Implementation;
+@using WardrobeManager.Shared.Services.Interfaces;
+
+
+<div class="flex flex-row justify-between py-4 px-8 bg-primary-content w-full rounded-lg items-center">
+    @* Left section *@
+    <div class="w-1/5">
+        <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="" />
+    </div>
+    @* Middle section *@
+    <div class="flex flex-col items-center justify-between w-3/5 h-full gap-5">
+        <div>
+            <div class="flex flex-row gap-10 items-center">
+                <p class="subtitle-text text-primary">@Item.Name</p>
+                <span class="body-text bi bi-stars text-accent"></span>
+            </div>
+            <div class="flex flex-row gap-5 pt-2">
+                <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Category)" AdditionalCss="text-secondary-content bg-secondary" />
+                <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Season)" AdditionalCss="text-secondary-content bg-secondary" />
+            </div>
+        </div>
+
+        <p class="body-text text-primary">
+            Last updated: @Item.DateUpdated.ToString("MMMM d, yyyy")
+        </p>
+    </div>
+    @* Right section *@
+    <div class="flex flex-col items-center justify-between w-1/6 h-full gap-3">
+        <SmallButton Label="View" AdditionalCss="text-accent-content bg-accent" />
+        <SmallButton Label="Edit" AdditionalCss="text-primary-content bg-primary" />
+        <SmallButton Label="Delete" AdditionalCss="text-secondary-content bg-secondary" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public ServerClothingItem Item { get; set; }
+}

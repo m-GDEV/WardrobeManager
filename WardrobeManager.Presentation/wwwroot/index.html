@@ -1,65 +1,52 @@
 <!doctype html>
 <html lang="en" data-theme="emerald" class="h-full">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>WardrobeManager.Presentation</title>
-        <base href="/" />
-        <!--<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />-->
-        <!--<link rel="stylesheet" href="css/app.css" />-->
-        <link rel="icon" type="image/png" href="favicon.png" />
-        <!--<link href="WardrobeManager.Presentation.styles.css" rel="stylesheet" />-->
-        <link href="manifest.webmanifest" rel="manifest" />
-        <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
-        <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WardrobeManager.Presentation</title>
+    <base href="/" />
+    <!--<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />-->
+    <!--<link rel="stylesheet" href="css/app.css" />-->
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <!--<link href="WardrobeManager.Presentation.styles.css" rel="stylesheet" />-->
+    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
 
-        <!-- CSS/Styling -->
-        <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-        <link
-            href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css"
-            rel="stylesheet"
-            type="text/css"
-            />
-        <!--<script defer src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>-->
-        <script
-            defer
-            src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"
-            ></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- CSS/Styling -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script defer src="https://cdn.jsdelivr.net/npm/theme-change@2.0.2/index.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        <!--<script href="./js/theme-change.js"></script>-->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
+          rel="stylesheet" />
+    <link href="./css/custom.css" rel="stylesheet" type="text/css" />
 
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=DM+Serif+Display:ital@0;1&display=swap"
-            rel="stylesheet"
-            />
-        <link href="./css/custom.css" rel="stylesheet" type="text/css" />
+    <!--<script src="./css/tailwind.js"></script>
+    <link href="./css/daisyUI.css" rel="stylesheet" type="text/css" />-->
+</head>
 
-        <!--<script src="./css/tailwind.js"></script>
-        <link href="./css/daisyUI.css" rel="stylesheet" type="text/css" />-->
-    </head>
-
-    <body class="h-full text-base-content">
-        <!-- Change the contents of this div to customize the webassembly loading screen -->
-        <div id="app" class="h-full">
-            <div class="h-full flex flex-col justify-center items-center bg-base-100 gap-5">
-                <h1 class="subtitle-text">Please wait while WardrobeManager loads...</h1>
-                <span class="loading loading-dots loading-lg text-primary-content"></span>
-            </div>
+<body class="h-full text-base-content">
+    <!-- Change the contents of this div to customize the webassembly loading screen -->
+    <div id="app" class="h-full">
+        <div class="h-full flex flex-col justify-center items-center bg-base-100 gap-5">
+            <h1 class="subtitle-text">Please wait while WardrobeManager loads...</h1>
+            <span class="loading loading-dots loading-lg text-primary-content"></span>
         </div>
-        <!-- Change the contents of this div to customize the webassembly loading screen -->
-
-        <!-- <div id="blazor-error-ui" class="hidden"> -->
-        <!--     An unhandled error has occurred. -->
-        <!--     <a href="" class="reload">Reload</a> -->
-        <!--     <a class="dismiss">🗙</a> -->
-        <!-- </div> -->
-        <script src="_framework/blazor.webassembly.js"></script>
-        <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
-        <script>
-            navigator.serviceWorker.register("service-worker.js");
-        </script>
-    </body>
+    </div>
+    <!-- Change the contents of this div to customize the webassembly loading screen -->
+    <!-- <div id="blazor-error-ui" class="hidden"> -->
+    <!--     An unhandled error has occurred. -->
+    <!--     <a href="" class="reload">Reload</a> -->
+    <!--     <a class="dismiss">🗙</a> -->
+    <!-- </div> -->
+    <script src="_framework/blazor.webassembly.js"></script>
+    <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
+    <script>
+        navigator.serviceWorker.register("service-worker.js");
+    </script>
+</body>
 </html>

@@ -1,0 +1,22 @@
+@namespace WardrobeManager.Presentation.Components.Global
+
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@using WardrobeManager.Shared.Services.Implementation;
+@using WardrobeManager.Shared.Services.Interfaces;
+
+@* As of now, tags are not meant to be clicked *@
+<button class="py-1 px-3 small-text @AdditionalCss rounded-xl hover:scale-125 transition-all duration-300">
+    @Label
+</button>
+
+@code {
+    [Parameter]
+    public string Label { get; set; }
+
+    [Parameter]
+    public string AdditionalCss { get; set; }
+}

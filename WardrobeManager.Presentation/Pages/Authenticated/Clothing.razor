@@ -3,6 +3,7 @@
 
 @using WardrobeManager.Presentation.Components
 @using WardrobeManager.Presentation.Components.FormItems
+@using WardrobeManager.Presentation.Components.Clothing
 @using WardrobeManager.Shared.Models
 @using WardrobeManager.Shared.Enums
 @using WardrobeManager.Presentation.Services.Implementation
@@ -34,61 +35,53 @@
             <h3 class="subheading-text">Filters</h3>
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
 
-                <EditForm Model="formModel">
+                <EditForm Model="filterModel" class="flex flex-col justify-between h-full">
                     @* Toggles *@
                     <LabelAndElement Label="Has Image" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="formModel.HasImage" />
+                        <SwitchToggle @bind-Enabled="filterModel.HasImage" />
                     </LabelAndElement>
                     <LabelAndElement Label="Favourited" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="formModel.Favourited" />
+                        <SwitchToggle @bind-Enabled="filterModel.Favourited" />
                     </LabelAndElement>
                     <LabelAndElement Label="Recently Added" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="formModel.RecentlyAdded" />
+                        <SwitchToggle @bind-Enabled="filterModel.RecentlyAdded" />
                     </LabelAndElement>
 
                     @* Selects *@
                     <LabelAndElement Label="Category">
-                        <InputSelect @bind-Value="formModel.Category" class="select rounded-md bg-primary text-primary-content">
+                        <InputSelect @bind-Value="filterModel.Category" class="select rounded-md bg-primary text-primary-content">
                             @foreach (var category in Enum.GetValues<ClothingCategory>())
                             {
-                                var words = Regex.Matches(category.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
-                                var cat = (ClothingCategory)category;
-                                var withSpaces = string.Join(" ", words);
-                                var emoji = ProjectConstants.GetEmojiForClothingCategory(cat);
-                                <option value="@category">@emoji  @withSpaces</option>
+                                <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
                             }
                         </InputSelect>
                     </LabelAndElement>
                     <LabelAndElement Label="Season">
-                        <InputSelect @bind-Value="formModel.Season" class="select rounded-md bg-primary text-primary-content">
+                        <InputSelect @bind-Value="filterModel.Season" class="select rounded-md bg-primary text-primary-content">
                             @foreach (var season in Enum.GetValues<Season>())
                             {
-                                var words = Regex.Matches(season.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
-                                var cat = (Season)season;
-                                var withSpaces = string.Join(" ", words);
-                                var emoji = ProjectConstants.GetEmojiForSeason(cat);
-                                <option value="@season">@emoji  @withSpaces</option>
+                                <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
                             }
                         </InputSelect>
                     </LabelAndElement>
 
                     @* Data Pickers *@
                     <LabelAndElement Label="Date Added">
-                        <DatePicker @bind-FromDate="formModel.DateAddedFrom" @bind-ToDate="formModel.DateAddedTo" />
+                        <DatePicker @bind-FromDate="filterModel.DateAddedFrom" @bind-ToDate="filterModel.DateAddedTo" />
                     </LabelAndElement>
                     <LabelAndElement Label="Last Worn">
-                        <DatePicker @bind-FromDate="formModel.LastWornFrom" @bind-ToDate="formModel.LastWornTo" />
+                        <DatePicker @bind-FromDate="filterModel.LastWornFrom" @bind-ToDate="filterModel.LastWornTo" />
                     </LabelAndElement>
                     <LabelAndElement Label="Last Edited">
-                        <DatePicker @bind-FromDate="formModel.LastEditedFrom" @bind-ToDate="formModel.LastEditedTo" />
+                        <DatePicker @bind-FromDate="filterModel.LastEditedFrom" @bind-ToDate="filterModel.LastEditedTo" />
                     </LabelAndElement>
-                    
+
                     @* Ranges *@
                     <LabelAndElement Label="Times Worn">
-                        <Range @bind-Count="formModel.TimesWorn" />
+                        <Range @bind-Count="filterModel.TimesWorn" />
                     </LabelAndElement>
                     <LabelAndElement Label="Times Worn Since Wash">
-                        <Range @bind-Count="formModel.TimesWornSinceWash" />
+                        <Range @bind-Count="filterModel.TimesWornSinceWash" />
                     </LabelAndElement>
                 </EditForm>
             </div>
@@ -96,16 +89,21 @@
         @* Centre Column *@
         <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4 overflow-scroll">
             <Search Width="1/6" />
-            <div class="flex flex-row w-full gap-3 items-center">
-                <p class="subtitle-text text-primary-content">Sort Ly </p>
-                @* <DropDown Label="Sort By" TItem="@SortCategory" bg="primary-content " fg="primary"/> *@
+            <div class="flex flex-row gap-3 items-center self-end">
+                <p class="subtitle-text text-primary-content">Sort By</p>
+                <InputSelect @bind-Value="filterModel.Category" class="select rounded-md bg-primary text-primary-content">
+                    @foreach (var category in Enum.GetValues<ClothingCategory>())
+                    {
+                        <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
+                    }
+                </InputSelect>
             </div>
-            <div class="overflow-scroll">
+            <div class="overflow-scroll flex flex-col items-center gap-6 w-3/5">
                 @if (clothing != null)
                 {
-                    foreach (var Model in clothing)
+                    foreach (var item in clothing)
                     {
-                        <p>@Model.Name</p>
+                        <ItemSummary Item="item" />
                     }
                 }
             </div>
@@ -156,7 +154,7 @@
 
 @code {
     List<ServerClothingItem>? clothing = null;
-    public FormModel formModel = new FormModel();
+    public FilterModel filterModel = new FilterModel();
 
     protected override async Task OnInitializedAsync()
     {
@@ -182,7 +180,7 @@
         // await Refresh();
     }
 
-    public class FormModel
+    public class FilterModel
     {
         public bool HasImage { get; set; }
         public bool Favourited { get; set; }

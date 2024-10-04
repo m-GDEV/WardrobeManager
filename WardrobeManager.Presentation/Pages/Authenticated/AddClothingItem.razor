@@ -35,40 +35,23 @@
                     <LabelAndElement Label="Category" Orientation="Vertical">
                         <InputSelect @bind-Value=newItem.Category  placeholder="Category"
                                      class="form-select bg-primary-content text-primary p-3 rounded-2xl">
-                            @foreach (var category in Enum.GetValues(typeof(ClothingCategory)))
+                            @foreach (var category in Enum.GetValues<ClothingCategory>())
                             {
-                                var words =
-                                    Regex.Matches(category.ToString(), @"([A-Z][a-z]+)")
-                                    .Cast<Match>()
-                                    .Select(m => m.Value);
-
-                                var cat = (ClothingCategory)category;
-                                var withSpaces = string.Join(" ", words);
-                                var emoji = ProjectConstants.GetEmojiForClothingCategory(cat);
-
-                                <option value="@category">@emoji  @withSpaces</option>
+                                <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
                             }
                         </InputSelect>
                     </LabelAndElement>
                     <LabelAndElement Label="Season" Orientation="Vertical">
                         <InputSelect @bind-Value=newItem.Season  placeholder="Season"
                                      class="form-select bg-primary-content text-primary p-3 rounded-2xl">
-                            @foreach (var season in Enum.GetValues(typeof(Season)))
+                            @foreach (var season in Enum.GetValues<Season>())
                             {
-                                var words =
-                                    Regex.Matches(season.ToString(), @"([A-Z][a-z]+)")
-                                    .Cast<Match>()
-                                    .Select(m => m.Value);
-
-                                var sea = (Season)season;
-                                var withSpaces = string.Join(" ", words);
-                                var emoji = ProjectConstants.GetEmojiForSeason(sea);
-                                <option value="@season">@emoji @withSpaces</option>
+                                <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
                             }
                         </InputSelect>
                     </LabelAndElement>
                     <LabelAndElement Label="Favourited">
-                        <SwitchToggle Enabled="@newItem.Favourited" EnabledChanged="@(() => newItem.Favourited = !newItem.Favourited)" />
+                        <SwitchToggle @bind-Enabled="@newItem.Favourited" />
                     </LabelAndElement>
                     <LabelAndElement Label="Upload Image" Orientation="Vertical">
                         <InputFile accept="image/*" capture OnChange="@UploadImage"  class="file-input file-input-md file-input-secondary w-full max-w-xs"/>
@@ -110,7 +93,7 @@
 
         if (newItem.ImageBase64 == string.Empty)
         {
-            @* message = "Image size too large, try again."; *@
+            _notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
         }
     }
 
