@@ -20,6 +20,25 @@
 @code {
     protected override void OnInitialized() {
         _notificationService.OnChange += StateHasChanged;
+        // this runs the callback method suppleid every 5 seconds. it does not wait for the last 
+        // call to the method to finish. this can cause race conditions. it should be fine though
+        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero,TimeSpan.FromSeconds(5));
+    }
+
+    // Go through all notifications and try to remove the non-critical ones
+    private void TryToClearNotifications(object? state)
+    {
+        var notifications = _notificationService.Notifications;
+
+        foreach (var notification in notifications)
+        {
+            TimeSpan difference = DateTime.UtcNow - notification.CreationDate;
+
+            if (difference.TotalSeconds > 10 && notification.type != NotificationType.Warning && notification.type != NotificationType.Error)
+            {
+                _notificationService.RemoveNotification(notification);
+            }
+        }
     }
 
     private void Dismiss(NotificationMessage notification)

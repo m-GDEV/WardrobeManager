@@ -20,35 +20,18 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-//builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-
 // Auth0 api-auth (user can become authorized to use api)
-
-//builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
-//builder.Services.AddHttpClient("WebAPI",
-//        client => client.BaseAddress = new Uri(apiEndpoint))
-//    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
-
 // https://learn.microsoft.com/en-us/aspnet/core/blazor/security/webassembly/additional-scenarios?view=aspnetcore-8.0#custom-authorizationmessagehandler-class
 builder.Services.AddTransient<CustomAuthorizationMessageHandler>();
 builder.Services.AddHttpClient("WebAPI",
         client => client.BaseAddress = new Uri(apiEndpoint))
 .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
 
-//builder.Services.AddHttpClient("ServerAPI",
-//      client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-//    .AddHttpMessageHandler<AuthorizationMessageHandler>();
-//    //.AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-//builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>()
-//  .CreateClient("ServerAPI"));
 
-
+// My Services
 builder.Services.AddScoped<IApiService, ApiService>(serviceProvider =>
         {
-        //var httpClient = serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient("ApiService");
-
-        return new ApiService(apiEndpoint, serviceProvider.GetRequiredService<IHttpClientFactory>());
+            return new ApiService(apiEndpoint, serviceProvider.GetRequiredService<IHttpClientFactory>());
         });
 builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddSingleton<INotificationService, NotificationService>();
@@ -57,11 +40,9 @@ builder.Services.AddSingleton<INotificationService, NotificationService>();
 // Auth0 client-side auth (user can become authenticated)
 builder.Services.AddOidcAuthentication(options =>
         {
-        builder.Configuration.Bind("Auth0", options.ProviderOptions);
-        options.ProviderOptions.ResponseType = "code";
-        options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
+            builder.Configuration.Bind("Auth0", options.ProviderOptions);
+            options.ProviderOptions.ResponseType = "code";
+            options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
         });
-
-
 
 await builder.Build().RunAsync();

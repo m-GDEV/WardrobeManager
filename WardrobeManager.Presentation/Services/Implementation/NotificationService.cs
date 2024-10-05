@@ -45,6 +45,7 @@ public class NotificationService : INotificationService
 public class NotificationMessage(string Message, NotificationType Type) {
     public string message = Message;
     public NotificationType type = Type;
+    public DateTime CreationDate = DateTime.UtcNow;
 }
 
 public enum NotificationType {
