@@ -11,34 +11,38 @@
 
 <div class="flex flex-row justify-between py-4 px-8 bg-primary-content w-full rounded-lg items-center">
     @* Left section *@
-    <div class="w-1/5">
-        <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="" />
-    </div>
-    @* Middle section *@
-    <div class="flex flex-col items-center justify-between w-3/5 h-full gap-5">
-        <div>
-            <div class="flex flex-row gap-10 items-center">
-                <p class="subtitle-text text-primary">@Item.Name</p>
-                <span class="body-text bi bi-stars text-accent"></span>
-            </div>
-            <div class="flex flex-row gap-5 pt-2">
-                <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Category)" AdditionalCss="text-secondary-content bg-secondary" />
-                <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Season)" AdditionalCss="text-secondary-content bg-secondary" />
-            </div>
+    <div class="flex flex-row gap-5 grow items-center">
+        <div class="w-1/5">
+            <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="" />
         </div>
+        @* Text part *@
+        <div class="flex flex-col justify-between grow h-full gap-5">
+            <div>
+                <div class="flex flex-row  gap-2 items-center">
+                    <p class="subtitle-text text-primary">@Item.Name</p>
+                    <span class="body-text bi bi-stars text-accent"></span>
+                </div>
+                <div class="flex flex-row gap-5 pt-2">
+                    <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Category)" AdditionalCss="text-secondary-content bg-secondary" />
+                    <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Season)" AdditionalCss="text-secondary-content bg-secondary" />
+                </div>
+            </div>
 
-        <p class="body-text text-primary">
-            Last updated: @Item.DateUpdated.ToString("MMMM d, yyyy")
-        </p>
+            <p class="body-text text-primary">
+                Last updated: @Item.DateUpdated.ToString("MMMM d, yyyy")
+            </p>
+        </div>
     </div>
     @* Right section *@
     <div class="flex flex-col items-center justify-between w-1/6 h-full gap-3">
+        @* Maybe not the best way but it works *@
         <div @onclick="HandleView">
-        <SmallButton Label="View" AdditionalCss="text-accent-content bg-accent" />
-
+            <SmallButton Label="View" AdditionalCss="text-accent-content bg-accent" />
         </div>
         <SmallButton Label="Edit" AdditionalCss="text-primary-content bg-primary" />
-        <SmallButton Label="Delete" AdditionalCss="text-secondary-content bg-secondary" />
+        <div @onclick="HandleDelete">
+            <SmallButton Label="Delete" AdditionalCss="text-secondary-content bg-secondary" />
+        </div>
     </div>
 </div>
 
@@ -50,9 +54,15 @@
     // This method is a callback from the parent that does stuff when the 'view' button is clicked
     [Parameter]
     public EventCallback<ServerClothingItem> ViewMethod { get; set; }
+    [Parameter]
+    public EventCallback<ServerClothingItem> DeleteMethod { get; set; }
 
     public async Task HandleView()
     {
         await ViewMethod.InvokeAsync(Item);
+    }
+    public async Task HandleDelete()
+    {
+        await DeleteMethod.InvokeAsync(Item);
     }
 }

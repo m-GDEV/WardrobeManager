@@ -12,7 +12,7 @@
 @using System.Text.RegularExpressions
 
 
-@inject IApiService ApiService
+@inject IApiService _apiService
 @inject INotificationService _notificationService
 @* @inject HttpClient Http *@
 @* @inject IHttpClientFactory ClientFactory *@
@@ -106,7 +106,7 @@
                 {
                     foreach (var item in clothing)
                     {
-                        <ItemSummary Item="item" ViewMethod="ChangeSelectedItem" />
+                        <ItemSummary Item="item" ViewMethod="ChangeSelectedItem" DeleteMethod="DeleteItem" />
                     }
                 }
             </div>
@@ -170,7 +170,7 @@
     {
         try
         {
-            clothing = await ApiService.GetClothing();
+            clothing = await _apiService.GetClothing();
 
         }
         catch (AccessTokenNotAvailableException exception)
@@ -188,6 +188,20 @@
     public async Task ChangeSelectedItem(ServerClothingItem item)
     {
         selectedItem = item;
+    }
+    public async Task DeleteItem(ServerClothingItem item)
+    {
+        try
+        {
+
+            await _apiService.Delete(item);
+            clothing = await _apiService.GetClothing();
+            StateHasChanged();
+        }
+        catch (HttpRequestException ex)
+        {
+            _notificationService.AddNotification($"Cannot fetch clothing: {ex.Message}", NotificationType.Error);
+        }
     }
 
     @* Static Variables *@

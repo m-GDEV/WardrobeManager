@@ -40,7 +40,17 @@ public class ApiService : IAsyncDisposable, IApiService
 
     public async Task Delete(ServerClothingItem clothing)
     {
-        var res = await _httpClient.DeleteAsync( "/clothingitem?id={clothing.Id}");
+        var res = await _httpClient.DeleteAsync($"/clothing/{clothing.Id}");
+        res.EnsureSuccessStatusCode();
+    }
+    public async Task Wear(ServerClothingItem clothing)
+    {
+        var res = await _httpClient.GetAsync($"/actions/wear/{clothing.Id}");
+        res.EnsureSuccessStatusCode();
+    }
+    public async Task Wash(ServerClothingItem clothing)
+    {
+        var res = await _httpClient.GetAsync($"/actions/wear/{clothing.Id}");
         res.EnsureSuccessStatusCode();
     }
 

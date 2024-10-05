@@ -70,12 +70,12 @@ public static class ClothingEndpoints {
     // Delete one clothing item
     // ---------------------
     public static async Task<IResult> DeleteClothingItem(
-            int itemId, IClothingItemService clothingItemService, HttpContext context, IUserService userService, DatabaseContext _context
+            int id, IClothingItemService clothingItemService, HttpContext context, IUserService userService, DatabaseContext _context
             ){
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await clothingItemService.DeleteClothingItem(user.Id,itemId);
+        await clothingItemService.DeleteClothingItem(user.Id,id);
 
         return Results.Ok("Deleted");
     }
