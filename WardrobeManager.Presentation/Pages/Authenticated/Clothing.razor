@@ -29,11 +29,11 @@
 
 
 
-    <div class="pb-4 px-8 gap-8 flex flex-row justify-center w-full overflow-scroll grow">
+    <div class="grow pb-4 px-8 gap-8 flex flex-row justify-center w-full">
         @* Left Column *@
-        <div class="w-1/4 flex flex-col items-center">
+        <div class="basis-1/4 flex flex-col items-center grow overflow-scroll">
             <h3 class="subheading-text">Filters</h3>
-            <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary">
+            <div class="rounded-xl bg-primary-content  w-full p-4 text-primary flex flex-col grow overflow-scroll">
 
                 <EditForm Model="filterModel" class="flex flex-col justify-between h-full">
                     @* Toggles *@
@@ -87,18 +87,21 @@
             </div>
         </div>
         @* Centre Column *@
-        <div class="w-2/4 bg-primary rounded-xl flex flex-col items-center p-4 overflow-scroll">
-            <Search Width="1/6" />
-            <div class="flex flex-row gap-3 items-center self-end">
-                <p class="subtitle-text text-primary-content">Sort By</p>
-                <InputSelect @bind-Value="filterModel.Category" class="select rounded-md bg-primary text-primary-content">
-                    @foreach (var category in Enum.GetValues<ClothingCategory>())
-                    {
-                        <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
-                    }
-                </InputSelect>
+        <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center justify-between grow p-4 ">
+            <div class="flex flex-row items-center justify-between gap-5 py-4">
+                <Search Width="1/6" />
+                <div class="flex flex-row gap-3 items-center">
+                    <p class="subtitle-text text-primary-content">Sort By</p>
+                    <InputSelect @bind-Value="filterModel.Category" class="select rounded-md bg-primary-content text-primary">
+                        @foreach (var category in Enum.GetValues<ClothingCategory>())
+                        {
+                            <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
+                        }
+                    </InputSelect>
+                </div>
+
             </div>
-            <div class="overflow-scroll flex flex-col items-center gap-6 w-3/5">
+            <div class="overflow-scroll flex flex-col items-center gap-6 w-4/5 grow max-h-[32rem] ">
                 @if (clothing != null)
                 {
                     foreach (var item in clothing)
@@ -109,13 +112,15 @@
             </div>
         </div>
         @* Right Column *@
-        <div class="w-1/4 flex flex-col items-center">
+        <div class="basis-1/4 flex flex-col items-center grow">
             <h3 class="subheading-text">Preview</h3>
-            <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col">
+            <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col  grow">
                 @* Psuedo header *@
                 @if (selectedItem == null)
                 {
-                    <p class="subheading-text text-primary">Press 'view' to an item's details here!</p>
+                    @* https://stackoverflow.com/questions/32551291/in-css-flexbox-why-are-there-no-justify-items-and-justify-self-properties*@
+                    @* Using my-auto cus there is no justify-self-center like self-center exists for the cross axis*@
+                    <p class="subheading-text text-primary my-auto text-center">Press 'view' to an item's details here!</p>
                 }
                 else
                 {
