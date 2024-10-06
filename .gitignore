@@ -366,3 +366,4 @@ FodyWeavers.xsd
 /WardrobeManager.Api/database.dat-wal
 .idea
         *.Zone.Identifier*
+/WardrobeManager.Api/wwwroot/uploads
