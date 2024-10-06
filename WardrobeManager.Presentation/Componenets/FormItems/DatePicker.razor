@@ -9,27 +9,26 @@
 @using WardrobeManager.Shared.Services.Interfaces;
 
 <div class="w-3/4 flex flex-row items-center justify-end text-sm gap-2">
-    <InputDate TValue="DateTime" @bind-Value="FromDateInternal" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
+    <InputDate TValue="DateTime?" @bind-Value="FromDateInternal" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
     <p>To</p>
-    <InputDate TValue="DateTime" @bind-Value="ToDateInternal" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
+    <InputDate TValue="DateTime?" @bind-Value="ToDateInternal" class="w-1/2 py-3  rounded bg-primary text-primary-content" />
 </div>
 
-@* Chat gpt is fire tbh. Theres no proper docs on InputDate *@
 @code {
     [Parameter]
-    public DateTime FromDate { get; set; }
+    public DateTime? FromDate { get; set; }
 
     [Parameter]
-    public EventCallback<DateTime> FromDateChanged { get; set; }
+    public EventCallback<DateTime?> FromDateChanged { get; set; }
 
     [Parameter]
-    public DateTime ToDate { get; set; }
+    public DateTime? ToDate { get; set; }
 
     [Parameter]
-    public EventCallback<DateTime> ToDateChanged { get; set; }
+    public EventCallback<DateTime?> ToDateChanged { get; set; }
 
-    private DateTime fromDateInternal;
-    private DateTime FromDateInternal
+    private DateTime? fromDateInternal;
+    private DateTime? FromDateInternal
     {
         get => FromDate;
         set
@@ -42,8 +41,8 @@
         }
     }
 
-    private DateTime toDateInternal;
-    private DateTime ToDateInternal
+    private DateTime? toDateInternal;
+    private DateTime? ToDateInternal
     {
         get => ToDate;
         set
@@ -56,4 +55,3 @@
         }
     }
 }
-

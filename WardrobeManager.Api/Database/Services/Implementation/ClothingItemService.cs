@@ -39,21 +39,27 @@ public class ClothingItemService : IClothingItemService
             return items;
         }
 
+        // Filtering logic:
+        // booleans: if the bool is not activated I assume you don't care about that boolean
+        //           eg: if model.Favourited it false I don't assume you want to see non-favourited items,
+        //           i assume you don't care about that field and this method will return items regardless of 
+        //           of their 'Favourited' status
+        // ints:     If these values are 0 we assume the user doesn't want to filter based on them
+
         var filteredItems = items
             // Logic for this might be fucked - Selects items with/without an image based on model 
-            .Where(item => (item.ImageGuid != null) == model.HasImage)
-            .Where(item => item.Favourited == model.Favourited)
+            .Where(item => !model.HasImage || (item.ImageGuid != null) == model.HasImage)
+            .Where(item => !model.Favourited || item.Favourited == model.Favourited)
             // Selects items with 'DateAdded' two weeks or less from the current time, only if recently added is true
             .Where(item => !model.RecentlyAdded || (DateTime.UtcNow - item.DateAdded) <= TimeSpan.FromDays(14))
              .Where(item => model.Category == ClothingCategory.None || item.Category == model.Category) // Ignore if None
             .Where(item => model.Season == Season.None || item.Season == model.Season) // Ignore if None
-            .Where(item => item.DateAdded >= model.DateAddedFrom)
-            .Where(item => item.DateAdded <= model.DateAddedTo)
-            .Where(item => item.LastWorn >= model.LastWornFrom)
-            .Where(item => item.LastWorn <= model.LastWornTo)
-            .Where(item => item.DateUpdated >= model.LastEditedFrom)
-            .Where(item => item.DateUpdated <= model.LastEditedTo)
-            // If these values are 0 we assume the user doesn't want to filter based on them
+            .Where(item => model.DateAddedFrom == null || item.DateAdded >= model.DateAddedFrom)
+            .Where(item => model.DateAddedTo == null || item.DateAdded <= model.DateAddedTo)
+            .Where(item => model.LastWornFrom == null || item.LastWorn >= model.LastWornFrom)
+            .Where(item => model.LastWornTo == null || item.LastWorn <= model.LastWornTo)
+            .Where(item => model.LastEditedFrom == null || item.DateUpdated >= model.LastEditedFrom)
+            .Where(item => model.LastEditedTo == null || item.DateUpdated <= model.LastEditedTo)
             .Where(item => model.TimesWorn == 0 || item.TimesWornTotal >= model.TimesWorn)
             .Where(item => model.TimesWornSinceWash == 0 || item.TimesWornSinceWash >= model.TimesWornSinceWash);
     

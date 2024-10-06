@@ -29,7 +29,7 @@
             <div class="bg-primary p-6 h-full w-full">
                 <EditForm model="@newItem" class=" flex flex-col h-full justify-around">
                     <LabelAndElement Label="Name" Orientation="Vertical">
-                        <InputText class="bg-primary-content text-primary p-3 rounded-2xl" @bind-Value="newItem.Name"
+                        <InputText class="bg-primary-content text-primary p-3 rounded-2xl outline-none border-0" @bind-Value="newItem.Name"
                                    placeholder="My favourite Green T-Shirt"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Category" Orientation="Vertical">
@@ -51,7 +51,7 @@
                         </InputSelect>
                     </LabelAndElement>
                     <LabelAndElement Label="Favourited">
-                        <SwitchToggle @bind-Enabled="@newItem.Favourited" />
+                        <SwitchToggle @bind-Enabled="@newItem.Favourited" ToggleColors="bg-primary hover:bg-primary [--tglbg:oklch(var(--pc)/1)]"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Upload Image" Orientation="Vertical">
                         <InputFile accept="image/*" capture OnChange="@UploadImage"  class="file-input file-input-md file-input-secondary w-full max-w-xs"/>
@@ -68,7 +68,7 @@
                 else {
                     <img src="/defaultItem.png" class="w-5/6 object-contain rounded-xl"/>
                 }
-                <input type="submit" value="Add Clothing Item" onclick="@FormSubmitted" class="btn btn-accent " />
+                <input type="submit" value="Add Clothing Item" @onclick="FormSubmitted" class="btn btn-accent " />
             </div>
         </div>
     </div>

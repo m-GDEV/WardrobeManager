@@ -13,14 +13,25 @@
     @* Left section *@
     <div class="flex flex-row gap-5 grow items-center">
         <div class="w-1/5">
-            <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="" />
+            @if (Item.ImageGuid == null)
+            {
+                @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
+                <img src="@ProjectConstants.ApiUrl/images/blahblah" class="" />
+            }
+            else
+            {
+                <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="" />
+            }
         </div>
         @* Text part *@
         <div class="flex flex-col justify-between grow h-full gap-5">
             <div>
                 <div class="flex flex-row  gap-2 items-center">
                     <p class="subtitle-text text-primary">@Item.Name</p>
-                    <span class="body-text bi bi-stars text-accent"></span>
+                    @if (Item.Favourited)
+                    {
+                        <span class="body-text bi bi-stars text-accent"></span>
+                    }
                 </div>
                 <div class="flex flex-row gap-5 pt-2">
                     <Tag Label="@ProjectConstants.GetNameWithSpacesAndEmoji(Item.Category)" AdditionalCss="text-secondary-content bg-secondary" />

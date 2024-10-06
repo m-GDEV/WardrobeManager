@@ -25,12 +25,12 @@ public class FilterModel
     // Ensures backed doesn't filter based on one of these enums by default
     public ClothingCategory Category { get; set; } = ClothingCategory.None;
     public Season Season { get; set; } = Season.None;
-    public DateTime DateAddedFrom { get; set; } = DateTime.UtcNow;
-    public DateTime DateAddedTo { get; set; } = DateTime.UtcNow;
-    public DateTime LastWornFrom { get; set; } = DateTime.UtcNow;
-    public DateTime LastWornTo { get; set; } = DateTime.UtcNow;
-    public DateTime LastEditedFrom { get; set; } = DateTime.UtcNow;
-    public DateTime LastEditedTo { get; set; } = DateTime.UtcNow;
+    public DateTime? DateAddedFrom { get; set; } = null;
+    public DateTime? DateAddedTo { get; set; } = null;
+    public DateTime? LastWornFrom { get; set; } = null;
+    public DateTime? LastWornTo { get; set; } = null;
+    public DateTime? LastEditedFrom { get; set; } = null;
+    public DateTime? LastEditedTo { get; set; } = null;
     public int TimesWorn { get; set; }
     public int TimesWornSinceWash { get; set; }
 

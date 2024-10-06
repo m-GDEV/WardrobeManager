@@ -32,6 +32,10 @@ public class SharedService : ISharedService
     {
         try
         {
+            if (string.IsNullOrEmpty(input))
+            {
+                return false;
+            }
             Convert.FromBase64String(input);
             return true;
         }
