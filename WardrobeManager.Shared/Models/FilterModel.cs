@@ -1,15 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 using WardrobeManager.Shared.Enums;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace WardrobeManager.Shared.Models;
 
 public class FilterModel
 {
+    public FilterModel() { } 
+
     public SortByCategories SortBy { get; set; } = SortByCategories.None;
     public bool IsAscending { get; set; } = true;
 
@@ -27,4 +33,10 @@ public class FilterModel
     public DateTime LastEditedTo { get; set; } = DateTime.UtcNow;
     public int TimesWorn { get; set; }
     public int TimesWornSinceWash { get; set; }
+
+    // Absolute fuck this .NET should have a built-in way to do this
+    //public static bool TryParse(string input, out FilterModel model)
+    //{
+     
+    //}
 }

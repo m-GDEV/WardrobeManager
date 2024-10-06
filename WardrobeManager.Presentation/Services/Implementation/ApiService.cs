@@ -4,6 +4,7 @@ using System.Text.Json;
 using WardrobeManager.Presentation.Pages;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.Misc;
 using Microsoft.AspNetCore.Authorization;
 
 namespace WardrobeManager.Presentation.Services.Implementation;
@@ -24,10 +25,16 @@ public class ApiService : IAsyncDisposable, IApiService
         return clothing;
     }
 
+    public async Task<List<ServerClothingItem>?> GetFilteredClothing(FilterModel model)
+    {
+        var res = await _httpClient.PostAsJsonAsync<FilterModel>( "/clothing/filtered", model);
+        res.EnsureSuccessStatusCode();
+        var clothing = await res.Content.ReadFromJsonAsync<List<ServerClothingItem>?>();
+        return clothing;
+    }
+
     public async Task Add(NewOrEditedClothingItemDTO clothing)
     {
-        var serialized = JsonSerializer.Serialize(clothing);
-
         var res = await _httpClient.PostAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothing", clothing);
         res.EnsureSuccessStatusCode();
     }

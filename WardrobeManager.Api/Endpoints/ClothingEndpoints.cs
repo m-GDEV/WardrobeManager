@@ -37,7 +37,7 @@ public static class ClothingEndpoints {
     }
 
     // ---------------------
-    // Get all clothing items - with filters applied
+    // Get (but its a POST method) all clothing items - with filters applied
     // ---------------------
     public static async Task<IResult> GetFilteredClothing(
             [FromBody] FilterModel model, HttpContext context, IClothingItemService clothingItemService, DatabaseContext _context

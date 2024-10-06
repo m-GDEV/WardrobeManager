@@ -92,12 +92,17 @@
                 <Search Width="1/6" />
                 <div class="flex flex-row gap-3 items-center">
                     <p class="subtitle-text text-primary-content">Sort By</p>
-                    <InputSelect @bind-Value="filterModel.Category" class="select rounded-md bg-primary-content text-primary">
-                        @foreach (var category in Enum.GetValues<ClothingCategory>())
+                    <InputSelect @bind-Value="filterModel.SortBy" class="select rounded-md bg-primary-content text-primary">
+                        @foreach (var sortby in Enum.GetValues<SortByCategories>())
                         {
-                            <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
+                            var words = Regex.Matches(sortby.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
+                            var cat = (SortByCategories)sortby;
+                            var withSpaces = string.Join(" ", words);
+                            <option value="@sortby">@withSpaces</option>
                         }
                     </InputSelect>
+                    <InputCheckbox @bind-Value="filterModel.IsAscending" class="checkbox checkbox-secondary" />
+                    <InputCheckbox @bind-Value="filterModel.IsAscending" class="checkbox checkbox-secondary" />
                 </div>
 
             </div>
@@ -170,7 +175,7 @@
     {
         try
         {
-            clothing = await _apiService.GetClothing();
+            clothing = await _apiService.GetFilteredClothing(filterModel);
 
         }
         catch (AccessTokenNotAvailableException exception)
@@ -195,7 +200,7 @@
         {
 
             await _apiService.Delete(item);
-            clothing = await _apiService.GetClothing();
+            clothing = await _apiService.GetFilteredClothing(filterModel);
             StateHasChanged();
         }
         catch (HttpRequestException ex)

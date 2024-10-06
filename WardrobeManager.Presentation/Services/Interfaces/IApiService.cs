@@ -11,6 +11,7 @@ public interface IApiService
     
     // Things to do with existing items
     Task<List<ServerClothingItem>?> GetClothing();
+    Task<List<ServerClothingItem>?> GetFilteredClothing(FilterModel model);
     Task Delete(ServerClothingItem clothing);
     Task Wear(ServerClothingItem clothing);
     Task Wash(ServerClothingItem clothing);
