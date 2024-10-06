@@ -57,7 +57,7 @@ public class ApiService : IAsyncDisposable, IApiService
     }
     public async Task Wash(ServerClothingItem clothing)
     {
-        var res = await _httpClient.GetAsync($"/actions/wear/{clothing.Id}");
+        var res = await _httpClient.GetAsync($"/actions/wash/{clothing.Id}");
         res.EnsureSuccessStatusCode();
     }
 
