@@ -9,4 +9,5 @@ public enum ClothingCategory
     Sweatpants,
     Jeans,
     DressPants,
+    None
 }

@@ -15,10 +15,11 @@ public class EditedUserDTO
 
 
     public EditedUserDTO
-        (string name, string profilePictureBase64) {
-            this.Name = name;
-            this.ProfilePictureBase64 = profilePictureBase64;
-        }
+        (string name, string profilePictureBase64)
+    {
+        this.Name = name;
+        this.ProfilePictureBase64 = profilePictureBase64;
+    }
 
     public string Name { get; set; }
     // Based64 validation is left to service that adds this to db

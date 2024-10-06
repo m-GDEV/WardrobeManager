@@ -15,6 +15,8 @@ public static class ClothingEndpoints {
         var group = app.MapGroup("/clothing").RequireAuthorization();
 
         group.MapGet("", GetClothing);
+        // maybe should get a GET request, idc rn
+        group.MapPost("/filtered", GetFilteredClothing);
         group.MapPost("", AddClothingItem);
         group.MapPut("/{id}", EditClothingItem);
         group.MapDelete("/{id}", DeleteClothingItem);
@@ -30,6 +32,20 @@ public static class ClothingEndpoints {
         Debug.Assert(user != null, "Cannot get user");
 
         var clothes = await clothingItemService.GetAllClothing(user.Id);
+
+        return Results.Ok(clothes);
+    }
+
+    // ---------------------
+    // Get all clothing items - with filters applied
+    // ---------------------
+    public static async Task<IResult> GetFilteredClothing(
+            [FromBody] FilterModel model, HttpContext context, IClothingItemService clothingItemService, DatabaseContext _context
+            ){
+        User? user = context.Items["user"] as User;
+        Debug.Assert(user != null, "Cannot get user");
+
+        var clothes = await clothingItemService.GetFilteredClothing(user.Id, model);
 
         return Results.Ok(clothes);
     }

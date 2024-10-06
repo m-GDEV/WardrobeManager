@@ -66,6 +66,7 @@ builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
 
 // auth0
 var domain = $"https://{builder.Configuration["Auth0:Domain"]}/";

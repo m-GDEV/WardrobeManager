@@ -35,6 +35,7 @@
                             <p class="body-text font-bold">@context.User.Identity.Name</p>
                             <div class="avatar online">
                                 <div class="w-12 rounded-full">
+                                    @* https://blog.jepsen.ninja/gravatar-c-api *@
                                     <img src="@ProjectConstants.ProfileImage" />
                                 </div>
                             </div>
@@ -48,15 +49,11 @@
                     </div>
                 </Authorized>
 
-
-
-
-
                 <NotAuthorized>
                     <a class="flex flex-row gap-3 items-center" href="/authentication/login">
                         <p class="body-text text-base-content">Log in</p>
                         <div class="avatar placeholder">
-                            <div class="bg-neutral text-neutral-content w-24 rounded-full">
+                            <div class="bg-neutral text-neutral-content w-12 rounded-full">
                                 <span class="text-3xl">D</span>
                             </div>
                         </div>
@@ -75,6 +72,4 @@
         </div>
     </div>
 </nav>
-@code {
-}
 

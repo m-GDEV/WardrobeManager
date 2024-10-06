@@ -13,6 +13,7 @@ public class DatabaseContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<ServerClothingItem> ClothingItems { get; set; }
+    public DbSet<Log> Logs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

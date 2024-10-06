@@ -205,21 +205,5 @@
     }
 
     @* Static Variables *@
-    public class FilterModel
-    {
-        public bool HasImage { get; set; }
-        public bool Favourited { get; set; }
-        public bool RecentlyAdded { get; set; }
-        public ClothingCategory Category { get; set; }
-        public Season Season { get; set; }
-        public DateTime DateAddedFrom { get; set; } = DateTime.UtcNow;
-        public DateTime DateAddedTo { get; set; } = DateTime.UtcNow;
-        public DateTime LastWornFrom { get; set; } = DateTime.UtcNow;
-        public DateTime LastWornTo { get; set; } = DateTime.UtcNow;
-        public DateTime LastEditedFrom { get; set; } = DateTime.UtcNow;
-        public DateTime LastEditedTo { get; set; } = DateTime.UtcNow;
-        public int TimesWorn { get; set; }
-        public int TimesWornSinceWash { get; set; }
-    }
 
 }

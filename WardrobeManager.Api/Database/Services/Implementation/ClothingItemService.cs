@@ -4,6 +4,8 @@ using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Services.Interfaces;
 using WardrobeManager.Api.Database.Services.Interfaces;
 using System.Diagnostics;
+using System.Diagnostics.Tracing;
+using System.Runtime.InteropServices;
 
 namespace WardrobeManager.Api.Database.Services.Implementation;
 
@@ -24,12 +26,85 @@ public class ClothingItemService : IClothingItemService
 
 
     // ---- Methods for multiple clothing items ---
-    public async Task<List<ServerClothingItem>?> GetAllClothing(int userId) {
+    public async Task<List<ServerClothingItem>?> GetAllClothing(int userId)
+    {
         return _context.ClothingItems.Where(item => item.UserId == userId).ToList();
     }
+    public async Task<List<ServerClothingItem>?> GetFilteredClothing(int userId, FilterModel model)
+    {
+        var items = await GetAllClothing(userId);
+        
+        if (items == null)
+        {
+            return items;
+        }
+
+        var filteredItems = items
+            // Logic for this might be fucked - Selects items with/without an image based on model 
+            .Where(item => (item.ImageGuid != null) == model.HasImage)
+            .Where(item => item.Favourited == model.Favourited)
+            // Selects items with 'DateAdded' two weeks or less from the current time, only if recently added is true
+            .Where(item => !model.RecentlyAdded || (DateTime.UtcNow - item.DateAdded) <= TimeSpan.FromDays(14))
+             .Where(item => model.Category == ClothingCategory.None || item.Category == model.Category) // Ignore if None
+            .Where(item => model.Season == Season.None || item.Season == model.Season) // Ignore if None
+            .Where(item => item.DateAdded >= model.DateAddedFrom)
+            .Where(item => item.DateAdded <= model.DateAddedTo)
+            .Where(item => item.LastWorn >= model.LastWornFrom)
+            .Where(item => item.LastWorn <= model.LastWornTo)
+            .Where(item => item.DateUpdated >= model.LastEditedFrom)
+            .Where(item => item.DateUpdated <= model.LastEditedTo)
+            // If these values are 0 we assume the user doesn't want to filter based on them
+            .Where(item => model.TimesWorn == 0 || item.TimesWornTotal >= model.TimesWorn)
+            .Where(item => model.TimesWornSinceWash == 0 || item.TimesWornSinceWash >= model.TimesWornSinceWash);
+    
+
+        // Apply sorting rules
+        if (model.IsAscending)
+        {
+            switch (model.SortBy)
+            {
+                case SortByCategories.Category:
+                    return filteredItems.OrderBy(item => item.Category).ToList();
+                case SortByCategories.Season:
+                    return filteredItems.OrderBy(item => item.Season).ToList();
+                case SortByCategories.TimesWorn:
+                    return filteredItems.OrderBy(item => item.TimesWornTotal).ToList();
+
+                // Can't order ascending or descending if we sort by nothing
+                case SortByCategories.None:
+                    return filteredItems.ToList();
+                // this enum might expand in the future, this is to cover that scenario     
+                default:
+                    return filteredItems.ToList();
+            }
+        }
+        else
+        {
+            switch (model.SortBy)
+            {
+                case SortByCategories.Category:
+                    return filteredItems.OrderByDescending(item => item.Category).ToList();
+                case SortByCategories.Season:
+                    return filteredItems.OrderByDescending(item => item.Season).ToList();
+                case SortByCategories.TimesWorn:
+                    return filteredItems.OrderByDescending(item => item.TimesWornTotal).ToList();
+
+                // Can't order ascending or descending if we sort by nothing
+                case SortByCategories.None:
+                    return filteredItems.ToList();
+                // this enum might expand in the future, this is to cover that scenario     
+                default:
+                    return filteredItems.ToList();
+            }
+
+        }
+    }
+
+
 
     // ---- Methods for one clothing item ---
-    public async Task<ServerClothingItem?> GetClothingItem(int userId, int itemId) {
+    public async Task<ServerClothingItem?> GetClothingItem(int userId, int itemId)
+    {
         return await _context.ClothingItems.Where(item => item.Id == itemId && item.UserId == userId).FirstOrDefaultAsync();
     }
 
@@ -41,13 +116,14 @@ public class ClothingItemService : IClothingItemService
         }
 
         Guid? newItemGuid = null;
-        if (_sharedService.IsValidBase64(newItem.ImageBase64)) {
+        if (_sharedService.IsValidBase64(newItem.ImageBase64))
+        {
             newItemGuid = Guid.NewGuid();
             // decode and save file to place on disk with guid as name
             await _fileService.SaveImage(newItemGuid, newItem.ImageBase64);
         }
 
-        ServerClothingItem newClothingItem  = new ServerClothingItem
+        ServerClothingItem newClothingItem = new ServerClothingItem
             (
              newItem.Name,
              newItem.Category,
@@ -69,10 +145,12 @@ public class ClothingItemService : IClothingItemService
         var dbRecord = await GetClothingItem(userId, itemId);
 
         // There was no 'old' item to edit
-        if (dbRecord == null) {
+        if (dbRecord == null)
+        {
             throw new Exception("Cannot find old item");
         }
-        if (editedItem == null) {
+        if (editedItem == null)
+        {
             throw new Exception("editedItem is null");
         }
 
@@ -85,9 +163,11 @@ public class ClothingItemService : IClothingItemService
         dbRecord.DateUpdated = DateTime.UtcNow;
 
         // If its null we assume they do not want to change the existing image
-        if (editedItem.ImageBase64 != null) {
+        if (editedItem.ImageBase64 != null)
+        {
             Guid? editedItemGuid = null;
-            if (_sharedService.IsValidBase64(editedItem.ImageBase64)) {
+            if (_sharedService.IsValidBase64(editedItem.ImageBase64))
+            {
                 editedItemGuid = Guid.NewGuid();
                 // decode and save file to place on disk with guid as name
                 await _fileService.SaveImage(editedItemGuid, editedItem.ImageBase64);
@@ -104,11 +184,13 @@ public class ClothingItemService : IClothingItemService
         var dbRecord = await GetClothingItem(userId, itemId);
 
         // There was no 'old' item to edit
-        if (dbRecord == null) {
+        if (dbRecord == null)
+        {
             throw new Exception("Cannot find old item");
         }
 
-        switch(type) {
+        switch (type)
+        {
             case ActionType.Wear:
                 dbRecord.Wear();
                 break;
@@ -129,7 +211,8 @@ public class ClothingItemService : IClothingItemService
     {
         var itemToDelete = await GetClothingItem(userId, itemId);
 
-        if (itemToDelete == null) {
+        if (itemToDelete == null)
+        {
             throw new Exception("Cannot find item to delete");
         }
 
