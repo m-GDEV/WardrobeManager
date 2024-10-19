@@ -46,8 +46,8 @@ public class UserService : IUserService
             var sampleClothingItems = new List<ServerClothingItem>
             {
                 // New GUID are provided. They do not have a matching image as other guids would. The aim is to make our ImageEndpoint return a 'missing photo' image 
-                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside, false, 5, Guid.NewGuid()),
-                new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall, WearLocation.HomeAndOutside, false, 20, Guid.NewGuid()),
+                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside, false, 5, null),
+                new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall, WearLocation.HomeAndOutside, false, 20, null),
             };
             newUser.ServerClothingItems = sampleClothingItems;
 

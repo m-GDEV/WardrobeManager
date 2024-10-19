@@ -92,7 +92,7 @@
         @* Centre Column *@
         <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center justify-between grow p-4 ">
             <EditForm EditContext="FilterContext" class="flex flex-row items-center justify-between gap-5 py-4">
-                <Search Width="1/6" />
+                <Search @bind-Value="filterModel.SearchQuery" FetchClothing="FetchClothing"/>
                 <div class="flex flex-row gap-3 items-center">
                     <p class="subtitle-text text-primary-content">Sort By</p>
                     <InputSelect @bind-Value="filterModel.SortBy" class="select rounded-md bg-primary-content text-primary">
@@ -156,7 +156,7 @@
                     </LabelAndElement>
                     <div class="flex flex-row justify-center gap-5 pb-4">
                         <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
-                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
+                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wash())">Wash</button>
                     </div>
                     <div class="flex flex-col justify-center rounded-xl">
                         @if (selectedItem.ImageGuid == null)
@@ -202,6 +202,12 @@
         try
         {
             clothing = await _apiService.GetFilteredClothing(filterModel);
+
+            // refresh the selected item (necessary to refresh because this does not get updated when the old clothing is replaced)
+            if (selectedItem != null)
+            {
+                selectedItem = clothing.FirstOrDefault(item => item.Id == selectedItem.Id);
+            }
             StateHasChanged();
         }
         catch (HttpRequestException ex)
@@ -234,12 +240,15 @@
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
         await _apiService.Wear(selectedItem);
+        await FetchClothing();
     }
     public async Task Wash()
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
         await _apiService.Wash(selectedItem);
+        await FetchClothing();
     }
+
     private async void OnFieldChanged(object? sender,
         FieldChangedEventArgs e)
     {

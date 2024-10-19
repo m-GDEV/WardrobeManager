@@ -14,7 +14,9 @@ namespace WardrobeManager.Shared.Models;
 
 public class FilterModel
 {
-    public FilterModel() { } 
+    public FilterModel() { }
+
+    public string SearchQuery { get; set; } = string.Empty;
 
     public SortByCategories SortBy { get; set; } = SortByCategories.None;
     public bool IsAscending { get; set; } = true;
@@ -33,10 +35,4 @@ public class FilterModel
     public DateTime? LastEditedTo { get; set; } = null;
     public int TimesWorn { get; set; }
     public int TimesWornSinceWash { get; set; }
-
-    // Absolute fuck this .NET should have a built-in way to do this
-    //public static bool TryParse(string input, out FilterModel model)
-    //{
-     
-    //}
 }

@@ -48,6 +48,7 @@ public class ClothingItemService : IClothingItemService
 
         var filteredItems = items
             // Logic for this might be fucked - Selects items with/without an image based on model 
+            .Where(item => model.SearchQuery == string.Empty || item.Name.ToLower().Contains(model.SearchQuery.ToLower()))
             .Where(item => !model.HasImage || (item.ImageGuid != null) == model.HasImage)
             .Where(item => !model.Favourited || item.Favourited == model.Favourited)
             // Selects items with 'DateAdded' two weeks or less from the current time, only if recently added is true
