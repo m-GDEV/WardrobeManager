@@ -27,10 +27,24 @@
 
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var apiConnection = await _apiService.CheckApiConnection();
+        }
+        catch (HttpRequestException ex)
+        {
+            _navManager.NavigateTo("/CannotConnectToApi");
+        }
+        await base.OnInitializedAsync();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender) 
+        if (firstRender)
         {
+
             // Manually call theme-change js functions cus it tries to do it on page load and that
             // doesn't jive with the blazor wasm system
 

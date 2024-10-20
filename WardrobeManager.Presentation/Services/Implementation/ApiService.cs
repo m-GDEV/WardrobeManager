@@ -1,5 +1,6 @@
 ﻿using System.Net.Http.Json;
 using System.Net;
+using System.Reflection.Metadata.Ecma335;
 using System.Text.Json;
 using WardrobeManager.Presentation.Pages;
 using WardrobeManager.Presentation.Services.Interfaces;
@@ -17,6 +18,12 @@ public class ApiService : IAsyncDisposable, IApiService
     public ApiService(string apiEndpoint, IHttpClientFactory factory) {
         _apiEndpoint = apiEndpoint;
         _httpClient = factory.CreateClient("WebAPI");
+    }
+
+    public async Task<HttpResponseMessage> CheckApiConnection()
+    {
+        HttpResponseMessage con = await _httpClient.GetAsync("/ping");
+        return con;
     }
 
     public async Task<List<ServerClothingItem>?> GetClothing()

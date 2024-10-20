@@ -1,4 +1,5 @@
-﻿using WardrobeManager.Shared.Models;
+﻿using System.Net;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Presentation.Services.Interfaces;
 public interface IApiService
@@ -16,4 +17,6 @@ public interface IApiService
     Task Wear(ServerClothingItem clothing);
     Task Wash(ServerClothingItem clothing);
 
+    // Misc 
+    Task<HttpResponseMessage> CheckApiConnection();
 }

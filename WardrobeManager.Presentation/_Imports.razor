@@ -12,4 +12,8 @@
 @using Microsoft.AspNetCore.Authorization
 
 @using WardrobeManager.Shared.Misc;
-@using WardrobeManager.Presentation.Components.Global;
+@using WardrobeManager.Presentation.Components.Global
+@using WardrobeManager.Presentation.Services.Interfaces
+
+@inject IApiService _apiService
+@inject NavigationManager _navManager

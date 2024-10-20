@@ -1,0 +1,27 @@
+@page "/CannotConnectToApi"
+
+<div class="flex flex-col justify-center items-center w-full h-full">
+    <h1 class="title-text text-base-content">Cannot connect to API</h1>
+    <p class="body-text text-primary">@ExceptionMessage</p>
+</div>
+
+@code
+{
+    string ExceptionMessage { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var con = await _apiService.CheckApiConnection();
+            _navManager.NavigateTo("/"); // in case the api comes back online
+        }
+        catch (HttpRequestException e)
+        {
+            ExceptionMessage = e.ToString();
+        }
+
+
+        await base.OnInitializedAsync();
+    }
+}
