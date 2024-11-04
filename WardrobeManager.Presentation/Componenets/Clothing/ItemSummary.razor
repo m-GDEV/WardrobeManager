@@ -47,11 +47,11 @@
     @* Right section *@
     <div class="flex flex-col items-center justify-between w-1/6 h-full gap-3">
         @* Maybe not the best way but it works *@
-        <div @onclick="HandleView">
+        <div @onclick="HandleView" class="w-full">
             <SmallButton Label="View" AdditionalCss="text-accent-content bg-accent" />
         </div>
         <SmallButton Label="Edit" AdditionalCss="text-primary-content bg-primary" />
-        <div @onclick="HandleDelete">
+        <div @onclick="HandleDelete" class="w-full">
             <SmallButton Label="Delete" AdditionalCss="text-secondary-content bg-secondary" />
         </div>
     </div>
