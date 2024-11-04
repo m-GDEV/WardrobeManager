@@ -27,19 +27,6 @@
 
 
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            var apiConnection = await _apiService.CheckApiConnection();
-        }
-        catch (HttpRequestException ex)
-        {
-            _navManager.NavigateTo("/CannotConnectToApi");
-        }
-        await base.OnInitializedAsync();
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

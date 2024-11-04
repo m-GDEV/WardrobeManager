@@ -20,7 +20,11 @@
         <NotFound>
             <PageTitle>Not found</PageTitle>
             <LayoutView Layout="@typeof(MainLayout)">
-                <p role="alert">Sorry, there's nothing at this address.</p>
+                <div class="h-full w-full">
+                    <div class="h-full flex flex-col justify-center items-center bg-base-100 gap-5">
+                        <h1 class="heading-text">Page Not Found</h1>
+                    </div>
+                </div>
             </LayoutView>
         </NotFound>
     </Router>
