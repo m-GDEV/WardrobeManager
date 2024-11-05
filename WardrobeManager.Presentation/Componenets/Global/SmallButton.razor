@@ -9,7 +9,7 @@
 @using WardrobeManager.Shared.Services.Interfaces;
 
 @* As of now, tags are not meant to be clicked *@
-<button class="py-1 px-3 small-text @AdditionalCss rounded-xl hover:scale-125 transition-all duration-300">
+<button class="py-1 px-3 small-text btn @AdditionalCss rounded-xl hover:scale-125 transition-all duration-300 w-full" @onclick="CallAction">
     @Label
 </button>
 
@@ -19,4 +19,15 @@
 
     [Parameter]
     public string AdditionalCss { get; set; }
+    
+    [Parameter]
+    public EventCallback OptionalActionToDo { get; set; }
+
+    public void CallAction()
+    {
+        if (OptionalActionToDo.HasDelegate)
+        {
+            OptionalActionToDo.InvokeAsync();
+        }
+    }
 }

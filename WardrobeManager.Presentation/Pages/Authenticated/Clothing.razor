@@ -28,7 +28,6 @@
     <h1 class="pt-14 pb-12 heading-text">Create, view, and edit your clothing items here!</h1>
 
 
-
     <div class="grow pb-4 px-8 gap-8 flex flex-row justify-center w-full">
         @* Left Column *@
         <div class="basis-1/4 flex flex-col items-center grow overflow-scroll">
@@ -38,16 +37,16 @@
             </div>
             <div class="rounded-xl bg-primary-content  w-full p-4 text-primary flex flex-col grow overflow-scroll">
 
-                <EditForm EditContext="FilterContext" class="flex flex-col justify-between h-full">
+                <EditForm EditContext="FilterContext" class="flex flex-col  h-full">
                     @* Toggles *@
                     <LabelAndElement Label="Has Image" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="filterModel.HasImage" />
+                        <SwitchToggle @bind-Enabled="filterModel.HasImage"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Favourited" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="filterModel.Favourited" />
+                        <SwitchToggle @bind-Enabled="filterModel.Favourited"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Recently Added" Orientation="horizontal">
-                        <SwitchToggle @bind-Enabled="filterModel.RecentlyAdded" />
+                        <SwitchToggle @bind-Enabled="filterModel.RecentlyAdded"/>
                     </LabelAndElement>
 
                     @* Selects *@
@@ -70,32 +69,35 @@
 
                     @* Data Pickers *@
                     <LabelAndElement Label="Date Added">
-                        <DatePicker @bind-FromDate="filterModel.DateAddedFrom" @bind-ToDate="filterModel.DateAddedTo" />
+                        <DatePicker @bind-FromDate="filterModel.DateAddedFrom" @bind-ToDate="filterModel.DateAddedTo"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Last Worn">
-                        <DatePicker @bind-FromDate="filterModel.LastWornFrom" @bind-ToDate="filterModel.LastWornTo" />
+                        <DatePicker @bind-FromDate="filterModel.LastWornFrom" @bind-ToDate="filterModel.LastWornTo"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Last Edited">
-                        <DatePicker @bind-FromDate="filterModel.LastEditedFrom" @bind-ToDate="filterModel.LastEditedTo" />
+                        <DatePicker @bind-FromDate="filterModel.LastEditedFrom" @bind-ToDate="filterModel.LastEditedTo"/>
                     </LabelAndElement>
 
                     @* Ranges *@
                     <LabelAndElement Label="Times Worn">
-                        <Range @bind-Count="filterModel.TimesWorn" />
+                        <Range @bind-Count="filterModel.TimesWorn"/>
                     </LabelAndElement>
                     <LabelAndElement Label="Times Worn Since Wash">
-                        <Range @bind-Count="filterModel.TimesWornSinceWash" />
+                        <Range @bind-Count="filterModel.TimesWornSinceWash"/>
                     </LabelAndElement>
                 </EditForm>
             </div>
         </div>
         @* Centre Column *@
-        <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center justify-between grow p-4 ">
-            <EditForm EditContext="FilterContext" class="flex flex-row items-center justify-between gap-5 py-4">
-                <Search @bind-Value="filterModel.SearchQuery" FetchClothing="FetchClothing"/>
+        <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center gap-10  p-4 ">
+            <EditForm EditContext="FilterContext" class="flex flex-row items-center justify-between gap-5 py-4 pb-4">
+                <div class="flex flex-row justify-between  bg-base-200 px-4 py-2 rounded-full gap-6">
+                    <TextInput @bind-Value="filterModel.SearchQuery" placeholder="Green T-Shirt" Css="bg-base-200" OptionalCallback="FetchClothing"/>
+                    <span class="bi bi-search"/>
+                </div>
                 <div class="flex flex-row gap-3 items-center">
                     <p class="subtitle-text text-primary-content">Sort By</p>
-                    <InputSelect @bind-Value="filterModel.SortBy" class="select rounded-md bg-primary-content text-primary">
+                    <InputSelect @bind-Value="filterModel.SortBy" class="select select-sm rounded-md bg-primary-content text-primary">
                         @foreach (var sortby in Enum.GetValues<SortByCategories>())
                         {
                             var words = Regex.Matches(sortby.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
@@ -104,20 +106,21 @@
                             <option value="@sortby">@withSpaces</option>
                         }
                     </InputSelect>
-                    <p>Ascending?</p>
-                    <InputCheckbox @bind-Value="filterModel.IsAscending" class="checkbox checkbox-secondary" />
+                    <p class="text-primary-content">Ascending?</p>
+                    <InputCheckbox @bind-Value="filterModel.IsAscending" class="checkbox checkbox-secondary"/>
                 </div>
 
             </EditForm>
-            <div class="overflow-scroll flex flex-col items-center gap-6 w-4/5 grow max-h-[32rem] ">
+            <div class="overflow-scroll flex flex-col items-center gap-6 w-4/5  max-h-[20rem]">
                 @if (clothing != null)
                 {
                     foreach (var item in clothing)
                     {
-                        <ItemSummary Item="item" ViewMethod="ChangeSelectedItem" DeleteMethod="DeleteItem" />
+                        <ItemSummary Item="item" ViewMethod="ChangeSelectedItem" EditMethod="EditItem" DeleteMethod="DeleteItem" CallbackAfterEdit="FetchClothing"/>
                     }
                 }
             </div>
+
         </div>
         @* Right Column *@
         <div class="basis-1/4 flex flex-col items-center grow">
@@ -132,11 +135,16 @@
                 }
                 else
                 {
-                    <p class="subtitle-text">@selectedItem.Name</p>
+                    <p class="subtitle-text">
+                        @selectedItem.Name
+                        @if (selectedItem.Favourited)
+                        {
+                            <span class="bi bi-stars text-xl text-accent"></span>
+                        }
+                    </p>
                     <div class="flex flex-row gap-3 py-4">
                         <span class="small-text badge badge-lg badge-secondary">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
                         <span class="small-text badge badge-lg badge-accent">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
-                        <span class="bi bi-stars text-xl text-accent"></span>
                     </div>
                     @* Info *@
                     <LabelAndElement Label="Last Edited">
@@ -162,14 +170,15 @@
                         @if (selectedItem.ImageGuid == null)
                         {
                             @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
-                            <img src="@ProjectConstants.ApiUrl/images/blahblah" class="h-[10rem] object-contain" />
+                            <img src="@ProjectConstants.ApiUrl/images/blahblah" class="h- object-contain"/>
                         }
                         else
                         {
-                            <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-[10rem] object-contain" />
+                            <div class="h-[80%] mx-auto ">
+                                <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl"/>
+                            </div>
                         }
                     </div>
-
                 }
             </div>
         </div>
@@ -183,7 +192,6 @@
     public FilterModel filterModel = new FilterModel();
 
     public ServerClothingItem? selectedItem = null;
-
 
 
     // Blazor Override Stuff
@@ -208,6 +216,7 @@
             {
                 selectedItem = clothing.FirstOrDefault(item => item.Id == selectedItem.Id);
             }
+
             StateHasChanged();
         }
         catch (HttpRequestException ex)
@@ -222,11 +231,11 @@
     {
         selectedItem = item;
     }
+
     public async Task DeleteItem(ServerClothingItem item)
     {
         try
         {
-
             await _apiService.Delete(item);
             clothing = await _apiService.GetFilteredClothing(filterModel);
             StateHasChanged();
@@ -236,12 +245,14 @@
             _notificationService.AddNotification($"Cannot fetch clothing: {ex.Message}", NotificationType.Error);
         }
     }
+
     public async Task Wear()
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
         await _apiService.Wear(selectedItem);
         await FetchClothing();
     }
+
     public async Task Wash()
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
@@ -254,7 +265,6 @@
     {
         // _notificationService.AddNotification("something changed", NotificationType.Info);
         await FetchClothing();
-
     }
 
     public async Task ResetFilterModel()
@@ -262,4 +272,9 @@
         filterModel = new FilterModel();
         await FetchClothing();
     }
+
+    public async Task EditItem(ServerClothingItem item)
+    {
+    }
+
 }

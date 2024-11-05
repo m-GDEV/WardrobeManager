@@ -8,7 +8,7 @@ public interface IApiService
 
     // Things to do with new/edited items
     Task Add(NewOrEditedClothingItemDTO clothing);
-    Task Update(NewOrEditedClothingItemDTO clothing);
+    Task Update(NewOrEditedClothingItemDTO clothing, int OriginalItemId);
     
     // Things to do with existing items
     Task<List<ServerClothingItem>?> GetClothing();

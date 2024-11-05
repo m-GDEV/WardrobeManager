@@ -46,9 +46,9 @@ public class ApiService : IAsyncDisposable, IApiService
         res.EnsureSuccessStatusCode();
     }
 
-    public async Task Update(NewOrEditedClothingItemDTO clothing)
+    public async Task Update(NewOrEditedClothingItemDTO clothing, int OriginalItemId)
     {
-        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItemDTO>( "/clothing", clothing);
+        var res = await _httpClient.PutAsJsonAsync<NewOrEditedClothingItemDTO>( $"/clothing/{OriginalItemId}", clothing);
         res.EnsureSuccessStatusCode();
     }
 

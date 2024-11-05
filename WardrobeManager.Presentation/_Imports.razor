@@ -14,7 +14,12 @@
 @using WardrobeManager.Shared.Misc;
 @using WardrobeManager.Presentation.Components.Global
 @using WardrobeManager.Presentation.Services.Interfaces
+@using WardrobeManager.Shared.Services.Interfaces
+
+
+@inject NavigationManager _navManager
+@inject IJSRuntime JsRuntime
 
 @inject IApiService _apiService
-@inject INotificationService _notficationService
-@inject NavigationManager _navManager
+@inject INotificationService _notificationService
+@inject ISharedService _sharedService
