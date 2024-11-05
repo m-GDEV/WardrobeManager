@@ -2,6 +2,7 @@
 
 public enum ClothingCategory
 {
+    None,
     TShirt,
     DressShirt,
     Sweater,
@@ -9,5 +10,4 @@ public enum ClothingCategory
     Sweatpants,
     Jeans,
     DressPants,
-    None
 }

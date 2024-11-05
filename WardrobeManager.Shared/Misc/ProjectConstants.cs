@@ -1,5 +1,4 @@
 using System.Text.RegularExpressions;
-
 using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Shared.Misc;
@@ -44,8 +43,8 @@ public static class ProjectConstants
 
     public static string GetNameWithSpacesAndEmoji(ClothingCategory category)
     {
-        var words = Regex.Matches(category.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
-        var cat = (ClothingCategory)category;
+        var words = Regex.Matches(category.ToString(), @"([A-Z][a-z]+)").Select(m => m.Value);
+        var cat = category;
         var withSpaces = string.Join(" ", words);
         var emoji = GetEmoji(cat);
 
@@ -53,16 +52,16 @@ public static class ProjectConstants
     }
     public static string GetNameWithSpacesAndEmoji(Season season)
     {
-        var words = Regex.Matches(season.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
-        var cat = (Season)season;
+        var words = Regex.Matches(season.ToString(), @"([A-Z][a-z]+)").Select(m => m.Value);
+        var cat = season;
         var withSpaces = string.Join(" ", words);
         var emoji = GetEmoji(cat);
 
         return $"{emoji} {withSpaces}";
     }
     
-    public static string GetNameWithSpacesFromEnum<T>(T givenEnum) where T : System.Enum {
-        var words = Regex.Matches(givenEnum.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
+    public static string GetNameWithSpacesFromEnum<T>(T givenEnum) where T : Enum {
+        var words = Regex.Matches(givenEnum.ToString(), @"([A-Z][a-z]+)").Select(m => m.Value);
         var withSpaces = string.Join(" ", words);
         return $"{withSpaces}";
     }

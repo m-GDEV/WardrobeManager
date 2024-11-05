@@ -23,9 +23,9 @@
 @* <h1 class="subheading-text">@userid</h1> *@
 
 
-<h1 class="pt-14 pb-12 heading-text text-center">Create, view, and edit your clothing items here!</h1>
+<h1 class="heading-text text-center my-4">Create, view, and edit your clothing items here!</h1>
 
-<div class="flex h-[65%] flex-row items-center px-8 pb-4 gap-8 justify-center w-full">
+<div class="flex h-[75%] flex-row items-center px-8 gap-8 justify-center w-full">
     @* Left Column *@
     <div class="basis-1/4 flex flex-col items-center grow h-full">
         <div class="flex flex-row justify-center relative w-full items-center">
@@ -48,20 +48,20 @@
 
                 @* Selects *@
                 <LabelAndElement Label="Category">
-                    <InputSelect @bind-Value="filterModel.Category" class="select select-sm w-[10rem] rounded-md bg-primary text-primary-content">
+                    <select @bind="filterModel.Category" @bind:after="FetchClothing" class="select select-sm w-[10rem] rounded-md bg-primary text-primary-content">
                         @foreach (var category in Enum.GetValues<ClothingCategory>())
                         {
                             <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
                         }
-                    </InputSelect>
+                    </select>
                 </LabelAndElement>
                 <LabelAndElement Label="Season">
-                    <InputSelect @bind-Value="filterModel.Season" class="select select-sm rounded-md w-[10rem] bg-primary text-primary-content">
+                    <select @bind="filterModel.Season" @bind:after="FetchClothing"  class="select select-sm rounded-md w-[10rem] bg-primary text-primary-content">
                         @foreach (var season in Enum.GetValues<Season>())
                         {
                             <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
                         }
-                    </InputSelect>
+                    </select>
                 </LabelAndElement>
 
                 @* Data Pickers *@
@@ -77,10 +77,10 @@
 
                 @* Ranges *@
                 <LabelAndElement Label="Times Worn">
-                    <Range @bind-Count="filterModel.TimesWorn"/>
+                    <Range @bind-Count="filterModel.TimesWorn" OptionalCallback="FetchClothing"/>
                 </LabelAndElement>
                 <LabelAndElement Label="Times Worn Since Wash">
-                    <Range @bind-Count="filterModel.TimesWornSinceWash"/>
+                    <Range @bind-Count="filterModel.TimesWornSinceWash" OptionalCallback="FetchClothing"/>
                 </LabelAndElement>
             </EditForm>
         </div>
@@ -94,18 +94,19 @@
             </div>
             <div class="flex flex-row gap-3 items-center">
                 <p class="subtitle-text text-primary-content">Sort By</p>
-                <InputSelect @bind-Value="filterModel.SortBy" class="select select-sm rounded-md bg-primary-content text-primary">
+                <select required @bind="@filterModel.SortBy" @bind:after="FetchClothing"  class="select select-sm rounded-md bg-primary-content text-primary">
                     @foreach (var sortBy in Enum.GetValues<SortByCategories>())
                     {
                         <option value="@sortBy">@ProjectConstants.GetNameWithSpacesFromEnum(sortBy)</option>
                     }
-                </InputSelect>
+                </select>
+
                 <p class="text-primary-content">Ascending?</p>
                 <InputCheckbox @bind-Value="filterModel.IsAscending" class="checkbox checkbox-secondary"/>
             </div>
 
         </EditForm>
-        <div class="overflow-scroll flex flex-col items-center gap-6 w-4/5  ">
+        <div class=" flex flex-col items-center gap-6 w-4/5  ">
             @if (clothing != null)
             {
                 foreach (var item in clothing)
@@ -117,9 +118,9 @@
 
     </div>
     @* Right Column *@
-    <div class="basis-1/4 flex flex-col items-center grow h-full">
+    <div class="basis-1/4 flex flex-col items-center grow h-full ">
         <h3 class="subheading-text">Preview</h3>
-        <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col  grow">
+        <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col  grow overflow-auto">
             @* Psuedo header *@
             @if (selectedItem == null)
             {
@@ -129,48 +130,49 @@
             }
             else
             {
-                <p class="subtitle-text">
-                    @selectedItem.Name
-                    @if (selectedItem.Favourited)
-                    {
-                        <span class="bi bi-stars text-xl text-accent"></span>
-                    }
-                </p>
-                <div class="flex flex-row gap-3 py-4">
-                    <span class="small-text badge badge-lg badge-secondary">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
-                    <span class="small-text badge badge-lg badge-accent">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
+                <div class="">
+                    <p class="subtitle-text">
+                        @selectedItem.Name
+                        @if (selectedItem.Favourited)
+                        {
+                            <span class="bi bi-stars text-xl text-accent"></span>
+                        }
+                    </p>
+                    <div class="flex flex-row gap-3 py-4">
+                        <span class="small-text badge badge-lg badge-secondary">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
+                        <span class="small-text badge badge-lg badge-accent">@ProjectConstants.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
+                    </div>
+                    @* Info *@
+                    <LabelAndElement Label="Last Edited">
+                        <p>@selectedItem.DateUpdated.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Date Added">
+                        <p>@selectedItem.DateAdded.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Last Worn">
+                        <p>@selectedItem.LastWorn.ToString("MMMM d, yyyy")</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Desired Time Worn Before Wash">
+                        <p>@selectedItem.DesiredTimesWornBeforeWash</p>
+                    </LabelAndElement>
+                    <LabelAndElement Label="Total Times Worn">
+                        <p>@selectedItem.TimesWornTotal</p>
+                    </LabelAndElement>
+                    <div class="flex flex-row justify-center gap-5">
+                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
+                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wash())">Wash</button>
+                    </div>
+
                 </div>
-                @* Info *@
-                <LabelAndElement Label="Last Edited">
-                    <p>@selectedItem.DateUpdated.ToString("MMMM d, yyyy")</p>
-                </LabelAndElement>
-                <LabelAndElement Label="Date Added">
-                    <p>@selectedItem.DateAdded.ToString("MMMM d, yyyy")</p>
-                </LabelAndElement>
-                <LabelAndElement Label="Last Worn">
-                    <p>@selectedItem.LastWorn.ToString("MMMM d, yyyy")</p>
-                </LabelAndElement>
-                <LabelAndElement Label="Desired Time Worn Before Wash">
-                    <p>@selectedItem.DesiredTimesWornBeforeWash</p>
-                </LabelAndElement>
-                <LabelAndElement Label="Total Times Worn">
-                    <p>@selectedItem.TimesWornTotal</p>
-                </LabelAndElement>
-                <div class="flex flex-row justify-center gap-5 pb-4">
-                    <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
-                    <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wash())">Wash</button>
-                </div>
-                <div class="flex flex-col justify-center rounded-xl">
+                <div class="flex flex-col items-center justify-center rounded-xl h-[75%]">
                     @if (selectedItem.ImageGuid == null)
                     {
                         @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
-                        <img src="@ProjectConstants.ApiUrl/images/blahblah" class="h- object-contain"/>
+                        <img src="@ProjectConstants.ApiUrl/images/faasdfj" class="h-full object-contain rounded-xl mx-auto"/>
                     }
                     else
                     {
-                        <div class="h-[80%] mx-auto ">
-                            <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl"/>
-                        </div>
+                        <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl mx-auto"/>
                     }
                 </div>
             }
