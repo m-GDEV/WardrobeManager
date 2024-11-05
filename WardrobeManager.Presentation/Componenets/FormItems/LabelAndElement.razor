@@ -9,8 +9,8 @@
 @using WardrobeManager.Shared.Services.Interfaces;
 
 @if (Orientation == "vertical" || Orientation == "Vertical") {
-    <div class="flex flex-col justify-between pb-4 gap-3 w-full ">
-        <label>
+    <div class="flex flex-col justify-between pb-4 gap-3 w-full @TextColorCss">
+        <label class="@TextColorCss">
             @Label
         </label>
 
@@ -19,7 +19,7 @@
 }
 else {
     <div class="flex flex-row justify-between items-center pb-4 w-full">
-        <label>
+        <label class="@TextColorCss">
             @Label
         </label>
 
@@ -36,4 +36,7 @@ else {
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
+    
+    [Parameter]
+    public string TextColorCss { get; set; }
 }

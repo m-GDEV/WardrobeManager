@@ -10,7 +10,7 @@
 
 <div class="w-1/2 flex flex-row gap-2">
     <p>0</p>
-    <input type="range" @bind="CountInternal" min="0" max="100" class="range range-primary  bg-base-100" />
+    <input type="range" @bind="CountInternal" min="0" max="100" class="range range-sm range-primary  bg-base-100" step="10" />
     <p>100+</p>
 </div>
 
@@ -20,6 +20,8 @@
 
     [Parameter]
     public EventCallback<int> CountChanged { get; set; }
+    
+    [Parameter] public EventCallback OptionalCallback { get; set; }
 
     private int countInternal;
     private int CountInternal
@@ -31,6 +33,11 @@
             {
                 Count = value;
                 CountChanged.InvokeAsync(value); // Notify the parent component of the change
+
+                if (OptionalCallback.HasDelegate)
+                {
+                    OptionalCallback.InvokeAsync();
+                }
             }
         }
     }
