@@ -28,47 +28,52 @@
             @*  Left Side *@
             <div class="bg-primary p-6 h-full w-full">
                 <EditForm model="@newItem" class=" flex flex-col h-full justify-around">
-                    <LabelAndElement Label="Name" Orientation="Vertical">
-                        <InputText class="bg-primary-content text-primary p-3 rounded-2xl outline-none border-0" @bind-Value="newItem.Name"
-                                   placeholder="My favourite Green T-Shirt"/>
+                    <LabelAndElement Label="Name" Orientation="Vertical" TextColorCss="text-primary-content">
+                        <TextInput @bind-Value="newItem.Name" Css="bg-primary-content text-primary p-3 rounded-2xl"/>
                     </LabelAndElement>
-                    <LabelAndElement Label="Category" Orientation="Vertical">
-                        <InputSelect @bind-Value=newItem.Category  placeholder="Category"
-                                     class="form-select bg-primary-content text-primary p-3 rounded-2xl">
+                    <LabelAndElement Label="Category" Orientation="Vertical" TextColorCss="text-primary-content">
+                        <select @bind=newItem.Category placeholder="Category"
+                                class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                             @foreach (var category in Enum.GetValues<ClothingCategory>())
                             {
                                 <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
                             }
-                        </InputSelect>
+                        </select>
                     </LabelAndElement>
-                    <LabelAndElement Label="Season" Orientation="Vertical">
-                        <InputSelect @bind-Value=newItem.Season  placeholder="Season"
-                                     class="form-select bg-primary-content text-primary p-3 rounded-2xl">
+                    <LabelAndElement Label="Season" Orientation="Vertical" TextColorCss="text-primary-content">
+                        <select @bind=newItem.Season placeholder="Season"
+                                class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                             @foreach (var season in Enum.GetValues<Season>())
                             {
                                 <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
                             }
-                        </InputSelect>
+                        </select>
                     </LabelAndElement>
-                    <LabelAndElement Label="Favourited">
+                    <LabelAndElement Label="Favourited" TextColorCss="text-primary-content">
                         <SwitchToggle @bind-Enabled="@newItem.Favourited" ToggleColors="bg-primary hover:bg-primary [--tglbg:oklch(var(--pc)/1)]"/>
                     </LabelAndElement>
-                    <LabelAndElement Label="Upload Image" Orientation="Vertical">
-                        <InputFile accept="image/*" capture OnChange="@UploadImage"  class="file-input file-input-md file-input-secondary w-full max-w-xs"/>
+                    <LabelAndElement Label="Upload Image" Orientation="Vertical" TextColorCss="text-primary-content">
+                        <InputFile accept="image/*" capture OnChange="@UploadImage" class="file-input file-input-md file-input-secondary w-full max-w-xs text-secondary-content"/>
                     </LabelAndElement>
                 </EditForm>
             </div>
 
             @*  Right Side *@
-            <div class="bg-primary-content w-full h-full flex flex-col items-center justify-between py-6">
-                @if (newItem.ImageBase64 != string.Empty) {
+            <div class="bg-primary-content w-full flex flex-col items-center justify-between pt-6 pb-10">
+                <h3 class="subtitle-text text-primary">Selected Image:</h3>
+
+                @* show new image if uploaded *@
+                @if (newItem.ImageBase64 != string.Empty)
+                {
                     string src = $"data:image/png;base64, {newItem.ImageBase64}";
                     <img src="@src" class="w-5/6 object-contain rounded-xl"/>
                 }
-                else {
+                @* show default image if neither *@
+                else
+                {
                     <img src="/defaultItem.png" class="w-5/6 object-contain rounded-xl"/>
                 }
-                <input type="submit" value="Add Clothing Item" @onclick="FormSubmitted" class="btn btn-accent " />
+                <input type="submit" value="Edit Clothing Item" @onclick="FormSubmitted" class="btn btn-accent"/>
             </div>
         </div>
     </div>
@@ -100,13 +105,17 @@
     async Task FormSubmitted()
     {
         // do stuff with api
-        try {
+        try
+        {
             await _apiService.Add(newItem);
             _notificationService.AddNotification("Clothing Item Added Successfully!", NotificationType.Success);
         }
-        catch (Exception ex) {
+        catch (Exception ex)
+        {
             _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
         }
+
         newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
     }
+
 }

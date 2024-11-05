@@ -7,43 +7,45 @@
 
 
 <div class="flex flex-col gap-6">
-    <h3 class="subheading-text">Editing @item.Name</h3>
+    <h3 class="subheading-text text-center">Editing @item.Name</h3>
     <div class="flex flex-row justify-center rounded-xl w-full max-w-[40rem] overflow-auto ">
         @*  Left Side *@
         <div class="bg-primary p-6 h-full w-full">
             <EditForm model="@newItem" class=" flex flex-col h-full justify-around">
-                <LabelAndElement Label="Name" Orientation="Vertical">
+                <LabelAndElement Label="Name" Orientation="Vertical" TextColorCss="text-primary-content">
                     <TextInput @bind-Value="newItem.Name" Css="bg-primary-content text-primary p-3 rounded-2xl"/>
                 </LabelAndElement>
-                <LabelAndElement Label="Category" Orientation="Vertical">
-                    <InputSelect @bind-Value=newItem.Category placeholder="Category"
-                                 class="form-select bg-primary-content text-primary p-3 rounded-2xl">
+                <LabelAndElement Label="Category" Orientation="Vertical" TextColorCss="text-primary-content">
+                    <select @bind=newItem.Category placeholder="Category"
+                            class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                         @foreach (var category in Enum.GetValues<ClothingCategory>())
                         {
                             <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
                         }
-                    </InputSelect>
+                    </select>
                 </LabelAndElement>
-                <LabelAndElement Label="Season" Orientation="Vertical">
-                    <InputSelect @bind-Value=newItem.Season placeholder="Season"
-                                 class="form-select bg-primary-content text-primary p-3 rounded-2xl">
+                <LabelAndElement Label="Season" Orientation="Vertical" TextColorCss="text-primary-content">
+                    <select @bind=newItem.Season placeholder="Season"
+                            class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                         @foreach (var season in Enum.GetValues<Season>())
                         {
                             <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
                         }
-                    </InputSelect>
+                    </select>
                 </LabelAndElement>
-                <LabelAndElement Label="Favourited">
+                <LabelAndElement Label="Favourited" TextColorCss="text-primary-content">
                     <SwitchToggle @bind-Enabled="@newItem.Favourited" ToggleColors="bg-primary hover:bg-primary [--tglbg:oklch(var(--pc)/1)]"/>
                 </LabelAndElement>
-                <LabelAndElement Label="Upload Image" Orientation="Vertical">
-                    <InputFile accept="image/*" capture OnChange="@UploadImage" class="file-input file-input-md file-input-secondary w-full max-w-xs"/>
+                <LabelAndElement Label="Upload Image" Orientation="Vertical" TextColorCss="text-primary-content">
+                    <InputFile accept="image/*" capture OnChange="@UploadImage" class="file-input file-input-md file-input-secondary w-full max-w-xs text-secondary-content"/>
                 </LabelAndElement>
             </EditForm>
         </div>
 
         @*  Right Side *@
-        <div class="bg-primary-content w-full flex flex-col items-center justify-between py-6">
+        <div class="bg-primary-content w-full flex flex-col items-center justify-between pt-6 pb-10">
+            <h3 class="subtitle-text text-primary">Selected Image:</h3>
+
             @* show new image if uploaded *@
             @if (newItem.ImageBase64 != string.Empty)
             {
@@ -60,7 +62,7 @@
             {
                 <img src="/defaultItem.png" class="w-5/6 object-contain rounded-xl"/>
             }
-            <input type="submit" value="Edit Clothing Item" @onclick="FormSubmitted" class="btn btn-accent "/>
+            <input type="submit" value="Edit Clothing Item" @onclick="FormSubmitted" class="btn btn-accent"/>
         </div>
     </div>
 </div>
@@ -75,9 +77,13 @@
 
     protected override async Task OnInitializedAsync()
     {
+       MakeNewItemReflectSourceItem(); 
+    }
+
+    // Do this so it looks like the user is actually editing the original clothing item
+    private void MakeNewItemReflectSourceItem()
+    {
         newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
-        
-        // Do this so it looks like the user is actually editing the original clothing item
         newItem.Name = item.Name;
         newItem.Category = item.Category;
         newItem.Season = item.Season;
@@ -114,7 +120,7 @@
             _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
         }
 
-        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
+        MakeNewItemReflectSourceItem();
     }
 
 }
