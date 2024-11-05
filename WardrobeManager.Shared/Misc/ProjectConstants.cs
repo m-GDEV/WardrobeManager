@@ -60,4 +60,10 @@ public static class ProjectConstants
 
         return $"{emoji} {withSpaces}";
     }
+    
+    public static string GetNameWithSpacesFromEnum<T>(T givenEnum) where T : System.Enum {
+        var words = Regex.Matches(givenEnum.ToString(), @"([A-Z][a-z]+)").Cast<Match>().Select(m => m.Value);
+        var withSpaces = string.Join(" ", words);
+        return $"{withSpaces}";
+    }
 }

@@ -5,14 +5,12 @@
 @using WardrobeManager.Presentation.Services.Implementation;
 @inject INotificationService _notificationService;
 
-<div class="h-full  text-base-content flex flex-col body-text transition-all duration-300">
+<div class="h-full  text-base-content body-text transition-all duration-300">
     <NavMenu />
 
     <ErrorBoundary @ref="errorBoundary">
         <ChildContent>
-            <main class="flex grow h-full ">
                 @Body
-            </main>
             <Footer />
         </ChildContent>
         <ErrorContent Context="ex">
