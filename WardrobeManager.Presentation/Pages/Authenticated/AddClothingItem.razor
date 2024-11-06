@@ -5,106 +5,26 @@
 
 @using WardrobeManager.Shared.Models;
 @using WardrobeManager.Shared.Enums;
-@using WardrobeManager.Presentation.Services.Implementation;
-@using WardrobeManager.Presentation.Services.Interfaces;
-@using WardrobeManager.Presentation.Components.FormItems
-
-@using WardrobeManager.Shared.Services.Implementation;
-@using WardrobeManager.Shared.Services.Interfaces;
-
-@using System.Text.RegularExpressions;
+@using WardrobeManager.Presentation.Services.Implementation
+@using WardrobeManager.Presentation.Components.Clothing
 
 @inject IApiService _apiService;
-@inject ISharedService _sharedService;
-@inject INotificationService _notificationService;
+@inject ISharedService _sharedService
+@inject INotificationService _notificationService
 
 
 <div class="w-full flex flex-col items-center">
     <div class="w-3/5 flex flex-col items-center">
         <h1 class="heading-text pt-14 pb-6">Add A Clothing Item</h1>
         <p class="subtitle-text pb-10">Clothing items can have multiple characteristics, allowing you to perfectly categorize your wardrobe!</p>
-        @* hidden overflow is to make child elements confrom to border radius *@
-        <div class="flex flex-row justify-center rounded-xl w-full max-w-[40rem] overflow-auto ">
-            @*  Left Side *@
-            <div class="bg-primary p-6 h-full w-full">
-                <EditForm model="@newItem" class=" flex flex-col h-full justify-around">
-                    <LabelAndElement Label="Name" Orientation="Vertical" TextColorCss="text-primary-content">
-                        <TextInput @bind-Value="newItem.Name" Css="bg-primary-content text-primary p-3 rounded-2xl"/>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Category" Orientation="Vertical" TextColorCss="text-primary-content">
-                        <select @bind=newItem.Category placeholder="Category"
-                                class="form-select bg-primary-content text-primary p-3 rounded-2xl">
-                            @foreach (var category in Enum.GetValues<ClothingCategory>())
-                            {
-                                <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
-                            }
-                        </select>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Season" Orientation="Vertical" TextColorCss="text-primary-content">
-                        <select @bind=newItem.Season placeholder="Season"
-                                class="form-select bg-primary-content text-primary p-3 rounded-2xl">
-                            @foreach (var season in Enum.GetValues<Season>())
-                            {
-                                <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
-                            }
-                        </select>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Favourited" TextColorCss="text-primary-content">
-                        <SwitchToggle @bind-Enabled="@newItem.Favourited" ToggleColors="bg-primary hover:bg-primary [--tglbg:oklch(var(--pc)/1)]"/>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Upload Image" Orientation="Vertical" TextColorCss="text-primary-content">
-                        <InputFile accept="image/*" capture OnChange="@UploadImage" class="file-input file-input-md file-input-secondary w-full max-w-xs text-secondary-content"/>
-                    </LabelAndElement>
-                </EditForm>
-            </div>
-
-            @*  Right Side *@
-            <div class="bg-primary-content w-full flex flex-col items-center justify-between pt-6 pb-10">
-                <h3 class="subtitle-text text-primary">Selected Image:</h3>
-
-                @* show new image if uploaded *@
-                @if (newItem.ImageBase64 != string.Empty)
-                {
-                    string src = $"data:image/png;base64, {newItem.ImageBase64}";
-                    <img src="@src" class="w-5/6 object-contain rounded-xl"/>
-                }
-                @* show default image if neither *@
-                else
-                {
-                    <img src="/defaultItem.png" class="w-5/6 object-contain rounded-xl"/>
-                }
-                <input type="submit" value="Edit Clothing Item" @onclick="FormSubmitted" class="btn btn-accent"/>
-            </div>
-        </div>
+        <NewOrEditItemSection Editing="false" SubmitForm="FormSubmitted"></NewOrEditItemSection>
     </div>
 </div>
 
 
 @code {
-    MemoryStream? img = null;
-    NewOrEditedClothingItemDTO? newItem = null;
-
-    protected override async Task OnInitializedAsync()
+    private async Task FormSubmitted(NewOrEditedClothingItemDTO newItem)
     {
-        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
-    }
-
-    async Task UploadImage(InputFileChangeEventArgs e)
-    {
-        img = new MemoryStream();
-        await e.File.OpenReadStream(maxAllowedSize: 1024 * 5000).CopyToAsync(img);
-
-        newItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
-
-        if (newItem.ImageBase64 == string.Empty)
-        {
-            _notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
-        }
-    }
-
-    async Task FormSubmitted()
-    {
-        // do stuff with api
         try
         {
             await _apiService.Add(newItem);
@@ -114,8 +34,5 @@
         {
             _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
         }
-
-        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
     }
-
 }
