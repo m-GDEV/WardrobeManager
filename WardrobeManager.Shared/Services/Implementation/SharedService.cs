@@ -52,6 +52,6 @@ public class SharedService : ISharedService
 
     }
     public NewOrEditedClothingItemDTO CreateDefaultNewOrEditedClothingItemDTO() {
-        return new NewOrEditedClothingItemDTO("My Favourite Green T-Shrit", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
+        return new NewOrEditedClothingItemDTO("My Favourite Green T-Shirt", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
     }
 }
