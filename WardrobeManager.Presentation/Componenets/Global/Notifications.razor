@@ -9,7 +9,7 @@
 <div class="toast toast-top toast-end">
     @foreach (var notification in _notificationService.Notifications) {
         var cssClass = GetNotificationCssClass(notification.type) ;
-        <div class="alert @cssClass text-wrap">
+        <div class="alert @cssClass text-wrap inline-flex flex-row justify-between w-full">
             <span>@notification.message</span>
             <button class="w-5 h-5" @onclick="(() => Dismiss(notification))"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
         </div>

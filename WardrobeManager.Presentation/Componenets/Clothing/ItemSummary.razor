@@ -47,47 +47,70 @@
     @* Right section *@
     <div class="flex flex-col items-center justify-between h-full gap-2">
         <SmallButton Label="View" AdditionalCss="btn-accent w-[8rem] " OptionalActionToDo="HandleView"/>
-        <div onclick="@($"{id}.showModal()")" class="w-full">
+        <div onclick="@($"{ModalId}.showModal()")" class="w-full">
             <SmallButton Label="Edit" AdditionalCss="btn-primary w-[8rem] "/>
         </div>
         <SmallButton Label="Delete" AdditionalCss="btn-secondary w-[8rem] " OptionalActionToDo="HandleDelete"/>
     </div>
 </div>
-<Modal Id="@id">
-    <EditItemSection item="Item" ModalId="@id" CallbackAfterEdit="CallbackAfterEdit"/>
+
+@* Modal that pops up when user clicks 'edit' *@
+<Modal Id="@ModalId" MaxWidth="40rem">
+    <NewOrEditItemSection Editing="true" EditedItem="Item" SubmitForm="HandleEdit"/>
 </Modal>
 
+
+
 @code {
+
+    // Init stuff
     [Parameter] public ServerClothingItem Item { get; set; }
 
+    // view has a separate callback because the action Clothing.razor must do is unique
+    [Parameter] public EventCallback<ServerClothingItem> ViewCallback { get; set; }
+    [Parameter] public EventCallback CallbackAfterEditAndDelete { get; set; }
 
-    // This method is a callback from the parent that does stuff when the 'view' button is clicked
-    [Parameter] public EventCallback<ServerClothingItem> ViewMethod { get; set; }
-    [Parameter] public EventCallback<ServerClothingItem> EditMethod { get; set; }
-    [Parameter] public EventCallback<ServerClothingItem> DeleteMethod { get; set; }
-    [Parameter] public EventCallback CallbackAfterEdit { get; set; }
-
-    public string id { get; set; }
+    public string ModalId { get; set; }
 
     protected override void OnParametersSet()
     {
-        id = MiscMethods.GenerateRandomId();
+        ModalId = MiscMethods.GenerateRandomId();
         base.OnParametersSet();
     }
 
+
+    // Methods to handle View, Edit, and Delete
     public async Task HandleView()
     {
-        await ViewMethod.InvokeAsync(Item);
+        await ViewCallback.InvokeAsync(Item);
+    }
+
+    public async Task HandleEdit(NewOrEditedClothingItemDTO newItem)
+    {
+        try
+        {
+            await _apiService.Update(newItem, Item.Id);
+            await JsRuntime.InvokeVoidAsync("CloseModal", ModalId);
+            await CallbackAfterEditAndDelete.InvokeAsync(); // From Clothing.razor
+            _notificationService.AddNotification("Clothing Item Edited Successfully!", NotificationType.Success);
+        }
+        catch (Exception ex)
+        {
+            _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
+        }
     }
 
     public async Task HandleDelete()
     {
-        await DeleteMethod.InvokeAsync(Item);
-    }
-
-    public async Task HandleEdit()
-    {
-        await EditMethod.InvokeAsync(Item);
+        try
+        {
+            await _apiService.Delete(Item);
+            await CallbackAfterEditAndDelete.InvokeAsync(); // From Clothing.razor
+        }
+        catch (HttpRequestException ex)
+        {
+            _notificationService.AddNotification($"Cannot fetch clothing: {ex.Message}", NotificationType.Error);
+        }
     }
 
 }
