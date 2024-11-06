@@ -2,32 +2,83 @@
 
 @attribute [Authorize]
 
-@inject IApiService ApiService
 
-@using WardrobeManager.Presentation.Services.Implementation;
-@using WardrobeManager.Presentation.Services.Interfaces;
+@using WardrobeManager.Presentation.Services.Implementation
+@using WardrobeManager.Presentation.Services.Interfaces
+@using WardrobeManager.Shared.Models
+@using WardrobeManager.Presentation.Components.Clothing
 
 <PageTitle>Dashboard</PageTitle>
 
-<h1 class="heading-text text-base-content">Dashboard</h1>
 
-Welcome to your new app.
-
-<!-- Open the modal using ID.showModal() method -->
-<button class="btn" onclick="my_modal_1.showModal()">open modal</button>
-<dialog id="my_modal_1" class="modal">
-    <div class="modal-box">
-        <h3 class="text-lg font-bold">Hello!</h3>
-        <p class="py-4">Press ESC key or click the button below to close</p>
-        <div class="modal-action">
-            <form method="dialog">
-                <!-- if there is a button in form, it will close the modal -->
-                <button class="btn btn-primary">Close</button>
-            </form>
+<div class="flex flex-row items-start justify-start h-[85%] px-20 mt-6">
+    
+    @* Left Section *@
+    <div class="flex flex-col items-center gap-2 basis-1/2 h-full">
+        <h1 class="heading-text">Wardrobe Manager</h1>
+        <div class="flex flex-col items-center gap-3 overflow-auto rounded-xl h-full">
+            @if (clothing == null || clothing.Count == 0)
+            {
+                <p class="my-auto mx-auto subtitle-text">No clothing found!</p>
+            }
+            else
+            {
+                foreach (var item in clothing.Take(3).ToList())
+                {
+                    <div class="w-3/4 h-3/4">
+                        <ItemSummary Item="item" ViewCallback="@ViewCallback" CallbackAfterEditAndDelete="FetchClothing"/>
+                    </div>
+                }
+            }
+        </div>
+        <a class="subtitle-text btn btn-accent" href="/clothing">View More</a>
+    </div>
+    
+    @* Centre Section *@
+    <div class="flex flex-col items-center gap-10 basis-1/4 h-full">
+        <h3 class="subheading-text pt-6">Suggested Outfit</h3>
+        <div class="flex flex-col items-center gap-1 h-full">
+            <div class="basis-2/5 bg-red-500 p-1 w-full"></div>
+            <div class="basis-2/5 bg-blue-500 p-1 w-full"></div>
+            <div class="basis-1/5 bg-purple-500 p-1 w-full"></div>
         </div>
     </div>
-</dialog>
+    
+    @* Right Section *@
+    <div class="flex flex-col items-center gap-10 basis-1/4 h-full">
+        <h3 class="subheading-text pt-6">Your Stats</h3>
+        <div class="flex flex-col items-center gap-1 rounded-xl justify-between h-full">
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+            <p class="subtitle-text">55 Clothing Items</p>
+        </div>
+    </div>
+</div>
+
 
 
 @code {
+    private List<ServerClothingItem>? clothing;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await FetchClothing();
+        await base.OnInitializedAsync();
+    }
+    
+    private async Task FetchClothing() {
+        clothing = await _apiService.GetClothing();
+        StateHasChanged();
+    }
+
+    private async Task ViewCallback(ServerClothingItem item)
+    {
+        _navManager.NavigateTo($"/clothing?id={item.Id}");
+    }
+
 }
