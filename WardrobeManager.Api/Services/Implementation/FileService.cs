@@ -1,7 +1,6 @@
-﻿using WardrobeManager.Api.Database.Services.Interfaces;
-using WardrobeManager.Shared.Models;
+﻿using WardrobeManager.Api.Services.Interfaces;
 
-namespace WardrobeManager.Api.Database.Services.Implementation;
+namespace WardrobeManager.Api.Services.Implementation;
 
 public class FileService : IFileService
 {

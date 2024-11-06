@@ -1,9 +1,8 @@
-﻿using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Enums;
-using WardrobeManager.Api.Database.Services.Interfaces;
-using SQLitePCL;
+﻿using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Api.Database.Services.Implementation;
+namespace WardrobeManager.Api.Services.Implementation;
 public class LoggingSerivce : ILoggingService
 {
     private DatabaseContext _context { get; set; } 

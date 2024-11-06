@@ -1,8 +1,6 @@
-using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Shared.Models;
-using WardrobeManager.Api.Database.Services.Interfaces;
 
-namespace WardrobeManager.Api.Database.Services.Interfaces;
+namespace WardrobeManager.Api.Services.Interfaces;
 
 public interface IUserService
 {

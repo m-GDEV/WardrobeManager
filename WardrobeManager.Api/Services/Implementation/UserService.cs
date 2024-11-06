@@ -1,11 +1,11 @@
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
-using WardrobeManager.Shared.Models;
+using Microsoft.EntityFrameworkCore;
+using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Exceptions;
-using WardrobeManager.Api.Database.Services.Interfaces;
+using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Api.Database.Services.Implementation;
+namespace WardrobeManager.Api.Services.Implementation;
 
 public class UserService : IUserService
 {

@@ -1,7 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
-using WardrobeManager.Api.Database.Services.Interfaces;
-using WardrobeManager.Api.Database.Services.Implementation;
 using WardrobeManager.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Shared.Services.Interfaces;
@@ -14,6 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
 using WardrobeManager.Api;
+using WardrobeManager.Api.Services.Implementation;
+using WardrobeManager.Api.Services.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);

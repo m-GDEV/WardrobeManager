@@ -1,7 +1,7 @@
-﻿using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Enums;
+﻿using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Api.Database.Services.Interfaces;
+namespace WardrobeManager.Api.Services.Interfaces;
 public interface IClothingItemService
 {
     // ---- Methods for multiple clothing items ---

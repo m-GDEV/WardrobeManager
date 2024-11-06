@@ -1,4 +1,4 @@
-﻿namespace WardrobeManager.Api.Database.Services.Interfaces;
+﻿namespace WardrobeManager.Api.Services.Interfaces;
 
 public interface IFileService
 {

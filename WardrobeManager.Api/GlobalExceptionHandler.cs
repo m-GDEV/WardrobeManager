@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics;
-using WardrobeManager.Api.Database.Services.Interfaces;
+using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.Enums;
 

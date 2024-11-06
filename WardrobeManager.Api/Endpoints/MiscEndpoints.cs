@@ -1,6 +1,5 @@
 using System;
 using WardrobeManager.Api.Database;
-using WardrobeManager.Api.Database.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;

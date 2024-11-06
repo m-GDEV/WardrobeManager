@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WardrobeManager.Shared.Models;
+using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.Services.Interfaces;
-using WardrobeManager.Api.Database.Services.Interfaces;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
-using System.Runtime.InteropServices;
 
-namespace WardrobeManager.Api.Database.Services.Implementation;
+namespace WardrobeManager.Api.Services.Implementation;
 
 public class ClothingItemService : IClothingItemService
 {
@@ -53,7 +51,7 @@ public class ClothingItemService : IClothingItemService
             .Where(item => !model.Favourited || item.Favourited == model.Favourited)
             // Selects items with 'DateAdded' two weeks or less from the current time, only if recently added is true
             .Where(item => !model.RecentlyAdded || (DateTime.UtcNow - item.DateAdded) <= TimeSpan.FromDays(14))
-             .Where(item => model.Category == ClothingCategory.None || item.Category == model.Category) // Ignore if None
+            .Where(item => model.Category == ClothingCategory.None || item.Category == model.Category) // Ignore if None
             .Where(item => model.Season == Season.None || item.Season == model.Season) // Ignore if None
             .Where(item => model.DateAddedFrom == null || item.DateAdded >= model.DateAddedFrom)
             .Where(item => model.DateAddedTo == null || item.DateAdded <= model.DateAddedTo)
@@ -65,46 +63,21 @@ public class ClothingItemService : IClothingItemService
             .Where(item => model.TimesWornSinceWash == 0 || item.TimesWornSinceWash >= model.TimesWornSinceWash);
     
 
-        // Apply sorting rules
-        if (model.IsAscending)
+        // Apply sorting rules (thank you chatgpt)
+        Func<ServerClothingItem, object>? sortKey = model.SortBy switch
         {
-            switch (model.SortBy)
-            {
-                case SortByCategories.Category:
-                    return filteredItems.OrderBy(item => item.Category).ToList();
-                case SortByCategories.Season:
-                    return filteredItems.OrderBy(item => item.Season).ToList();
-                case SortByCategories.TimesWorn:
-                    return filteredItems.OrderBy(item => item.TimesWornTotal).ToList();
+            SortByCategories.Category => item => item.Category,
+            SortByCategories.Season => item => item.Season,
+            SortByCategories.TimesWorn => item => item.TimesWornTotal,
+            SortByCategories.DateAdded => item => item.DateAdded,
+            _ => null // For SortByCategories.None or unsupported cases
+        };
 
-                // Can't order ascending or descending if we sort by nothing
-                case SortByCategories.None:
-                    return filteredItems.ToList();
-                // this enum might expand in the future, this is to cover that scenario     
-                default:
-                    return filteredItems.ToList();
-            }
-        }
-        else
-        {
-            switch (model.SortBy)
-            {
-                case SortByCategories.Category:
-                    return filteredItems.OrderByDescending(item => item.Category).ToList();
-                case SortByCategories.Season:
-                    return filteredItems.OrderByDescending(item => item.Season).ToList();
-                case SortByCategories.TimesWorn:
-                    return filteredItems.OrderByDescending(item => item.TimesWornTotal).ToList();
+        if (sortKey == null) return filteredItems.ToList(); // No sorting if no valid key
 
-                // Can't order ascending or descending if we sort by nothing
-                case SortByCategories.None:
-                    return filteredItems.ToList();
-                // this enum might expand in the future, this is to cover that scenario     
-                default:
-                    return filteredItems.ToList();
-            }
-
-        }
+        return model.IsAscending
+            ? filteredItems.OrderBy(sortKey).ToList()
+            : filteredItems.OrderByDescending(sortKey).ToList();
     }
 
 
