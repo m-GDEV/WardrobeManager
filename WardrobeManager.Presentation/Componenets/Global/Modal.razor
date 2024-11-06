@@ -8,14 +8,6 @@
     <div class="modal-box max-w-[@MaxWidth] w-[90%] relative min-h-[20rem] flex flex-row justify-center items-center">
         @ChildContent
 
-        @* Show X button at top right *@
-        <div class="absolute top-[1rem] right-[1.5rem]">
-            <form method="dialog">
-                <button class="btn">
-                    <span class="bi bi-x text-3xl text-base"></span>
-                </button>
-            </form>
-        </div>
     </div>
 
     @* Creates backdrop behind modal so if user clicks outside the modal, it will close *@
