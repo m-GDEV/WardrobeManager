@@ -86,7 +86,7 @@
         </div>
     </div>
     @* Centre Column *@
-    <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center gap-10  p-4 overflow-auto grow h-full">
+    <div class="basis-2/4 bg-primary rounded-xl flex flex-col items-center gap-10  p-4 grow h-full">
         <EditForm EditContext="FilterContext" class="flex flex-row items-center justify-between gap-5 py-4 pb-4">
             <div class="flex flex-row justify-between  bg-base-200 px-4 py-2 rounded-full gap-6">
                 <TextInput @bind-Value="filterModel.SearchQuery" placeholder="Green T-Shirt" Css="bg-base-200" OptionalCallback="FetchClothing"/>
@@ -106,7 +106,7 @@
             </div>
 
         </EditForm>
-        <div class=" flex flex-col items-center gap-6 w-4/5  ">
+        <div class=" flex flex-col items-center gap-6 w-4/5  overflow-auto">
             @if (clothing != null)
             {
                 foreach (var item in clothing)
