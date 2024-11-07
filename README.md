@@ -63,7 +63,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-
+Wardrobe Manager simplifies clothing organization and outfit planning. Add and manage clothing items with images, track wear frequency, and specify preferred combinations. Set wash schedules, mark favorites, and filter by season. This fully open-source application helps optimize wardrobe choices and plan outfits effortlessly. Easily self-hostable, Wardrobe Manager puts you in control of your clothing data and helps you build the perfect look, every time.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
