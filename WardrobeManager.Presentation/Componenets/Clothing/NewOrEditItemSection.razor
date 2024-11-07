@@ -89,18 +89,14 @@
 
 
     // Overriding methods
-    protected override async Task OnInitializedAsync()
-    {
-        InitializeNewItem();
-        await base.OnInitializedAsync();
-    }
-
     protected override async Task OnParametersSetAsync()
     {
         if (Editing && EditedItem == null)
         {
             throw new Exception("You cannot use this component in edit mode without supplying an item to Edit!");
         }
+        
+        InitializeNewItem();
 
         SubmitButtonText = Editing == true ? "Edit Clothing Item" : "Add Clothing Item";
         await base.OnParametersSetAsync();
@@ -109,19 +105,15 @@
     // Do this so it looks like the user is actually editing the original clothing item
     private void InitializeNewItem()
     {
+        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
         if (Editing)
         {
-            newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
             newItem.Name = EditedItem.Name;
             newItem.Category = EditedItem.Category;
             newItem.Season = EditedItem.Season;
             newItem.Favourited = EditedItem.Favourited;
             newItem.WearLocation = EditedItem.WearLocation;
             newItem.DesiredTimesWornBeforeWash = EditedItem.DesiredTimesWornBeforeWash;
-        }
-        else
-        {
-            newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
         }
     }
 
