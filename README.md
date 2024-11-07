@@ -182,8 +182,7 @@ Project Link: [https://github.com/m-GDEV/WardrobeManager](https://github.com/m-G
 ## Acknowledgments
 
 * [Best-README-Template: for this cool template](https://github.com/othneildrew/Best-README-Template)
-* []()
-* []()
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -202,6 +201,6 @@ Project Link: [https://github.com/m-GDEV/WardrobeManager](https://github.com/m-G
 [license-shield]: https://img.shields.io/github/license/m-GDEV/WardrobeManager.svg?style=for-the-badge
 [license-url]: https://github.com/m-GDEV/WardrobeManager/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/musa_ahmed
+[linkedin-url]: https://linkedin.com/in/musa-ahmed
 [product-screenshot]: docs/demo-video.mp4
 
