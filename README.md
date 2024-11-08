@@ -67,8 +67,7 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-https://github.com/user-attachments/assets/55a1c6b1-d190-4092-a001-c06d387b8cf4
-
+![Demo Video](./docs/demo-video.gif)
 
 ### Built With
 
