@@ -1,7 +1,9 @@
 ﻿@page "/clothing"
 @attribute [Authorize]
 
+@using System.Reflection
 @using System.Reflection.Metadata.Ecma335
+@using System.Text.Json
 @using WardrobeManager.Presentation.Components
 @using WardrobeManager.Presentation.Components.FormItems
 @using WardrobeManager.Presentation.Components.Clothing
@@ -138,7 +140,7 @@
                         @selectedItem.Name
                         @if (selectedItem.Favourited)
                         {
-                            <span class="bi bi-stars text-xl text-accent"></span>
+                            <span class="pl-2 bi bi-stars text-xl text-accent"></span>
                         }
                     </p>
                     <div class="flex flex-row gap-3 py-4">
@@ -194,6 +196,24 @@
         // An EditForm context allows me to define an EventCallback to run whenever a form element is changed
         FilterContext = new(filterModel);
         FilterContext.OnFieldChanged += OnFieldChanged;
+        
+      var uri = _navManager.ToAbsoluteUri(_navManager.Uri);
+        
+        // Look for query param that represents filterModel & try to deserialize & use it 
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("filterModel", out var givenfilterModel))
+        {
+            try
+            {
+                var deserializedFilterModel = JsonSerializer.Deserialize<FilterModel>(givenfilterModel);
+                filterModel = deserializedFilterModel;
+            }
+            catch
+            {
+                // ignore the invalid data 
+            }
+            
+        }
+        
 
         await FetchClothing();
         
@@ -204,7 +224,6 @@
             return;
         }
         
-        var uri = _navManager.ToAbsoluteUri(_navManager.Uri);
         
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("itemId", out var itemId))
         {
@@ -228,6 +247,10 @@
             {
                 selectedItem = clothing.FirstOrDefault(item => item.Id == selectedItem.Id);
             }
+           
+            // update URL query params so stats is persisted after page refresh
+            var serializedFilterModel = JsonSerializer.Serialize(filterModel);
+            await JsRuntime.InvokeVoidAsync("UpdateQueryParams", "filterModel", serializedFilterModel);
 
             StateHasChanged();
         }
@@ -241,6 +264,7 @@
     public async Task ChangeSelectedItem(ServerClothingItem item)
     {
         selectedItem = item;
+        await JsRuntime.InvokeVoidAsync("UpdateQueryParams", "itemId", selectedItem.Id);
     }
 
     // REMOVE THESE, PUT THEM IN OTHER COMPOENNETj
@@ -270,5 +294,6 @@
         filterModel = new FilterModel();
         await FetchClothing();
     }
+
 
 }
