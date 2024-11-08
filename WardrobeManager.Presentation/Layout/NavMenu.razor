@@ -8,7 +8,7 @@
     class="bg-base-300 text-base-content  w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
 
     @* Left side  *@
-    <a class="flex flex-row gap-6 items-center" href="/">
+    <a class="flex flex-row gap-6 items-center" href="@HomePageLink">
         <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"  />
         <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
     </a>
@@ -73,3 +73,27 @@
     </div>
 </nav>
 
+
+@code {
+    public string HomePageLink { get; set; } = string.Empty;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the current authentication state
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        // Check if the user is authenticated
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            // instead of going to public home page take them to the authenticated dashboardj
+            HomePageLink = "/dashboard";
+        }
+        else
+        {
+            HomePageLink = "/";
+        }
+    }
+    
+
+}

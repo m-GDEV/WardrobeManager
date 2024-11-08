@@ -19,21 +19,4 @@
 </div>
 
 @code {
-
-    protected override async Task OnInitializedAsync()
-    {
-        // Get the current authentication state
-        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        // Check if the user is authenticated
-        if (user.Identity?.IsAuthenticated ?? false)
-        {
-            // User is authenticated, redirect to another page
-            _navManager.NavigateTo("/dashboard");
-        }
-        
-        await base.OnInitializedAsync();
-    }
-
 }
