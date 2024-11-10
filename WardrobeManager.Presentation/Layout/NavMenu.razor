@@ -8,10 +8,20 @@
     class="bg-base-300 text-base-content  w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
 
     @* Left side  *@
-    <a class="flex flex-row gap-6 items-center" href="@HomePageLink">
-        <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"  />
-        <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
-    </a>
+    <AuthorizeView>
+        <Authorized>
+                <a class="flex flex-row gap-6 items-center" href="/dashboard">
+                    <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"/>
+                    <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
+                </a>
+        </Authorized>
+        <NotAuthorized>
+            <a class="flex flex-row gap-6 items-center" href="/">
+                <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"/>
+                <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
+            </a>
+        </NotAuthorized>
+    </AuthorizeView>
 
     @* Middle *@
     <AuthorizeView>
@@ -30,27 +40,19 @@
         <div class="hidden lg:flex flex-row gap-2 items-center">
             <AuthorizeView>
                 <Authorized>
-                    <div class="dropdown dropdown-hover dropdown-end">
-                        <a tabindex="0" role="button" class="flex flex-row gap-3 items-center text-base-content hover:bg-accent hover:text-accent-content px-3 py-2 rounded transition-all duration-300" >
-                            <p class="body-text font-bold">@context.User.Identity.Name</p>
+                            <p class="body-text font-bold">@context?.User?.Identity?.Name</p>
                             <div class="avatar ">
                                 <div class="w-12 rounded-full">
                                     @* https://blog.jepsen.ninja/gravatar-c-api *@
-                                    <img src="@ProjectConstants.ProfileImage" />
+                                    <img src="@ProjectConstants.ProfileImage"/>
                                 </div>
                             </div>
-                        </a>
-                        <div tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-4 shadow flex flex-col gap-5">
-                            <div onclick=@(() => Navigation.NavigateToLogout("authentication/logout"))>
-                                <img class="w-8 h-8" src="https://cdn-icons-png.flaticon.com/128/1828/1828490.png" />
-                            </div>
-                        <ChangeTheme />
-                        </div>
-                    </div>
+                            <ChangeTheme/>
+                            <button @onclick="Logout" class="bi bi-door-open-fill text-3xl text-primary"></button>
                 </Authorized>
 
                 <NotAuthorized>
-                    <a class="flex flex-row gap-3 items-center" href="/authentication/login">
+                    <a class="flex flex-row gap-3 items-center" href="/login">
                         <p class="body-text text-base-content">Log in</p>
                         <div class="avatar placeholder">
                             <div class="bg-neutral text-neutral-content w-12 rounded-full">
@@ -62,7 +64,9 @@
             </AuthorizeView>
         </div>
         <div class="dropdown dropdown-bottom dropdown-end lg:hidden">
-            <div tabindex="0" role="button" class=""><span class="bi bi-list text-2xl text-accent"></span></div>
+            <div tabindex="0" role="button" class="">
+                <span class="bi bi-list text-2xl text-accent"></span>
+            </div>
             <div tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                 <div class="flex flex-col justify-center gap-5">
                     <NavLink href="/add" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
@@ -75,25 +79,11 @@
 
 
 @code {
-    public string HomePageLink { get; set; } = string.Empty;
-    
-    protected override async Task OnInitializedAsync()
+    public async Task Logout()
     {
-        // Get the current authentication state
-        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        // Check if the user is authenticated
-        if (user.Identity?.IsAuthenticated ?? false)
-        {
-            // instead of going to public home page take them to the authenticated dashboardj
-            HomePageLink = "/dashboard";
-        }
-        else
-        {
-            HomePageLink = "/";
-        }
+        await _accountManagement.LogoutAsync();
+        _navManager.NavigateTo("/");
     }
-    
+
 
 }

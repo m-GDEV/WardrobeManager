@@ -1,4 +1,6 @@
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Presentation.Services.Implementation;
 
@@ -7,7 +9,7 @@ public class NotificationService : INotificationService
     private readonly List<NotificationMessage> _notifications = new List<NotificationMessage>();
     private readonly object _lock = new object();
 
-    public event Action OnChange;
+    public event Action? OnChange;
 
     public List<NotificationMessage> Notifications
     {
@@ -40,17 +42,4 @@ public class NotificationService : INotificationService
     }
 
     private void NotifyStateChanged() => OnChange?.Invoke();
-}
-
-public class NotificationMessage(string Message, NotificationType Type) {
-    public string message = Message;
-    public NotificationType type = Type;
-    public DateTime CreationDate = DateTime.UtcNow;
-}
-
-public enum NotificationType {
-    Info,
-    Success,
-    Warning,
-    Error
 }

@@ -1,0 +1,14 @@
+﻿@namespace WardrobeManager.Presentation.Layout;
+
+@inject NavigationManager Navigation
+
+
+<AuthorizeView>
+    <Authorized>
+    </Authorized>
+    <NotAuthorized>
+        <footer class="flex flex-row justify-center items-center w-full bg-base-300 h-full">
+            <p class="text-base-content font-semibold">Wardrobe Manager - Built By Musa Ahmed | Since 2024</p>
+        </footer>
+    </NotAuthorized>
+</AuthorizeView>

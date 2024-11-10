@@ -1,4 +1,7 @@
-﻿using WardrobeManager.Presentation.Services.Implementation;
+﻿
+
+using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Presentation.Services.Interfaces;
 

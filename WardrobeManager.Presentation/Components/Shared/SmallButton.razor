@@ -1,0 +1,24 @@
+@namespace WardrobeManager.Presentation.Components.Shared;
+
+@* As of now, tags are not meant to be clicked *@
+<button class="py-1 px-3 body-text btn @AdditionalCss rounded-xl hover:scale-105 transition-all duration-300 w-full" @onclick="CallAction">
+    @Label
+</button>
+
+@code {
+    [Parameter]
+    public required string Label { get; set; }
+
+    [Parameter] public string AdditionalCss { get; set; } = string.Empty;
+    
+    [Parameter]
+    public EventCallback OptionalActionToDo { get; set; }
+
+    public void CallAction()
+    {
+        if (OptionalActionToDo.HasDelegate)
+        {
+            OptionalActionToDo.InvokeAsync();
+        }
+    }
+}

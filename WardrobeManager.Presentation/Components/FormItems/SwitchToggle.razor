@@ -1,0 +1,46 @@
+@namespace WardrobeManager.Presentation.Components.FormItems;
+
+@using WardrobeManager.Shared.Models;
+@using WardrobeManager.Shared.Enums;
+@using WardrobeManager.Presentation.Services.Implementation;
+@using WardrobeManager.Presentation.Services.Interfaces;
+
+@using WardrobeManager.Shared.Services.Implementation;
+@using WardrobeManager.Shared.Services.Interfaces;
+
+<InputCheckbox @bind-Value="_enabled" class="@CssClass" />
+
+@code {
+
+    // stupid fucking variable cus you can't mix C# and markup or something: https://github.com/dotnet/razor/issues/7684
+    public string CssClass = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        CssClass = $"toggle {ToggleColors} border-0";
+
+        await base.OnInitializedAsync();
+    }
+
+    [Parameter]
+    public bool Enabled { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> EnabledChanged { get; set; }
+
+    [Parameter]
+    public string ToggleColors { get; set; } = $"bg-primary-content hover:bg-primary-content [--tglbg:oklch(var(--p)/1)]";
+
+
+    private bool _enabled 
+    {
+        get => Enabled;
+        set
+        {
+            if (Enabled != value)
+            {
+                Enabled = value;
+                EnabledChanged.InvokeAsync(value); // Notify the parent of the change
+            }
+        }
+    }
+}

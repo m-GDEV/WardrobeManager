@@ -5,59 +5,66 @@ using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Shared.Services.Interfaces;
 using WardrobeManager.Shared.Exceptions;
 using System.Diagnostics;
+using System.Security.Claims;
 using WardrobeManager.Shared.Services.Implementation;
 using WardrobeManager.Api.Endpoints;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using WardrobeManager.Api;
+using WardrobeManager.Api.Database.Models;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-// add db context
-builder.Services.AddDbContext<DatabaseContext>(options =>
-        options.UseSqlite("Data Source=database.dat")
-        );
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
+// Configure app cookie (THIS ALLOWS THE BACKEND AND FRONTEND RUN ON DIFFERENT DOMAINS)
+//
+// The default values, which are appropriate for hosting the Backend and
+// BlazorWasmAuth apps on the same domain, are Lax and SameAsRequest. 
+// For more information on these settings, see:
+// https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-identity#cross-domain-hosting-same-site-configuration
+/*
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+});
+*/
+builder.Services.AddAuthorizationBuilder();
 
-// services added by me but created by microsft
+// add db context
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite("Data Source=database.db"));
+
+// Add identify and opt-in to endpoints 
+builder.Services.AddIdentityCore<AppUser>()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<DatabaseContext>()
+    // this maps some Identity API endpoints like '/register' check Swagger for all of them
+    .AddApiEndpoints(); 
+
+// Add a CORS policy for the client
+builder.Services.AddCors(
+    options => options.AddPolicy(
+        "wasm",
+        policy => policy.WithOrigins([builder.Configuration["BackendUrl"] ?? "https://localhost:5001", 
+                builder.Configuration["FrontendUrl"] ?? "https://localhost:5002"])
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            .AllowCredentials()));
+
+// services added by me but created by Microsfot
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
 // Swagger can use JWT Bearer auth
-builder.Services.AddSwaggerGen(opt =>
-        {
-        opt.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
-        opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-                {
-                In = ParameterLocation.Header,
-                Description = "Please enter token",
-                Name = "Authorization",
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = "bearer"
-                });
+builder.Services.AddSwaggerGen();
 
-        opt.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                {
-                new OpenApiSecurityScheme
-                {
-                Reference = new OpenApiReference
-                {
-                Type=ReferenceType.SecurityScheme,
-                Id="Bearer"
-                }
-                },
-                new string[]{}
-                }
-                });
-        });
-
-// custom services
+// Custom Services Added by Musa
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 builder.Services.AddScoped<DatabaseContext>();
@@ -68,29 +75,6 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
 
-// auth0
-var domain = $"https://{builder.Configuration["Auth0:Domain"]}/";
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, c =>
-            {
-            c.Authority = domain;
-            c.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-            {
-            ValidAudience = builder.Configuration["Auth0:Audience"],
-            ValidIssuer = domain,
-            };
-            });
-
-builder.Services.AddAuthorization(o =>
-        {
-        o.AddPolicy("clothing:read-write", p => p.
-                RequireAuthenticatedUser().
-                RequireClaim("scope", "clothing:read-write"));
-        });
-
-builder.Services.AddCors();
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -98,20 +82,22 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseCors(builder => builder
-            .AllowAnyOrigin()
-            .AllowAnyMethod()
-            .AllowAnyHeader()
-            );
 }
 
-// auth0
-app.UseAuthentication();
-app.UseAuthorization();
-
+app.MapIdentityApi<AppUser>();
+app.UseCors("wasm");
 
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
+
+// Enable authentication and authorization after CORS Middleware
+// processing (UseCors) in case the Authorization Middleware tries
+// to initiate a challenge before the CORS Middleware has a chance
+// to set the appropriate headers.
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.UseHttpsRedirection();
 
 
 // Mapping custom endpoints
@@ -120,38 +106,14 @@ app.MapClothingEndpoints();
 app.MapImageEndpoints();
 app.MapMiscEndpoints();
 app.MapActionEndpoints();
+app.MapIdentityEndpoints();
 
-
+// Custom Middleware
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-8.0
-// middleware (convert into class when you clean up this file)
-app.Use(async (HttpContext context, RequestDelegate next) => {
-
-        var userService = context.RequestServices.GetRequiredService<IUserService>();
-
-
-        var Auth0Id = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-        // only create the user if the consumer of the api is authorized
-        if (Auth0Id != null)
-        {
-        await userService.CreateUser(Auth0Id);
-        Debug.Assert(await userService.DoesUserExist(Auth0Id) == true, "User finding/creating is broken");
-
-        var user = await userService.GetUser(Auth0Id);
-        Debug.Assert(user != null, "At this point in the pipeline user should exist");
-
-        // pass along to controllers
-        context.Items["user"] = user;
-        }
-
-        await next(context);
-});
-
-
+app.UseMiddleware<UserCreationMiddleware>();
 
 // Initialize DB (only run if db doesn't exist)
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
-DatabaseInitializer.Initialize(context);
+await DatabaseInitializer.InitializeAsync(scope);
 
 app.Run();

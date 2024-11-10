@@ -6,7 +6,11 @@ namespace WardrobeManager.Shared.Models;
 
 public class ServerClothingItem
 {
-    public ServerClothingItem() { } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+    public ServerClothingItem()
+    {
+    } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     // deserializer needs a way to create the object without any fields so it can assign them if they exist
 
@@ -14,19 +18,19 @@ public class ServerClothingItem
     // For now some of the other user editable fields will not be assigned here
     // In the future you can add this functionality to the frontend and then change this
     public ServerClothingItem
-        (
-         string name, ClothingCategory category, Season season, WearLocation wearLocation,
-         bool favourited, int desiredTimesWornBeforeWash, Guid? imageGuid
-        )
-        {
-            this.Name = name;
-            this.Category = category;
-            this.Season = season;
-            this.WearLocation = wearLocation;
-            this.Favourited = favourited;
-            this.DesiredTimesWornBeforeWash = desiredTimesWornBeforeWash;
-            this.ImageGuid = imageGuid;
-        }
+    (
+        string name, ClothingCategory category, Season season, WearLocation wearLocation,
+        bool favourited, int desiredTimesWornBeforeWash, Guid? imageGuid
+    )
+    {
+        this.Name = name;
+        this.Category = category;
+        this.Season = season;
+        this.WearLocation = wearLocation;
+        this.Favourited = favourited;
+        this.DesiredTimesWornBeforeWash = desiredTimesWornBeforeWash;
+        this.ImageGuid = imageGuid;
+    }
 
     // ---- EF Core modifies -----
     public int Id { get; set; }
@@ -35,14 +39,17 @@ public class ServerClothingItem
     // the following 2 fields are not nullable
     // https://learn.microsoft.com/en-us/ef/core/modeling/relationships/one-to-many
     [JsonIgnore] // causes the serializer to run into loop
-        public User User { get; set; } // navigation property
+    public User User { get; set; } // navigation property
+
     public int UserId { get; set; }
 
     // ---- User modifies -----
     public string Name { get; set; }
     public ClothingCategory Category { get; set; }
     public Season Season { get; set; }
+
     public WearLocation WearLocation { get; set; }
+
     // modified in spirit by the user, they change the image. program assigns guid
     public Guid? ImageGuid { get; set; }
     public bool Favourited { get; set; } = false;
@@ -56,10 +63,13 @@ public class ServerClothingItem
 
     // ---- Only program modifies ----
     public int TimesWornSinceWash { get; set; } = 0;
+
     // initialized at zero since the user can change this later
     public int TimesWornTotal { get; set; } = 0;
     public DateTime LastWorn { get; set; }
+
     public DateTime DateAdded { get; set; } = DateTime.UtcNow;
+
     // will be updated directly. at init this is fine for default
     public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
 
@@ -67,6 +77,7 @@ public class ServerClothingItem
     {
         TimesWornSinceWash = 0;
     }
+
     public void Wear()
     {
         TimesWornSinceWash += 1;
@@ -74,4 +85,3 @@ public class ServerClothingItem
         LastWorn = DateTime.UtcNow;
     }
 }
-

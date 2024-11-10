@@ -1,0 +1,46 @@
+﻿@* This component will be used for the login page & the sign up page *@
+
+<div class="flex flex-row w-full h-full">
+    <div class="w-3/5 bg-primary-content h-full"> 
+        <div class="w-5/6 mx-auto flex flex-col items-center justify-center h-full">
+            <h1 class="text-primary title-text mt-8 mb-8">Wardrobe Manager</h1>
+            <img class="rounded-lg max-w-[32rem]" src="img/home-background.jpg" />
+        </div>
+    </div>
+
+    <div class="w-2/5 bg-primary h-full">
+        <div class="w-4/6 mx-auto h-full flex flex-col items-center justify-center">
+            <h2 class="pt-8 heading-text text-primary-content">@PageHeaderText</h2>
+            <EditForm class="pt-8 w-full pb-8" Model="@formModel" OnSubmit="SubmitButtonMethod">
+                <p class="text-primary-content py-2 subtitle-text">Email</p>
+                <InputText @bind-Value="@formModel.email" required class=" w-full subtitle-text input input-bordered px-6 py-10 text-primary bg-primary-content mb-4 rounded-2xl" placeholder="Your Username Here" type="email"/>
+
+                <p class="text-primary-content py-2 subtitle-text">Password</p>
+                <InputText @bind-Value="@formModel.password" required class="subtitle-text w-full input input-bordered px-6 py-10 text-primary bg-primary-content mb-8 rounded-2xl" placeholder="............" type="password"/>
+                
+                <input class="w-full py-4 subtitle-text bg-secondary text-secondary-content rounded-2xl " type="submit" value="@SubmitButtonText"/>
+            </EditForm>
+
+            <div class="flex flex-row items-center gap-3 mb-8">
+                <p class="body-text text-lg text-primary-content">@RedirectHeaderText</p>
+                <a class="text-accent-content font-bold btn btn-accent " href="@RedirectLinkPath">@RedirectLinkText</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public required string PageHeaderText { get; set; }
+    [Parameter] public required string SubmitButtonText { get; set; }
+    [Parameter] public required string RedirectHeaderText { get; set; }
+    [Parameter] public required string RedirectLinkText { get; set; }
+    [Parameter] public required string RedirectLinkPath { get; set; }
+    [Parameter] public required EventCallback<LoginOrSignupModel> SubmitButtonCallback { get; set; }
+
+    public LoginOrSignupModel formModel { get; set; } = new LoginOrSignupModel();
+
+    public async Task SubmitButtonMethod()
+    {
+        await SubmitButtonCallback.InvokeAsync(formModel);
+    }
+}

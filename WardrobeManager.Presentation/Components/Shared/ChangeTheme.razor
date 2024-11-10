@@ -1,0 +1,60 @@
+@namespace WardrobeManager.Presentation.Components.Shared;
+
+
+<select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-2 border-base-content">
+    <optgroup label="Basic Themes">
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+    </optgroup>
+    <optgroup label="Extra Themes">
+        <option value="acid">Acid</option>
+        <option value="aqua">Aqua</option>
+        <option value="autumn">Autumn</option>
+        <option value="black">Black</option>
+        <option value="bumblebee">Bumblebee</option>
+        <option value="business">Business</option>
+        <option value="coffee">Coffee</option>
+        <option value="corporate">Corporate</option>
+        <option value="cmyk">CMYK</option>
+        <option value="cupcake">Cupcake</option>
+        <option value="cyberpunk">Cyberpunk</option>
+        <option value="dracula">Dracula</option>
+        <option value="emerald">Emerald</option>
+        <option value="fantasy">Fantasy</option>
+        <option value="forest">Forest</option>
+        <option value="garden">Garden</option>
+        <option value="halloween">Halloween</option>
+        <option value="lemonade">Lemonade</option>
+        <option value="lofi">Lofi</option>
+        <option value="luxury">Luxury</option>
+        <option value="night">Night</option>
+        <option value="pastel">Pastel</option>
+        <option value="retro">Retro</option>
+        <option value="synthwave">Synthwave</option>
+        <option value="valentine">Valentine</option>
+        <option value="wireframe">Wireframe</option>
+    </optgroup>
+</select>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+// Manually call theme-change js functions cus it tries to do it on page load and that
+// doesn't jive with the blazor wasm system
+
+// For some reason onafterrenderasync is running before the <select> element actually exists in the DOM
+// This is the case when i run this code in NavMenu.razor too
+// So for now I'm just gonna put a delay here and hope it works
+            //await Task.Delay(5000);
+            await JsRuntime.InvokeVoidAsync("themeSelect");
+
+// Uncomment these if you want to change the theme with a different method
+// await JSRuntime.InvokeVoidAsync("themeBtn");
+// await JSRuntime.InvokeVoidAsync("themeToggle");
+            await JsRuntime.InvokeVoidAsync("console.log", "themeSelect loaded");
+        }
+    }
+
+}
