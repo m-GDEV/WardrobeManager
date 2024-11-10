@@ -9,7 +9,7 @@ namespace WardrobeManager.Api.Database;
 
 public class DatabaseInitializer
 {
-    public static async Task Initialize(IServiceScope scope)
+    public static async Task InitializeAsync(IServiceScope scope)
     {
         // Get stuff
         using var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
