@@ -1,12 +1,4 @@
-@namespace WardrobeManager.Presentation.Components.Global
-
-@using WardrobeManager.Shared.Models;
-@using WardrobeManager.Shared.Enums;
-@using WardrobeManager.Presentation.Services.Implementation;
-@using WardrobeManager.Presentation.Services.Interfaces;
-
-@using WardrobeManager.Shared.Services.Implementation;
-@using WardrobeManager.Shared.Services.Interfaces;
+@namespace WardrobeManager.Presentation.Components.Shared
 
 
 <select data-choose-theme class="rounded-xl px-3 py-1 bg-base-100 text-base-content border-4 border-base-content">
@@ -43,3 +35,26 @@
         <option value="wireframe">Wireframe</option>
     </optgroup>
 </select>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+// Manually call theme-change js functions cus it tries to do it on page load and that
+// doesn't jive with the blazor wasm system
+
+// For some reason onafterrenderasync is running before the <select> element actually exists in the DOM
+// This is the case when i run this code in NavMenu.razor too
+// So for now I'm just gonna put a delay here and hope it works
+            //await Task.Delay(5000);
+            await JsRuntime.InvokeVoidAsync("themeSelect");
+
+// Uncomment these if you want to change the theme with a different method
+// await JSRuntime.InvokeVoidAsync("themeBtn");
+// await JSRuntime.InvokeVoidAsync("themeToggle");
+            await JsRuntime.InvokeVoidAsync("console.log", "themeSelect loaded");
+        }
+    }
+
+}

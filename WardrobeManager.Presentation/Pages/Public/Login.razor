@@ -1,38 +1,27 @@
-﻿@page "/login"
+﻿@using WardrobeManager.Presentation.Components.Identity
+
+@page "/login"
 
 <PageTitle>Login</PageTitle>
 
-<div class="flex flex-row w-full">
-    <div class="w-3/5 bg-primary-content h-full"> 
-        <div class="w-5/6 mx-auto flex flex-col items-center justify-center h-full">
-            <h1 class="text-primary title-text mt-8 mb-8">Wardrobe Manager</h1>
-            <img class="rounded-lg max-w-[500px]" src="https://upload.vps.connectwithmusa.com/file/snail-camel-mouse" />
-        </div>
-    </div>
 
+<LoginOrSignup PageHeaderText="Log In" SubmitButtonText="Login" SubmitButtonCallback="LoginMethod" RedirectHeaderText="Don't have an account?" RedirectLinkText="Sign up" RedirectLinkPath="/signup"/>
 
-    <div class="w-2/5 bg-primary h-full">
-        <div class="w-4/6 mx-auto h-full flex flex-col items-center justify-center">
-            <h2 class="pt-8 heading-text text-accent-content">Sign In</h2>
-            <form class="pt-8 w-full pb-8">
-                <p class="text-neutral py-2 subtitle-text">Username</p>
-                <input class=" w-full subtitle-text input input-bordered px-6 py-10 text-primary bg-primary-content mb-4 rounded-2xl" placeholder="TM_CLNCY" type="text" />
+@code {
 
-                <p class="text-neutral py-2 subtitle-text">Password</p>
-                <input class="subtitle-text w-full input input-bordered px-6 py-10 text-primary bg-primary-content mb-8 rounded-2xl" placeholder="............" type="password" />
+    public async Task LoginMethod(LoginOrSignupModel data)
+    {
+        var res = await _accountManagement.LoginAsync(data.email, data.password);
 
-                <div class="flex flex-row justify-between mb-14">
-                    <p class="text-primary-content text-2xl body-text">Remember Me</p>
-                    <input type="checkbox" class="bg-primary-content checkbox" />
-                </div>
+        if (!res.Succeeded)
+        {
+            foreach (var error in res.ErrorList)
+            {
+                _notificationService.AddNotification(error, NotificationType.Error);
+            }
+        }
+        
+        _navManager.NavigateTo("/dashboard");
+    }
 
-                <input class="w-full py-4 subtitle-text bg-accent text-accent-content rounded-2xl " type="submit" value="Sign In" />
-            </form>
-
-            <div class="flex flex-row items-center gap-3 mb-8">
-                <p class="body-text text-lg text-primary-content">Don't have an account? </p>
-                    <a class="text-accent-content font-bold btn btn-accent " href="/signup">Sign Up here</a>
-            </div>
-        </div>
-    </div>
-</div>
+}

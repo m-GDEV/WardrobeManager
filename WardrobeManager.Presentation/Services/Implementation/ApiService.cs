@@ -17,7 +17,7 @@ public class ApiService : IAsyncDisposable, IApiService
 
     public ApiService(string apiEndpoint, IHttpClientFactory factory) {
         _apiEndpoint = apiEndpoint;
-        _httpClient = factory.CreateClient("WebAPI");
+        _httpClient = factory.CreateClient("Auth");
     }
 
     public async Task<HttpResponseMessage> CheckApiConnection()

@@ -1,0 +1,25 @@
+﻿@using WardrobeManager.Presentation.Components.Identity
+
+@page "/signup"
+
+<PageTitle>Sign Up</PageTitle>
+
+
+<LoginOrSignup PageHeaderText="Sign Up" SubmitButtonText="Sign Up" SubmitButtonCallback="RegisterMethod" RedirectHeaderText="Already have an account?" RedirectLinkText="Log In" RedirectLinkPath="/login" />
+
+@code {
+    public async Task RegisterMethod(LoginOrSignupModel data)
+    {
+        var res = await _accountManagement.RegisterAsync(data.email, data.password);
+
+        if (!res.Succeeded)
+        {
+            foreach (var error in res.ErrorList)
+            {
+                _notificationService.AddNotification(error, NotificationType.Error);
+            }
+        }
+        
+        _navManager.NavigateTo("/dashboard");
+    }
+}

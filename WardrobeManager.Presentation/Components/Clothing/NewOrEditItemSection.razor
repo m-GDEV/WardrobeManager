@@ -23,7 +23,7 @@
                             class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                         @foreach (var category in Enum.GetValues<ClothingCategory>())
                         {
-                            <option value="@category">@ProjectConstants.GetNameWithSpacesAndEmoji(category)</option>
+                            <option value="@category">@MiscMethods.GetNameWithSpacesAndEmoji(category)</option>
                         }
                     </select>
                 </LabelAndElement>
@@ -32,7 +32,7 @@
                             class="form-select bg-primary-content text-primary p-3 rounded-2xl">
                         @foreach (var season in Enum.GetValues<Season>())
                         {
-                            <option value="@season">@ProjectConstants.GetNameWithSpacesAndEmoji(season)</option>
+                            <option value="@season">@MiscMethods.GetNameWithSpacesAndEmoji(season)</option>
                         }
                     </select>
                 </LabelAndElement>

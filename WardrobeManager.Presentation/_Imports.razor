@@ -18,12 +18,18 @@
 @inject AuthenticationStateProvider _authenticationStateProvider
 
 @* My Stuff *@
-@using WardrobeManager.Shared.Misc;
-@using WardrobeManager.Presentation.Components.Global
-@using WardrobeManager.Presentation.Services.Interfaces
+@using WardrobeManager.Shared.Misc
 @using WardrobeManager.Shared.Services.Interfaces
+@using WardrobeManager.Shared.Enums
+@using WardrobeManager.Shared.Models
+
+@using WardrobeManager.Presentation.Components.Shared
+@using WardrobeManager.Presentation.Identity
+@using WardrobeManager.Presentation.Services.Interfaces
+
 
 @* My Stuff *@
 @inject IApiService _apiService
 @inject INotificationService _notificationService
 @inject ISharedService _sharedService
+@inject IAccountManagement _accountManagement

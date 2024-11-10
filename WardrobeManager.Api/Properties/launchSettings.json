@@ -38,9 +38,15 @@
       },
       "publishAllPorts": true,
       "useSSL": true
+    },
+    "dotnet watch": {
+      "commandName": "Executable",
+      "workingDirectory": "$(ProjectDir)",
+      "executablePath": "dotnet.exe",
+      "commandLineArgs": "watch --non-interactive run debug --launch-profile https"
     }
   },
-  "$schema": "http://json.schemastore.org/launchsettings.json",
+  "$schema": "https://json.schemastore.org/launchsettings.json",
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
