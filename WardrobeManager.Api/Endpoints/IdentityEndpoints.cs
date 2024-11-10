@@ -19,14 +19,14 @@ public static class IdentityEndpoints
     public static void MapIdentityEndpoints(this IEndpointRouteBuilder app)
     {
 
-        app.MapPost("/logout", Logout).RequireAuthorization();
-        app.MapGet("/roles", Roles).RequireAuthorization();
+        app.MapPost("/logout", LogoutAsync).RequireAuthorization();
+        app.MapGet("/roles", RolesAsync).RequireAuthorization();
     }
 
 // Provide an end point to clear the cookie for logout
 // For more information on the logout endpoint and antiforgery, see:
 // https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-identity#antiforgery-support
-    public static async Task<IResult> Logout(SignInManager<AppUser> signInManager, [FromBody] object empty)
+    public static async Task<IResult> LogoutAsync(SignInManager<AppUser> signInManager, [FromBody] object empty)
     {
         if (empty is not null)
         {
@@ -38,7 +38,7 @@ public static class IdentityEndpoints
         return Results.Unauthorized();
     }
 
-    public static async Task<IResult> Roles(ClaimsPrincipal user)
+    public static async Task<IResult> RolesAsync(ClaimsPrincipal user)
     {
         if (user.Identity is not null && user.Identity.IsAuthenticated)
         {
