@@ -64,20 +64,13 @@
 @code {
 
     // Init stuff
-    [Parameter] public ServerClothingItem Item { get; set; }
+    [Parameter] public required ServerClothingItem Item { get; set; }
 
     // view has a separate callback because the action Clothing.razor must do is unique
     [Parameter] public EventCallback<ServerClothingItem> ViewCallback { get; set; }
     [Parameter] public EventCallback CallbackAfterEditAndDelete { get; set; }
 
-    public string ModalId { get; set; }
-
-    protected override void OnParametersSet()
-    {
-        ModalId = MiscMethods.GenerateRandomId();
-        base.OnParametersSet();
-    }
-
+    public string ModalId { get; set; } = MiscMethods.GenerateRandomId();
 
     // Methods to handle View, Edit, and Delete
     public async Task HandleView()

@@ -7,8 +7,7 @@
 
 @code {
     [Parameter]
-    public string Label { get; set; }
+    public required string Label { get; set; }
 
-    [Parameter]
-    public string AdditionalCss { get; set; }
+    [Parameter] public string AdditionalCss { get; set; } = string.Empty;
 }

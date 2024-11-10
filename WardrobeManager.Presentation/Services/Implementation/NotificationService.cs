@@ -9,7 +9,7 @@ public class NotificationService : INotificationService
     private readonly List<NotificationMessage> _notifications = new List<NotificationMessage>();
     private readonly object _lock = new object();
 
-    public event Action OnChange;
+    public event Action? OnChange;
 
     public List<NotificationMessage> Notifications
     {

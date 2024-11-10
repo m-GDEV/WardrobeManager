@@ -199,12 +199,12 @@
       var uri = _navManager.ToAbsoluteUri(_navManager.Uri);
         
         // Look for query param that represents filterModel & try to deserialize & use it 
-        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("filterModel", out var givenfilterModel))
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("filterModel", out var givenFilterModel))
         {
             try
             {
-                var deserializedFilterModel = JsonSerializer.Deserialize<FilterModel>(givenfilterModel);
-                filterModel = deserializedFilterModel;
+                FilterModel? deserializedFilterModel = JsonSerializer.Deserialize<FilterModel>(givenFilterModel.ToString());
+                filterModel = deserializedFilterModel ?? filterModel;
             }
             catch
             {

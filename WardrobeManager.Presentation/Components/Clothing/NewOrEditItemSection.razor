@@ -9,7 +9,7 @@
 <div class="flex flex-col gap-6">
     @if (Editing)
     {
-        <h3 class="subheading-text text-center">Editing @EditedItem.Name</h3>
+        <h3 class="subheading-text text-center">Editing @EditedItem?.Name</h3>
     }
     <div class="flex flex-row justify-center rounded-xl w-full max-w-[40rem] overflow-auto ">
         @*  Left Side *@
@@ -84,7 +84,7 @@
     [Parameter] public EventCallback<NewOrEditedClothingItemDTO> SubmitForm { get; set; }
 
     public string SubmitButtonText = string.Empty;
-    NewOrEditedClothingItemDTO? newItem = null;
+    NewOrEditedClothingItemDTO newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
     MemoryStream? img = null;
 
 
@@ -106,15 +106,14 @@
     private void InitializeNewItem()
     {
         newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
-        if (Editing)
-        {
-            newItem.Name = EditedItem.Name;
-            newItem.Category = EditedItem.Category;
-            newItem.Season = EditedItem.Season;
-            newItem.Favourited = EditedItem.Favourited;
-            newItem.WearLocation = EditedItem.WearLocation;
-            newItem.DesiredTimesWornBeforeWash = EditedItem.DesiredTimesWornBeforeWash;
-        }
+        // Already checked this in OnParamatersSetAsync but this removes warnings
+        if (!Editing || EditedItem == null) return;
+        newItem.Name = EditedItem.Name;
+        newItem.Category = EditedItem.Category;
+        newItem.Season = EditedItem.Season;
+        newItem.Favourited = EditedItem.Favourited;
+        newItem.WearLocation = EditedItem.WearLocation;
+        newItem.DesiredTimesWornBeforeWash = EditedItem.DesiredTimesWornBeforeWash;
     }
 
     async Task UploadImage(InputFileChangeEventArgs e)

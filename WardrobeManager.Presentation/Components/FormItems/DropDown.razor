@@ -8,8 +8,8 @@
 @using WardrobeManager.Shared.Services.Implementation;
 @using WardrobeManager.Shared.Services.Interfaces;
 
-
 @* This does not work right now. I can't figure out how to use a generic enum type *@
+@*
 @typeparam TEnum where TEnum : Enum
 
 <InputSelect @bind-Value="SelectedValue" class="select rounded-md bg-primary text-primary-content" >
@@ -41,3 +41,5 @@
             }
         }
     }
+    
+*@

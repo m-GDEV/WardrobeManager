@@ -1,0 +1,21 @@
+﻿# Remove the line below if you want to inherit .editorconfig settings from higher directories
+root = true
+
+# C# files
+[*.cs]
+
+#### Core EditorConfig Options ####
+
+# Indentation and spacing
+indent_size = 4
+indent_style = space
+tab_width = 4
+
+#### .NET Coding Conventions ####
+
+#### Diagnostic configuration ####
+
+### Disable certain warnings: 
+
+# CA1000: Do not declare static members on generic types
+dotnet_diagnostic.CS1998.severity = none

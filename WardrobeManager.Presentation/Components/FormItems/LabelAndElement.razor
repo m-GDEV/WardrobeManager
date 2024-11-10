@@ -29,14 +29,13 @@ else {
 
 @code {
     [Parameter]
-    public string Label { get; set; }
+    public required string Label { get; set; }
 
     [Parameter]
     public string Orientation { get; set; } = "horizontal";
 
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
-    
-    [Parameter]
-    public string TextColorCss { get; set; }
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter] public string TextColorCss { get; set; } = string.Empty;
 }

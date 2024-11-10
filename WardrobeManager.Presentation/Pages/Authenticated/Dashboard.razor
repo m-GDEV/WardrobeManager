@@ -84,7 +84,9 @@
         StateHasChanged();
     }
 
+#pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
     private async Task ViewCallback(ServerClothingItem item)
+#pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
     {
         _navManager.NavigateTo($"/clothing?itemId={item.Id}");
     }

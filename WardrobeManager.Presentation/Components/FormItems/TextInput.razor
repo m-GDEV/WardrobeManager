@@ -6,11 +6,11 @@
 <input type="text" @bind="_value" @bind:event="oninput" placeholder="@Placeholder" class="outline-none border-none w-full @Css"/>
 
 @code {
-    [Parameter] public string Css { get; set; }
+    [Parameter] public string Css { get; set; } = string.Empty;
 
-    [Parameter] public string Placeholder { get; set; }
+    [Parameter] public string Placeholder { get; set; } = string.Empty;
 
-    [Parameter] public string Value { get; set; }
+    [Parameter] public required string Value { get; set; }
 
     [Parameter] public EventCallback<string> ValueChanged { get; set; }
 

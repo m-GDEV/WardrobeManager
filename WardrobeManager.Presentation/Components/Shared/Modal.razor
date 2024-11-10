@@ -18,12 +18,9 @@
 
 @code
 {
-    [Parameter]
-    public string Id { get; set; }
+    [Parameter] public required string Id { get; set; }
 
-    [Parameter]
-    public string MaxWidth { get; set; } = "70rem";
+    [Parameter] public string MaxWidth { get; set; } = "70rem";
 
-    [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    [Parameter] public required RenderFragment ChildContent { get; set; }
 }

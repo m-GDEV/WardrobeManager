@@ -19,6 +19,8 @@
             {
                 _notificationService.AddNotification(error, NotificationType.Error);
             }
+
+            return;
         }
         
         _navManager.NavigateTo("/dashboard");
