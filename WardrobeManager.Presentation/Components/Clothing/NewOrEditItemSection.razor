@@ -84,7 +84,7 @@
     [Parameter] public EventCallback<NewOrEditedClothingItemDTO> SubmitForm { get; set; }
 
     public string SubmitButtonText = string.Empty;
-    NewOrEditedClothingItemDTO newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
+    NewOrEditedClothingItemDTO newItem = MiscMethods.CreateDefaultNewOrEditedClothingItemDTO();
     MemoryStream? img = null;
 
 
@@ -105,7 +105,7 @@
     // Do this so it looks like the user is actually editing the original clothing item
     private void InitializeNewItem()
     {
-        newItem = _sharedService.CreateDefaultNewOrEditedClothingItemDTO();
+        newItem = MiscMethods.CreateDefaultNewOrEditedClothingItemDTO();
         // Already checked this in OnParamatersSetAsync but this removes warnings
         if (!Editing || EditedItem == null) return;
         newItem.Name = EditedItem.Name;

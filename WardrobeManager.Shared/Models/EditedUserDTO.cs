@@ -11,7 +11,9 @@ namespace WardrobeManager.Shared.Models;
 /// <summary> DTO that client sends to edit their user details</summary>
 public class EditedUserDTO
 {
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public EditedUserDTO() { } // ONLY FOR DESERIALIZER. THIS SHIT BETTER HAVE NO REFERENCES
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 
     public EditedUserDTO

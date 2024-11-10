@@ -1,10 +1,16 @@
 ﻿using System.Text.RegularExpressions;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Shared.Misc;
 
 public static class MiscMethods
 {
+    
+    public static NewOrEditedClothingItemDTO CreateDefaultNewOrEditedClothingItemDTO() {
+        return new NewOrEditedClothingItemDTO("My Favourite Green T-Shirt", ClothingCategory.TShirt, Season.Fall, false, WearLocation.HomeAndOutside, 5, "");
+    }
+    
     // This is by no means actually random
     public static string GenerateRandomId()
     {

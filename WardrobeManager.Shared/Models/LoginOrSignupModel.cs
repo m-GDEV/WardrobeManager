@@ -2,6 +2,6 @@
 
 public class LoginOrSignupModel
 {
-    public string email;
-    public string password;
+    public string email = string.Empty;
+    public string password = string.Empty;
 }

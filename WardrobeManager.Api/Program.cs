@@ -112,7 +112,12 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 {
     var userService = context.RequestServices.GetRequiredService<IUserService>();
 
-
+    
+    // -------------- !!IMPORTANT!! -------------
+    // Previously I was using Auth0 as an authentication provider.
+    // Coincidentally, Microsoft Identity and Auto0 used the NameIdentifier claim for a user
+    // So all the old code still works 100% fine. 
+    // For this reason I will not be modifying anything Auth0 at the moment
     var Auth0Id = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
     // only create the user if the consumer of the api is authorized

@@ -52,7 +52,7 @@
                         <select @bind="filterModel.Category" @bind:after="FetchClothing" class="select select-sm w-[10rem] rounded-md bg-primary text-primary-content">
                             @foreach (var category in Enum.GetValues<ClothingCategory>())
                             {
-                            <option value="@category">@MiscMethods.GetNameWithSpacesAndEmoji(category)</option>
+                                <option value="@category">@MiscMethods.GetNameWithSpacesAndEmoji(category)</option>
                             }
                         </select>
                     </LabelAndElement>
@@ -60,7 +60,7 @@
                         <select @bind="filterModel.Season" @bind:after="FetchClothing" class="select select-sm rounded-md w-[10rem] bg-primary text-primary-content">
                             @foreach (var season in Enum.GetValues<Season>())
                             {
-                            <option value="@season">@MiscMethods.GetNameWithSpacesAndEmoji(season)</option>
+                                <option value="@season">@MiscMethods.GetNameWithSpacesAndEmoji(season)</option>
                             }
                         </select>
                     </LabelAndElement>
@@ -98,7 +98,7 @@
                     <select required @bind="@filterModel.SortBy" @bind:after="FetchClothing" class="select select-sm rounded-md bg-primary-content text-primary">
                         @foreach (var sortBy in Enum.GetValues<SortByCategories>())
                         {
-                        <option value="@sortBy">@MiscMethods.GetNameWithSpacesFromEnum(sortBy)</option>
+                            <option value="@sortBy">@MiscMethods.GetNameWithSpacesFromEnum(sortBy)</option>
                         }
                     </select>
 
@@ -110,10 +110,10 @@
             <div class=" flex flex-col items-center gap-6 w-4/5  overflow-auto">
                 @if (clothing != null)
                 {
-                foreach (var item in clothing)
-                {
-                <ItemSummary Item="item" ViewCallback="ChangeSelectedItem" CallbackAfterEditAndDelete="FetchClothing"/>
-                }
+                    foreach (var item in clothing)
+                    {
+                        <ItemSummary Item="item" ViewCallback="ChangeSelectedItem" CallbackAfterEditAndDelete="FetchClothing"/>
+                    }
                 }
             </div>
             <p class="ody-text text-center pt-4">📜 Scroll for more!</p>
@@ -125,66 +125,66 @@
             <div class="rounded-xl bg-primary-content grow w-full p-4 text-primary flex flex-col  h-full overflow-auto">
                 @if (selectedItem == null)
                 {
-                @* https://stackoverflow.com/questions/32551291/in-css-flexbox-why-are-there-no-justify-items-and-justify-self-properties*@
-                @* Using my-auto cus there is no justify-self-center like self-center exists for the cross axis*@
-                <p class="subheading-text text-primary my-auto text-center">Press 'view' to see an item's details here!</p>
+                    @* https://stackoverflow.com/questions/32551291/in-css-flexbox-why-are-there-no-justify-items-and-justify-self-properties*@
+                    @* Using my-auto cus there is no justify-self-center like self-center exists for the cross axis*@
+                    <p class="subheading-text text-primary my-auto text-center">Press 'view' to see an item's details here!</p>
                 }
                 else
                 {
-                @* Info *@
-                <div class="shrink basis-auto">
-                    <p class="subtitle-text">
-                        @selectedItem.Name
-                        @if (selectedItem.Favourited)
-                        {
-                        <span class="pl-2 bi bi-stars text-xl text-accent"></span>
-                        }
-                    </p>
-                    <div class="flex flex-row gap-3 py-4">
-                        <span class="small-text badge badge-lg badge-secondary">@MiscMethods.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
-                        <span class="small-text badge badge-lg badge-accent">@MiscMethods.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
-                    </div>
-                    <LabelAndElement Label="Last Edited">
-                        <p>@selectedItem.DateUpdated.ToString("MMMM d, yyyy")</p>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Date Added">
-                        <p>@selectedItem.DateAdded.ToString("MMMM d, yyyy")</p>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Last Worn">
-                        <p>@selectedItem.LastWorn.ToString("MMMM d, yyyy")</p>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Desired Time Worn Before Wash">
-                        <p>@selectedItem.DesiredTimesWornBeforeWash</p>
-                    </LabelAndElement>
-                    <LabelAndElement Label="Total Times Worn">
-                        <p>@selectedItem.TimesWornTotal</p>
-                    </LabelAndElement>
-                    <div class="flex flex-row justify-center gap-5">
-                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
-                        <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wash())">Wash</button>
-                    </div>
+                    @* Info *@
+                    <div class="shrink basis-auto">
+                        <p class="subtitle-text">
+                            @selectedItem.Name
+                            @if (selectedItem.Favourited)
+                            {
+                                <span class="pl-2 bi bi-stars text-xl text-accent"></span>
+                            }
+                        </p>
+                        <div class="flex flex-row gap-3 py-4">
+                            <span class="small-text badge badge-lg badge-secondary">@MiscMethods.GetNameWithSpacesAndEmoji(selectedItem.Category)</span>
+                            <span class="small-text badge badge-lg badge-accent">@MiscMethods.GetNameWithSpacesAndEmoji(selectedItem.Season)</span>
+                        </div>
+                        <LabelAndElement Label="Last Edited">
+                            <p>@selectedItem.DateUpdated.ToString("MMMM d, yyyy")</p>
+                        </LabelAndElement>
+                        <LabelAndElement Label="Date Added">
+                            <p>@selectedItem.DateAdded.ToString("MMMM d, yyyy")</p>
+                        </LabelAndElement>
+                        <LabelAndElement Label="Last Worn">
+                            <p>@selectedItem.LastWorn.ToString("MMMM d, yyyy")</p>
+                        </LabelAndElement>
+                        <LabelAndElement Label="Desired Time Worn Before Wash">
+                            <p>@selectedItem.DesiredTimesWornBeforeWash</p>
+                        </LabelAndElement>
+                        <LabelAndElement Label="Total Times Worn">
+                            <p>@selectedItem.TimesWornTotal</p>
+                        </LabelAndElement>
+                        <div class="flex flex-row justify-center gap-5">
+                            <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wear())">Wear</button>
+                            <button class=" btn btn-sm btn-accent" @onclick="(async () => await Wash())">Wash</button>
+                        </div>
 
-                </div>
-                @* Image *@
-                @if (selectedItem.ImageGuid == null)
-                {
-                @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
-                <img src="@ProjectConstants.ApiUrl/images/faasdfj" class="h-full object-contain rounded-xl mx-auto mt-4"/>
-                }
-                else
-                {
-                <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl mx-auto mt-4"/>
-                }
+                    </div>
+                    @* Image *@
+                    @if (selectedItem.ImageGuid == null)
+                    {
+                        @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
+                        <img src="@ProjectConstants.ApiUrl/images/faasdfj" class="h-full object-contain rounded-xl mx-auto mt-4"/>
+                    }
+                    else
+                    {
+                        <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl mx-auto mt-4"/>
+                    }
                 }
             </div>
         </div>
     </div>
-    
+
 </div>
 
 @code {
     List<ServerClothingItem>? clothing = null;
-    EditContext FilterContext;
+    EditContext? FilterContext;
     public FilterModel filterModel = new FilterModel();
     public ServerClothingItem? selectedItem = null;
 
@@ -193,11 +193,11 @@
     protected override async Task OnInitializedAsync()
     {
         // An EditForm context allows me to define an EventCallback to run whenever a form element is changed
-        FilterContext = new(filterModel);
+        FilterContext = new EditContext(filterModel);
         FilterContext.OnFieldChanged += OnFieldChanged;
-        
-      var uri = _navManager.ToAbsoluteUri(_navManager.Uri);
-        
+
+        var uri = _navManager.ToAbsoluteUri(_navManager.Uri);
+
         // Look for query param that represents filterModel & try to deserialize & use it 
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("filterModel", out var givenFilterModel))
         {
@@ -210,27 +210,26 @@
             {
                 // ignore the invalid data 
             }
-            
         }
-        
+
 
         await FetchClothing();
-        
-        
+
+
         // Parse Query Params
         if (clothing == null)
         {
             return;
         }
-        
-        
+
+
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("itemId", out var itemId))
         {
             var specifiedItem = clothing.FirstOrDefault(s => s.Id == Convert.ToInt32(itemId));
             // If no item is found selectedItem will remain null and it will be as if nothing happened
             selectedItem = specifiedItem;
         }
-        
+
         await base.OnInitializedAsync();
     }
 
@@ -244,9 +243,9 @@
             // refresh the selected item (necessary to refresh because this does not get updated when the old clothing is replaced)
             if (selectedItem != null)
             {
-                selectedItem = clothing.FirstOrDefault(item => item.Id == selectedItem.Id);
+                selectedItem = clothing?.FirstOrDefault(item => item.Id == selectedItem.Id);
             }
-           
+
             // update URL query params so stats is persisted after page refresh
             var serializedFilterModel = JsonSerializer.Serialize(filterModel);
             await JsRuntime.InvokeVoidAsync("UpdateQueryParams", "filterModel", serializedFilterModel);
@@ -266,18 +265,21 @@
         await JsRuntime.InvokeVoidAsync("UpdateQueryParams", "itemId", selectedItem.Id);
     }
 
-    // REMOVE THESE, PUT THEM IN OTHER COMPOENNETj
     public async Task Wear()
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
-        await _apiService.Wear(selectedItem);
+        // I know this button can only be pressed when selectedItem is populated so disable null warning
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-forgiving
+        await _apiService.Wear(selectedItem!);
         await FetchClothing();
     }
 
     public async Task Wash()
     {
         // Just use selected item since there the wear/wash buttons will only show for that item
-        await _apiService.Wash(selectedItem);
+        // I know this button can only be pressed when selectedItem is populated so disable null warning
+        // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-forgiving
+        await _apiService.Wash(selectedItem!);
         await FetchClothing();
     }
 

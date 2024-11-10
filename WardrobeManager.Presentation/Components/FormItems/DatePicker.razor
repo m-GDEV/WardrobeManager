@@ -27,7 +27,6 @@
     [Parameter]
     public EventCallback<DateTime?> ToDateChanged { get; set; }
 
-    private DateTime? fromDateInternal;
     private DateTime? FromDateInternal
     {
         get => FromDate;
@@ -41,7 +40,6 @@
         }
     }
 
-    private DateTime? toDateInternal;
     private DateTime? ToDateInternal
     {
         get => ToDate;

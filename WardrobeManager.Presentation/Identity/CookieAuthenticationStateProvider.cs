@@ -98,11 +98,11 @@ namespace WardrobeManager.Presentation.Identity
             };
 
             // unknown error
-            return new FormResult
-            {
-                Succeeded = false,
-                ErrorList = defaultDetail
-            };
+            // return new FormResult
+            // {
+            //     Succeeded = false,
+            //     ErrorList = defaultDetail
+            // };
         }
 
         /// <summary>
