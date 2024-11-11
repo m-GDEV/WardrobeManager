@@ -26,5 +26,6 @@ public class LoggingSerivce : ILoggingService
         {
             _logger.LogInformation(log.Title + log.Description);
         }
+        await _context.SaveChangesAsync();
     }
 }

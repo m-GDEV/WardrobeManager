@@ -3,40 +3,39 @@
 services:
   wardrobe-manager-api:
     container_name: wardrobe-manager-api
-    build: 
+    build:
       context: .
       dockerfile: dockerfiles/WardrobeManager.Api.Dockerfile
       args:
         DOCKER_BUILDKIT: 1
         BUILDKIT_PROGRESS: plain
     environment:
-      - ASPNETCORE_URLS=http://:8000
+      - ASPNETCORE_URLS=http://*:8000
       - Logging__Loglevel__Default=Debug
       - Logging__Loglevel__Microsoft.AspNetCore=Debug
-    ports:  
-      - "6000:8000"
-    volumes: 
+    ports:
+      - "9000:8000"
+    volumes:
       - ./data:/data
     networks:
       wardrobe-manager:
-        
 
-#  wardrobe-manager-presentation:
-#    container_name: wardrobe-manager-presentation
-#    build:
-#      context: .
-#      dockerfile: dockerfiles/WardrobeManager.Presentation.Dockerfile
-#      args:
-#        DOCKER_BUILDKIT: 1
-#        BUILDKIT_PROGRESS: plain
-#    environment:
-#      - ASPNETCORE_URLS=http://:8001
-#      - Logging__Loglevel__Default=Debug
-#      - Logging__Loglevel__Microsoft.AspNetCore=Debug
-#    ports:
-#      - "6001:8001"
-#    networks:
-#      wardrobe-manager:
-        
+  wardrobe-manager-presentation:
+    container_name: wardrobe-manager-presentation
+    build:
+      context: .
+      dockerfile: dockerfiles/WardrobeManager.Presentation.Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1
+        BUILDKIT_PROGRESS: plain
+    environment:
+      - ASPNETCORE_URLS=http://*:8001
+      - Logging__Loglevel__Default=Debug
+      - Logging__Loglevel__Microsoft.AspNetCore=Debug
+    ports:
+      - "9001:8001"
+    networks:
+      wardrobe-manager:
+
 networks:
   wardrobe-manager:
