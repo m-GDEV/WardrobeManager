@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Api;
 
@@ -15,7 +17,12 @@ public class UserCreationMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
+        
         var userService = context.RequestServices.GetRequiredService<IUserService>();
+        var loggingService = context.RequestServices.GetRequiredService<ILoggingService>();
+
+        var log = new Log("Request received:", context.Request.ToString() ?? context.Request.Path, LogType.Info);
+        await loggingService.CreateDatabaseAndConsoleLog(log);
 
 
         // -------------- !!IMPORTANT!! -------------

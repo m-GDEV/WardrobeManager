@@ -3,5 +3,5 @@
 namespace WardrobeManager.Api.Services.Interfaces;
 public interface ILoggingService
 {
-    Task CreateDatabaseLog(Log log);
+    Task CreateDatabaseAndConsoleLog(Log log);
 }
