@@ -1,0 +1,28 @@
+# This file relies on the source code, it is only meant for development
+
+services:
+  wardrobe-manager-api:
+    container_name: wardrobe-manager-api
+    build: 
+      context: .
+      dockerfile: dockerfiles/WardrobeManager.Api.Dockerfile
+      args:
+        DOCKER_BUILDKIT: 1
+        BUILDKIT_PROGRESS: plain
+    environment:
+      - ASPNETCORE_URLS=http://localhost:6000
+      - Logging__Loglevel__Default=Debug
+      - Logging__Loglevel__Microsoft.AspNetCore=Debug
+    ports:  
+      - "8034:6000"
+    networks:
+      wardrobe-manager:
+        
+#  wardrobe-manager-presentation:
+#    container_name: wardrobe-manager-presentation
+#    build: WardrobeManager.Presentation/Dockerfile
+#    networks:
+#      wardrobe-manager:
+
+networks:
+  wardrobe-manager:

@@ -21,6 +21,11 @@ using WardrobeManager.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuration is setup by default to read from (in order of precedence) Environment Variables, appsettings.json
+// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
+string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
+string FrontendUrl = builder.Configuration["FrontendUrl"] ?? throw new Exception("Frontend: configuration value not set");
+
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
 // Configure app cookie (THIS ALLOWS THE BACKEND AND FRONTEND RUN ON DIFFERENT DOMAINS)
 //
@@ -45,14 +50,16 @@ builder.Services.AddIdentityCore<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     // this maps some Identity API endpoints like '/register' check Swagger for all of them
-    .AddApiEndpoints(); 
+    .AddApiEndpoints();
 
 // Add a CORS policy for the client
 builder.Services.AddCors(
     options => options.AddPolicy(
         "wasm",
-        policy => policy.WithOrigins([builder.Configuration["BackendUrl"] ?? "https://localhost:5001", 
-                builder.Configuration["FrontendUrl"] ?? "https://localhost:5002"])
+        policy => policy.WithOrigins([
+                BackendUrl,
+                FrontendUrl
+            ])
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials()));

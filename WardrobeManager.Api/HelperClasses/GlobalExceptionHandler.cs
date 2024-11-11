@@ -30,7 +30,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         _logger.LogError(ex.Message);
 
         var log = new Log(ex.Message, ex.ToString(), LogType.UncaughtException);
-        await _loggingService.CreateDatabaseLog(log);
+        await _loggingService.CreateDatabaseAndConsoleLog(log);
 
 
         context.Response.StatusCode = 500;

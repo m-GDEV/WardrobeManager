@@ -14,11 +14,15 @@ using static System.Net.WebRequestMethods;
 
 
 
-// No appsettings.json so just doing constants here
-string apiEndpoint = "https://localhost:7026";
 
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
+
+// Configuration is setup by default to read from (in order of precedence) Environment Variables, appsettings.json
+// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
+string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
+string FrontendUrl = builder.Configuration["FrontendUrl"] ?? throw new Exception("Frontend: configuration value not set");
+
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
@@ -35,17 +39,15 @@ builder.Services.AddScoped<AuthenticationStateProvider, CookieAuthenticationStat
 builder.Services.AddScoped(sp => (IAccountManagement)sp.GetRequiredService<AuthenticationStateProvider>());
 
 // set base address for default host
-builder.Services.AddScoped(sp =>
-    new HttpClient { BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "https://localhost:5002") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(BackendUrl) });
 
 // configure client for auth interactions
-builder.Services.AddHttpClient(
-    "Auth",
-    opt => opt.BaseAddress = new Uri(builder.Configuration["BackendUrl"] ?? "https://localhost:5001"))
+builder.Services.AddHttpClient("Auth", opt => 
+        opt.BaseAddress = new Uri(BackendUrl))
     .AddHttpMessageHandler<CookieHandler>();
 
 // My Services
-builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(apiEndpoint, sp.GetRequiredService<IHttpClientFactory>()));
+builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 
