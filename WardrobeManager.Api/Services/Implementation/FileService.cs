@@ -18,7 +18,7 @@ public class FileService : IFileService
 
     public string GetDefaultUploadPath()
     {
-        string uploadsFolderPath = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+        string uploadsFolderPath = Path.Combine("/data/images/uploads");
 
         // 3. Create the folder if it doesn't exist:
         Directory.CreateDirectory(uploadsFolderPath); // sneaking it in so i don't have to later

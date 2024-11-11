@@ -10,19 +10,33 @@ services:
         DOCKER_BUILDKIT: 1
         BUILDKIT_PROGRESS: plain
     environment:
-      - ASPNETCORE_URLS=http://localhost:6000
+      - ASPNETCORE_URLS=http://:8000
       - Logging__Loglevel__Default=Debug
       - Logging__Loglevel__Microsoft.AspNetCore=Debug
     ports:  
-      - "8034:6000"
+      - "6000:8000"
+    volumes: 
+      - ./data:/data
     networks:
       wardrobe-manager:
         
+
 #  wardrobe-manager-presentation:
 #    container_name: wardrobe-manager-presentation
-#    build: WardrobeManager.Presentation/Dockerfile
+#    build:
+#      context: .
+#      dockerfile: dockerfiles/WardrobeManager.Presentation.Dockerfile
+#      args:
+#        DOCKER_BUILDKIT: 1
+#        BUILDKIT_PROGRESS: plain
+#    environment:
+#      - ASPNETCORE_URLS=http://:8001
+#      - Logging__Loglevel__Default=Debug
+#      - Logging__Loglevel__Microsoft.AspNetCore=Debug
+#    ports:
+#      - "6001:8001"
 #    networks:
 #      wardrobe-manager:
-
+        
 networks:
   wardrobe-manager:

@@ -43,7 +43,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorizationBuilder();
 
 // add db context
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite("Data Source=database.db"));
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite("Data Source=/data/database.db"));
 
 // Add identify and opt-in to endpoints 
 builder.Services.AddIdentityCore<AppUser>()

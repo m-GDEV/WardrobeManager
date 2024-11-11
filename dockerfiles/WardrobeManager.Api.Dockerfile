@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 
-RUN echo "got here"
+#RUN echo "got here"
 # This copy stuff will only work when the docker build context is one level higher than where this dockerfile is located. You can do this with the docker-compose.yml
 COPY  ./WardrobeManager.Shared /src/WardrobeManager.Shared/
 COPY  ./WardrobeManager.Api /src/WardrobeManager.Api/
