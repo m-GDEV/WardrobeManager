@@ -5,10 +5,14 @@ namespace WardrobeManager.Api.Services.Implementation;
 public class FileService : IFileService
 {
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IConfiguration _config;
+    private readonly IDataDirectoryService _dataDirectoryService;
 
-    public FileService(IWebHostEnvironment webHostEnvironment)
+    public FileService(IWebHostEnvironment webHostEnvironment, IConfiguration config, IDataDirectoryService dataDirectoryService)
     {
         _webHostEnvironment = webHostEnvironment;
+        _config = config;
+        _dataDirectoryService = dataDirectoryService;
     }
 
     public string ParseGuid(Guid guid)
@@ -18,8 +22,8 @@ public class FileService : IFileService
 
     public string GetDefaultUploadPath()
     {
-        string uploadsFolderPath = Path.Combine("/data/images/uploads");
-
+        string uploadsFolderPath = Path.Combine(_dataDirectoryService.GetImagesDirectory(), "uploads");
+        
         // 3. Create the folder if it doesn't exist:
         Directory.CreateDirectory(uploadsFolderPath); // sneaking it in so i don't have to later
 

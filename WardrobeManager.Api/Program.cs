@@ -42,9 +42,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 */
 builder.Services.AddAuthorizationBuilder();
 
-// add db context
-builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlite("Data Source=/data/database.db"));
-
 // Add identify and opt-in to endpoints 
 builder.Services.AddIdentityCore<AppUser>()
     .AddRoles<IdentityRole>()
@@ -81,6 +78,16 @@ builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
+builder.Services.AddSingleton<IDataDirectoryService, DataDirectoryService>();
+
+// add db context
+builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>
+{
+    var dataDirectoryService = serviceProvider.GetRequiredService<IDataDirectoryService>();
+    var dbPath = Path.Combine(dataDirectoryService.GetDatabaseDirectory(), "database.db");
+    options.UseSqlite($"Data Source={dbPath}");
+});
+
 
 var app = builder.Build();
 
