@@ -365,8 +365,11 @@ FodyWeavers.xsd
 /WardrobeManager.Api/database.dat-shm
 /WardrobeManager.Api/database.dat-wal
 .idea
-        *.Zone.Identifier*
+*.Zone.Identifier*
 /WardrobeManager.Api/wwwroot/uploads
 /WardrobeManager.Api/database.db
 /WardrobeManager.Api/database.db-shm
 /WardrobeManager.Api/database.db-wal
+
+# used for docker-compose testing
+data/
