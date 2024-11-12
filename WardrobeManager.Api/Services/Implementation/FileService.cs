@@ -4,15 +4,13 @@ namespace WardrobeManager.Api.Services.Implementation;
 
 public class FileService : IFileService
 {
-    private readonly IWebHostEnvironment _webHostEnvironment;
-    private readonly IConfiguration _config;
     private readonly IDataDirectoryService _dataDirectoryService;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public FileService(IWebHostEnvironment webHostEnvironment, IConfiguration config, IDataDirectoryService dataDirectoryService)
+    public FileService(IDataDirectoryService dataDirectoryService, IWebHostEnvironment webHostEnvironment)
     {
-        _webHostEnvironment = webHostEnvironment;
-        _config = config;
         _dataDirectoryService = dataDirectoryService;
+        _webHostEnvironment = webHostEnvironment;
     }
 
     public string ParseGuid(Guid guid)
@@ -23,10 +21,6 @@ public class FileService : IFileService
     public string GetDefaultUploadPath()
     {
         string uploadsFolderPath = Path.Combine(_dataDirectoryService.GetImagesDirectory(), "uploads");
-        
-        // 3. Create the folder if it doesn't exist:
-        Directory.CreateDirectory(uploadsFolderPath); // sneaking it in so i don't have to later
-
         return uploadsFolderPath;
     }
 
@@ -51,7 +45,7 @@ public class FileService : IFileService
     public async Task<byte[]> GetImage(string guid)
     {
         string path = Path.Combine(GetDefaultUploadPath(), guid);
-        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.jpg");
+        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.png");
 
         if (File.Exists(path))
         {

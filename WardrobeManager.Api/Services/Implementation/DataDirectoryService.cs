@@ -31,10 +31,15 @@ public class DataDirectoryService : IDataDirectoryService
         Directory.CreateDirectory(path);
         return path;
     }
-
     public string GetImagesDirectory()
     {
         var path = Path.Combine(_baseDirectory, "images");
+        Directory.CreateDirectory(path);
+        return path;
+    }
+    public string GetUploadsDirectory()
+    {
+        var path = Path.Combine(GetImagesDirectory(), "uploads");
         Directory.CreateDirectory(path);
         return path;
     }
