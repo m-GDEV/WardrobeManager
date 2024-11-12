@@ -21,3 +21,5 @@ COPY --from=publish /app/publish .
 RUN mkdir -p /data
 
 ENTRYPOINT ["dotnet", "WardrobeManager.Api.dll"]
+
+EXPOSE 8080
