@@ -8,13 +8,13 @@
 
     string _imagePath = string.Empty;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnParametersSetAsync()
     {
         // the way my api controller matches routes you need to supply a path for /images/{image_id}
         // because some clothing items can have no image the Guid with therefore be null and /images/ will be called which doesn't trigger the api
         _imagePath = ImageGuid.ToString() ?? "fakepath";
 
-        await base.OnAfterRenderAsync(firstRender);
+        await base.OnParametersSetAsync();
     }
 
 }
