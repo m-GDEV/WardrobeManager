@@ -20,8 +20,6 @@ services:
     build:
       context: .
       dockerfile: ./docker/WardrobeManager.Presentation/Dockerfile
-    environment:
-      - BackendUrl=http://localhost:9000
     ports:
       - "9001:80"
     volumes: 
