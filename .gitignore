@@ -361,6 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Added by Musa
 /WardrobeManager.Api/database.dat
 /WardrobeManager.Api/database.dat-shm
 /WardrobeManager.Api/database.dat-wal
