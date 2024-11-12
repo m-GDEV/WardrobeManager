@@ -13,15 +13,7 @@
     @* Left section *@
     <div class="flex flex-row gap-5 grow items-center">
         <div class="w-1/5">
-            @if (Item.ImageGuid == null)
-            {
-                @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
-                <img src="@ProjectConstants.ApiUrl/images/blahblah" class="rounded-lg"/>
-            }
-            else
-            {
-                <img src="@ProjectConstants.ApiUrl/images/@Item.ImageGuid" class="rounded-lg"/>
-            }
+            <Image ImageGuid="Item.ImageGuid" Css="rounded-lg" />
         </div>
         @* Text part *@
         <div class="flex flex-col justify-between grow h-full gap-5">

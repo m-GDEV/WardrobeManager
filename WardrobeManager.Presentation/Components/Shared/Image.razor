@@ -1,0 +1,20 @@
+@namespace WardrobeManager.Presentation.Components.Shared
+
+<img src="@_config["BackendUrl"]/images/@_imagePath" class="@Css"/>
+
+@code {
+    [Parameter] public required Guid? ImageGuid { get; set; }
+    [Parameter] public required string Css { get; set; }
+
+    string _imagePath = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        // the way my api controller matches routes you need to supply a path for /images/{image_id}
+        // because some clothing items can have no image the Guid with therefore be null and /images/ will be called which doesn't trigger the api
+        _imagePath = ImageGuid.ToString() ?? "fakepath";
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}

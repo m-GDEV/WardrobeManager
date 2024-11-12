@@ -166,15 +166,7 @@
 
                     </div>
                     @* Image *@
-                    @if (selectedItem.ImageGuid == null)
-                    {
-                        @* When ImageGuid is null it sends a request to this endpoint: "/images/". This does not go to the right controller so i'm doing this for now*@
-                        <img src="@ProjectConstants.ApiUrl/images/faasdfj" class="h-full object-contain rounded-xl mx-auto mt-4"/>
-                    }
-                    else
-                    {
-                        <img src="@ProjectConstants.ApiUrl/images/@selectedItem.ImageGuid" class="h-full object-contain rounded-xl mx-auto mt-4"/>
-                    }
+                    <Image ImageGuid="selectedItem.ImageGuid" Css="h-full object-contain rounded-xl mx-auto mt-4" />
                 }
             </div>
         </div>
