@@ -25,6 +25,8 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
 string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
 
+Console.WriteLine("Hello man" + BackendUrl);
+
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 

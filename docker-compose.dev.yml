@@ -7,12 +7,9 @@ services:
       context: .
       dockerfile: ./docker/WardrobeManager.Api/Dockerfile
     environment:
-      - ASPNETCORE_URLS=http://*:8000
       - FrontendUrl=http://localhost:9001
-#      - Logging__Loglevel__Default=Debug
-#      - Logging__Loglevel__Microsoft.AspNetCore=Debug
     ports:
-      - "9000:8000"
+      - "9004:8080"
     volumes:
       - ./data:/data
     networks:
@@ -29,6 +26,7 @@ services:
       - "9001:80"
     volumes: 
       - ./docker/WardrobeManager.Presentation/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/appsettings.Production.json:/usr/share/nginx/html/appsettings.Production.json
     networks:
       wardrobe-manager:
 
