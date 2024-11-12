@@ -22,7 +22,9 @@
 
             return;
         }
-        
+
+        // For some reason blazor shows the NotAuthorized thing if i redirect too fast
+        await Task.Delay(1000);
         _navManager.NavigateTo("/dashboard");
     }
 

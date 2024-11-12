@@ -1,9 +1,15 @@
-﻿@page "/test"
+﻿@inject ILogger<Test> _logger
+@inject IConfiguration _config
+
+@page "/test"
+@using Microsoft.Extensions.Configuration
+@using Microsoft.Extensions.Logging
 
 <div class="grow p-4  bg-purple-500 overflow-hidden flex flex-col">
     <h1 class=" heading-text h-2/5 " >
-            dool cool stufdff!
-        </h1>
+        dcool stufdff!
+    </h1>
+    <p class="text-[10rem] text-red-500">test: @f</p>
     <div class="grow flex  flex-row items-center justify-between border border-white ">
         <div class="basis-1/2 border-green-500 border bg-red-500 h-full"></div>
         <div class="basis-full border-green-500 border bg-green-900 h-full flex flex-row items-center ">
@@ -37,5 +43,16 @@
  *@
 
 @code {
+    string f = string.Empty;
+    
+    protected override void OnInitialized()
+    {
+        f = $"{_config["BackendUrl"] ?? "terrifier 3 was a great movie"}";
+        _logger.LogCritical(f);        
+        Console.WriteLine(f);
+        StateHasChanged();
+         
+        base.OnInitialized();
+    }
 
 }

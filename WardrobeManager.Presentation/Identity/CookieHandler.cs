@@ -1,4 +1,7 @@
 
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 
 namespace WardrobeManager.Presentation.Identity;
@@ -21,5 +24,7 @@ public class CookieHandler : DelegatingHandler
         request.Headers.Add("X-Requested-With", ["XMLHttpRequest"]);
 
         return base.SendAsync(request, cancellationToken);
+        
+        
     }
 }

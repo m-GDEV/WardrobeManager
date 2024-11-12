@@ -1,3 +1,5 @@
+using System;
+using System.Net.Http;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WardrobeManager.Presentation;
@@ -8,6 +10,7 @@ using WardrobeManager.Shared.Services.Interfaces;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.Extensions.DependencyInjection;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Shared.Models;
 using static System.Net.WebRequestMethods;
@@ -21,7 +24,6 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 // Configuration is setup by default to read from (in order of precedence) Environment Variables, appsettings.json
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
 string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
-string FrontendUrl = builder.Configuration["FrontendUrl"] ?? throw new Exception("Frontend: configuration value not set");
 
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
