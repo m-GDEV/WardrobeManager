@@ -14,8 +14,8 @@ on:
     branches: ["master"]
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+  # REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}-api
 
 jobs:
   push_to_registry:
@@ -40,7 +40,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
-          images: ${{ secrets.DOCKER_USERNAME }}/wardrobe-manager
+          images: ${{ secrets.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
 
       - name: Build and push Docker image
         id: push
