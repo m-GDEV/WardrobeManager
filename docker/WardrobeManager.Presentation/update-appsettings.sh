@@ -1,0 +1,1 @@
+cat /usr/share/nginx/html/appsettings.Production.json | jq --arg newValue "$(printenv BackendUrl)" '.BackendUrl = $newValue' > /usr/share/nginx/html/appsettings.Production.json

@@ -1,8 +1,8 @@
-# This file relies on the source code, it is only meant for development
-
 services:
   wardrobe-manager-api:
+    image: tmclncy/wardrobemanager-api:latest
     container_name: wardrobe-manager-api
+    
     build:
       context: .
       dockerfile: ./docker/WardrobeManager.Api/Dockerfile
