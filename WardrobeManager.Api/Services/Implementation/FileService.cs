@@ -39,7 +39,7 @@ public class FileService : IFileService
     public async Task<byte[]> GetImage(string guid)
     {
         string path = Path.Combine(_dataDirectoryService.GetUploadsDirectory(), guid);
-        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.png");
+        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.jpg");
 
         if (File.Exists(path))
         {
