@@ -12,7 +12,8 @@
     {
         // the way my api controller matches routes you need to supply a path for /images/{image_id}
         // because some clothing items can have no image the Guid with therefore be null and /images/ will be called which doesn't trigger the api
-        _imagePath = string.IsNullOrEmpty(ImageGuid.ToString()) ? "fakepath" : ImageGuid.ToString();
+        // suppress nullable error because it doesn't realize i'm already checking it
+        _imagePath = (string.IsNullOrEmpty(ImageGuid.ToString()) ? "fakepath" : ImageGuid.ToString())!;
 
         await base.OnParametersSetAsync();
     }
