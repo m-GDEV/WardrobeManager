@@ -7,4 +7,5 @@ public interface IDataDirectoryService
     public string GetBaseDataDirectory();
     public string GetDatabaseDirectory();
     public string GetImagesDirectory();
+    public string GetUploadsDirectory();
 }

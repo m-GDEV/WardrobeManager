@@ -18,12 +18,6 @@ public class FileService : IFileService
         return guid.ToString().Replace("{", "").Replace("}", "");
     }
 
-    public string GetDefaultUploadPath()
-    {
-        string uploadsFolderPath = Path.Combine(_dataDirectoryService.GetImagesDirectory(), "uploads");
-        return uploadsFolderPath;
-    }
-
     public async Task SaveImage(Guid? guid, string ImageBase64)
     {
         // we check on the client, but if the image is larger than our limit
@@ -37,14 +31,14 @@ public class FileService : IFileService
 
         byte[] imageBytes = Convert.FromBase64String(ImageBase64);
 
-        string path = Path.Combine(GetDefaultUploadPath(), ParseGuid(properGuid));
+        string path = Path.Combine(_dataDirectoryService.GetUploadsDirectory(), ParseGuid(properGuid));
 
         await File.WriteAllBytesAsync(path, imageBytes);
     }
 
     public async Task<byte[]> GetImage(string guid)
     {
-        string path = Path.Combine(GetDefaultUploadPath(), guid);
+        string path = Path.Combine(_dataDirectoryService.GetUploadsDirectory(), guid);
         string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.png");
 
         if (File.Exists(path))
