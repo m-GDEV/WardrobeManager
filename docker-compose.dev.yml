@@ -11,7 +11,7 @@ services:
     ports:
       - "9005:8080"
     volumes:
-      - ./data2:/data
+      - ./data:/data
 
   wardrobe-manager-presentation:
     container_name: wardrobe-manager-presentation
