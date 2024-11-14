@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 
 namespace WardrobeManager.Shared.Models;
+
+// As of right now, the AppUser class is only used for authentication. 
+// The User class is used to connect an AppUser with User and give them a profile in the app
+// In the future it might be a good idea to merge these
 public class User(string Auth0Id)
 {
     // Because the user is created solely when we only know their Auth0Id,
