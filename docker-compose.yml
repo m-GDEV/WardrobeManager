@@ -2,10 +2,6 @@ services:
   wardrobe-manager-api:
     image: tmclncy/wardrobemanager-api:latest
     container_name: wardrobe-manager-api
-    
-    build:
-      context: .
-      dockerfile: ./docker/WardrobeManager.Api/Dockerfile
     environment:
       - FrontendUrl=http://localhost:9001
     ports:
@@ -16,10 +12,8 @@ services:
       wardrobe-manager:
 
   wardrobe-manager-presentation:
+    image: tmclncy/wardrobemanager-presentation:latest
     container_name: wardrobe-manager-presentation
-    build:
-      context: .
-      dockerfile: ./docker/WardrobeManager.Presentation/Dockerfile
     environment:
       - BackendUrl=http://localhost:9005
     ports:
