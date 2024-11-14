@@ -8,8 +8,6 @@ services:
       - "9005:8080"
     volumes:
       - ./data:/data
-    networks:
-      wardrobe-manager:
 
   wardrobe-manager-presentation:
     image: tmclncy/wardrobemanager-presentation:latest
@@ -18,8 +16,3 @@ services:
       - BackendUrl=http://localhost:9005
     ports:
       - "9001:80"
-    networks:
-      wardrobe-manager:
-
-networks:
-  wardrobe-manager:
