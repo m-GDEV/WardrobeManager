@@ -56,7 +56,7 @@
             @* (editing item) show old image if it exists *@
             else if (EditedItem is not null)
             {
-                <Image ImageGuid="EditedItem.ImageGuid" Css="w-5/6 object-contain rounded-xl" />
+                <Image ImageGuid="EditedItem.ImageGuid" Css="w-5/6 object-contain rounded-xl"/>
             }
             @* show default image if neither *@
             else
@@ -95,7 +95,7 @@
         {
             throw new Exception("You cannot use this component in edit mode without supplying an item to Edit!");
         }
-        
+
         InitializeNewItem();
 
         SubmitButtonText = Editing == true ? "Edit Clothing Item" : "Add Clothing Item";
@@ -118,12 +118,20 @@
 
     async Task UploadImage(InputFileChangeEventArgs e)
     {
-        img = new MemoryStream();
-        await e.File.OpenReadStream(maxAllowedSize: 1024 * 5000).CopyToAsync(img);
+        try
+        {
+            img = new MemoryStream();
+            // 5MB max file size
+            await e.File.OpenReadStream(maxAllowedSize: 1024 * 5000).CopyToAsync(img);
 
-        newItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
+            newItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
 
-        if (newItem.ImageBase64 == string.Empty)
+            if (newItem.ImageBase64 == string.Empty)
+            {
+                _notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
+            }
+        }
+        catch (IOException)
         {
             _notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
         }
