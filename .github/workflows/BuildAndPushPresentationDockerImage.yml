@@ -3,6 +3,7 @@ name: Publish WardrobeManager.Presentation Docker image
 on:
   release:
     branches: ["master"]
+    types: [published]
 
 env:
   IMAGE_NAME: wardrobemanager-presentation
