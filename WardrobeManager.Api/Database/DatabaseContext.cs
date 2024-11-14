@@ -13,7 +13,7 @@ public class DatabaseContext : IdentityDbContext<AppUser>
     }
 
     public DbSet<AppUser> AppUsers { get; set; }
-    public DbSet<User> Users { get; set; }
+    public new DbSet<User> Users { get; set; }
     public DbSet<ServerClothingItem> ClothingItems { get; set; }
     public DbSet<Log> Logs { get; set; }
 
