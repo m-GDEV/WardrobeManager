@@ -22,8 +22,8 @@
             return;
         }
         
-        // For some reason blazor shows the NotAuthorized thing if i redirect too fast
-        await Task.Delay(1000);
-        _navManager.NavigateTo("/dashboard");
+        // The way the current Auth system works the user is not automatically signed in after making an account
+        _notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
+        _navManager.NavigateTo("/login");
     }
 }
