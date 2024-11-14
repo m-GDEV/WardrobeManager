@@ -44,7 +44,7 @@ public static class MiscMethods
 
             Season.FallAndWinter => "🍂❄️",
             Season.WinterAndSpring => "❄️🌸",
-            Season.SprintAndSummer => "🌸☀️",
+            Season.SpringAndSummer => "🌸☀️",
             Season.SummerAndFall => "☀️🍂",
             _ => ""
         };

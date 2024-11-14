@@ -2,6 +2,7 @@
 
 public enum Season
 {
+    None,
     Fall,
     Winter,
     Spring,
@@ -10,8 +11,7 @@ public enum Season
 
     FallAndWinter,
     WinterAndSpring,
-    SprintAndSummer,
+    SpringAndSummer,
     SummerAndFall,
 
-    None
 }

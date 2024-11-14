@@ -45,13 +45,13 @@ public class ServerClothingItem
 
     // ---- User modifies -----
     public string Name { get; set; }
-    public ClothingCategory Category { get; set; }
-    public Season Season { get; set; }
+    public ClothingCategory Category { get; set; } = ClothingCategory.None;
+    public Season Season { get; set; } = Season.None;
 
-    public WearLocation WearLocation { get; set; }
+    public WearLocation WearLocation { get; set; } = WearLocation.None;
 
     // modified in spirit by the user, they change the image. program assigns guid
-    public Guid? ImageGuid { get; set; }
+    public Guid? ImageGuid { get; set; } = null;
     public bool Favourited { get; set; } = false;
 
     // # of times the user wants to wear a piece of clothing before washing it
