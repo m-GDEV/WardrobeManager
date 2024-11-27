@@ -43,7 +43,10 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorizationBuilder();
 
 // Add identify and opt-in to endpoints 
-builder.Services.AddIdentityCore<AppUser>()
+builder.Services.AddIdentityCore<AppUser>(options =>
+    {
+        options.User.RequireUniqueEmail = true;
+    })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<DatabaseContext>()
     // this maps some Identity API endpoints like '/register' check Swagger for all of them

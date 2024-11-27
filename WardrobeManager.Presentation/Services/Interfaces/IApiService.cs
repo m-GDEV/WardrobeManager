@@ -19,4 +19,10 @@ public interface IApiService
 
     // Misc 
     Task<HttpResponseMessage> CheckApiConnection();
+    
+    // User Management
+    Task<bool> DoesAdminUserExist();
+    
+    // bool: succeeded?, string: text description
+    Task<(bool, string)> CreateAdminUserIfMissing(AdminUserCredentials credentials);
 }

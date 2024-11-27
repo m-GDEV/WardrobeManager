@@ -39,47 +39,5 @@ public class DatabaseInitializer
             }
         }
 
-        // User Creation
-        foreach (var user in seedUsers)
-        {
-            var hashed = password.HashPassword(user, "password123");
-            user.PasswordHash = hashed;
-            await userStore.CreateAsync(user);
-
-            if (user.Email is not null)
-            {
-                var appUser = await userManager.FindByEmailAsync(user.Email);
-
-                if (appUser is not null && user.RoleList is not null)
-                {
-                    await userManager.AddToRolesAsync(appUser, user.RoleList);
-                }
-            }
-        }
-
     }
-
-    private class SeedUser : AppUser
-    {
-        public string[]? RoleList { get; set; }
-    }
-    private static readonly IEnumerable<SeedUser> seedUsers =
-    [
-        new SeedUser()
-        {
-            Email = "leela@contoso.com", 
-            NormalizedEmail = "LEELA@CONTOSO.COM", 
-            NormalizedUserName = "LEELA@CONTOSO.COM", 
-            RoleList = [ "Admin", "User" ], 
-            UserName = "leela@contoso.com"
-        },
-        new SeedUser()
-        {
-            Email = "harry@contoso.com",
-            NormalizedEmail = "HARRY@CONTOSO.COM",
-            NormalizedUserName = "HARRY@CONTOSO.COM",
-            RoleList = [ "User" ],
-            UserName = "harry@contoso.com"
-        },
-    ];
 }

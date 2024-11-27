@@ -22,6 +22,10 @@ public class NotificationService : INotificationService
         }
     }
 
+    public void AddNotification(string message)
+    {
+        AddNotification(message, NotificationType.Info);
+    }
     public void AddNotification(string message, NotificationType type)
     {
         lock (_lock)

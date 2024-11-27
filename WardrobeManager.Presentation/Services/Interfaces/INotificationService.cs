@@ -11,6 +11,7 @@ public interface INotificationService
 
     event Action OnChange;
 
+    void AddNotification(string message);
     void AddNotification(string message, NotificationType type);
     void RemoveNotification(NotificationMessage message);
 }

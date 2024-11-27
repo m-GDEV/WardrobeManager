@@ -1,6 +1,9 @@
 using System.Diagnostics;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Database.Models;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
@@ -10,10 +13,14 @@ namespace WardrobeManager.Api.Services.Implementation;
 public class UserService : IUserService
 {
     private readonly DatabaseContext _context;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly RoleManager<IdentityRole> _roleManager;
 
-    public UserService(DatabaseContext databaseContext)
+    public UserService(DatabaseContext databaseContext, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
     {
         _context = databaseContext;
+        _userManager = userManager;
+        _roleManager = roleManager;
     }
 
     // Auth0Id methods (used in middleware)
@@ -82,5 +89,69 @@ public class UserService : IUserService
 
         _context.Users.Remove(dbRecord);
         await _context.SaveChangesAsync();
+    }
+
+    // These methods are called by the frontend during the onboarding process
+    
+    // REVIEW: performance can likely be improved
+    public async Task<bool> DoesAdminUserExist()
+    {
+        var users = await _userManager.Users.ToListAsync();
+        
+        var adminRoleExists = await _roleManager.RoleExistsAsync("Admin");
+        Debug.Assert(adminRoleExists == true, "Admin role should exist (created in db init)!");
+
+        foreach (var user in users)
+        {
+            if (await _userManager.IsInRoleAsync(user, "Admin"))
+            {
+                return true;
+            }   
+        }
+
+        return false;
+    }
+
+    public async Task<(bool, string)> CreateAdminIfMissing(string email, string password)
+    {
+        if (await DoesAdminUserExist())
+        {
+            return (false,"Admin user already exists!");
+        }
+        
+        var hasher = new PasswordHasher<AppUser>();
+            
+        var adminRoleExists = await _roleManager.RoleExistsAsync("Admin");
+        Debug.Assert(adminRoleExists == true, "Admin role should exist (created in db init)!");
+
+        var user = new AppUser
+        {
+            Email = email,
+            NormalizedEmail = email.ToUpper(), 
+            UserName = email.ToUpper(),
+            NormalizedUserName = email.ToUpper(), 
+        };
+
+        var hashed = hasher.HashPassword(user, password);
+        user.PasswordHash = hashed;
+        var createResult = await _userManager.CreateAsync(user);
+
+        if (createResult.Succeeded is false)
+        {
+            var errors = createResult.Errors.Select(e => e.Description).ToList();
+            return (false, string.Join(" ", errors));
+        }
+        
+        var roleResult = await _userManager.AddToRoleAsync(user, "Admin");
+
+        if (roleResult.Succeeded is false)
+        {
+            var errors = roleResult.Errors.Select(e => e.Description).ToList();
+            return (false, string.Join(" ", errors));
+        }
+            
+        await _context.SaveChangesAsync();
+
+        return (true, "Admin user created!");
     }
 }
