@@ -84,7 +84,56 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To be completed! fixlater
+### Docker
+
+To deploy this application yourself (self-hosted) you can use docker with an environment file to configure the app.
+
+`docker-compose.yml` (this is likely out of date, check [here](https://github.com/m-GDEV/WardrobeManager/tree/master/docker-compose.yml) for the most up to date version):
+
+```yml
+services:
+  wardrobe-manager-api:
+    image: tmclncy/wardrobemanager-api:latest
+    container_name: wardrobe-manager-api
+    env_file:
+      ./docker/config.env # change this to the right location
+    ports:
+      - "9000:8080"
+    volumes:
+      - ./data:/data # you may use a local bind-mount or an actual docker volume
+
+  wardrobe-manager-presentation:
+    image: tmclncy/wardrobemanager-presentation:latest
+    container_name: wardrobe-manager-presentation
+    env_file:
+      ./docker/config.env # change this to the right location
+    ports:
+      - "9001:80"
+```
+
+`config.env` (this is likely out of date, check [here](https://github.com/m-GDEV/WardrobeManager/tree/master/docker-compose.yml) for the most up to date version)
+```dotenv
+# Wardrobe Manager Example Configuration File
+
+# These settings will afffect the API and Presentation
+
+# Url of WardrobeManager.Presentation
+WM_FRONTEND_URL=https://localhost:9001
+
+# Url of WardrobeManager.Api
+WM_BACKEND_URL=https://localhost:9000
+
+# Maximum image upload size 
+WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB=5
+
+# Persistent storage location (do not change if running in docker, change docker volume mount instead)
+WM_DATA_DIRECTORY=/data
+
+# Not prefix with 'WM_' as Blazor WASM applications do not have server logs 
+# https://learn.microsoft.com/en-us/aspnet/core/fundamentals/logging
+# Allowed Levels: Trace, Debug, Information, Warning, Error, Critical, None
+Logging__LogLevel__Default=Information
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -111,16 +160,16 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 - [x] Login with multiple user accounts
 - [x] Customize UI using over 20+ different themes
 - [x] Advanced filtering & searching of clothing items
+- [x] Ability to deploy application with Docker Compose (update readme)
+- [x] Use native authentication, do not rely on Auth0
 - [ ] Figure out how to sync client & server versions
 - [ ] Responsive UI
 - [ ] Write tests
-- [ ] Ability to deploy application with Docker Compose (update readme)
 - [ ] Outfits
   - [ ] Create "outfits", collection of multiple clothing items
   - [ ] Generate outfits dynamically
   - [ ] Group outfits together by colour theme (neutral, vibrant, etc)
   - [ ] Dynamically generate outfits based on color theme (neutral, vibrant, etc)
-- [ ] Use native authentication, do not rely on Auth0
 - [ ] Generate thumbnails & use them
 - [ ] Image processing
   - [ ] Use image processing to detect most common color in image of clothing item
