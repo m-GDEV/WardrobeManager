@@ -66,7 +66,7 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 
 <!-- GETTING STARTED -->
-# Installaion
+# Installation
 
 ### Docker
 
