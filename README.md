@@ -19,7 +19,7 @@
   <p align="center">
     Welcome to the world’s first ever all-in-one wardrobe management solution
     <br />
-    <a href="https://github.com/m-GDEV/WardrobeManager/tree/master/docs"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/m-GDEV/WardrobeManager/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/m-GDEV/WardrobeManager">View Demo</a>
@@ -66,9 +66,7 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 
 <!-- GETTING STARTED -->
-# Getting Started
-
-## Installaion
+# Installaion
 
 ### Docker
 
