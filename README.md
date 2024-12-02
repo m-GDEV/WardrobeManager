@@ -36,11 +36,10 @@
 # Links
 * [About The Project](#about-the-project)
 * [Built With](#built-with)
-* [Getting Started](#getting-started)
-  * [Installation](#installation)
-  * [Development Environment](#development-environment)
+* [Installation](#installation)
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
+  * [Development Environment](#development-environment)
 * [License](#license)
 * [Contact](#contact)
 * [Acknowledgements](#acknowledgements)
@@ -73,7 +72,7 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 ### Docker
 
-To deploy this application yourself (self-hosted) you can use docker with an environment file to configure the app.
+To deploy this application yourself (self-hosted) you can use **docker compose** with an environment file to configure the app.
 
 `docker-compose.yml` (this is likely out of date, check [here](https://github.com/m-GDEV/WardrobeManager/tree/master/docker-compose.yml) for the most up to date version):
 
@@ -122,12 +121,26 @@ WM_DATA_DIRECTORY=/data
 Logging__LogLevel__Default=Information
 ```
 
-## Development Environment
+**Example setup guide (on UNIX based systems):**
+```bash
+# Make new directory & go into it:
+cd ~
+mkdir wardrobe-manager
+cd wardrobe-manager
 
-1. Clone the repository: `git clone https://github.com/m-GDEV/WardrobeManager`
-2. Open solution in IDE of your choice
-3. Run both projects with 'dotnet watch' launch profile
-4. Profit
+# Download docker-compose.yml:
+curl -LO https://raw.githubusercontent.com/m-GDEV/WardrobeManager/master/docker-compose.yml
+
+# Download config.env:
+curl -LO https://raw.githubusercontent.com/m-GDEV/WardrobeManager/master/docker/config.env
+
+# Modify docker-compose.yml & config.env as appropriate
+vi docker-compose.yml
+vi config.env
+
+# Run application with docker compose
+docker compose up -d
+```
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -163,6 +176,13 @@ See the [open projects](https://github.com/m-GDEV/WardrobeManager/projects) for 
 
 <!-- CONTRIBUTING -->
 # Contributing
+
+## Development Environment
+
+1. Clone the repository: `git clone https://github.com/m-GDEV/WardrobeManager`
+2. Open solution in IDE of your choice
+3. Run both projects with 'dotnet watch' launch profile
+4. Profit
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
