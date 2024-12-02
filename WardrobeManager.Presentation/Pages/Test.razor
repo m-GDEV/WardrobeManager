@@ -47,7 +47,7 @@
     
     protected override void OnInitialized()
     {
-        f = $"{_config["BackendUrl"] ?? "terrifier 3 was a great movie"}";
+        f = $"{_config["WM_BACKEND_URL"] ?? "terrifier 3 was a great movie"}";
         _logger.LogCritical(f);        
         Console.WriteLine(f);
         StateHasChanged();

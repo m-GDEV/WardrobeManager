@@ -19,6 +19,7 @@ COPY --from=publish /app/publish/wwwroot .
 
 # Setup docker entrypoint script (used to dynamically update appsettings.Production.json based on env variable)
 RUN apk add jq 
+RUN apk add bash # lazy, fixlater, the update-appsettings.sh script does not work with sh
 COPY ["./docker/WardrobeManager.Presentation/update-appsettings.sh", "/docker-entrypoint.d/40-script.sh"]
 RUN chmod +x "/docker-entrypoint.d/40-script.sh"
 

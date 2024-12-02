@@ -2,17 +2,12 @@
 
 namespace WardrobeManager.Api.Services.Implementation;
 
-public class FileService : IFileService
+public class FileService(
+    IDataDirectoryService dataDirectoryService,
+    IWebHostEnvironment webHostEnvironment,
+    IConfiguration configuration)
+    : IFileService
 {
-    private readonly IDataDirectoryService _dataDirectoryService;
-    private readonly IWebHostEnvironment _webHostEnvironment;
-
-    public FileService(IDataDirectoryService dataDirectoryService, IWebHostEnvironment webHostEnvironment)
-    {
-        _dataDirectoryService = dataDirectoryService;
-        _webHostEnvironment = webHostEnvironment;
-    }
-
     public string ParseGuid(Guid guid)
     {
         return guid.ToString().Replace("{", "").Replace("}", "");
@@ -31,25 +26,36 @@ public class FileService : IFileService
 
         byte[] imageBytes = Convert.FromBase64String(ImageBase64);
 
-        string path = Path.Combine(_dataDirectoryService.GetUploadsDirectory(), ParseGuid(properGuid));
+        // 5MB default max file size
+        var max_file_size = configuration["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"] ?? "5";
+        int max_file_size_num = Convert.ToInt32(max_file_size);
+        max_file_size_num *= 1024;
+
+        if (imageBytes.Length > max_file_size_num)
+        {
+            throw new Exception(
+                $"File size too large! Received file size: {imageBytes.Length / 1024} MB. Max file size: {max_file_size_num / 1024} MB");
+        }
+
+        string path = Path.Combine(dataDirectoryService.GetUploadsDirectory(), ParseGuid(properGuid));
 
         await File.WriteAllBytesAsync(path, imageBytes);
     }
 
     public async Task<byte[]> GetImage(string guid)
     {
-        string path = Path.Combine(_dataDirectoryService.GetUploadsDirectory(), guid);
-        string notFound = Path.Combine(_webHostEnvironment.WebRootPath, "images", "notfound.jpg");
+        string path = Path.Combine(dataDirectoryService.GetUploadsDirectory(), guid);
+        string notFound = Path.Combine(webHostEnvironment.WebRootPath, "images", "notfound.jpg");
 
         if (File.Exists(path))
         {
-            byte[] imageBytes = await File.ReadAllBytesAsync(path);                                       // 6. Serve the file
+            byte[] imageBytes = await File.ReadAllBytesAsync(path); // 6. Serve the file
             return imageBytes;
         }
 
         else
         {
-            byte[] imageBytes = await File.ReadAllBytesAsync(notFound);                                        // 6. Serve the file
+            byte[] imageBytes = await File.ReadAllBytesAsync(notFound); // 6. Serve the file
             return imageBytes;
         }
     }

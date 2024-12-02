@@ -23,8 +23,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Configuration is setup by default to read from (in order of precedence) Environment Variables, appsettings.json
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
-string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
-string FrontendUrl = builder.Configuration["FrontendUrl"] ?? throw new Exception("Frontend: configuration value not set");
+string BackendUrl = builder.Configuration["WM_BACKEND_URL"] ?? throw new Exception("BackendUrl: configuration value not set");
+string FrontendUrl = builder.Configuration["WM_FRONTEND_URL"] ?? throw new Exception("Frontend: configuration value not set");
 
 builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme).AddIdentityCookies();
 // Configure app cookie (THIS ALLOWS THE BACKEND AND FRONTEND RUN ON DIFFERENT DOMAINS)
@@ -101,6 +101,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Adds a bunch of auto generated Identity-related routes (/register, /login, etc)
 app.MapIdentityApi<AppUser>();
 app.UseCors("wasm");
 

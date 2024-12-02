@@ -13,7 +13,7 @@ public class DataDirectoryService : IDataDirectoryService
 
     public DataDirectoryService(IConfiguration config, IWebHostEnvironment webHostEnvironment)
     {
-        string DataDirectory = config["DataDirectory"] ?? throw new Exception("Data Directory: configuration value not set");
+        string DataDirectory = config["WM_DATA_DIRECTORY"] ?? throw new Exception("Data Directory: configuration value not set");
 
         _baseDirectory = webHostEnvironment.IsDevelopment() ? Path.GetFullPath(Path.Combine(webHostEnvironment.ContentRootPath, DataDirectory)) : DataDirectory;
     }

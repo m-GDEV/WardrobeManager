@@ -23,7 +23,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
 // Configuration is setup by default to read from (in order of precedence) Environment Variables, appsettings.json
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
-string BackendUrl = builder.Configuration["BackendUrl"] ?? throw new Exception("BackendUrl: configuration value not set");
+string BackendUrl = builder.Configuration["WM_BACKEND_URL"] ?? throw new Exception("BackendUrl: configuration value not set");
 
 Console.WriteLine("Hello man" + BackendUrl);
 

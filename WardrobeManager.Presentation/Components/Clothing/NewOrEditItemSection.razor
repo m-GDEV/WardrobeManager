@@ -121,8 +121,13 @@
         try
         {
             img = new MemoryStream();
-            // 5MB max file size
-            await e.File.OpenReadStream(maxAllowedSize: 1024 * 5000).CopyToAsync(img);
+            
+            // 5MB default max file size
+            var max_file_size = _config["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"] ?? "5";
+            int max_file_size_num = Convert.ToInt32(max_file_size);
+            max_file_size_num *= 1024;
+            
+            await e.File.OpenReadStream(maxAllowedSize: max_file_size_num).CopyToAsync(img);
 
             newItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
 
