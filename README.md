@@ -33,35 +33,20 @@
 
 
 <!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
-  </ol>
-</details>
-
-
+# Links
+* [About The Project](#about-the-project)
+* [Built With](#built-with)
+* [Getting Started](#getting-started)
+  * [Installation](#installation)
+  * [Development Environment](#development-environment)
+* [Roadmap](#roadmap)
+* [Contributing](#contributing)
+* [License](#license)
+* [Contact](#contact)
+* [Acknowledgements](#acknowledgements)
 
 <!-- ABOUT THE PROJECT -->
-## About The Project
+# About The Project
 
 Wardrobe Manager simplifies clothing organization and outfit planning. Add and manage clothing items with images, track wear frequency, and specify preferred combinations. Set wash schedules, mark favorites, and filter by season. This fully open-source application helps optimize wardrobe choices and plan outfits effortlessly. Easily self-hostable, Wardrobe Manager puts you in control of your clothing data and helps you build the perfect look, every time.
 
@@ -69,7 +54,7 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 ![Demo Video](./docs/demo-video.gif)
 
-### Built With
+## Built With
 
 * ![](https://img.shields.io/badge/ASP.NET%20Web%20Api-512BD4?style=for-the-badge&logo=.NET&logoColor=white)
 * ![](https://img.shields.io/badge/Blazor%20Web%20Assembly-512BD4?style=for-the-badge&logo=Blazor&logoColor=white)
@@ -82,7 +67,9 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 
 <!-- GETTING STARTED -->
-## Getting Started
+# Getting Started
+
+## Installaion
 
 ### Docker
 
@@ -135,26 +122,18 @@ WM_DATA_DIRECTORY=/data
 Logging__LogLevel__Default=Information
 ```
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Development Environment
 
+1. Clone the repository: `git clone https://github.com/m-GDEV/WardrobeManager`
+2. Open solution in IDE of your choice
+3. Run both projects with 'dotnet watch' launch profile
+4. Profit
 
-
-<!-- USAGE EXAMPLES -->
-
-<!--
-
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
--->
 
 <!-- ROADMAP -->
-## Roadmap
+# Roadmap
 
 - [x] Add, view, edit, and delete clothing items
 - [x] Login with multiple user accounts
@@ -183,7 +162,7 @@ See the [open projects](https://github.com/m-GDEV/WardrobeManager/projects) for 
 
 
 <!-- CONTRIBUTING -->
-## Contributing
+# Contributing
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
@@ -198,7 +177,7 @@ Don't forget to give the project a star! Thanks again!
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### Top contributors:
+## Top contributors:
 
 <a href="https://github.com/m-GDEV/WardrobeManager/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=m-GDEV/WardrobeManager" alt="contrib.rocks image" />
@@ -207,7 +186,7 @@ Don't forget to give the project a star! Thanks again!
 
 
 <!-- LICENSE -->
-## License
+# License
 
 Distributed under the GPL 3.0 License. See `LICENSE.txt` for more information.
 
@@ -216,7 +195,7 @@ Distributed under the GPL 3.0 License. See `LICENSE.txt` for more information.
 
 
 <!-- CONTACT -->
-## Contact
+# Contact
 
 Musa Ahmed - [musaa.ahmed7@gmail.com](mailto:musaa.ahmed7@gmail.com)
 
@@ -227,7 +206,7 @@ Project Link: [https://github.com/m-GDEV/WardrobeManager](https://github.com/m-G
 
 
 <!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
+# Acknowledgments
 
 * [Best-README-Template: for this cool template](https://github.com/othneildrew/Best-README-Template)
 
