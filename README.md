@@ -1,11 +1,28 @@
 <!-- https://github.com/othneildrew/Best-README-Template -->
 
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
+<div align="center">
+
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/m-GDEV/WardrobeManager)
+[![Contributors](https://img.shields.io/github/contributors/m-GDEV/WardrobeManager.svg)](https://github.com/m-GDEV/WardrobeManager/graphs/contributors)
+[![Forks](https://img.shields.io/github/forks/m-GDEV/WardrobeManager.svg?style=flat)](https://github.com/m-GDEV/WardrobeManager/network/members)
+![GitHub Repo stars](https://img.shields.io/github/stars/m-GDEV/WardrobeManager?style=flat&link=https%3A%2F%2Fgithub.com%2Fm-GDEV%2FWardrobeManager%2Fstargazers)
+[![Issues](https://img.shields.io/github/issues/m-GDEV/WardrobeManager.svg)](https://github.com/m-GDEV/WardrobeManager/issues)
+[![MIT License](https://img.shields.io/github/license/m-GDEV/WardrobeManager.svg)](https://github.com/m-GDEV/WardrobeManager/blob/master/LICENSE.txt)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fwardrobemanager.connectwithmusa.com%2F&up_message=active&down_message=inactive&label=demo&link=https%3A%2F%2Fwardrobemanager.connectwithmusa.com%2F)
+
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/m-GDEV/WardrobeManager/BuildAndPushApiDockerImage.yml?branch=master&style=flat&label=API%20Docker%20Image%20Build&link=https%3A%2F%2Fgithub.com%2Fm-GDEV%2FWardrobeManager%2Factions%2Fworkflows%2FBuildAndPushApiDockerImage.yml)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/m-GDEV/WardrobeManager/BuildAndPushPresentationDockerImage.yml?branch=master&style=flat&label=Presentation%20Docker%20Image%20Build&link=https%3A%2F%2Fgithub.com%2Fm-GDEV%2FWardrobeManager%2Factions%2Fworkflows%2FBuildAndPushPresentationDockerImage.yml)
+
+![Docker Image Size](https://img.shields.io/docker/image-size/tmclncy/wardrobemanager-api?sort=date&label=API%20Docker%20Image%20Size&link=https%3A%2F%2Fhub.docker.com%2Frepository%2Fdocker%2Ftmclncy%2Fwardrobemanager-api%2Fgeneral)
+![Docker Image Size](https://img.shields.io/docker/image-size/tmclncy/wardrobemanager-presentation?sort=date&label=Presentation%20Docker%20Image%20Size&link=https%3A%2F%2Fhub.docker.com%2Frepository%2Fdocker%2Ftmclncy%2Fwardrobemanager-presentation%2Fgeneral)
+
+</div>
+
+
+ 
+ <!--
+ [![LinkedIn](https://img.shields.io/badge/-LinkedIn-black.svg?logo=linkedin&colorB=555)](https://linkedin.com/in/musa-ahmed)
+-->
 
 <!-- PROJECT LOGO -->
 <br />
@@ -55,12 +72,12 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 ## Built With
 
-* ![](https://img.shields.io/badge/ASP.NET%20Web%20Api-512BD4?style=for-the-badge&logo=.NET&logoColor=white)
-* ![](https://img.shields.io/badge/Blazor%20Web%20Assembly-512BD4?style=for-the-badge&logo=Blazor&logoColor=white)
-* ![](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-* ![](https://img.shields.io/badge/Daisyui-1AD1A5?style=for-the-badge&logo=daisyui&logoColor=white)
-* ![](https://img.shields.io/badge/Bootstrap%20Icons-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
-* ![](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+* ![](https://img.shields.io/badge/ASP.NET%20Web%20Api-512BD4&logo=.NET&logoColor=white)
+* ![](https://img.shields.io/badge/Blazor%20Web%20Assembly-512BD4&logo=Blazor&logoColor=white)
+* ![](https://img.shields.io/badge/TailwindCSS-06B6D4&logo=tailwindcss&logoColor=white)
+* ![](https://img.shields.io/badge/Daisyui-1AD1A5&logo=daisyui&logoColor=white)
+* ![](https://img.shields.io/badge/Bootstrap%20Icons-7952B3&logo=bootstrap&logoColor=white)
+* ![](https://img.shields.io/badge/Docker-2496ED&logo=docker&logoColor=white)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -231,22 +248,4 @@ Project Link: [https://github.com/m-GDEV/WardrobeManager](https://github.com/m-G
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/m-GDEV/WardrobeManager.svg?style=for-the-badge
-[contributors-url]: https://github.com/m-GDEV/WardrobeManager/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/m-GDEV/WardrobeManager.svg?style=for-the-badge
-[forks-url]: https://github.com/m-GDEV/WardrobeManager/network/members
-[stars-shield]: https://img.shields.io/github/stars/m-GDEV/WardrobeManager.svg?style=for-the-badge
-[stars-url]: https://github.com/m-GDEV/WardrobeManager/stargazers
-[issues-shield]: https://img.shields.io/github/issues/m-GDEV/WardrobeManager.svg?style=for-the-badge
-[issues-url]: https://github.com/m-GDEV/WardrobeManager/issues
-[license-shield]: https://img.shields.io/github/license/m-GDEV/WardrobeManager.svg?style=for-the-badge
-[license-url]: https://github.com/m-GDEV/WardrobeManager/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/musa-ahmed
-[product-screenshot]: docs/demo-video.mp4
 
