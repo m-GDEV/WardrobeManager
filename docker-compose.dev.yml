@@ -1,5 +1,6 @@
 # This file relies on the source code, it is only meant for development
 
+name: wardrobemanager-dev
 services:
   wardrobe-manager-api:
     container_name: wardrobe-manager-api

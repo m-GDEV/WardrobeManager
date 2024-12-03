@@ -1,3 +1,4 @@
+name: wardrobemanager
 services:
   wardrobe-manager-api:
     image: tmclncy/wardrobemanager-api:latest
