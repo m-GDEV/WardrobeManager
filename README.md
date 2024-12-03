@@ -72,12 +72,12 @@ Wardrobe Manager simplifies clothing organization and outfit planning. Add and m
 
 ## Built With
 
-* ![](https://img.shields.io/badge/ASP.NET%20Web%20Api-512BD4&logo=.NET&logoColor=white)
-* ![](https://img.shields.io/badge/Blazor%20Web%20Assembly-512BD4&logo=Blazor&logoColor=white)
-* ![](https://img.shields.io/badge/TailwindCSS-06B6D4&logo=tailwindcss&logoColor=white)
-* ![](https://img.shields.io/badge/Daisyui-1AD1A5&logo=daisyui&logoColor=white)
-* ![](https://img.shields.io/badge/Bootstrap%20Icons-7952B3&logo=bootstrap&logoColor=white)
-* ![](https://img.shields.io/badge/Docker-2496ED&logo=docker&logoColor=white)
+![](https://img.shields.io/badge/ASP.NET%20Web%20Api-512BD4?logo=.NET&logoColor=white)
+![](https://img.shields.io/badge/Blazor%20Web%20Assembly-512BD4?logo=Blazor&logoColor=white)
+![](https://img.shields.io/badge/Tailwind%20CSS-06B6D4?logo=tailwindcss?logoColor=white)
+![](https://img.shields.io/badge/DaisyUI-1AD1A5?logo=daisyui?logoColor=white)
+![](https://img.shields.io/badge/Bootstrap%20Icons-7952B3?logo=bootstrap&logoColor=white)
+![](https://img.shields.io/badge/Docker-2496ED&logo=docker?logoColor=white)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
