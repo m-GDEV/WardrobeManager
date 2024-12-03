@@ -39,7 +39,7 @@
     <a href="https://github.com/m-GDEV/WardrobeManager/docs"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/m-GDEV/WardrobeManager">View Demo</a>
+    <a href="https://wardrobemanager.connectwithmusa.com/">View Demo</a>
     ·
     <a href="https://github.com/m-GDEV/WardrobeManager/issues/new">Report Bug</a>
     ·
