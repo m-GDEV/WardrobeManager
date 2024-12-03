@@ -19,5 +19,11 @@
   <ItemGroup>
     <ProjectReference Include="..\WardrobeManager.Shared\WardrobeManager.Shared.csproj" />
   </ItemGroup>
+  
+  <!-- Build tailwindcss -->
+  <Target Name="BuildTailwind" BeforeTargets="Build">
+    <Exec Command="npm install" />
+    <Exec Command="npm run build" />
+  </Target>
 
 </Project>

@@ -179,8 +179,9 @@ See the [open projects](https://github.com/m-GDEV/WardrobeManager/projects) for 
 
 1. Clone the repository: `git clone https://github.com/m-GDEV/WardrobeManager`
 2. Open solution in IDE of your choice
-3. Run both projects with 'dotnet watch' launch profile
-4. Profit
+3. Make sure you have npm and nodejs installed and that they are in your PATH
+4. Run both projects with 'dotnet watch' launch profile
+5. Profit
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 

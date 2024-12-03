@@ -5,17 +5,20 @@
 <div class="h-full  text-base-content body-text transition-all duration-300">
     <ErrorBoundary @ref="errorBoundary">
         <ChildContent>
-            <div class="h-[10%]">
-                <NavMenu/>
+            
+            <div class="hidden sm:block h-full">
+                <div class="h-[10%]">
+                    <NavMenu/>
+                </div>
+                <div class="h-[90%]">
+                    @Body
+                </div>
             </div>
-            <div class="h-[90%]">
-                @Body
+            <div class="sm:hidden flex flex-col items-center justify-center h-full">
+                <h1 class="heading-text text-primary">Mobile Version In Development!</h1>
+                <p class="subtitle-text text-accent">Please check back later</p>
             </div>
-        @*
-            <div class="h-[7%]">
-                <FooterMenu/>
-            </div>
-            *@
+            
         </ChildContent>
         <ErrorContent Context="ex">
             @{

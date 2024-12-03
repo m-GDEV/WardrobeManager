@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "build": "tailwindcss -i ./tailwind.css -o ./wwwroot/css/tailwind.css --minify",
+    "watch": "tailwindcss -i ./tailwind.css -o ./wwwroot/css/tailwind.css --watch"
+  },
+  
   "devDependencies": {
     "daisyui": "^4.12.14",
     "tailwindcss": "^3.4.15"

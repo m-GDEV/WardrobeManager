@@ -9,6 +9,11 @@ COPY  ./WardrobeManager.Presentation /src/WardrobeManager.Presentation/
 
 # Publish phase
 FROM build AS publish
+
+# Takes a while and installs a lot of deps but its ok because this not the final stage
+RUN apt update
+RUN apt install nodejs npm -y
+
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./WardrobeManager.Presentation/WardrobeManager.Presentation.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
