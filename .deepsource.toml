@@ -1,6 +1,19 @@
+# Last Edited: 2026-02-14
 version = 1
 
-exclude_patterns = ["WardrobeManager.Api/Migrations/**"]
+exclude_patterns = [
+    "WardrobeManager.Api/Migrations/**",
+    "**/node_modules/",
+    "**/bin/",
+    "**/obj/",
+]
+
+test_patterns = [
+    "**/*.Tests/**"
+]
 
 [[analyzers]]
 name = "csharp"
+enabled = true
+[analyzers.meta]
+  cyclomatic_complexity_threshold = "high"
