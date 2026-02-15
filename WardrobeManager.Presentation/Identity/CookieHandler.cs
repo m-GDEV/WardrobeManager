@@ -1,8 +1,8 @@
+#region
 
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
+
+#endregion
 
 namespace WardrobeManager.Presentation.Identity;
 

@@ -1,7 +1,11 @@
-﻿namespace WardrobeManager.Presentation;
+﻿#region
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+
+#endregion
+
+namespace WardrobeManager.Presentation;
 
 public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
 {

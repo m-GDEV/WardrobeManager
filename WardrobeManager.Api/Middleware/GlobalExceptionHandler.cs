@@ -1,10 +1,13 @@
+#region
+
 using Microsoft.AspNetCore.Diagnostics;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
-using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.Enums;
 
+#endregion
 
-namespace WardrobeManager.Api;
+namespace WardrobeManager.Api.Middleware;
 
 internal sealed class GlobalExceptionHandler : IExceptionHandler
 {

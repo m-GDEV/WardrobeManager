@@ -1,7 +1,4 @@
-using System.Text.RegularExpressions;
-using WardrobeManager.Shared.Enums;
-
-namespace WardrobeManager.Shared.Misc;
+namespace WardrobeManager.Shared.StaticResources;
 
 public static class ProjectConstants
 {

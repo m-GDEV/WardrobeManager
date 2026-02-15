@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿#region
 
-namespace WardrobeManager.Api.Database.Models;
+using Microsoft.AspNetCore.Identity;
+
+#endregion
+
+namespace WardrobeManager.Api.Database.Entities;
 
 // As of right now, the AppUser class is only used for authentication. 
 // The User class is used to connect an AppUser with User and give them a profile in the app

@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using System.Text.Json.Serialization;
 
-namespace WardrobeManager.Shared.Models;
+#endregion
+
+namespace WardrobeManager.Api.Database.Entities;
 
 // As of right now, the AppUser class is only used for authentication. 
 // The User class is used to connect an AppUser with User and give them a profile in the app

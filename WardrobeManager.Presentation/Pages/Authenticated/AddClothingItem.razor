@@ -1,14 +1,10 @@
 ﻿@page "/add"
+@using WardrobeManager.Presentation.Components.Clothing
 
 @namespace WardrobeManager.Presentation.Pages.Authenticated
 @attribute [Authorize]
 
-@using WardrobeManager.Shared.Models;
-@using WardrobeManager.Presentation.Services.Implementation
-@using WardrobeManager.Presentation.Components.Clothing
-
 @inject IApiService _apiService;
-@inject ISharedService _sharedService
 @inject INotificationService _notificationService
 
 

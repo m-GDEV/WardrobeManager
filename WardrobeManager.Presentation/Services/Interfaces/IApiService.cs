@@ -1,5 +1,8 @@
-﻿using System.Net;
+﻿#region
+
 using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Presentation.Services.Interfaces;
 public interface IApiService

@@ -28,6 +28,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Validators\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

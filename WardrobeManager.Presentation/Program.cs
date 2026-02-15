@@ -1,23 +1,14 @@
-using System;
-using System.Net.Http;
+#region
+
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WardrobeManager.Presentation;
+using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
-using WardrobeManager.Shared.Services.Implementation;
-using WardrobeManager.Shared.Services.Interfaces;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.Extensions.DependencyInjection;
-using WardrobeManager.Presentation.Identity;
-using WardrobeManager.Shared.Models;
-using static System.Net.WebRequestMethods;
 
-
-
-
+#endregion
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
@@ -53,7 +44,6 @@ builder.Services.AddHttpClient("Auth", opt =>
 
 // My Services
 builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
-builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 

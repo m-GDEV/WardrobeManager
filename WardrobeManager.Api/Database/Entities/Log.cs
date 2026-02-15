@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿#region
+
 using WardrobeManager.Shared.Enums;
 
-namespace WardrobeManager.Shared.Models;
+#endregion
+
+namespace WardrobeManager.Api.Database.Entities;
 public class Log(string title, string description, LogType type)
 {
     public int Id { get; set; }

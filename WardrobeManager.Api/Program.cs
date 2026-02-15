@@ -1,23 +1,15 @@
+#region
+
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
-using WardrobeManager.Shared.Models;
-using Microsoft.AspNetCore.Mvc;
-using WardrobeManager.Shared.Services.Interfaces;
-using WardrobeManager.Shared.Exceptions;
-using System.Diagnostics;
-using System.Security.Claims;
-using WardrobeManager.Shared.Services.Implementation;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Endpoints;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.OpenApi.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using WardrobeManager.Api;
-using WardrobeManager.Api.Database.Models;
+using WardrobeManager.Api.Middleware;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 
+#endregion
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,7 +69,6 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<DatabaseContext>();
 
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
-builder.Services.AddScoped<ISharedService, SharedService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILoggingService, LoggingSerivce>();

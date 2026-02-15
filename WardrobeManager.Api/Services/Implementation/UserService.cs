@@ -1,12 +1,15 @@
+#region
+
 using System.Diagnostics;
-using System.Linq.Expressions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
-using WardrobeManager.Api.Database.Models;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
 

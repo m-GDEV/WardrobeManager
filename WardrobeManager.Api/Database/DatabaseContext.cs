@@ -1,7 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WardrobeManager.Shared.Models;
+﻿#region
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WardrobeManager.Api.Database.Models;
+using Microsoft.EntityFrameworkCore;
+using WardrobeManager.Api.Database.Entities;
+
+#endregion
 
 namespace WardrobeManager.Api.Database;
 

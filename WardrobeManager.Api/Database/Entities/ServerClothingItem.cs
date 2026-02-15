@@ -1,8 +1,11 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using WardrobeManager.Shared.Enums;
-using System.Text.Json.Serialization;
+﻿#region
 
-namespace WardrobeManager.Shared.Models;
+using System.Text.Json.Serialization;
+using WardrobeManager.Shared.Enums;
+
+#endregion
+
+namespace WardrobeManager.Api.Database.Entities;
 
 public class ServerClothingItem
 {

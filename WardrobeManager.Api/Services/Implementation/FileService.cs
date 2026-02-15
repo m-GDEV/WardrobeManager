@@ -1,4 +1,8 @@
-﻿using WardrobeManager.Api.Services.Interfaces;
+﻿#region
+
+using WardrobeManager.Api.Services.Interfaces;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
 

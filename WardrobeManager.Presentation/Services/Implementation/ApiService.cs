@@ -1,12 +1,10 @@
-﻿using System.Net.Http.Json;
-using System.Net;
-using System.Reflection.Metadata.Ecma335;
-using System.Text.Json;
-using WardrobeManager.Presentation.Pages;
+﻿#region
+
+using System.Net.Http.Json;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Misc;
-using Microsoft.AspNetCore.Authorization;
+
+#endregion
 
 namespace WardrobeManager.Presentation.Services.Implementation;
 

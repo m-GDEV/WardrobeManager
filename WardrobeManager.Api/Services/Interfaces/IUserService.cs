@@ -1,4 +1,9 @@
+#region
+
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Interfaces;
 

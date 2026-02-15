@@ -1,15 +1,3 @@
-using System;
-using WardrobeManager.Api.Database;
-using Microsoft.AspNetCore.Authorization;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
-using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Services.Interfaces;
-
-
 namespace WardrobeManager.Api.Endpoints;
 
 public static class MiscEndpoints {

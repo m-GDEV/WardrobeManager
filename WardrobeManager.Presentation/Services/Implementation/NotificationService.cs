@@ -1,6 +1,10 @@
+#region
+
 using WardrobeManager.Presentation.Services.Interfaces;
-using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Presentation.Services.Implementation;
 

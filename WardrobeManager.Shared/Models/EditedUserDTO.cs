@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using WardrobeManager.Shared.Enums;
-
 namespace WardrobeManager.Shared.Models;
 
 /// <summary> DTO that client sends to edit their user details</summary>

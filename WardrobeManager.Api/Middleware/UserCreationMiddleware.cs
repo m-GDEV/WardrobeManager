@@ -1,9 +1,14 @@
-﻿using System.Diagnostics;
+﻿#region
+
+using System.Diagnostics;
+using System.Security.Claims;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Api;
+#endregion
+
+namespace WardrobeManager.Api.Middleware;
 
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-8.0
 public class UserCreationMiddleware
@@ -30,7 +35,7 @@ public class UserCreationMiddleware
         // Coincidentally, Microsoft Identity and Auto0 used the NameIdentifier claim for a user
         // So all the old code still works 100% fine. 
         // For this reason I will not be modifying anything Auth0 at the moment
-        var Auth0Id = context.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+        var Auth0Id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         // only create the user if the consumer of the api is authorized
         if (Auth0Id != null)

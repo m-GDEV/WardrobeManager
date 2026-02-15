@@ -1,4 +1,8 @@
-﻿using WardrobeManager.Presentation.Identity.Models;
+﻿#region
+
+using WardrobeManager.Presentation.Identity.Models;
+
+#endregion
 
 namespace WardrobeManager.Presentation.Identity;
 

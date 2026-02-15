@@ -1,13 +1,12 @@
+#region
 
-using System;
-using WardrobeManager.Api.Database;
-using Microsoft.AspNetCore.Authorization;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Services.Interfaces;
 
+#endregion
 
 namespace WardrobeManager.Api.Endpoints;
 

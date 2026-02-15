@@ -1,12 +1,13 @@
-using System;
-using WardrobeManager.Api.Database;
-using Microsoft.AspNetCore.Authorization;
+#region
+
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Services.Interfaces;
 
+#endregion
 
 namespace WardrobeManager.Api.Endpoints;
 
@@ -54,7 +55,7 @@ public static class ClothingEndpoints {
     // Add a new clothing item (these comments are unecessar but i don't want no comments)
     // ---------------------
     public static async Task<IResult> AddClothingItem(
-            [FromBody] NewOrEditedClothingItemDTO  newItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService, IUserService userService, HttpContext context, DatabaseContext _context
+            [FromBody] NewOrEditedClothingItemDTO  newItem, IClothingItemService clothingItemService, IFileService fileService, IUserService userService, HttpContext context, DatabaseContext _context
             ){
         // if (!sharedService.IsValid(newItem.ClothingItem)) {
         //     return Results.BadRequest("Invalid clothing item");
@@ -71,7 +72,7 @@ public static class ClothingEndpoints {
     // Edit one clothing item
     // ---------------------
     public static async Task<IResult> EditClothingItem(
-            int id, [FromBody] NewOrEditedClothingItemDTO editedItem, IClothingItemService clothingItemService, ISharedService sharedService, IFileService fileService, DatabaseContext _context, IUserService userService, HttpContext context
+            int id, [FromBody] NewOrEditedClothingItemDTO editedItem, IClothingItemService clothingItemService, IFileService fileService, DatabaseContext _context, IUserService userService, HttpContext context
             ){
 
         User? user = context.Items["user"] as User;

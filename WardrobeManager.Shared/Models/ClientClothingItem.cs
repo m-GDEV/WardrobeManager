@@ -1,4 +1,8 @@
-﻿using WardrobeManager.Shared.Enums;
+﻿#region
+
+using WardrobeManager.Shared.Enums;
+
+#endregion
 
 namespace WardrobeManager.Shared.Models;
 
