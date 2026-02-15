@@ -43,7 +43,7 @@ builder.Services.AddHttpClient("Auth", opt =>
     .AddHttpMessageHandler<CookieHandler>();
 
 // My Services
-builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
+// builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 

@@ -2,32 +2,5 @@
 @using WardrobeManager.Presentation.Components.Clothing
 
 @namespace WardrobeManager.Presentation.Pages.Authenticated
-@attribute [Authorize]
 
-@inject IApiService _apiService;
-@inject INotificationService _notificationService
-
-
-<div class="w-full flex flex-col items-center">
-    <div class="w-3/5 flex flex-col items-center">
-        <h1 class="heading-text pt-14 pb-6">Add A Clothing Item</h1>
-        <p class="subtitle-text pb-10">Clothing items can have multiple characteristics, allowing you to perfectly categorize your wardrobe!</p>
-        <NewOrEditItemSection Editing="false" SubmitForm="FormSubmitted"></NewOrEditItemSection>
-    </div>
-</div>
-
-
-@code {
-    private async Task FormSubmitted(NewOrEditedClothingItemDTO newItem)
-    {
-        try
-        {
-            await _apiService.Add(newItem);
-            _notificationService.AddNotification("Clothing Item Added Successfully!", NotificationType.Success);
-        }
-        catch (Exception ex)
-        {
-            _notificationService.AddNotification($"Error: {ex.Message}", NotificationType.Error);
-        }
-    }
-}
+<h1 class="text-4xl">Add Clothing Item!</h1>
