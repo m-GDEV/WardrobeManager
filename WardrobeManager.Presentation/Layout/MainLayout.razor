@@ -1,24 +1,15 @@
 ﻿@inherits LayoutComponentBase
+
 @inject IJSRuntime JSRuntime
 @inject INotificationService _notificationService
+@inject Initialization init
+@inject BrowserExtensions browserExtensions
 
-<div class="h-full  text-base-content body-text transition-all duration-300">
+<body class="dark sea-green h-full body-text transition-all duration-300 "
+     @onclick="init.HandleMainLayoutClickEvent">
     <ErrorBoundary @ref="errorBoundary">
         <ChildContent>
-            
-            <div class="hidden sm:block h-full">
-                <div class="h-[10%]">
-                    <NavMenu/>
-                </div>
-                <div class="h-[90%]">
-                    @Body
-                </div>
-            </div>
-            <div class="sm:hidden flex flex-col items-center justify-center h-full">
-                <h1 class="heading-text text-primary">Mobile Version In Development!</h1>
-                <p class="subtitle-text text-accent">Please check back later</p>
-            </div>
-            
+            @Body
         </ChildContent>
         <ErrorContent Context="ex">
             @{
@@ -26,13 +17,13 @@
             }
         </ErrorContent>
     </ErrorBoundary>
-</div>
+</body>
 <Notifications/>
 
 @code {
     private ErrorBoundary? errorBoundary;
-    
-    
+
+
     // This runs every time any page is (fully) reloaded (in the browser)
     protected override async Task OnInitializedAsync()
     {
@@ -43,6 +34,16 @@
         // }
         //
         // await base.OnInitializedAsync();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await browserExtensions.SetToLocalStorage("theme", "dark");
+            await browserExtensions.SetToLocalStorage("theme", "dark");
+            await init.InitializeTheme();
+        }
     }
 
     protected override void OnParametersSet()

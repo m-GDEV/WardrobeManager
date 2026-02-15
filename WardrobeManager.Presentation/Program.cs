@@ -3,6 +3,7 @@
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Sysinfocus.AspNetCore.Components;
 using WardrobeManager.Presentation;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Implementation;
@@ -45,6 +46,9 @@ builder.Services.AddHttpClient("Auth", opt =>
 // My Services
 // builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
+
+// Libraries
+builder.Services.AddSysinfocus();
 
 
 
