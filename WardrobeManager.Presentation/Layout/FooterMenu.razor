@@ -1,4 +1,5 @@
-﻿@namespace WardrobeManager.Presentation.Layout
+﻿@using WardrobeManager.Shared.StaticResources
+@namespace WardrobeManager.Presentation.Layout
 
 @inject NavigationManager Navigation
 
@@ -7,8 +8,12 @@
     <Authorized>
     </Authorized>
     <NotAuthorized>
-        <footer class="flex flex-row justify-center items-center w-full bg-base-300 h-full">
-            <p class="text-base-content font-semibold">Wardrobe Manager - Built By Musa Ahmed | Since 2024</p>
+        <footer class="flex flex-row justify-center items-center w-full">
+            <Text class="py-4 text-base-content font-semibold">
+                <p>
+                    @ProjectConstants.ProjectName - Built By Musa Ahmed | Since 2024
+                </p>
+            </Text>
         </footer>
     </NotAuthorized>
 </AuthorizeView>

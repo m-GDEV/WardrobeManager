@@ -3,85 +3,47 @@
 @inject IJSRuntime JsRuntime
 
 <nav
-    class="bg-base-300 text-base-content  w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
+    class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
+    <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"></Text>
+    <div class="flex flex-wrap">
+        <Button Type="ButtonType.Outline" 
+                Text="Dashboard" 
+                Icon="Home" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
 
-    @* Left side  *@
-    <AuthorizeView>
-        <Authorized>
-                <a class="flex flex-row gap-6 items-center" href="/dashboard">
-                    <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"/>
-                    <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
-                </a>
-        </Authorized>
-        <NotAuthorized>
-            <a class="flex flex-row gap-6 items-center" href="/">
-                <img class="w-16 h-16 rounded-xl" src="/img/icon.webp"/>
-                <p class="subtitle-text text-base-content ">@ProjectConstants.ProjectName</p>
-            </a>
-        </NotAuthorized>
-    </AuthorizeView>
+        <Button Type="ButtonType.Outline" 
+                Text="My Wardrobe" 
+                Icon="Person" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
 
-    @* Middle *@
-    <AuthorizeView>
-        <Authorized>
-            <div class="hidden lg:flex flex-row justify-center gap-5">
-                <NavLink href="/add" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
-                <NavLink href="/clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
-            </div>
-        </Authorized>
-        <NotAuthorized>
-        </NotAuthorized>
-    </AuthorizeView>
+        <Button Type="ButtonType.Outline" 
+                Text="Outfits" 
+                Icon="Palette" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
 
-    @* Right side *@
-    <div>
-        <div class="hidden lg:flex flex-row gap-2 items-center">
-            <AuthorizeView>
-                <Authorized>
-                            <p class="body-text font-bold">@context?.User?.Identity?.Name</p>
-                            <div class="avatar ">
-                                <div class="w-12 rounded-full">
-                                    @* https://blog.jepsen.ninja/gravatar-c-api *@
-                                    <img src="@ProjectConstants.ProfileImage"/>
-                                </div>
-                            </div>
-                            <ChangeTheme/>
-                            <button @onclick="Logout" class="bi bi-door-open-fill text-3xl text-primary"></button>
-                </Authorized>
+        <Button Type="ButtonType.Outline" 
+                Text="Planning" 
+                Icon="Calendar_Month" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
 
-                <NotAuthorized>
-                    <a class="flex flex-row gap-3 items-center" href="/login">
-                        <p class="body-text text-base-content">Log in</p>
-                        <div class="avatar placeholder">
-                            <div class="bg-neutral text-neutral-content w-12 rounded-full">
-                                <span class="text-3xl">D</span>
-                            </div>
-                        </div>
-                    </a>
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-        <div class="dropdown dropdown-bottom dropdown-end lg:hidden">
-            <div tabindex="0" role="button" class="">
-                <span class="bi bi-list text-2xl text-accent"></span>
-            </div>
-            <div tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                <div class="flex flex-col justify-center gap-5">
-                    <NavLink href="/add" class="btn btn-secondary body-text text-secondary-content">Add Clothing Item</NavLink>
-                    <NavLink href="/clothing" class="btn btn-secondary body-text text-secondary-content">View Clothing Items</NavLink>
-                </div>
-            </div>
-        </div>
+        <Button Type="ButtonType.Outline" 
+                Text="Analytics" 
+                Icon="ssid_chart" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
+        
+        <Button Type="ButtonType.Primary" 
+                Text="Add Item" 
+                Icon="Add" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
+        <Button Type="ButtonType.Secondary" 
+                Text="Photo" 
+                Icon="Camera" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
+        <Button Type="ButtonType.Ghost" 
+                Icon="Settings" 
+                class="gap-3 border-[1px] rounded-xl border-gray-300" />
+        
+        <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" />   
+
     </div>
 </nav>
-
-
-@code {
-    public async Task Logout()
-    {
-        await _accountManagement.LogoutAsync();
-        _navManager.NavigateTo("/");
-    }
-
-
-}
