@@ -5,16 +5,20 @@
 @inject Initialization init
 @inject BrowserExtensions browserExtensions
 
-<body class="dark sea-green h-full body-text transition-all duration-300 "
+<body class="dark h-full body-text transition-all duration-300 "
      @onclick="init.HandleMainLayoutClickEvent">
     <ErrorBoundary @ref="errorBoundary">
         <ChildContent>
+            <NavMenu />
             @Body
+            <FooterMenu />
         </ChildContent>
         <ErrorContent Context="ex">
             @{
                 _notificationService.AddNotification(ex.Message, NotificationType.Error);
+                Console.WriteLine(ex.Message);
             }
+            <p>@ex.Message</p>
         </ErrorContent>
     </ErrorBoundary>
 </body>
