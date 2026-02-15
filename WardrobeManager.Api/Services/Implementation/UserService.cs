@@ -47,18 +47,18 @@ public class UserService : IUserService
     // Users are only created based off of an authenticated user's login info
     public async Task CreateUser()
     {
-        var newUser = new User();
-        newUser.ServerClothingItems = new List<ServerClothingItem>();
-
-        var sampleClothingItems = new List<ServerClothingItem>
+        var newUser = new User
         {
-            // New GUID are provided. They do not have a matching image as other guids would. The aim is to make our ImageEndpoint return a 'missing photo' image 
-            new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall, WearLocation.HomeAndOutside,
-                false, 5, null),
-            new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall,
-                WearLocation.HomeAndOutside, false, 20, null),
+            ServerClothingItems = new List<ServerClothingItem>
+            {
+                // New GUID are provided. They do not have a matching image as other guids would. The aim is to make our ImageEndpoint return a 'missing photo' image 
+                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall,
+                    WearLocation.HomeAndOutside,
+                    false, 5, null),
+                new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall,
+                    WearLocation.HomeAndOutside, false, 20, null),
+            }
         };
-        newUser.ServerClothingItems = sampleClothingItems;
         
         await _genericRepository.CreateAsync(newUser);
         await _genericRepository.SaveAsync();   

@@ -7,7 +7,7 @@ using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Api.Database.Entities;
 
-public class ServerClothingItem : DatabaseEntity
+public class ServerClothingItem : IDatabaseEntity
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public ServerClothingItem()

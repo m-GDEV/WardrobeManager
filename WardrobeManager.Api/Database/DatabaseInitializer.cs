@@ -16,7 +16,6 @@ public class DatabaseInitializer
         // Get stuff
         using var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
         using var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        using var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
         
         // Create db and applies migrations (useful when running on new environment, don't need to do this manually)
         // Like called 'Update-Database' I think
@@ -26,9 +25,6 @@ public class DatabaseInitializer
         {
             return;
         }
-
-        var userStore = new UserStore<User>(context);
-        var password = new PasswordHasher<User>();
 
         // Role Creation
         string[] roles = ["Admin", "User"];

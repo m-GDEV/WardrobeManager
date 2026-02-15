@@ -5,10 +5,10 @@ using WardrobeManager.Api.Database.Entities;
 
 namespace WardrobeManager.Api.Repositories;
 
-public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEntity : class, DatabaseEntity
+public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEntity : class, IDatabaseEntity
     {
-        private DbSet<TEntity> _dbSet;
-        private DatabaseContext _context;
+        private readonly DbSet<TEntity> _dbSet;
+        private readonly DatabaseContext _context;
 
         public GenericRepository(DatabaseContext context)
         {

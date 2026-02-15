@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace WardrobeManager.Api.Database.Entities;
 
-public class User : IdentityUser, DatabaseEntity
+public class User : IdentityUser, IDatabaseEntity
 {
     public IEnumerable<IdentityRole>? Roles { get; set; }
     

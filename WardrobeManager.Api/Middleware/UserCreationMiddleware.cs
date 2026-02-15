@@ -24,7 +24,7 @@ public class UserCreationMiddleware
     public async Task InvokeAsync(HttpContext context)
     {
         
-        var userService = context.RequestServices.GetRequiredService<IUserService>();
+        // var userService = context.RequestServices.GetRequiredService<IUserService>();
         var loggingService = context.RequestServices.GetRequiredService<ILoggingService>();
 
         var log = new Log("Request received:", context.Request.ToString() ?? context.Request.Path, LogType.Info);
@@ -36,7 +36,7 @@ public class UserCreationMiddleware
         // Coincidentally, Microsoft Identity and Auto0 used the NameIdentifier claim for a user
         // So all the old code still works 100% fine. 
         // For this reason I will not be modifying anything Auth0 at the moment
-        var Auth0Id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        // var Auth0Id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         // only create the user if the consumer of the api is authorized
         // if (Auth0Id != null)
