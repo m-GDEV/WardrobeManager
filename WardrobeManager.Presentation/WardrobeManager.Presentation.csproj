@@ -19,6 +19,10 @@
   <ItemGroup>
     <ProjectReference Include="..\WardrobeManager.Shared\WardrobeManager.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
   
   <!-- Build tailwindcss -->
   <Target Name="BuildTailwind" BeforeTargets="Build">

@@ -1,105 +1,10 @@
 @page "/onboarding"
-
-@using System.ComponentModel.DataAnnotations
-@using WardrobeManager.Presentation.Components.Onboarding
 @using WardrobeManager.Presentation.Components.FormItems
+@using WardrobeManager.Presentation.Components.Onboarding
+@using WardrobeManager.Shared.StaticResources
 @namespace WardrobeManager.Presentation.Pages.Public
 
 <PageTitle>Onboarding - WardrobeManager</PageTitle>
 
 
-<div class="h-full flex flex-col items-center bg-primary-content gap-10">
-    <h3 class="heading-text">Welcome to WardrobeManager!</h3>
-
-    <div class="grow flex ">
-        @switch (currentSectionIndex)
-        {
-            case 0:
-            {
-                <OnboardingSection Title="@($"{ProjectConstants.ProjectName} is an all-in-one solution to clothing management.")"
-                                   ButtonText="Next"
-                                   ButtonClickCallback="GoToNextSection">
-                    <img src="@ProjectConstants.HomeBackgroundImage" class="h-96   object-contain rounded-2xl"/>
-                </OnboardingSection>
-                break;
-            }
-            case 1:
-            {
-                <OnboardingSection Title="@($"Enter the credentials for the administrator account")"
-                                   ButtonText="Next"
-                                   ButtonClickCallback="CreateAdminUser">
-                    <div>
-                        <LabelAndElement Label="Username" Orientation="vertical">
-                            <InputText @bind-Value="email" required class="bg-base-200 text-base-content p-3 rounded-xl" placeholder="@("email@example.com")" type="email"/>
-                        </LabelAndElement>
-                        <LabelAndElement Label="Password" Orientation="vertical">
-                            <InputText @bind-Value="password" required class="bg-base-200 text-base-content p-3 rounded-xl" placeholder="............" type="password"/>
-                        </LabelAndElement>
-
-
-                    </div>
-                </OnboardingSection>
-                break;
-            }
-            case 2:
-            {
-                <OnboardingSection Title="@($"Enjoy using {ProjectConstants.ProjectName}!")"
-                                   ButtonText="Go To Dashboard"
-                                   ButtonClickCallback="@(() => _navManager.NavigateTo("/dashboard"))">
-                    <p class="subtitle-text">
-                        If you encounter any issues, please open an issue on the <a href="@ProjectConstants.ProjectGitRepo" class="text-accent">GitHub repo</a>
-                    </p>
-                </OnboardingSection>
-                break;
-            }
-        }
-
-    </div>
-
-</div>
-
-@code {
-    private int currentSectionIndex = 0;
-
-    private string email = string.Empty;
-    private string password = string.Empty;
-
-    protected override async Task OnInitializedAsync()
-    {
-        var exists = await _apiService.DoesAdminUserExist();
-        if (exists)
-        {
-            _navManager.NavigateTo("/login");
-        }
-
-        await base.OnInitializedAsync();
-    }
-
-    public void GoToNextSection()
-    {
-        currentSectionIndex++;
-        StateHasChanged();
-    }
-
-    public async Task CreateAdminUser()
-    {
-        if (email == string.Empty || password == string.Empty)
-        {
-            _notificationService.AddNotification("You must specify a username and password!", NotificationType.Warning);
-        }
-
-        var credentials = new AdminUserCredentials
-        {
-            email = email, password = password
-        };
-        var res = await _apiService.CreateAdminUserIfMissing(credentials);
-        _notificationService.AddNotification(res.Item2);
-
-        // If added the admin user was sucessful
-        if (res.Item1 is true)
-        {
-            GoToNextSection();
-        }
-    }
-
-}
+<h1 class="text-4xl">Onboarding!</h1>

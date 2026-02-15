@@ -1,7 +1,8 @@
-﻿using WardrobeManager.Api.Database;
+﻿#region
+
 using WardrobeManager.Api.Services.Interfaces;
-using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
 

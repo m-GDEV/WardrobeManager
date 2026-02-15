@@ -1,18 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WardrobeManager.Shared.Models;
+﻿#region
+
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using WardrobeManager.Api.Database.Models;
+using Microsoft.EntityFrameworkCore;
+using WardrobeManager.Api.Database.Entities;
+
+#endregion
 
 namespace WardrobeManager.Api.Database;
 
-public class DatabaseContext : IdentityDbContext<AppUser>
+public class DatabaseContext : IdentityDbContext<User>
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
 
     }
 
-    public DbSet<AppUser> AppUsers { get; set; }
     public new DbSet<User> Users { get; set; }
     public DbSet<ServerClothingItem> ClothingItems { get; set; }
     public DbSet<Log> Logs { get; set; }

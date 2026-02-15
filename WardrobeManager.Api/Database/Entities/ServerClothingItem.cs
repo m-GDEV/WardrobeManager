@@ -1,10 +1,13 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using WardrobeManager.Shared.Enums;
+﻿#region
+
 using System.Text.Json.Serialization;
+using WardrobeManager.Shared.Enums;
 
-namespace WardrobeManager.Shared.Models;
+#endregion
 
-public class ServerClothingItem
+namespace WardrobeManager.Api.Database.Entities;
+
+public class ServerClothingItem : IDatabaseEntity
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public ServerClothingItem()

@@ -1,9 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿#region
+
+using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
-using WardrobeManager.Shared.Services.Interfaces;
+using WardrobeManager.Shared.StaticResources;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
 
@@ -11,14 +16,12 @@ public class ClothingItemService : IClothingItemService
 {
     private readonly DatabaseContext _context;
     private readonly IUserService _userService;
-    private readonly ISharedService _sharedService;
     private readonly IFileService _fileService;
 
-    public ClothingItemService(DatabaseContext databaseContext, IUserService userService, ISharedService sharedService, IFileService fileService)
+    public ClothingItemService(DatabaseContext databaseContext, IUserService userService, IFileService fileService)
     {
         _context = databaseContext;
         _userService = userService;
-        _sharedService = sharedService;
         _fileService = fileService;
     }
 
@@ -96,7 +99,7 @@ public class ClothingItemService : IClothingItemService
         }
 
         Guid? newItemGuid = null;
-        if (_sharedService.IsValidBase64(newItem.ImageBase64))
+        if (MiscMethods.IsValidBase64(newItem.ImageBase64))
         {
             newItemGuid = Guid.NewGuid();
             // decode and save file to place on disk with guid as name
@@ -146,7 +149,7 @@ public class ClothingItemService : IClothingItemService
         if (editedItem.ImageBase64 != null)
         {
             Guid? editedItemGuid = null;
-            if (_sharedService.IsValidBase64(editedItem.ImageBase64))
+            if (MiscMethods.IsValidBase64(editedItem.ImageBase64))
             {
                 editedItemGuid = Guid.NewGuid();
                 // decode and save file to place on disk with guid as name

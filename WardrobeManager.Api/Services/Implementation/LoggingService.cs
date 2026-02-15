@@ -1,7 +1,11 @@
-﻿using WardrobeManager.Api.Database;
+﻿#region
+
+using WardrobeManager.Api.Database;
+using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Models;
+
+#endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
 public class LoggingSerivce : ILoggingService

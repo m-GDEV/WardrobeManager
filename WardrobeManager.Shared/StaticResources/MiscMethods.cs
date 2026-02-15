@@ -1,8 +1,13 @@
-﻿using System.Text.RegularExpressions;
+﻿#region
+
+using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Shared.Misc;
+#endregion
+
+namespace WardrobeManager.Shared.StaticResources;
 
 public static class MiscMethods
 {
@@ -14,9 +19,8 @@ public static class MiscMethods
     // This is by no means actually random
     public static string GenerateRandomId()
     {
-        Random random = new Random(); // spikcq: CS-A1008
         const string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        var id = new string(Enumerable.Repeat(chars, 8).Select(s => s[random.Next(s.Length)]).ToArray());
+        string id = RandomNumberGenerator.GetString(chars, 8);
         return $"id{id}"; // id needs to start with letter
     }
     public static string GetEmoji(ClothingCategory category)
@@ -73,5 +77,23 @@ public static class MiscMethods
         var words = Regex.Matches(givenEnum.ToString(), @"([A-Z][a-z]+)").Select(m => m.Value);
         var withSpaces = string.Join(" ", words);
         return $"{withSpaces}";
+    }
+    
+    public static bool IsValidBase64(string input)
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(input))
+            {
+                return false;
+            }
+            Convert.FromBase64String(input);
+            return true;
+        }
+        catch
+        {
+            return false;
+
+        }
     }
 }
