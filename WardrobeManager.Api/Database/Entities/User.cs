@@ -1,29 +1,16 @@
-﻿#region
-
-using System.Text.Json.Serialization;
-
-#endregion
+﻿using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Identity;
 
 namespace WardrobeManager.Api.Database.Entities;
 
-// As of right now, the AppUser class is only used for authentication. 
-// The User class is used to connect an AppUser with User and give them a profile in the app
-// In the future it might be a good idea to merge these
-public class User(string Auth0Id)
+public class User : IdentityUser, DatabaseEntity
 {
-    // Because the user is created solely when we only know their Auth0Id,
-    // everything in this class has a sensisble default. When the user
-    // wants to change their profile details they may perform a PUT request
-    // with a DTO object
-
-
+    public IEnumerable<IdentityRole>? Roles { get; set; }
+    
     // Personal info
     public int Id { get; set; }
-    // used to identify user from auth0
-    public string Auth0Id { get; set; } = Auth0Id;
     public string Name { get; set;  } = "Default Name";
-    // stored directly in db instead of file since there won't be many users & its convenient
-    public string ProfilePictureBase64 { get; set; } = string.Empty;
+    public string ProfilePictureBase64 { get; set; } = string.Empty; // stored directly in db instead of file since there won't be many users & its convenient
     public DateTime AccountCreationDate = DateTime.UtcNow;
 
     // Data relationships

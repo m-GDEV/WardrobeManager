@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using System.Security.Claims;
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 
@@ -38,17 +39,17 @@ public class UserCreationMiddleware
         var Auth0Id = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         // only create the user if the consumer of the api is authorized
-        if (Auth0Id != null)
-        {
-            await userService.CreateUser(Auth0Id);
-            Debug.Assert(await userService.DoesUserExist(Auth0Id) == true, "User finding/creating is broken");
-
-            var user = await userService.GetUser(Auth0Id);
-            Debug.Assert(user != null, "At this point in the pipeline user should exist");
-
-            // pass along to controllers
-            context.Items["user"] = user;
-        }
+        // if (Auth0Id != null)
+        // {
+        //     await userService.CreateUser(Auth0Id);
+        //     Debug.Assert(await userService.DoesUserExist(Auth0Id) == true, "User finding/creating is broken");
+        //
+        //     var user = await userService.GetUser(Auth0Id);
+        //     Debug.Assert(user != null, "At this point in the pipeline user should exist");
+        //
+        //     // pass along to controllers
+        //     context.Items["user"] = user;
+        // }
 
         await _next(context);
     }

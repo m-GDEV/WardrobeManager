@@ -35,7 +35,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddAuthorizationBuilder();
 
 // Add identify and opt-in to endpoints 
-builder.Services.AddIdentityCore<AppUser>(options =>
+builder.Services.AddIdentityCore<User>(options =>
     {
         options.User.RequireUniqueEmail = true;
     })
@@ -93,7 +93,7 @@ if (app.Environment.IsDevelopment())
 }
 
 // Adds a bunch of auto generated Identity-related routes (/register, /login, etc)
-app.MapIdentityApi<AppUser>();
+app.MapIdentityApi<User>();
 app.UseCors("wasm");
 
 app.UseHttpsRedirection();

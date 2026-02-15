@@ -8,14 +8,13 @@ using WardrobeManager.Api.Database.Entities;
 
 namespace WardrobeManager.Api.Database;
 
-public class DatabaseContext : IdentityDbContext<AppUser>
+public class DatabaseContext : IdentityDbContext<User>
 {
     public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
     {
 
     }
 
-    public DbSet<AppUser> AppUsers { get; set; }
     public new DbSet<User> Users { get; set; }
     public DbSet<ServerClothingItem> ClothingItems { get; set; }
     public DbSet<Log> Logs { get; set; }

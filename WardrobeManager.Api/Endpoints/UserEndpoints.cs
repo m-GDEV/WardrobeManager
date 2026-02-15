@@ -3,6 +3,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
 

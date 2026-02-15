@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
 
@@ -26,7 +27,7 @@ public static class IdentityEndpoints
     // Provide an end point to clear the cookie for logout
     // For more information on the logout endpoint and antiforgery, see:
     // https://learn.microsoft.com/aspnet/core/blazor/security/webassembly/standalone-with-identity#antiforgery-support
-    public static async Task<IResult> LogoutAsync(SignInManager<AppUser> signInManager, [FromBody] object empty)
+    public static async Task<IResult> LogoutAsync(SignInManager<User> signInManager, [FromBody] object empty)
     {
         if (empty is not null)
         {

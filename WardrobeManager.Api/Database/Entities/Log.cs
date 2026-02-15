@@ -5,7 +5,7 @@ using WardrobeManager.Shared.Enums;
 #endregion
 
 namespace WardrobeManager.Api.Database.Entities;
-public class Log(string title, string description, LogType type)
+public class Log(string title, string description, LogType type) : DatabaseEntity
 {
     public int Id { get; set; }
     public string Title { get; set; } = title;
