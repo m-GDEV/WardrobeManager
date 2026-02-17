@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WardrobeManager.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedAppUser : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,6 +16,9 @@ namespace WardrobeManager.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
+                    PrimaryKeyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    ProfilePictureBase64 = table.Column<string>(type: "TEXT", nullable: false),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -34,6 +37,23 @@ namespace WardrobeManager.Api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.UniqueConstraint("AK_AspNetUsers_PrimaryKeyId", x => x.PrimaryKeyId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Logs",
+                columns: table => new
+                {
+                    PrimaryKeyId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Type = table.Column<int>(type: "INTEGER", nullable: false),
+                    Created = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Logs", x => x.PrimaryKeyId);
                 });
 
             migrationBuilder.CreateTable(
@@ -41,7 +61,7 @@ namespace WardrobeManager.Api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "TEXT", nullable: false),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: true),
                     Name = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "TEXT", nullable: true)
@@ -50,8 +70,8 @@ namespace WardrobeManager.Api.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoles_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
+                        name: "FK_AspNetRoles_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
@@ -118,6 +138,37 @@ namespace WardrobeManager.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClothingItems",
+                columns: table => new
+                {
+                    PrimaryKeyId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Category = table.Column<int>(type: "INTEGER", nullable: false),
+                    Season = table.Column<int>(type: "INTEGER", nullable: false),
+                    WearLocation = table.Column<int>(type: "INTEGER", nullable: false),
+                    ImageGuid = table.Column<Guid>(type: "TEXT", nullable: true),
+                    Favourited = table.Column<bool>(type: "INTEGER", nullable: false),
+                    DesiredTimesWornBeforeWash = table.Column<int>(type: "INTEGER", nullable: false),
+                    TimesWornSinceWash = table.Column<int>(type: "INTEGER", nullable: false),
+                    TimesWornTotal = table.Column<int>(type: "INTEGER", nullable: false),
+                    LastWorn = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateAdded = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClothingItems", x => x.PrimaryKeyId);
+                    table.ForeignKey(
+                        name: "FK_ClothingItems_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "PrimaryKeyId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -168,9 +219,9 @@ namespace WardrobeManager.Api.Migrations
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetRoles_AppUserId",
+                name: "IX_AspNetRoles_UserId",
                 table: "AspNetRoles",
-                column: "AppUserId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
@@ -203,6 +254,11 @@ namespace WardrobeManager.Api.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ClothingItems_UserId",
+                table: "ClothingItems",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -222,6 +278,12 @@ namespace WardrobeManager.Api.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ClothingItems");
+
+            migrationBuilder.DropTable(
+                name: "Logs");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

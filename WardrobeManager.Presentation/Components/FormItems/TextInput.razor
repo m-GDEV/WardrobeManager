@@ -3,7 +3,7 @@
 
 @* This is not that different compared to using InputText but it calls the callback every keypress *@
 
-<input type="text" @bind="_value" @bind:event="oninput" placeholder="@Placeholder" class="outline-none border-none w-full @Css"/>
+<input type="text" @bind="_value" @bind:event="oninput" placeholder="@Placeholder" class="outline-hidden border-none w-full @Css"/>
 
 @code {
     [Parameter] public string Css { get; set; } = string.Empty;

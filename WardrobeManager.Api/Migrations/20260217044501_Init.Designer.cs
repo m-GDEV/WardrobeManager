@@ -11,21 +11,18 @@ using WardrobeManager.Api.Database;
 namespace WardrobeManager.Api.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241108184754_AddedAppUser")]
-    partial class AddedAppUser
+    [Migration("20260217044501_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.3");
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -40,13 +37,16 @@ namespace WardrobeManager.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("AppUserId");
+                    b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -153,73 +153,9 @@ namespace WardrobeManager.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WardrobeManager.Api.Database.Models.AppUser", b =>
+            modelBuilder.Entity("WardrobeManager.Api.Database.Entities.Log", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex");
-
-                    b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("WardrobeManager.Shared.Models.Log", b =>
-                {
-                    b.Property<int>("Id")
+                    b.Property<int>("PrimaryKeyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -237,14 +173,14 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("PrimaryKeyId");
 
                     b.ToTable("Logs");
                 });
 
-            modelBuilder.Entity("WardrobeManager.Shared.Models.ServerClothingItem", b =>
+            modelBuilder.Entity("WardrobeManager.Api.Database.Entities.ServerClothingItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PrimaryKeyId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -288,41 +224,93 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<int>("WearLocation")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                    b.HasKey("PrimaryKeyId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("ClothingItems");
                 });
 
-            modelBuilder.Entity("WardrobeManager.Shared.Models.User", b =>
+            modelBuilder.Entity("WardrobeManager.Api.Database.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Auth0Id")
-                        .IsRequired()
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("PrimaryKeyId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("ProfilePictureBase64")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
-                    b.HasOne("WardrobeManager.Api.Database.Models.AppUser", null)
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", null)
                         .WithMany("Roles")
-                        .HasForeignKey("AppUserId");
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -336,7 +324,7 @@ namespace WardrobeManager.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("WardrobeManager.Api.Database.Models.AppUser", null)
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -345,7 +333,7 @@ namespace WardrobeManager.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("WardrobeManager.Api.Database.Models.AppUser", null)
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -360,7 +348,7 @@ namespace WardrobeManager.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WardrobeManager.Api.Database.Models.AppUser", null)
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,31 +357,29 @@ namespace WardrobeManager.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("WardrobeManager.Api.Database.Models.AppUser", null)
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WardrobeManager.Shared.Models.ServerClothingItem", b =>
+            modelBuilder.Entity("WardrobeManager.Api.Database.Entities.ServerClothingItem", b =>
                 {
-                    b.HasOne("WardrobeManager.Shared.Models.User", "User")
+                    b.HasOne("WardrobeManager.Api.Database.Entities.User", "User")
                         .WithMany("ServerClothingItems")
                         .HasForeignKey("UserId")
+                        .HasPrincipalKey("PrimaryKeyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WardrobeManager.Api.Database.Models.AppUser", b =>
+            modelBuilder.Entity("WardrobeManager.Api.Database.Entities.User", b =>
                 {
                     b.Navigation("Roles");
-                });
 
-            modelBuilder.Entity("WardrobeManager.Shared.Models.User", b =>
-                {
                     b.Navigation("ServerClothingItems");
                 });
 #pragma warning restore 612, 618

@@ -26,14 +26,15 @@ public class DatabaseContext : IdentityDbContext<User>
         modelBuilder.Entity<User>()
             .HasMany(e=> e.ServerClothingItems)
             .WithOne(e=> e.User)
-            .HasForeignKey(e=> e.UserId)
+            .HasForeignKey(e => e.UserId)
+            .HasPrincipalKey(e => e.PrimaryKeyId)
             .OnDelete(DeleteBehavior.Cascade) // deletes a user's clothing items when they are deleted
             .IsRequired();
         
         // Configure all entities that implement IDatabaseEntity
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            if (typeof(IDatabaseEntity).IsAssignableFrom(entityType.ClrType))
+            if (typeof(IDatabaseEntity).IsAssignableFrom(entityType.ClrType) && entityType.ClrType != typeof(User))
             {
                 modelBuilder.Entity(entityType.ClrType)
                     .HasKey(nameof(IDatabaseEntity.PrimaryKeyId));

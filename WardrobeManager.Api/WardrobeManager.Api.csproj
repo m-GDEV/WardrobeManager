@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Validators\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
