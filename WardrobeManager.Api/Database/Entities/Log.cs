@@ -7,7 +7,7 @@ using WardrobeManager.Shared.Enums;
 namespace WardrobeManager.Api.Database.Entities;
 public class Log(string title, string description, LogType type) : IDatabaseEntity
 {
-    public int Id { get; set; }
+    public int PrimaryKeyId { get; set; }
     public string Title { get; set; } = title;
     public string Description { get; set; } = description;
     public LogType Type { get; set; } = type;

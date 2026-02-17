@@ -35,7 +35,7 @@ public static class UserEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await userService.UpdateUser(user.Id, editedUser);
+        await userService.UpdateUser(user.PrimaryKeyId, editedUser);
 
         return Results.Ok("Updated");
     }
@@ -45,7 +45,7 @@ public static class UserEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await userService.DeleteUser(user.Id);
+        await userService.DeleteUser(user.PrimaryKeyId);
 
         return Results.Ok("Deleted");
     }
