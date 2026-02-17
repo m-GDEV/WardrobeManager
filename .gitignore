@@ -375,3 +375,5 @@ FodyWeavers.xsd
 
 # used for docker-compose testing
 data/
+
+/WardrobeManager.Presentation/wwwroot/css/tailwind.css

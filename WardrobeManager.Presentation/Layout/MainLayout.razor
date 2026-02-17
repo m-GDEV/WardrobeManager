@@ -2,11 +2,11 @@
 
 @inject IJSRuntime JSRuntime
 @inject INotificationService _notificationService
-@inject Initialization init
+@inject Initialization sysinfocusComponentsinit
 @inject BrowserExtensions browserExtensions
 
 <body class="dark h-full body-text transition-all duration-300 "
-     @onclick="init.HandleMainLayoutClickEvent">
+     @onclick="sysinfocusComponentsinit.HandleMainLayoutClickEvent">
     <ErrorBoundary @ref="errorBoundary">
         <ChildContent>
             <NavMenu />
@@ -46,7 +46,7 @@
         {
             await browserExtensions.SetToLocalStorage("theme", "dark");
             await browserExtensions.SetToLocalStorage("theme", "dark");
-            await init.InitializeTheme();
+            await sysinfocusComponentsinit.InitializeTheme();
         }
     }
 

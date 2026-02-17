@@ -88,7 +88,7 @@ public class ClothingItemService : IClothingItemService
     // ---- Methods for one clothing item ---
     public async Task<ServerClothingItem?> GetClothingItem(int userId, int itemId)
     {
-        return await _context.ClothingItems.Where(item => item.Id == itemId && item.UserId == userId).FirstOrDefaultAsync();
+        return await _context.ClothingItems.Where(item => item.PrimaryKeyId == itemId && item.UserId == userId).FirstOrDefaultAsync();
     }
 
     public async Task AddClothingItem(int userId, NewOrEditedClothingItemDTO newItem)

@@ -36,7 +36,7 @@ public class ServerClothingItem : IDatabaseEntity
     }
 
     // ---- EF Core modifies -----
-    public int Id { get; set; }
+    public int PrimaryKeyId { get; set; }
 
     // represents a mandatory one-to-many relationship with a User as
     // the following 2 fields are not nullable
