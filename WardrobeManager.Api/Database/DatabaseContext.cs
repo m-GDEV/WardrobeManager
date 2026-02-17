@@ -34,7 +34,7 @@ public class DatabaseContext : IdentityDbContext<User>
         // Configure all entities that implement IDatabaseEntity
         foreach (var entityType in modelBuilder.Model.GetEntityTypes())
         {
-            if (typeof(IDatabaseEntity).IsAssignableFrom(entityType.ClrType) && entityType.ClrType != new User().GetType())
+            if (typeof(IDatabaseEntity).IsAssignableFrom(entityType.ClrType) && entityType.ClrType != typeof(User))
             {
                 modelBuilder.Entity(entityType.ClrType)
                     .HasKey(nameof(IDatabaseEntity.PrimaryKeyId));
