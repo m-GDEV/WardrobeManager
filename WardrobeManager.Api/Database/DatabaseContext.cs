@@ -26,6 +26,7 @@ public class DatabaseContext : IdentityDbContext<User>
         modelBuilder.Entity<User>()
             .HasMany(e=> e.ServerClothingItems)
             .WithOne(e=> e.User)
+            .HasForeignKey(e => e.UserId)
             .HasPrincipalKey(e => e.PrimaryKeyId)
             .OnDelete(DeleteBehavior.Cascade) // deletes a user's clothing items when they are deleted
             .IsRequired();
