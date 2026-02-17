@@ -5,7 +5,7 @@
 @* !! When using this component make sure you put onclick="id.showModal()" in a button or something !! *@
 
 <dialog id="@Id" class="modal">
-    <div class="modal-box @MaxWidthCss w-[90%] relative min-h-[20rem] flex flex-row justify-center items-center">
+    <div class="modal-box @MaxWidthCss w-[90%] relative min-h-80 flex flex-row justify-center items-center">
         @ChildContent
 
     </div>
@@ -20,7 +20,7 @@
 {
     [Parameter] public required string Id { get; set; }
 
-    [Parameter] public string MaxWidthCss { get; set; } = "max-w-[70rem]";
+    [Parameter] public string MaxWidthCss { get; set; } = "max-w-280";
 
     [Parameter] public required RenderFragment ChildContent { get; set; }
 }
