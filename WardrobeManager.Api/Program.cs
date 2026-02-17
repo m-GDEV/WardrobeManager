@@ -6,6 +6,7 @@ using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Endpoints;
 using WardrobeManager.Api.Middleware;
+using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 
@@ -73,6 +74,11 @@ builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
 builder.Services.AddSingleton<IDataDirectoryService, DataDirectoryService>();
+
+// Entity Services
+builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
+builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
+builder.Services.AddScoped<IGenericRepository<ServerClothingItem>, GenericRepository<ServerClothingItem>>();
 
 // add db context
 builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>
