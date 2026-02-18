@@ -1,3 +1,8 @@
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Services.Interfaces;
+
 namespace WardrobeManager.Api.Endpoints;
 
 public static class MiscEndpoints {
@@ -12,6 +17,19 @@ public static class MiscEndpoints {
             return Results.Ok("Authenticated: WardrobeManager API is active.");
         }
         return Results.Ok("Unauthenticated: WardrobeManager API is active.");
+    }
+
+    public static async Task<IResult> AddLog([FromBody] Log givenLog, ILoggingService loggingService)
+    {
+        try
+        {
+            await loggingService.CreateDatabaseAndConsoleLog(givenLog);
+            return Results.Ok();
+        }
+        catch
+        {
+            return Results.Problem("Could not create log.");
+        }
     }
 }
 

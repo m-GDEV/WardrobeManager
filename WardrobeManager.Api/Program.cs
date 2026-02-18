@@ -72,7 +72,7 @@ builder.Services.AddScoped<DatabaseContext>();
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
+builder.Services.AddScoped<ILoggingService, LoggingService>();
 builder.Services.AddSingleton<IDataDirectoryService, DataDirectoryService>();
 
 // Entity Services

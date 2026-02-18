@@ -32,7 +32,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         // Log the error
         _logger.LogError(ex.Message);
 
-        var log = new Log(ex.Message, ex.ToString(), LogType.UncaughtException);
+        var log = new Log(ex.Message, ex.ToString(), LogType.UncaughtException, LogOrigin.Backend);
         await _loggingService.CreateDatabaseAndConsoleLog(log);
 
 

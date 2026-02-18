@@ -7,3 +7,11 @@ public enum LogType
     Error,
     UncaughtException
 }
+
+public enum LogOrigin
+{
+    Frontend,
+    Backend,
+    Database,
+    Unknown
+}

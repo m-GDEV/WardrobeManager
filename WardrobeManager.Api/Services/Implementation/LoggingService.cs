@@ -2,34 +2,28 @@
 
 using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 
 #endregion
 
 namespace WardrobeManager.Api.Services.Implementation;
-public class LoggingSerivce : ILoggingService
+public class LoggingService(IGenericRepository<Log> genericRepository, ILogger<LoggingService> logger)
+    : ILoggingService
 {
-    private readonly DatabaseContext _context;
-    private readonly ILogger<LoggingSerivce> _logger;
-
-    public LoggingSerivce(DatabaseContext context, ILogger<LoggingSerivce> logger)
-    {
-        _context = context;
-        _logger = logger;
-    }
-
     public async Task CreateDatabaseAndConsoleLog(Log log)
     {
-        _context.Logs.Add(log);
+        await genericRepository.CreateAsync(log);
         if (log.Type == LogType.Error || log.Type == LogType.UncaughtException)
         {
-            _logger.LogError(log.Title + log.Description);
+            logger.LogError(log.Title + log.Description);
         }
         else
         {
-            _logger.LogInformation(log.Title + log.Description);
+            logger.LogInformation(log.Title + log.Description);
         }
-        await _context.SaveChangesAsync();
+
+        await genericRepository.SaveAsync();
     }
 }
