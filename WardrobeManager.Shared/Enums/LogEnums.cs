@@ -5,7 +5,8 @@ public enum LogType
     Info,
     Warning,
     Error,
-    UncaughtException
+    UncaughtException,
+    RequestLog // logging incoming requests
 }
 
 public enum LogOrigin
