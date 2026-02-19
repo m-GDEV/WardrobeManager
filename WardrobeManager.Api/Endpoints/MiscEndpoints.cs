@@ -1,5 +1,4 @@
 using AutoMapper;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
@@ -24,16 +23,9 @@ public static class MiscEndpoints {
 
     public static async Task<IResult> AddLogAsync([FromBody] LogDTO givenLog, ILoggingService loggingService, IMapper mapper)
     {
-        try
-        {
-            Log log = mapper.Map<Log>(givenLog);
-            await loggingService.CreateDatabaseAndConsoleLog(log);
-            return Results.Ok();
-        }
-        catch
-        {
-            return Results.Problem("Could not create log.");
-        }
+        Log log = mapper.Map<Log>(givenLog);
+        await loggingService.CreateDatabaseAndConsoleLog(log);
+        return Results.Ok();
     }
 }
 

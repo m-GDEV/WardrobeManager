@@ -38,7 +38,7 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
 
 
         context.Response.StatusCode = 500;
-        await context.Response.WriteAsync(ex?.Message ?? "No exception", cancellationToken);
+        await context.Response.WriteAsync("Error processing request.", cancellationToken);
         
         // I think 'true' indicates we were able to handle the error
         return true;

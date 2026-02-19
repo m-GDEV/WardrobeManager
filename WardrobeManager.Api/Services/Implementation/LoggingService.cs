@@ -1,6 +1,5 @@
 ﻿#region
 
-using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Interfaces;
@@ -15,13 +14,13 @@ public class LoggingService(IGenericRepository<Log> genericRepository, ILogger<L
     public async Task CreateDatabaseAndConsoleLog(Log log)
     {
         await genericRepository.CreateAsync(log);
-        if (log.Type == LogType.Error || log.Type == LogType.UncaughtException)
+        if (log.Type is LogType.Error or LogType.UncaughtException)
         {
-            logger.LogError(log.Title + log.Description);
+            logger.LogError("{title}, {description}", log.Title , log.Description);
         }
         else
         {
-            logger.LogInformation(log.Title + log.Description);
+            logger.LogInformation("{title}, {description}", log.Title , log.Description);
         }
 
         await genericRepository.SaveAsync();

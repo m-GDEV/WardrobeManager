@@ -1,10 +1,6 @@
 ﻿#region
 
-using System.Diagnostics;
-using System.Security.Claims;
-using Dumpify;
 using WardrobeManager.Api.Database.Entities;
-using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 
@@ -19,7 +15,7 @@ public class LoggingMiddleware(RequestDelegate next)
     {
         var loggingService = context.RequestServices.GetRequiredService<ILoggingService>();
 
-        var log = new Log("Request received", context.Request.Path, LogType.RequestLog, LogOrigin.Backend);
+        var log = new Log("Request received", context.Connection.RemoteIpAddress?.ToString() ?? "No IP Address", LogType.RequestLog, LogOrigin.Backend);
         await loggingService.CreateDatabaseAndConsoleLog(log);
 
         await next(context);
