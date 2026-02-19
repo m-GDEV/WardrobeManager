@@ -30,6 +30,11 @@ public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEnti
         {
             await _dbSet.AddAsync(entity);
         }
+        
+        public virtual async Task CreateManyAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+        }
 
         public virtual void Remove(TEntity entity)
         {

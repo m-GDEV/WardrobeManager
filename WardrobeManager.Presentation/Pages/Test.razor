@@ -2,8 +2,10 @@
 @inject IConfiguration _config
 
 @page "/test"
+@using WardrobeManager.Shared.DTOs
 
 <h4 class="normal mb1">Regular Grid Column Example</h4>
+<Button OnClick="SendLog" Text="Send Log" Type="ButtonType.Outline"/>
 <Grid MinColWidth="150px" Gap="1rem">
     <div class="flex-col jcc aic g0"><Text Content="0" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="brown,red" /> I'm Zero </div>
     <div class="flex-col jcc aic g0"><Text Content="1" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="red,green" /> I'm One </div>
@@ -55,6 +57,21 @@
         StateHasChanged();
          
         base.OnInitialized();
+    }
+
+    public async Task SendLog()
+    {
+        var log = new LogDTO
+        {
+            Created = DateTime.UtcNow,
+            Description = "hahaha",
+            Origin = LogOrigin.Frontend,
+            Type = LogType.Info,
+            Title = "Test Log!"
+        };
+        Console.WriteLine(log);
+
+        await _apiService.AddLog(log);
     }
 
 }

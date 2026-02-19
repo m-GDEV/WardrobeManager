@@ -1,5 +1,6 @@
 #region
 
+using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
@@ -9,6 +10,7 @@ using WardrobeManager.Api.Middleware;
 using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.DTOs;
 
 #endregion
 
@@ -67,13 +69,22 @@ builder.Services.AddSwaggerGen();
 // Custom Services Added by Musa
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
-builder.Services.AddScoped<DatabaseContext>();
 
 builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<ILoggingService, LoggingSerivce>();
+builder.Services.AddScoped<ILoggingService, LoggingService>();
 builder.Services.AddSingleton<IDataDirectoryService, DataDirectoryService>();
+
+
+// Automapper
+builder.Services.AddAutoMapper(cfg => 
+{
+    cfg.LicenseKey = builder.Configuration["AutoMapper_License_Key"];
+    
+    // Add your maps here directly
+    cfg.CreateMap<Log, LogDTO>().ReverseMap();
+});
 
 // Entity Services
 builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
@@ -126,6 +137,7 @@ app.MapIdentityEndpoints();
 // Custom Middleware
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/middleware/write?view=aspnetcore-8.0
 app.UseMiddleware<UserCreationMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 // Initialize DB (only run if db doesn't exist)
 using var scope = app.Services.CreateScope();
