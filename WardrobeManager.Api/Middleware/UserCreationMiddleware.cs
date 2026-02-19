@@ -25,11 +25,6 @@ public class UserCreationMiddleware
     {
         
         // var userService = context.RequestServices.GetRequiredService<IUserService>();
-        // var loggingService = context.RequestServices.GetRequiredService<ILoggingService>();
-
-        // var log = new Log("Request received:", context.Request.ToString() ?? context.Request.Path, LogType.Info, );
-        // await loggingService.CreateDatabaseAndConsoleLog(log);
-
 
         // -------------- !!IMPORTANT!! -------------
         // Previously I was using Auth0 as an authentication provider.
