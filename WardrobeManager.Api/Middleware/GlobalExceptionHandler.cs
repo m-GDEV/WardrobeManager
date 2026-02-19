@@ -1,5 +1,6 @@
 #region
 
+using Dumpify;
 using Microsoft.AspNetCore.Diagnostics;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Interfaces;
@@ -32,12 +33,12 @@ internal sealed class GlobalExceptionHandler : IExceptionHandler
         // Log the error
         _logger.LogError(ex.Message);
 
-        var log = new Log(ex.Message, ex.ToString(), LogType.UncaughtException, LogOrigin.Backend);
+        var log = new Log(ex.Message, ex.DumpText(), LogType.UncaughtException, LogOrigin.Backend);
         await _loggingService.CreateDatabaseAndConsoleLog(log);
 
 
         context.Response.StatusCode = 500;
-        await context.Response.WriteAsync(ex.Message);
+        await context.Response.WriteAsync(ex?.Message ?? "No exception", cancellationToken);
         
         // I think 'true' indicates we were able to handle the error
         return true;
