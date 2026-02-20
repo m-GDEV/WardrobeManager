@@ -1,4 +1,4 @@
-name: .NET Build CI
+name: .NET Build and Test CI
 
 on:
   pull_request:
@@ -10,24 +10,43 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-    - name: Restore dependencies
-      run: dotnet restore
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+      - name: Restore dependencies
+        run: dotnet restore
 
-    - name: Build solution
-      # --no-restore is used because we ran it in the previous step
-      run: dotnet build --configuration Release --no-restore
+      - name: Build solution
+        # --no-restore is used because we ran it in the previous step
+        run: dotnet build --configuration Release --no-restore
 
-    - name: Run Tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      - name: Report Code Coverage to DeepSource
+        env:
+          DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
+        run: |
+          set -e
+          # Run your tests
+          dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=detailed" --results-directory /tmp/test-results/
+          
+          # Install DeepSource CLI
+          curl https://deepsource.io/cli | sh
+          
+          # From the root directory, run the report coverage command
+          COVERAGE_DIRECTORIES=$(find /tmp/test-results -mindepth 1 -type d)
+
+          for i in $COVERAGE_DIRECTORIES; do
+              if [ -f "$i/coverage.cobertura.xml" ]; then
+                  ./bin/deepsource report --analyzer test-coverage --key csharp --value-file $i/coverage.cobertura.xml
+              fi
+          done
