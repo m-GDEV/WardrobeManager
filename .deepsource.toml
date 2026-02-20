@@ -17,3 +17,8 @@ name = "csharp"
 enabled = true
 [analyzers.meta]
   cyclomatic_complexity_threshold = "high"
+
+
+[[analyzers]]
+name = "test-coverage"
+enabled = true
