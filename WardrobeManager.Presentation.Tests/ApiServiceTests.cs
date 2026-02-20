@@ -54,14 +54,18 @@ public class ApiServiceTests
             .Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get), // Only for GET
+                ItExpr.Is<HttpRequestMessage>(req => 
+                    req.Method == HttpMethod.Get &&
+                    req.RequestUri != null && 
+                    req.RequestUri.AbsolutePath.Contains("/does-admin-user-exist")
+                ), 
                 ItExpr.IsAny<CancellationToken>()
             )
             .ReturnsAsync(mockResponse);
         // Act
+        var res = await _apiService.DoesAdminUserExist();
         // Assert
         _mockHttpClientFactory.Verify(s => s.CreateClient("Auth"), Times.Once);
-        var res = await _apiService.DoesAdminUserExist();
         res.Should().Be(true);
     }
 
@@ -78,13 +82,17 @@ public class ApiServiceTests
             .Protected()
             .Setup<Task<HttpResponseMessage>>(
                 "SendAsync",
-                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get), // Only for GET
+                ItExpr.Is<HttpRequestMessage>(req => 
+                    req.Method == HttpMethod.Get &&
+                    req.RequestUri != null && 
+                    req.RequestUri.AbsolutePath.Contains("/does-admin-user-exist")
+                    ), 
                 ItExpr.IsAny<CancellationToken>()
             )
             .ReturnsAsync(mockResponse);
         // Act
         // Assert
+        await _apiService.Invoking(s => s.DoesAdminUserExist()).Should().ThrowAsync<HttpRequestException>();
         _mockHttpClientFactory.Verify(s => s.CreateClient("Auth"), Times.Once);
-       await _apiService.Invoking(s => s.DoesAdminUserExist()).Should().ThrowAsync<HttpRequestException>();
     }
 }
