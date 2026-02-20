@@ -1,0 +1,90 @@
+﻿using System.Net;
+using System.Net.Http.Json;
+using FluentAssertions;
+using Moq;
+using Moq.Protected;
+using WardrobeManager.Presentation.Services.Implementation;
+using WardrobeManager.Presentation.Services.Interfaces;
+
+namespace WardrobeManager.Presentation.Tests;
+
+public class ApiServiceTests
+{
+    private Mock<IHttpClientFactory> _mockHttpClientFactory;
+    private readonly string _apiEndPoint = "http://localhost:3000";
+    private IApiService _apiService;
+    private Mock<HttpMessageHandler> _mockHandler;
+
+    [SetUp]
+    public void Setup()
+    {
+        _mockHttpClientFactory = new Mock<IHttpClientFactory>();
+        _mockHandler = new Mock<HttpMessageHandler>();
+        // Create a real HttpClient that uses your Mock Handler
+        var httpClient = new HttpClient(_mockHandler.Object)
+        {
+            BaseAddress = new Uri(_apiEndPoint)
+        };
+
+        // Tell the mock factory to return this client when "Auth" is requested
+        _mockHttpClientFactory
+            .Setup(f => f.CreateClient("Auth"))
+            .Returns(httpClient);
+
+        _apiService = new ApiService(_apiEndPoint, _mockHttpClientFactory.Object);
+    }
+
+    [TearDown]
+    public async Task TearDown()
+    {
+        await _apiService.DisposeAsync();
+    }
+
+    [Test]
+    public async Task DoesAdminUserExists_Does_FunctionsCorrectly()
+    {
+        // Arrange
+        var mockResponse = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = JsonContent.Create(true)
+        };
+        // 2. Setup the Handler to return our mockResponse
+        _mockHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get), // Only for GET
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(mockResponse);
+        // Act
+        // Assert
+        _mockHttpClientFactory.Verify(s => s.CreateClient("Auth"), Times.Once);
+        var res = await _apiService.DoesAdminUserExist();
+        res.Should().Be(true);
+    }
+
+    [Test]
+    public async Task DoesAdminUserExists_DoesNotExist_FunctionsCorrectly()
+    {
+        // Arrange
+        var mockResponse = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.NotFound
+        };
+        // 2. Setup the Handler to return our mockResponse
+        _mockHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req => req.Method == HttpMethod.Get), // Only for GET
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(mockResponse);
+        // Act
+        // Assert
+        _mockHttpClientFactory.Verify(s => s.CreateClient("Auth"), Times.Once);
+       await _apiService.Invoking(s => s.DoesAdminUserExist()).Should().ThrowAsync<HttpRequestException>();
+    }
+}
