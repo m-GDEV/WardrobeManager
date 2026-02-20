@@ -31,12 +31,11 @@ jobs:
         # --no-restore is used because we ran it in the previous step
         run: dotnet build --configuration Release --no-restore
 
-      - name: Run Tests
-        run: dotnet test --configuration Release --no-build --verbosity normal
       - name: Report Code Coverage to DeepSource
         env:
           DEEPSOURCE_DSN: ${{ secrets.DEEPSOURCE_DSN }}
         run: |
+          set -e
           # Run your tests
           dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=detailed" --results-directory /tmp/test-results/
           
@@ -44,9 +43,10 @@ jobs:
           curl https://deepsource.io/cli | sh
           
           # From the root directory, run the report coverage command
-          # Fetch all generated test reports
-          
-          FILES=$(find /tmp/test-results -mindepth 1 -type d)
-          for i in $FILES; do
-            echo "./bin/deepsource report --analyzer test-coverage --key csharp --value-file $i/coverage.cobertura.xml"
+          COVERAGE_DIRECTORIES=$(find /tmp/test-results -mindepth 1 -type d)
+
+          for i in $COVERAGE_DIRECTORIES; do
+              if [ -f "$i/coverage.cobertura.xml" ]; then
+                  ./bin/deepsource report --analyzer test-coverage --key csharp --value-file $i/coverage.cobertura.xml
+              fi
           done
