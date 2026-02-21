@@ -1,49 +1,64 @@
-﻿@using WardrobeManager.Shared.StaticResources
+﻿@using WardrobeManager.Presentation.Components.Navgiation
+@using WardrobeManager.Shared.StaticResources
+
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
 
 <nav
-    class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
-    <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"></Text>
-    <div class="flex flex-wrap">
-        <Button Type="ButtonType.Outline" 
-                Text="Dashboard" 
-                Icon="Home" 
-                class="gap-3 border rounded-xl border-gray-300" />
-
-        <Button Type="ButtonType.Outline" 
-                Text="My Wardrobe" 
-                Icon="Person" 
-                class="gap-3 border rounded-xl border-gray-300" />
-
-        <Button Type="ButtonType.Outline" 
-                Text="Outfits" 
-                Icon="Palette" 
-                class="gap-3 border rounded-xl border-gray-300" />
-
-        <Button Type="ButtonType.Outline" 
-                Text="Planning" 
-                Icon="Calendar_Month" 
-                class="gap-3 border rounded-xl border-gray-300" />
-
-        <Button Type="ButtonType.Outline" 
-                Text="Analytics" 
-                Icon="ssid_chart" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        
-        <Button Type="ButtonType.Primary" 
-                Text="Add Item" 
-                Icon="Add" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        <Button Type="ButtonType.Secondary" 
-                Text="Photo" 
-                Icon="Camera" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        <Button Type="ButtonType.Ghost" 
-                Icon="Settings" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        
-        <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" />   
-
-    </div>
+        class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
+        <a href="/">
+                <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"></Text>
+        </a>
+        <AuthorizeView>
+                <NotAuthorized>
+                        <div class="flex">
+                                <a href="/login">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="Log in"
+                                                class="gap-3 border rounded-xl border-gray-300"/>
+                                </a>
+                                <a href="/signup">
+                                        <Button Type="ButtonType.Primary"
+                                                Text="Sign up"
+                                                class="gap-3 border rounded-xl border-gray-300"/>
+                                </a>
+                        </div>
+                </NotAuthorized>
+                <Authorized>
+                        <div class="flex flex-wrap">
+                                <Button Type="ButtonType.Outline"
+                                        Text="Dashboard"
+                                        Icon="Home"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Outline"
+                                        Text="My Wardrobe"
+                                        Icon="Person"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Outline"
+                                        Text="Outfits"
+                                        Icon="Palette"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Outline"
+                                        Text="Planning"
+                                        Icon="Calendar_Month"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Outline"
+                                        Text="Analytics"
+                                        Icon="ssid_chart"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Primary"
+                                        Text="Add Item"
+                                        Icon="Add"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Secondary"
+                                        Text="Photo"
+                                        Icon="Camera"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Button Type="ButtonType.Ghost"
+                                        Icon="Settings"
+                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular"/>
+                        </div>
+                </Authorized>
+        </AuthorizeView>
 </nav>
