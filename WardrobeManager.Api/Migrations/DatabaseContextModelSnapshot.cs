@@ -152,7 +152,7 @@ namespace WardrobeManager.Api.Migrations
 
             modelBuilder.Entity("WardrobeManager.Api.Database.Entities.Log", b =>
                 {
-                    b.Property<int>("PrimaryKeyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -173,14 +173,14 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<int>("Type")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("PrimaryKeyId");
+                    b.HasKey("Id");
 
                     b.ToTable("Logs");
                 });
 
             modelBuilder.Entity("WardrobeManager.Api.Database.Entities.ServerClothingItem", b =>
                 {
-                    b.Property<int>("PrimaryKeyId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -218,13 +218,14 @@ namespace WardrobeManager.Api.Migrations
                     b.Property<int>("TimesWornTotal")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("WearLocation")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("PrimaryKeyId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
@@ -275,9 +276,6 @@ namespace WardrobeManager.Api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PrimaryKeyId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ProfilePictureBase64")
@@ -369,7 +367,6 @@ namespace WardrobeManager.Api.Migrations
                     b.HasOne("WardrobeManager.Api.Database.Entities.User", "User")
                         .WithMany("ServerClothingItems")
                         .HasForeignKey("UserId")
-                        .HasPrincipalKey("PrimaryKeyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

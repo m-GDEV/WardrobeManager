@@ -45,9 +45,11 @@ public class IdentityService(IAccountManagement accountManagement, INotification
     public async Task<bool> LogoutAsync()
     {
         var success = await accountManagement.LogoutAsync();
-        if (!success) notificationService.AddNotification("Could not log out (are you already logged out?).", NotificationType.Error);
+        if (!success)
+            notificationService.AddNotification("Could not log out (are you already logged out?).",
+                NotificationType.Error);
         else notificationService.AddNotification("Logged out successfully!", NotificationType.Success);
-        
+
         return success;
     }
 }

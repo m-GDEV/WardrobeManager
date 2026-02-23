@@ -4,6 +4,8 @@
 @page "/test"
 @using WardrobeManager.Shared.DTOs
 
+<Button Text="State Changed" Type="ButtonType.Outline" Class="border" OnClick="ff" />
+
 <div class="flex">
     <Button Id="openPopover" Text="Open popover" Type="ButtonType.Outline" Class="border" OnClick="() => show = !show" />
 
@@ -86,4 +88,9 @@
 
 @code {
     bool show, showBottom;
+
+    public void ff()
+    {
+        StateHasChanged();
+    }
 }
