@@ -14,7 +14,9 @@ namespace WardrobeManager.Presentation.ViewModels;
 public partial class LoginViewModel(
     IAccountManagement accountManagement,
     INotificationService notificationService,
-    IMvvmNavigationManager navManager)
+    IMvvmNavigationManager navManager,
+    IIdentityService identityService
+    )
     : ViewModelBase
 {
     // Public Properties
@@ -45,21 +47,13 @@ public partial class LoginViewModel(
 
     public async Task LoginAsync()
     {
-        var res = await accountManagement.LoginAsync(_authenticationCredentialsModel.email,
-            _authenticationCredentialsModel.password);
+        var success = await identityService.LoginAsync(AuthenticationCredentialsModel);
 
-        if (!res.Succeeded)
+        if (!success)
         {
-            foreach (var error in res.ErrorList)
-            {
-                notificationService.AddNotification(error, NotificationType.Error);
-            }
-
             return;
         }
 
-        // The way the current Auth system works the user is not automatically signed in after making an account
-        notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
-        navManager.NavigateTo("/dashboard");
+        navManager.NavigateTo<DashboardViewModel>();
     }
 }

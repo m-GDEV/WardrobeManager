@@ -236,12 +236,13 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
         return new AuthenticationState(user);
     }
 
-    public async Task LogoutAsync()
+    public async Task<bool> LogoutAsync()
     {
         const string Empty = "{}";
         var emptyContent = new StringContent(Empty, Encoding.UTF8, "application/json");
-        await _httpClient.PostAsync("logout", emptyContent);
+        var res = await _httpClient.PostAsync("logout", emptyContent);
         NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        return res.IsSuccessStatusCode;
     }
 
     public async Task<bool> CheckAuthenticatedAsync()

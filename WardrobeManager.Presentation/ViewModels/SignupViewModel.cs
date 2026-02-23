@@ -14,25 +14,29 @@ namespace WardrobeManager.Presentation.ViewModels;
 public partial class SignupViewModel(
     IAccountManagement accountManagement,
     INotificationService notificationService,
-    IMvvmNavigationManager navManager)
+    IMvvmNavigationManager navManager,
+    IIdentityService identityService
+)
     : ViewModelBase
 {
     // Public Properties
     [ObservableProperty]
     private AuthenticationCredentialsModel _authenticationCredentialsModel = new AuthenticationCredentialsModel();
+
     public EditForm? EditForm { get; set; }
-    
+
     // Public Methods
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
     public void SetEmail(string email)
     {
         AuthenticationCredentialsModel.email = email;
     }
+
     public void SetPassword(string password)
     {
         AuthenticationCredentialsModel.password = password;
     }
-    
+
     public async Task DetectEnterPressed(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
@@ -40,23 +44,18 @@ public partial class SignupViewModel(
             await SignupAsync();
         }
     }
-    
+
     public async Task SignupAsync()
     {
-        var res = await accountManagement.RegisterAsync(_authenticationCredentialsModel.email, _authenticationCredentialsModel.password);
+        var success = await identityService.SignupAsync(AuthenticationCredentialsModel);
 
-        if (!res.Succeeded)
+        if (!success)
         {
-            foreach (var error in res.ErrorList)
-            {
-                notificationService.AddNotification(error, NotificationType.Error);
-            }
-
             return;
         }
-        
+
         // The way the current Auth system works the user is not automatically signed in after making an account
         notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
-        navManager.NavigateTo("/login");
+        navManager.NavigateTo<LoginViewModel>();
     }
 }

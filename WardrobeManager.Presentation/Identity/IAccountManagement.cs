@@ -22,8 +22,8 @@ public interface IAccountManagement
     /// <summary>
     /// Log out the logged in user.
     /// </summary>
-    /// <returns>The asynchronous task.</returns>
-    public Task LogoutAsync();
+    /// <returns>Whether the logout was sucessful</returns>
+    public Task<bool> LogoutAsync();
 
     /// <summary>
     /// Registration service.

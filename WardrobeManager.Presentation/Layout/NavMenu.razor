@@ -3,22 +3,34 @@
 
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
+@inherits MvvmOwningComponentBase<NavBarViewModel>
 
 <nav
         class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
-        <a href="/">
-                <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"></Text>
-        </a>
+        <div class="flex gap-3 items-center">
+                <a href="/">
+                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"/>
+                </a>
+                @if (ViewModel.CanConnectToBackend)
+                {
+                        <Badge Type="BadgeType.Success" Text="Connected"/>
+                }
+                else
+                {
+                        <Badge Type="BadgeType.Destructive" Text="Disconnected"/>
+                }
+
+        </div>
         <AuthorizeView>
                 <NotAuthorized>
                         <div class="flex gap-3">
                                 <a href="/login">
                                         <Button Type="ButtonType.Outline"
-                                                Text="Log in" />
+                                                Text="Log in"/>
                                 </a>
                                 <a href="/signup">
                                         <Button Type="ButtonType.Primary"
-                                                Text="Sign up" />
+                                                Text="Sign up"/>
                                 </a>
                         </div>
                 </NotAuthorized>
@@ -55,7 +67,23 @@
                                 <Button Type="ButtonType.Ghost"
                                         Icon="Settings"
                                         class="gap-3 border rounded-xl border-gray-300"/>
-                                <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular"/>
+                                <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" Id="userPopover"
+                                        OnClick="ViewModel.ToggleUserPopover"/>
+                                <Popover Show="ViewModel.ShowUserPopover" ParentId="userPopover"
+                                         Class="mt-[8vh] ml-[85vw]">
+                                        <Card>
+                                                <CardHeader>
+                                                        <h4 class="large">User Settings</h4>
+                                                        <p class="muted">Configure quick user options from here</p>
+                                                </CardHeader>
+                                                <CardContent>
+                                                        <div class="pb-4">
+                                                                <Button Type="ButtonType.Primary" Text="Log out"
+                                                                        OnClick="ViewModel.LogoutAsync"/>
+                                                        </div>
+                                                </CardContent>
+                                        </Card>
+                                </Popover>
                         </div>
                 </Authorized>
         </AuthorizeView>

@@ -47,6 +47,7 @@ builder.Services.AddHttpClient("Auth", opt =>
 // My Services
 builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 
 // Libraries
 builder.Services.AddSysinfocus();

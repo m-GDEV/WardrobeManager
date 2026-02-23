@@ -19,10 +19,10 @@ public class ApiService : IAsyncDisposable, IApiService
         _httpClient = factory.CreateClient("Auth");
     }
 
-    public async Task<HttpResponseMessage> CheckApiConnection()
+    public async Task<bool> CheckApiConnection()
     {
         HttpResponseMessage con = await _httpClient.GetAsync("/ping");
-        return con;
+        return con.IsSuccessStatusCode;
     }
     public async Task<HttpResponseMessage> AddLog(LogDTO log)
     {

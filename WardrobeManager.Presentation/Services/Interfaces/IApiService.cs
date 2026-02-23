@@ -11,7 +11,7 @@ public interface IApiService
     ValueTask DisposeAsync();
 
     // Misc 
-    Task<HttpResponseMessage> CheckApiConnection();
+    Task<bool> CheckApiConnection();
     Task<HttpResponseMessage> AddLog(LogDTO log);
     
     // User Management
