@@ -11,7 +11,7 @@ using WardrobeManager.Shared.Models;
 namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
-public partial class SignupViewModel(
+public partial class LoginViewModel(
     IAccountManagement accountManagement,
     INotificationService notificationService,
     IMvvmNavigationManager navManager)
@@ -20,30 +20,33 @@ public partial class SignupViewModel(
     // Public Properties
     [ObservableProperty]
     private AuthenticationCredentialsModel _authenticationCredentialsModel = new AuthenticationCredentialsModel();
+
     public EditForm? EditForm { get; set; }
-    
+
     // Public Methods
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
     public void SetEmail(string email)
     {
         AuthenticationCredentialsModel.email = email;
     }
+
     public void SetPassword(string password)
     {
         AuthenticationCredentialsModel.password = password;
     }
-    
+
     public async Task DetectEnterPressed(KeyboardEventArgs e)
     {
         if (e.Key == "Enter")
         {
-            await SignupAsync();
+            await LoginAsync();
         }
     }
-    
-    public async Task SignupAsync()
+
+    public async Task LoginAsync()
     {
-        var res = await accountManagement.RegisterAsync(_authenticationCredentialsModel.email, _authenticationCredentialsModel.password);
+        var res = await accountManagement.LoginAsync(_authenticationCredentialsModel.email,
+            _authenticationCredentialsModel.password);
 
         if (!res.Succeeded)
         {
@@ -54,9 +57,9 @@ public partial class SignupViewModel(
 
             return;
         }
-        
+
         // The way the current Auth system works the user is not automatically signed in after making an account
         notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
-        navManager.NavigateTo("/login");
+        navManager.NavigateTo("/dashboard");
     }
 }
