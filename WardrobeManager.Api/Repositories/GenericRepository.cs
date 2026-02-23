@@ -18,7 +18,7 @@ public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEnti
 
         public Task<TEntity?> GetAsync(int id)
         {
-            return _dbSet.Where(entity => entity.PrimaryKeyId == id).SingleOrDefaultAsync();
+            return _dbSet.Where(entity => entity.Id == id).SingleOrDefaultAsync();
         }
 
         public virtual Task<List<TEntity>> GetAllAsync()

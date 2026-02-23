@@ -27,11 +27,11 @@ public class ClothingItemService : IClothingItemService
 
 
     // ---- Methods for multiple clothing items ---
-    public async Task<List<ServerClothingItem>?> GetAllClothing(int userId)
+    public async Task<List<ServerClothingItem>?> GetAllClothing(string userId)
     {
         return _context.ClothingItems.Where(item => item.UserId == userId).ToList();
     }
-    public async Task<List<ServerClothingItem>?> GetFilteredClothing(int userId, FilterModel model)
+    public async Task<List<ServerClothingItem>?> GetFilteredClothing(string userId, FilterModel model)
     {
         var items = await GetAllClothing(userId);
         
@@ -86,12 +86,12 @@ public class ClothingItemService : IClothingItemService
 
 
     // ---- Methods for one clothing item ---
-    public async Task<ServerClothingItem?> GetClothingItem(int userId, int itemId)
+    public async Task<ServerClothingItem?> GetClothingItem(string userId, int itemId)
     {
-        return await _context.ClothingItems.Where(item => item.PrimaryKeyId == itemId && item.UserId == userId).FirstOrDefaultAsync();
+        return await _context.ClothingItems.Where(item => item.Id == itemId && item.UserId == userId).FirstOrDefaultAsync();
     }
 
-    public async Task AddClothingItem(int userId, NewOrEditedClothingItemDTO newItem)
+    public async Task AddClothingItem(string userId, NewOrEditedClothingItemDTO newItem)
     {
         if (newItem == null)
         {
@@ -123,7 +123,7 @@ public class ClothingItemService : IClothingItemService
     }
 
 
-    public async Task UpdateClothingItem(int userId, int itemId, NewOrEditedClothingItemDTO editedItem)
+    public async Task UpdateClothingItem(string userId, int itemId, NewOrEditedClothingItemDTO editedItem)
     {
         var dbRecord = await GetClothingItem(userId, itemId);
 
@@ -162,7 +162,7 @@ public class ClothingItemService : IClothingItemService
         await _context.SaveChangesAsync();
     }
 
-    public async Task CallMethodOnClothingItem(int userId, int itemId, ActionType type)
+    public async Task CallMethodOnClothingItem(string userId, int itemId, ActionType type)
     {
         var dbRecord = await GetClothingItem(userId, itemId);
 
@@ -190,7 +190,7 @@ public class ClothingItemService : IClothingItemService
     }
 
 
-    public async Task DeleteClothingItem(int userId, int itemId)
+    public async Task DeleteClothingItem(string userId, int itemId)
     {
         var itemToDelete = await GetClothingItem(userId, itemId);
 

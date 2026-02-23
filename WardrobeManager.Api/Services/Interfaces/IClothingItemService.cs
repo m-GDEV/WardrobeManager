@@ -10,13 +10,13 @@ namespace WardrobeManager.Api.Services.Interfaces;
 public interface IClothingItemService
 {
     // ---- Methods for multiple clothing items ---
-    Task<List<ServerClothingItem>?> GetAllClothing(int userId);
-    Task<List<ServerClothingItem>?> GetFilteredClothing(int userId, FilterModel model);
+    Task<List<ServerClothingItem>?> GetAllClothing(string userId);
+    Task<List<ServerClothingItem>?> GetFilteredClothing(string userId, FilterModel model);
 
     // ---- Methods for one clothing item ---
-    Task<ServerClothingItem?> GetClothingItem(int userId, int itemId);
-    Task AddClothingItem(int userId, NewOrEditedClothingItemDTO newItem);
-    Task UpdateClothingItem(int userId, int itemId, NewOrEditedClothingItemDTO editedItem);
-    Task DeleteClothingItem(int userId, int itemId);
-    Task CallMethodOnClothingItem(int userId, int itemId, ActionType type);
+    Task<ServerClothingItem?> GetClothingItem(string userId, int itemId);
+    Task AddClothingItem(string userId, NewOrEditedClothingItemDTO newItem);
+    Task UpdateClothingItem(string userId, int itemId, NewOrEditedClothingItemDTO editedItem);
+    Task DeleteClothingItem(string userId, int itemId);
+    Task CallMethodOnClothingItem(string userId, int itemId, ActionType type);
 }

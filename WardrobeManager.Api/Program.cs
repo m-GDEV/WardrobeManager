@@ -87,7 +87,6 @@ builder.Services.AddAutoMapper(cfg =>
 });
 
 // Entity Services
-builder.Services.AddScoped<IGenericRepository<User>, GenericRepository<User>>();
 builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
 builder.Services.AddScoped<IGenericRepository<ServerClothingItem>, GenericRepository<ServerClothingItem>>();
 

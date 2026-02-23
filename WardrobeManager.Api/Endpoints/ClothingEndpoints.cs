@@ -33,7 +33,7 @@ public static class ClothingEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        var clothes = await clothingItemService.GetAllClothing(user.PrimaryKeyId);
+        var clothes = await clothingItemService.GetAllClothing(user.Id);
 
         return Results.Ok(clothes);
     }
@@ -47,7 +47,7 @@ public static class ClothingEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        var clothes = await clothingItemService.GetFilteredClothing(user.PrimaryKeyId, model);
+        var clothes = await clothingItemService.GetFilteredClothing(user.Id, model);
 
         return Results.Ok(clothes);
     }
@@ -64,7 +64,7 @@ public static class ClothingEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await clothingItemService.AddClothingItem(user.PrimaryKeyId, newItem);
+        await clothingItemService.AddClothingItem(user.Id, newItem);
 
         return Results.Created();
     }
@@ -79,7 +79,7 @@ public static class ClothingEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await clothingItemService.UpdateClothingItem(user.PrimaryKeyId, id, editedItem);
+        await clothingItemService.UpdateClothingItem(user.Id, id, editedItem);
 
         return Results.Ok();
     }
@@ -93,7 +93,7 @@ public static class ClothingEndpoints {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await clothingItemService.DeleteClothingItem(user.PrimaryKeyId,id);
+        await clothingItemService.DeleteClothingItem(user.Id,id);
 
         return Results.Ok("Deleted");
     }

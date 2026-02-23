@@ -36,7 +36,7 @@ public class ServerClothingItem : IDatabaseEntity
     }
 
     // ---- EF Core modifies -----
-    public int PrimaryKeyId { get; set; }
+    public int Id { get; set; }
 
     // represents a mandatory one-to-many relationship with a User as
     // the following 2 fields are not nullable
@@ -44,7 +44,7 @@ public class ServerClothingItem : IDatabaseEntity
     [JsonIgnore] // causes the serializer to run into loop
     public User User { get; set; } // navigation property
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     // ---- User modifies -----
     public string Name { get; set; }

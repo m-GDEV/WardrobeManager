@@ -24,7 +24,7 @@ public static class ActionEndpoints {
             User? user = context.Items["user"] as User;
             Debug.Assert(user != null, "Cannot get user");
 
-            await clothingItemService.CallMethodOnClothingItem(user.PrimaryKeyId, id, ActionType.Wear);
+            await clothingItemService.CallMethodOnClothingItem(user.Id, id, ActionType.Wear);
 
             return Results.Ok("Item Worn");
         }
@@ -35,7 +35,7 @@ public static class ActionEndpoints {
             User? user = context.Items["user"] as User;
             Debug.Assert(user != null, "Cannot get user");
 
-            await clothingItemService.CallMethodOnClothingItem(user.PrimaryKeyId, id, ActionType.Wash);
+            await clothingItemService.CallMethodOnClothingItem(user.Id, id, ActionType.Wash);
             return Results.Ok("Item Worn");
         }
 }
