@@ -36,9 +36,9 @@
     [Parameter] public required string RedirectHeaderText { get; set; }
     [Parameter] public required string RedirectLinkText { get; set; }
     [Parameter] public required string RedirectLinkPath { get; set; }
-    [Parameter] public required EventCallback<LoginOrSignupModel> SubmitButtonCallback { get; set; }
+    [Parameter] public required EventCallback<AuthenticationCredentialsModel> SubmitButtonCallback { get; set; }
 
-    public LoginOrSignupModel formModel { get; set; } = new LoginOrSignupModel();
+    public AuthenticationCredentialsModel formModel { get; set; } = new AuthenticationCredentialsModel();
 
     public async Task SubmitButtonMethod()
     {

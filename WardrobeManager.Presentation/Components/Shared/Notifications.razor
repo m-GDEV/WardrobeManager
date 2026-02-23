@@ -4,22 +4,24 @@
 
 
 <div class="toast toast-top toast-end">
-    @foreach (var notification in _notificationService.Notifications) {
-        var cssClass = GetNotificationCssClass(notification.type) ;
-        <div class="alert @cssClass text-wrap inline-flex flex-row justify-between w-full">
-            <span>@notification.message</span>
-            <button class="w-5 h-5" @onclick="(() => Dismiss(notification))"><img src="https://www.svgrepo.com/show/12848/x-symbol.svg" /></button>
-        </div>
+    @foreach (var notification in _notificationService.Notifications)
+    {
+        var cssClass = GetNotificationCssClass(notification.type);
 
+        <Toast Show="@true">
+            @notification.message 
+        </Toast>
     }
 </div>
 
 @code {
-    protected override void OnInitialized() {
+
+    protected override void OnInitialized()
+    {
         _notificationService.OnChange += StateHasChanged;
         // this runs the callback method suppleid every 5 seconds. it does not wait for the last 
         // call to the method to finish. this can cause race conditions. it should be fine though
-        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero,TimeSpan.FromSeconds(5));
+        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
 
     // Go through all notifications and try to remove the non-critical ones
@@ -48,15 +50,13 @@
         _notificationService.OnChange -= StateHasChanged;
     }
 
-    public string GetNotificationCssClass(NotificationType type)
+    public ButtonType GetNotificationCssClass(NotificationType type)
     {
         return type switch
         {
-            NotificationType.Info => "alert-info",
-            NotificationType.Success => "alert-success",
-            NotificationType.Warning => "alert-warning",
-            NotificationType.Error => "alert-error",
-            _ => ""
+            NotificationType.Error => ButtonType.Destructive,
+            _ => ButtonType.Outline
         };
     }
+
 }

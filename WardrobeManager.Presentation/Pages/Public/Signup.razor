@@ -1,28 +1,33 @@
 ﻿@page "/signup"
-@using WardrobeManager.Presentation.Components.Identity
+@inherits MvvmOwningComponentBase<SignupViewModel>
 
 <PageTitle>Sign Up</PageTitle>
 
 
-<LoginOrSignup PageHeaderText="Sign Up" SubmitButtonText="Sign Up" SubmitButtonCallback="RegisterMethod" RedirectHeaderText="Already have an account?" RedirectLinkText="Log In" RedirectLinkPath="/login" />
+<div class="w-full bg-primary grow">
+    <div class="max-w-90 mx-auto flex flex-col items-center justify-center h-full">
+        <h2 class="heading-text text-primary-content">Sign Up</h2>
+        <EditForm class="w-full py-8 flex flex-col items-center gap-3" @ref="@ViewModel.EditForm"
+                  Model="@ViewModel.AuthenticationCredentialsModel" OnSubmit="ViewModel.LoginAsync">
+            <Input TItem="string"
+                   Value="@ViewModel.AuthenticationCredentialsModel.email"
+                   ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
+                   Placeholder="Enter your email"
+            />
+            <Input TItem="string"
+                   Value="@ViewModel.AuthenticationCredentialsModel.password"
+                   ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"
+                   Placeholder="Enter your password"
+            />
 
-@code {
-    public async Task RegisterMethod(LoginOrSignupModel data)
-    {
-        var res = await _accountManagement.RegisterAsync(data.email, data.password);
+            <Button Type="ButtonType.Primary" Text="Sign Up" OnClick="@ViewModel.LoginAsync"/>
+        </EditForm>
 
-        if (!res.Succeeded)
-        {
-            foreach (var error in res.ErrorList)
-            {
-                _notificationService.AddNotification(error, NotificationType.Error);
-            }
-
-            return;
-        }
-        
-        // The way the current Auth system works the user is not automatically signed in after making an account
-        _notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
-        _navManager.NavigateTo("/login");
-    }
-}
+        <div class="flex flex-row items-center gap-3 ">
+            <p class="body-text text-lg text-primary-content">Already have an account?</p>
+            <a href="/login">
+                <Button Text="Log in" Type="ButtonType.Secondary"/>
+            </a>
+        </div>
+    </div>
+</div>

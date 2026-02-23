@@ -1,4 +1,4 @@
-﻿@* Microsoft *@
+﻿@* Microsoft Imports *@
 @using System.Net.Http
 @using System.Net.Http.Json
 @using Microsoft.AspNetCore.Components.Forms
@@ -12,25 +12,26 @@
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Authorization
 
-@* Microsoft *@
+@* Microsoft Services *@
 @inject NavigationManager _navManager
 @inject IJSRuntime JsRuntime
 @inject AuthenticationStateProvider _authenticationStateProvider
 
-@* External Libraries *@
-@using Sysinfocus.AspNetCore.Components
-
-@* My Stuff *@
+@* My Imports *@
 @using WardrobeManager.Shared.Enums
 @using WardrobeManager.Shared.Models
-
 @using WardrobeManager.Presentation.Components.Shared
 @using WardrobeManager.Presentation.Identity
 @using WardrobeManager.Presentation.Services.Interfaces
+@using WardrobeManager.Presentation.ViewModels
 
-
-@* My Stuff *@
+@* My Services *@
 @inject IApiService _apiService
 @inject INotificationService _notificationService
 @inject IAccountManagement _accountManagement
 @inject IConfiguration _config
+
+@* External Library Imports *@
+@using Sysinfocus.AspNetCore.Components
+@using Blazing.Mvvm.Components;
+

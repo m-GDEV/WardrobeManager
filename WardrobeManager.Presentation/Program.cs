@@ -1,5 +1,6 @@
 #region
 
+using Blazing.Mvvm;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -49,7 +50,10 @@ builder.Services.AddSingleton<INotificationService, NotificationService>();
 
 // Libraries
 builder.Services.AddSysinfocus();
-
+builder.Services.AddMvvm(options =>
+{
+    options.HostingModelType = BlazorHostingModelType.WebAssembly;
+});
 
 
 await builder.Build().RunAsync();
