@@ -78,7 +78,7 @@
                                                 <CardContent>
                                                         <div class="pb-4">
                                                                 <Button Type="ButtonType.Primary" Text="Log out"
-                                                                        OnClick="ViewModel.LogoutAsync"/>
+                                                                        OnClick="LogoutAsync"/>
                                                         </div>
                                                 </CardContent>
                                         </Card>
@@ -87,3 +87,14 @@
                 </Authorized>
         </AuthorizeView>
 </nav>
+
+@code {
+        // When I call the identity service from Blazing.Mvvm's viewmodel, it does not properly propagate the 
+        // authenticate state changes for some reason. Because of this, this method needs to reside in the page for now.
+        public async Task LogoutAsync()
+        {
+                var success = await _identityService.LogoutAsync();
+                ViewModel.ShowUserPopover = false;
+                _navManager.NavigateTo<HomeViewModel>();
+        }
+}
