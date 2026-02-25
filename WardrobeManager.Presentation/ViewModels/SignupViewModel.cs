@@ -47,15 +47,17 @@ public partial class SignupViewModel(
 
     public async Task SignupAsync()
     {
-        var success = await identityService.SignupAsync(AuthenticationCredentialsModel);
-
-        if (!success)
+        var signupSuccess = await identityService.SignupAsync(AuthenticationCredentialsModel);
+        if (!signupSuccess) return;
+        
+        // Automatically log the user in after they create an account
+        var loginSuccess = await identityService.LoginAsync(AuthenticationCredentialsModel);
+        if (!loginSuccess)
         {
-            return;
+            notificationService.AddNotification("Account created, but could not log you in. Please try again.", NotificationType.Error);
         }
-
-        // The way the current Auth system works the user is not automatically signed in after making an account
-        notificationService.AddNotification("Account Created, please log in", NotificationType.Success);
-        navManager.NavigateTo<LoginViewModel>();
+        
+        notificationService.AddNotification("Account created and logged in successfully!", NotificationType.Success);
+        navManager.NavigateTo<DashboardViewModel>();
     }
 }

@@ -137,7 +137,8 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
             if (result.IsSuccessStatusCode)
             {
                 // need to refresh auth state
-                NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+                var authState = await GetAuthenticationStateAsync();
+                NotifyAuthenticationStateChanged(Task.FromResult(authState));
 
                 // success!
                 return new FormResult { Succeeded = true };
@@ -241,14 +242,9 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
         const string Empty = "{}";
         var emptyContent = new StringContent(Empty, Encoding.UTF8, "application/json");
         var res = await _httpClient.PostAsync("logout", emptyContent);
-        NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        var authState = await GetAuthenticationStateAsync();
+        NotifyAuthenticationStateChanged(Task.FromResult(authState));
         return res.IsSuccessStatusCode;
-    }
-
-    public async Task<bool> CheckAuthenticatedAsync()
-    {
-        await GetAuthenticationStateAsync();
-        return _authenticated;
     }
 
     public class RoleClaim

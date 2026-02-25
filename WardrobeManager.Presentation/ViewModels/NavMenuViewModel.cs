@@ -17,6 +17,7 @@ public partial class NavBarViewModel(
 {
     [ObservableProperty] private bool _showUserPopover;
     [ObservableProperty] private bool _canConnectToBackend;
+    [ObservableProperty] private string _usersName;
 
     public void ToggleUserPopover() => ShowUserPopover = !ShowUserPopover;
 
@@ -24,6 +25,9 @@ public partial class NavBarViewModel(
     {
         var res = await apiService.CheckApiConnection();
         CanConnectToBackend = res;
+        
+        var user = await identityService.GetUserInformation();
+        UsersName = user.Identity?.Name ?? "Logged In User";
     }
 
     public async Task LogoutAsync()

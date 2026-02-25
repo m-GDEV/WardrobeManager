@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
@@ -51,5 +52,17 @@ public class IdentityService(IAccountManagement accountManagement, INotification
         else notificationService.AddNotification("Logged out successfully!", NotificationType.Success);
 
         return success;
+    }
+
+    public async Task<ClaimsPrincipal> GetUserInformation()
+    {
+        var res = await accountManagement.GetAuthenticationStateAsync();
+        return res.User;
+    }
+
+    public async Task<bool> IsAuthenticated()
+    {
+        var res = await accountManagement.GetAuthenticationStateAsync();
+        return res.User.Identity?.IsAuthenticated ?? false;
     }
 }

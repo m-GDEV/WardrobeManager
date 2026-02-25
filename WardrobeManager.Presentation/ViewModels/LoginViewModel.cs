@@ -45,15 +45,20 @@ public partial class LoginViewModel(
         }
     }
 
+    public override async Task OnInitializedAsync()
+    {
+        var isAuthenticated = await identityService.IsAuthenticated();
+        if (isAuthenticated)
+        {
+            navManager.NavigateTo<DashboardViewModel>();
+        }
+    }
+
     public async Task LoginAsync()
     {
         var success = await identityService.LoginAsync(AuthenticationCredentialsModel);
-
-        if (!success)
-        {
-            return;
-        }
-
+        if (!success) return;
+        
         navManager.NavigateTo<DashboardViewModel>();
     }
 }

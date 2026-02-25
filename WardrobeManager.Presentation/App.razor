@@ -1,4 +1,5 @@
 ﻿@using WardrobeManager.Presentation.Components.Identity
+
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(App).Assembly">
         <Found Context="routeData">
@@ -12,7 +13,8 @@
                     </div>
                 </Authorizing>
                 <NotAuthorized>
-                    <NotAuthenticated />
+                    @* Custom Not Authenticated Component *@
+                    <NotAuthenticated/>
                 </NotAuthorized>
             </AuthorizeRouteView>
         </Found>

@@ -3,14 +3,28 @@
 
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
-@inherits MvvmOwningComponentBase<NavBarViewModel>
+@inherits MvvmComponentBase<NavBarViewModel>
 
 <nav
         class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
         <div class="flex gap-3 items-center">
-                <a href="/">
-                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"/>
-                </a>
+                <AuthorizeView>
+                        <Authorized>
+                                <a href="/dashboard">
+                                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2"
+                                              Weight="FontWeights.W100"/>
+                                </a>
+
+                        </Authorized>
+                        <NotAuthorized>
+                                <a href="/">
+                                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2"
+                                              Weight="FontWeights.W100"/>
+                                </a>
+
+
+                        </NotAuthorized>
+                </AuthorizeView>
                 @if (ViewModel.CanConnectToBackend)
                 {
                         <Badge Type="BadgeType.Success" Text="Connected"/>
@@ -34,38 +48,38 @@
                         </div>
                 </NotAuthorized>
                 <Authorized>
-                        <div class="flex flex-wrap">
+                        <div class="flex flex-wrap gap-3">
                                 <Button Type="ButtonType.Outline"
                                         Text="Dashboard"
                                         Icon="Home"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Outline"
                                         Text="My Wardrobe"
                                         Icon="Person"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Outline"
                                         Text="Outfits"
                                         Icon="Palette"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Outline"
                                         Text="Planning"
                                         Icon="Calendar_Month"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Outline"
                                         Text="Analytics"
                                         Icon="ssid_chart"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Primary"
                                         Text="Add Item"
                                         Icon="Add"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Secondary"
                                         Text="Photo"
                                         Icon="Camera"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Button Type="ButtonType.Ghost"
                                         Icon="Settings"
-                                        class="gap-3 border rounded-xl border-gray-300"/>
+                                />
                                 <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" Id="userPopover"
                                         OnClick="ViewModel.ToggleUserPopover"/>
                                 <Popover Show="ViewModel.ShowUserPopover" ParentId="userPopover"
@@ -73,12 +87,12 @@
                                         <Card>
                                                 <CardHeader>
                                                         <h4 class="large">User Settings</h4>
-                                                        <p class="muted">Configure quick user options from here</p>
+                                                        <p class="muted">Welcome @ViewModel.UsersName! Configure quick user options from here</p>
                                                 </CardHeader>
                                                 <CardContent>
                                                         <div class="pb-4">
                                                                 <Button Type="ButtonType.Primary" Text="Log out"
-                                                                        OnClick="LogoutAsync"/>
+                                                                        OnClick="@ViewModel.LogoutAsync"/>
                                                         </div>
                                                 </CardContent>
                                         </Card>
@@ -87,14 +101,3 @@
                 </Authorized>
         </AuthorizeView>
 </nav>
-
-@code {
-        // When I call the identity service from Blazing.Mvvm's viewmodel, it does not properly propagate the 
-        // authenticate state changes for some reason. Because of this, this method needs to reside in the page for now.
-        public async Task LogoutAsync()
-        {
-                var success = await _identityService.LogoutAsync();
-                ViewModel.ShowUserPopover = false;
-                _navManager.NavigateTo<HomeViewModel>();
-        }
-}
