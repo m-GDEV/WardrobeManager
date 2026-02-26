@@ -32,7 +32,7 @@ public partial class NavBarViewModel(
 
     public async Task LogoutAsync()
     {
-        var success = await identityService.LogoutAsync();
+        await identityService.LogoutAsync();
         ShowUserPopover = false;
         navManager.NavigateTo<HomeViewModel>();
     }

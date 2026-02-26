@@ -63,6 +63,6 @@ public class IdentityService(IAccountManagement accountManagement, INotification
     public async Task<bool> IsAuthenticated()
     {
         var res = await accountManagement.GetAuthenticationStateAsync();
-        return res.User.Identity?.IsAuthenticated ?? false;
+        return res.User.Identity?.IsAuthenticated == true;
     }
 }

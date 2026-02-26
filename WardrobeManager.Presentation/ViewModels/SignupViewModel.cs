@@ -21,7 +21,7 @@ public partial class SignupViewModel(
 {
     // Public Properties
     [ObservableProperty]
-    private AuthenticationCredentialsModel _authenticationCredentialsModel = new AuthenticationCredentialsModel();
+    private AuthenticationCredentialsModel _authenticationCredentialsModel = new();
 
     public EditForm? EditForm { get; set; }
 
