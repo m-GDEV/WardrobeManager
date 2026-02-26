@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <!-- Exclude by namespace (module/class pattern) -->
+          <Exclude>
+            [*]WardrobeManager.Api.Migrations.*
+          </Exclude>
+          <Exclude>
+            [*]WardrobeManager.Api.Migrations
+          </Exclude>
+
+          <!-- Exclude by file path (optional, safer for EF migrations) -->
+          <ExcludeByFile>
+            **/Migrations/*.cs
+          </ExcludeByFile>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>
