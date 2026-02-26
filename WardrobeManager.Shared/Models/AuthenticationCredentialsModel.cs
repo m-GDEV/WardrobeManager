@@ -2,6 +2,6 @@
 
 public class AuthenticationCredentialsModel
 {
-    public string email = string.Empty;
-    public string password = string.Empty;
+    public string Email = string.Empty;
+    public string Password = string.Empty;
 }

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Testing;
 using Moq;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Repositories;
+using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Enums;

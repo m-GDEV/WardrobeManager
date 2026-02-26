@@ -11,7 +11,7 @@ public class IdentityService(IAccountManagement accountManagement, INotification
 {
     public async Task<bool> SignupAsync(AuthenticationCredentialsModel credentials)
     {
-        var res = await accountManagement.RegisterAsync(credentials.email, credentials.password);
+        var res = await accountManagement.RegisterAsync(credentials.Email, credentials.Password);
 
         if (!res.Succeeded)
         {
@@ -28,7 +28,7 @@ public class IdentityService(IAccountManagement accountManagement, INotification
 
     public async Task<bool> LoginAsync(AuthenticationCredentialsModel credentials)
     {
-        var res = await accountManagement.LoginAsync(credentials.email, credentials.password);
+        var res = await accountManagement.LoginAsync(credentials.Email, credentials.Password);
 
         if (!res.Succeeded)
         {

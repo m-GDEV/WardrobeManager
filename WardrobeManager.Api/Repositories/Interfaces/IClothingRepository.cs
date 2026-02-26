@@ -1,6 +1,6 @@
 using WardrobeManager.Api.Database.Entities;
 
-namespace WardrobeManager.Api.Repositories;
+namespace WardrobeManager.Api.Repositories.Interfaces;
 
 public interface IClothingRepository : IGenericRepository<ClothingItem>
 {

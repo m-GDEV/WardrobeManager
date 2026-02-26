@@ -1,7 +1,6 @@
-using System.Linq.Expressions;
 using WardrobeManager.Api.Database.Entities;
 
-namespace WardrobeManager.Api.Repositories;
+namespace WardrobeManager.Api.Repositories.Interfaces;
 
 public interface IGenericRepository<TEntity> where TEntity : IDatabaseEntity
 {

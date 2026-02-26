@@ -1,9 +1,9 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Api.Repositories.Interfaces;
 
-namespace WardrobeManager.Api.Repositories;
+namespace WardrobeManager.Api.Repositories.Implementation;
 
 public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEntity : class, IDatabaseEntity
     {

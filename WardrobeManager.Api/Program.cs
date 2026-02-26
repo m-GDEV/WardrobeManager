@@ -8,6 +8,8 @@ using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Endpoints;
 using WardrobeManager.Api.Middleware;
 using WardrobeManager.Api.Repositories;
+using WardrobeManager.Api.Repositories.Implementation;
+using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;

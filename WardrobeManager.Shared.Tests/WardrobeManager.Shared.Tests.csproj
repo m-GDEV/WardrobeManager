@@ -26,4 +26,9 @@
       <ProjectReference Include="..\WardrobeManager.Shared\WardrobeManager.Shared.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="DTOs\" />
+      <Folder Include="Enums\" />
+    </ItemGroup>
+
 </Project>
