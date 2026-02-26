@@ -10,12 +10,12 @@
         <EditForm class="w-full py-8 flex flex-col items-center gap-3" @ref="@ViewModel.EditForm"
                   Model="@ViewModel.AuthenticationCredentialsModel" OnSubmit="ViewModel.SignupAsync">
             <Input TItem="string"
-                   Value="@ViewModel.AuthenticationCredentialsModel.email"
+                   Value="@ViewModel.AuthenticationCredentialsModel.Email"
                    ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
                    Placeholder="Enter your email"
             />
             <Input TItem="string"
-                   Value="@ViewModel.AuthenticationCredentialsModel.password"
+                   Value="@ViewModel.AuthenticationCredentialsModel.Password"
                    Type="password"
                    OnKeyDown="@((e) => ViewModel.DetectEnterPressed(e))"
                    ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"

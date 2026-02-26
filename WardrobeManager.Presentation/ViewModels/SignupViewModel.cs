@@ -29,12 +29,12 @@ public partial class SignupViewModel(
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
     public void SetEmail(string email)
     {
-        AuthenticationCredentialsModel.email = email;
+        AuthenticationCredentialsModel.Email = email;
     }
 
     public void SetPassword(string password)
     {
-        AuthenticationCredentialsModel.password = password;
+        AuthenticationCredentialsModel.Password = password;
     }
 
     public async Task DetectEnterPressed(KeyboardEventArgs e)
