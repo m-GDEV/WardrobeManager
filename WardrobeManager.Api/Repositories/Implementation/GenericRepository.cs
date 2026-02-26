@@ -7,8 +7,8 @@ namespace WardrobeManager.Api.Repositories;
 
 public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEntity : class, IDatabaseEntity
     {
-        private readonly DbSet<TEntity> _dbSet;
-        private readonly DatabaseContext _context;
+        protected readonly DbSet<TEntity> _dbSet;
+        protected  readonly DatabaseContext _context;
 
         public GenericRepository(DatabaseContext context)
         {
@@ -16,16 +16,16 @@ public class GenericRepository<TEntity>: IGenericRepository<TEntity> where TEnti
             _context = context;
         }
 
-        public Task<TEntity?> GetAsync(int id)
+        public Task<TEntity?> GetAsync(int entityId)
         {
-            return _dbSet.Where(entity => entity.Id == id).SingleOrDefaultAsync();
+            return _dbSet.Where(entity => entity.Id == entityId).SingleOrDefaultAsync();
         }
 
         public virtual Task<List<TEntity>> GetAllAsync()
         {
             return _dbSet.ToListAsync();
         }
-
+        
         public virtual async Task CreateAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);

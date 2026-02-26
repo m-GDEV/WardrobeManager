@@ -8,7 +8,7 @@ using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Shared.Enums;
 
-namespace WardrobeManager.Api.Tests;
+namespace WardrobeManager.Api.Tests.Services;
 
 public class LoggingServiceTests
 {

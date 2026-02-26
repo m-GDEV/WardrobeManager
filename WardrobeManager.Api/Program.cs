@@ -70,7 +70,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
 
-builder.Services.AddScoped<IClothingItemService, ClothingItemService>();
+builder.Services.AddScoped<IClothingService, ClothingService>();
 builder.Services.AddScoped<IFileService, FileService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ILoggingService, LoggingService>();
@@ -88,7 +88,7 @@ builder.Services.AddAutoMapper(cfg =>
 
 // Entity Services
 builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
-builder.Services.AddScoped<IGenericRepository<ServerClothingItem>, GenericRepository<ServerClothingItem>>();
+builder.Services.AddScoped<ClothingRepository>();
 
 // add db context
 builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>

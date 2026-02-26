@@ -16,7 +16,7 @@ public class DatabaseContext : IdentityDbContext<User>
     }
 
     public new DbSet<User> Users { get; set; }
-    public DbSet<ServerClothingItem> ClothingItems { get; set; }
+    public DbSet<ClothingItem> ClothingItems { get; set; }
     public DbSet<Log> Logs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

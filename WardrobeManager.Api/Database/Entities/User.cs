@@ -17,5 +17,5 @@ public class User : IdentityUser
     // 1-many relationship with serverclothingitems
     // We don't care to return this info when return user info via api
     [JsonIgnore]
-    public List<ServerClothingItem> ServerClothingItems { get; set;} = new List<ServerClothingItem>();
+    public List<ClothingItem> ServerClothingItems { get; set;} = new List<ClothingItem>();
 }
