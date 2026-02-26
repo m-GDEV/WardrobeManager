@@ -6,10 +6,10 @@
 <div class="toast toast-top toast-end">
     @foreach (var notification in _notificationService.Notifications)
     {
-        var cssClass = GetNotificationCssClass(notification.type);
+        var cssClass = GetNotificationCssClass(notification.Type);
 
         <Toast Show="@true">
-            @notification.message 
+            @notification.Message 
         </Toast>
     }
 </div>
@@ -33,7 +33,7 @@
         {
             TimeSpan difference = DateTime.UtcNow - notification.CreationDate;
 
-            if (difference.TotalSeconds > 10 && notification.type != NotificationType.Warning && notification.type != NotificationType.Error)
+            if (difference.TotalSeconds > 10 && notification.Type != NotificationType.Warning && notification.Type != NotificationType.Error)
             {
                 _notificationService.RemoveNotification(notification);
             }
