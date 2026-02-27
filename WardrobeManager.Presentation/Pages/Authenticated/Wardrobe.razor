@@ -14,10 +14,24 @@
             <DataColumns>
                 <DataTableColumn Property="x => x.Id" Header="Actions">
                     <Template>
-                        <Button Type="ButtonType.Destructive" Text="Delete" OnClick="@(() => ViewModel.RemoveItem(context.Id))"/>
+                        <Button Type="ButtonType.Destructive" Text="Delete" OnClick="() => ViewModel.ActionDialogStates[context.Id].ShowDelete = true"/>
+                        <Dialog Show="@ViewModel.ActionDialogStates[context.Id].ShowDelete" OnClose="() => ViewModel.ActionDialogStates[context.Id].ShowDelete = false">
+                            <Header>
+                                <div class="flex-col flex g4">
+                                    <p class="large">Are you sure you want to delete this item?</p>
+                                    <p class="muted">This action is permanent.</p>
+                                </div>
+                            </Header>
+                            <Content>
+                                <p>blah</p>
+                            </Content>
+                            <Footer>
+                                <Button Type="ButtonType.Destructive" Text="Delete" OnClick="() => ViewModel.RemoveItem(context.Id)"/>
+                            </Footer>
+                        </Dialog>
                     </Template>
                 </DataTableColumn>
-                <DataTableColumn Property="x => x.ImageGuid">
+                <DataTableColumn Property="@(x => x.ImageGuid ?? Guid.NewGuid() )">
                     <Template>
                         <Image ImageGuid="@context.ImageGuid.ToString()" Css="h-full object-contain rounded-xl max-w-[3rem] w-full"/>
                     </Template>

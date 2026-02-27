@@ -20,15 +20,33 @@ public partial class WardrobeViewModel(
 {
    // Public Properties
    [ObservableProperty] private List<ClothingItemDTO> _clothingItems;
+   [ObservableProperty] private Dictionary<int, ShowActionDialog> _actionDialogStates;
+   private bool show;
 
    public override async Task OnInitializedAsync()
    {
+       await FetchItemAndUpdate();
+   }
+
+   public async Task FetchItemAndUpdate()
+   {
        ClothingItems = await apiService.GetAllClothingItems();
+       ActionDialogStates = new Dictionary<int, ShowActionDialog>();
+       foreach (var item in ClothingItems)
+       {
+           ActionDialogStates.Add(item.Id, new ShowActionDialog());
+       }
    }
 
    public async Task RemoveItem(int itemId)
    {
        await apiService.RemoveClothingItem(itemId);
-       ClothingItems = await apiService.GetAllClothingItems();
+       await FetchItemAndUpdate();
    }
+}
+
+public record ShowActionDialog
+{
+    public bool ShowDelete = false;
+    public bool ShowEdit = false;
 }
