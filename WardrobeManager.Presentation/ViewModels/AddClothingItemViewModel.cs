@@ -15,36 +15,40 @@ public partial class AddClothingItemViewModel(
     IMvvmNavigationManager navManager,
     IApiService apiService,
     INotificationService notificationService,
-    IConfiguration  configuration
+    IConfiguration configuration
 )
     : ViewModelBase
 {
     // Public Properties
-    [ObservableProperty]
-    private NewClothingItemDTO _newClothingItem = new NewClothingItemDTO();
+    [ObservableProperty] private NewClothingItemDTO _newClothingItem = new NewClothingItemDTO();
 
-    public ICollection<ClothingCategory> ClothingCategories { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingCategory>();
+    public ICollection<ClothingCategory> ClothingCategories { get; set; } =
+        MiscMethods.ConvertEnumToCollection<ClothingCategory>();
+
     public ICollection<ClothingSize> ClothingSizes { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingSize>();
 
     public async Task SubmitAsync()
     {
         // Crude error checking, in the future i'd prefer to use a form with error validation
-        if (string.IsNullOrEmpty(NewClothingItem.Name))
+        var res = StaticValidators.Validate(NewClothingItem);
+        if (!res.Success)
         {
-            notificationService.AddNotification("New item must have name. Please enter a name.", NotificationType.Error);
+            notificationService.AddNotification(res.Message, NotificationType.Error);
             return;
         }
+
         await apiService.AddNewClothingItem(NewClothingItem);
-        notificationService.AddNotification($"Clothing Item \"{NewClothingItem.Name}\" Added!", NotificationType.Success);
+        notificationService.AddNotification($"Clothing Item \"{NewClothingItem.Name}\" Added!",
+            NotificationType.Success);
         NewClothingItem = new NewClothingItemDTO();
     }
-    
+
     public async Task UploadImage(InputFileChangeEventArgs e)
     {
         try
         {
             var img = new MemoryStream();
-            
+
             // 5MB default max file size
             var maxFileSize = configuration["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"];
             int maxFileSizeNum;
@@ -56,14 +60,16 @@ public partial class AddClothingItemViewModel(
             {
                 maxFileSizeNum = Convert.ToInt32(maxFileSize);
             }
+
             maxFileSizeNum *= 1024 * 1024; // int to megabytes
-            
+
             await e.File.OpenReadStream(maxAllowedSize: maxFileSizeNum).CopyToAsync(img);
 
             NewClothingItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
 
             if (NewClothingItem.ImageBase64 == string.Empty)
             {
+                // If the image is too large it become an empty string. This is an edgecase but I can't remember how to reproduce it.
                 notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
             }
         }

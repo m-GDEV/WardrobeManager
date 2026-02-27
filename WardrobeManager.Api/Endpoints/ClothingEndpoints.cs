@@ -9,6 +9,7 @@ using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
 using AutoMapper;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -42,14 +43,19 @@ public static class ClothingEndpoints
     }
 
     public static async Task<IResult> AddNewClothingItem(
-        [FromBody] NewClothingItemDTO newNewClothingItem,
+        [FromBody] NewClothingItemDTO newClothingItem,
         HttpContext context, IClothingService clothingService, IMapper mapper
     )
     {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
 
-        await clothingService.AddNewClothingItem(user.Id ,newNewClothingItem);
+        var res = StaticValidators.Validate(newClothingItem);
+        if (!res.Success)
+        {
+            return Results.BadRequest(res.Message);
+        }
+        await clothingService.AddNewClothingItem(user.Id ,newClothingItem);
 
         return Results.Ok();
     }
@@ -61,7 +67,7 @@ public static class ClothingEndpoints
     {
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
-
+    
         await clothingService.RemoveClothingItem(user.Id ,itemId);
 
         return Results.Ok();
