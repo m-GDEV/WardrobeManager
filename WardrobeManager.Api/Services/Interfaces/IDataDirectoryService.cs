@@ -6,4 +6,5 @@ public interface IDataDirectoryService
     public string GetDatabaseDirectory();
     public string GetImagesDirectory();
     public string GetUploadsDirectory();
+    public string GetDeletedUploadsDirectory();
 }

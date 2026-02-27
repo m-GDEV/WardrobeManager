@@ -17,7 +17,11 @@ using WardrobeManager.Shared.StaticResources;
 
 namespace WardrobeManager.Api.Services.Implementation;
 
-public class ClothingService(IClothingRepository clothingRepository, IMapper mapper, IFileService fileService, ILogger<ClothingService> logger)
+public class ClothingService(
+    IClothingRepository clothingRepository,
+    IMapper mapper,
+    IFileService fileService,
+    ILogger<ClothingService> logger)
     : IClothingService
 {
     // ---- Methods for multiple clothing items ---
@@ -58,6 +62,10 @@ public class ClothingService(IClothingRepository clothingRepository, IMapper map
         {
             clothingRepository.Remove(res);
             await clothingRepository.SaveAsync();
+            if (res.ImageGuid != null)
+            {
+                await fileService.DeleteImage((Guid)res.ImageGuid);
+            }
         }
         else
         {

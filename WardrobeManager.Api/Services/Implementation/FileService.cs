@@ -1,5 +1,6 @@
 ﻿#region
 
+using SQLitePCL;
 using WardrobeManager.Api.Services.Interfaces;
 
 #endregion
@@ -9,6 +10,7 @@ namespace WardrobeManager.Api.Services.Implementation;
 public class FileService(
     IDataDirectoryService dataDirectoryService,
     IWebHostEnvironment webHostEnvironment,
+    ILogger<FileService> logger,
     IConfiguration configuration)
     : IFileService
 {
@@ -62,5 +64,20 @@ public class FileService(
             byte[] imageBytes = await File.ReadAllBytesAsync(notFound); // 6. Serve the file
             return imageBytes;
         }
+    }
+
+    public async Task DeleteImage(Guid givenGuid)
+    {
+        var guid = ParseGuid(givenGuid);
+        string path = Path.Combine(dataDirectoryService.GetUploadsDirectory(), guid);
+        string deletePath = Path.Combine(dataDirectoryService.GetDeletedUploadsDirectory(), guid);
+
+        if (File.Exists(path))
+        {
+            File.Move(path, deletePath);
+            return;
+        }
+
+        logger.LogError($"Could not delete image {guid} as it does not exist");
     }
 }
