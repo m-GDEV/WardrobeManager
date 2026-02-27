@@ -1,7 +1,7 @@
 ﻿using FluentAssertions;
 using WardrobeManager.Shared.StaticResources;
 
-namespace WardrobeManager.Shared.Tests;
+namespace WardrobeManager.Shared.Tests.StaticResources;
 
 public class MiscMethodsTests
 {

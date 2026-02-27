@@ -5,22 +5,22 @@
 @inject Initialization sysinfocusComponentsinit
 @inject BrowserExtensions browserExtensions
 
-<body class="dark h-full body-text transition-all duration-300 "
-     @onclick="sysinfocusComponentsinit.HandleMainLayoutClickEvent">
-    <ErrorBoundary @ref="errorBoundary">
-        <ChildContent>
-            <NavMenu />
-            @Body
-            <FooterMenu />
-        </ChildContent>
-        <ErrorContent Context="ex">
-            @{
-                _notificationService.AddNotification(ex.Message, NotificationType.Error);
-                Console.WriteLine(ex.Message);
-            }
-            <p>@ex.Message</p>
-        </ErrorContent>
-    </ErrorBoundary>
+<body class="dark h-full body-text transition-all duration-300 flex flex-col"
+      @onclick="sysinfocusComponentsinit.HandleMainLayoutClickEvent">
+<ErrorBoundary @ref="errorBoundary">
+    <ChildContent>
+        <NavMenu/>
+        @Body
+        <FooterMenu/>
+    </ChildContent>
+    <ErrorContent Context="ex">
+        @{
+            // fixlater: In the future, we should maybe not display raw exceptions to the user
+            _notificationService.AddNotification(ex.Message, NotificationType.Error);
+            Console.WriteLine(ex.Message);
+        }
+    </ErrorContent>
+</ErrorBoundary>
 </body>
 <Notifications/>
 
@@ -44,7 +44,6 @@
     {
         if (firstRender)
         {
-            await browserExtensions.SetToLocalStorage("theme", "dark");
             await browserExtensions.SetToLocalStorage("theme", "dark");
             await sysinfocusComponentsinit.InitializeTheme();
         }

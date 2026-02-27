@@ -2,18 +2,18 @@
 @using WardrobeManager.Shared.StaticResources
 
 @namespace WardrobeManager.Presentation.Pages.Public
+@inherits MvvmComponentBase<HomeViewModel>
 
 <PageTitle>Welcome - WardrobeManager</PageTitle>
 
 
-<div class="h-full flex flex-col gap-12 items-center bg-primary-content">
+<div class="grow flex flex-col gap-12 items-center bg-primary-content">
     <div class="flex flex-col items-center gap-1">
         <h1 class="title-text text-primary">@ProjectConstants.ProjectName</h1>
-        @* fixlater *@
         <p class="subtitle-text text-primary">Welcome to the world’s first ever all-in-one wardrobe management solution</p>
         
     </div>
-    <img src="@ProjectConstants.HomeBackgroundImage" class="h-3/5 rounded-2xl"/>
+    <img src="@ProjectConstants.HomeBackgroundImage" class="w-2/5 rounded-2xl"/>
 </div>
 
 @code {

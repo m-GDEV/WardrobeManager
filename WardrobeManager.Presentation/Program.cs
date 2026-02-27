@@ -1,5 +1,6 @@
 #region
 
+using Blazing.Mvvm;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -46,10 +47,14 @@ builder.Services.AddHttpClient("Auth", opt =>
 // My Services
 builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
 
 // Libraries
 builder.Services.AddSysinfocus();
-
+builder.Services.AddMvvm(options =>
+{
+    options.HostingModelType = BlazorHostingModelType.WebAssembly;
+});
 
 
 await builder.Build().RunAsync();

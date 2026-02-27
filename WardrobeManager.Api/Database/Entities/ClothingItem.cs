@@ -7,10 +7,10 @@ using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Api.Database.Entities;
 
-public class ServerClothingItem : IDatabaseEntity
+public class ClothingItem : IDatabaseEntity
 {
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-    public ServerClothingItem()
+    public ClothingItem()
     {
     } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -20,7 +20,7 @@ public class ServerClothingItem : IDatabaseEntity
     // This constructor will be used to create default objects or initial objects
     // For now some of the other user editable fields will not be assigned here
     // In the future you can add this functionality to the frontend and then change this
-    public ServerClothingItem
+    public ClothingItem
     (
         string name, ClothingCategory category, Season season, WearLocation wearLocation,
         bool favourited, int desiredTimesWornBeforeWash, Guid? imageGuid
@@ -36,7 +36,7 @@ public class ServerClothingItem : IDatabaseEntity
     }
 
     // ---- EF Core modifies -----
-    public int PrimaryKeyId { get; set; }
+    public int Id { get; set; }
 
     // represents a mandatory one-to-many relationship with a User as
     // the following 2 fields are not nullable
@@ -44,7 +44,7 @@ public class ServerClothingItem : IDatabaseEntity
     [JsonIgnore] // causes the serializer to run into loop
     public User User { get; set; } // navigation property
 
-    public int UserId { get; set; }
+    public string UserId { get; set; }
 
     // ---- User modifies -----
     public string Name { get; set; }

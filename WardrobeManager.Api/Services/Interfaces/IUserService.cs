@@ -5,11 +5,11 @@ namespace WardrobeManager.Api.Services.Interfaces;
 
 public interface IUserService
 {
-    Task<User?> GetUser(int id);
-    Task<bool> DoesUserExist(int id);
+    Task<User?> GetUser(string userId);
+    Task<bool> DoesUserExist(string userId);
     Task CreateUser();
-    Task UpdateUser(int userId, EditedUserDTO editedUser);
-    Task DeleteUser(int userId);
+    Task UpdateUser(string userId, EditedUserDTO editedUser);
+    Task DeleteUser(string userId);
     Task<bool> DoesAdminUserExist();
     Task<(bool, string)> CreateAdminIfMissing(string email, string password);
 }

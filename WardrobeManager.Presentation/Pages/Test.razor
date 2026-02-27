@@ -4,74 +4,93 @@
 @page "/test"
 @using WardrobeManager.Shared.DTOs
 
-<h4 class="normal mb1">Regular Grid Column Example</h4>
-<Button OnClick="SendLog" Text="Send Log" Type="ButtonType.Outline"/>
-<Grid MinColWidth="150px" Gap="1rem">
-    <div class="flex-col jcc aic g0"><Text Content="0" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="brown,red" /> I'm Zero </div>
-    <div class="flex-col jcc aic g0"><Text Content="1" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="red,green" /> I'm One </div>
-    <div class="flex-col jcc aic g0"><Text Content="2" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="green,blue" /> I'm Two </div>
-    <div class="flex-col jcc aic g0"><Text Content="3" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="blue,gold" /> I'm Three</div>
-    <div class="flex-col jcc aic g0"><Text Content="4" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="gold,royalblue" /> I'm Four</div>
-    <div class="flex-col jcc aic g0"><Text Content="5" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="royalblue,orange" /> I'm Five</div>
-    <div class="flex-col jcc aic g0"><Text Content="6" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="orange,seagreen" /> I'm Six</div>
-    <div class="flex-col jcc aic g0"><Text Content="7" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="seagreen,khaki" /> I'm Seven</div>
-    <div class="flex-col jcc aic g0"><Text Content="8" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="khaki,magenta" /> I'm Eight</div>
-    <div class="flex-col jcc aic g0"><Text Content="9" SizeInRem="8" Weight="FontWeights.W900" ShowGradient GradientColors="magenta,brown" /> I'm Nine</div>    
-</Grid>
+<Button Text="State Changed" Type="ButtonType.Outline" Class="border" OnClick="ff" />
 
-<br/>
-<Separator Class="mtb1" />
-<br/>
+<div class="flex">
+    <Button Id="openPopover" Text="Open popover" Type="ButtonType.Outline" Class="border" OnClick="() => show = !show" />
 
-<h4 class="normal mb1">Masonry Example</h4>
-<Grid ShowAsMasonry="true">
-    <img src="https://plus.unsplash.com/premium_photo-1674473708374-0950924e38d7?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDF8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1555948150-52dadfc85530?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDV8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://plus.unsplash.com/premium_photo-1741629493418-260375b7338b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDR8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://plus.unsplash.com/premium_photo-1672242576944-bc571388a2c4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDh8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1735238075870-2e74333c6c7e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDZ8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1741587467707-97e1fc8eff1e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDd8cVBZc0R6dkpPWWN8fGVufDB8fHx8fA%3D%3D" loading="lazy" />
-    <img src="https://plus.unsplash.com/premium_photo-1741366435429-cf44a5ccaa24?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDExfHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1741277275242-dfe84912bcba?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEyfHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1741096932120-4ca5b4e5c532?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE0fHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1740766053617-6a8dbe97a6aa?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE1fHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://plus.unsplash.com/premium_photo-1686844461644-60c28fa4cfda?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDEzfHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1740975833734-2e0bba5d74df?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE4fHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-    <img src="https://images.unsplash.com/photo-1740686545460-8aa60a215bb2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHx0b3BpYy1mZWVkfDE5fHFQWXNEenZKT1ljfHxlbnwwfHx8fHw%3D" loading="lazy" />
-</Grid>
-
+    <Popover Show="@show" ParentId="openPopover" OnClose="x => show = x">
+        <Card>
+            <CardHeader>
+                <h4 class="large">Dimensions</h4>
+                <p class="muted">Set the dimensions for the layer.</p>
+            </CardHeader>
+            <CardContent>
+                <style>
+                    .s1 {
+                        width: 125px;
+                        font-size: 14px
+                    }
+                </style>
+                <div class="flex-col g8">
+                    <div class="flex">
+                        <span class="s1">Width</span>
+                        <Input TItem="string" Focus />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Max. width</span>
+                        <Input TItem="string" />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Height</span>
+                        <Input TItem="string" />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Max. height</span>
+                        <Input TItem="string" />
+                    </div>
+                </div>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+    </Popover>
+</div>
+<div style="margin-top: 30vh">
+    <Button Id="openPopoverBottom" Text="Open popover" Type="ButtonType.Outline" Class="border" OnClick="() => showBottom = !showBottom" Style="margin-left: 60vw" />
+    <Popover Show="@showBottom" ParentId="openPopoverBottom" OnClose="x => showBottom = x">
+        <Card>
+            <CardHeader>
+                <h4 class="large">Dimensions</h4>
+                <p class="muted">Set the dimensions for the layer.</p>
+            </CardHeader>
+            <CardContent>
+                <style>
+                    .s1 {
+                        width: 125px;
+                        font-size: 14px
+                    }
+                </style>
+                <div class="flex-col g8">
+                    <div class="flex">
+                        <span class="s1">Width</span>
+                        <Input TItem="string" Focus />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Max. width</span>
+                        <Input TItem="string" />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Height</span>
+                        <Input TItem="string" />
+                    </div>
+                    <div class="flex">
+                        <span class="s1">Max. height</span>
+                        <Input TItem="string" />
+                    </div>
+                </div>
+            </CardContent>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+    </Popover>
+</div>
 
 @code {
-    private void HandleLogin() { }
-    private void HandleGitHubLogin() { }
-    private void HandleGoogleLogin() { }
-    string f = string.Empty;
-    bool showAlertDialog;
+    bool show, showBottom;
 
-    
-    protected override void OnInitialized()
+    public void ff()
     {
-        f = $"{_config["WM_BACKEND_URL"] ?? "terrifier 3 was a great movie"}";
-        _logger.LogWarning(f);        
-        Console.WriteLine(f);
         StateHasChanged();
-         
-        base.OnInitialized();
     }
-
-    public async Task SendLog()
-    {
-        var log = new LogDTO
-        {
-            Created = DateTime.UtcNow,
-            Description = "hahaha",
-            Origin = LogOrigin.Frontend,
-            Type = LogType.Info,
-            Title = "Test Log!"
-        };
-        Console.WriteLine(log);
-
-        await _apiService.AddLog(log);
-    }
-
 }

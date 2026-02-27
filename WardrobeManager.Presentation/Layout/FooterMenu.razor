@@ -8,12 +8,13 @@
     <Authorized>
     </Authorized>
     <NotAuthorized>
-        <footer class="flex flex-row justify-center items-center w-full">
-            <Text class="py-4 text-base-content font-semibold">
-                <p>
-                    @ProjectConstants.ProjectName - Built By Musa Ahmed | Since 2024
-                </p>
-            </Text>
+        <footer class="flex flex-col sm:flex-row justify-center items-center w-full py-4 text-base-content ">
+            <span>
+                @ProjectConstants.ProjectName - Built By Musa Ahmed
+            </span>
+            <span>
+                <span class="hidden sm:inline">&nbsp;|</span> Since 2024
+            </span>
         </footer>
     </NotAuthorized>
 </AuthorizeView>

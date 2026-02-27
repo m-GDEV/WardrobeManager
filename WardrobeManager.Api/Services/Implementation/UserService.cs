@@ -1,6 +1,7 @@
 #region
 
 using System.Diagnostics;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using WardrobeManager.Api.Database;
@@ -18,24 +19,22 @@ public class UserService : IUserService
 {
     private readonly RoleManager<IdentityRole> _roleManager;
     private readonly UserManager<User> _userManager;
-    private readonly IGenericRepository<User> _genericRepository;
 
-    public UserService(IGenericRepository<User> genericRepository, UserManager<User> userManager,
+    public UserService(UserManager<User> userManager,
         RoleManager<IdentityRole> roleManager)
     {
         _roleManager = roleManager;
         _userManager = userManager;
-        _genericRepository = genericRepository;
     }
 
-    public async Task<User?> GetUser(int id)
+    public async Task<User?> GetUser(string id)
     {
-        return await _genericRepository.GetAsync(id);
+        return await _userManager.FindByIdAsync(id);
     }
 
-    public async Task<bool> DoesUserExist(int id)
+    public async Task<bool> DoesUserExist(string userId)
     {
-        if (await _genericRepository.GetAsync(id) != null)
+        if (await GetUser(userId) != null)
         {
             return true;
         }
@@ -49,22 +48,21 @@ public class UserService : IUserService
     {
         var newUser = new User
         {
-            ServerClothingItems = new List<ServerClothingItem>
+            ServerClothingItems = new List<ClothingItem>
             {
                 // New GUID are provided. They do not have a matching image as other guids would. The aim is to make our ImageEndpoint return a 'missing photo' image 
-                new ServerClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall,
+                new ClothingItem("Example T-Shirt", ClothingCategory.TShirt, Season.Fall,
                     WearLocation.HomeAndOutside,
                     false, 5, null),
-                new ServerClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall,
+                new ClothingItem("Example Pants", ClothingCategory.Jeans, Season.SummerAndFall,
                     WearLocation.HomeAndOutside, false, 20, null),
             }
         };
         
-        await _genericRepository.CreateAsync(newUser);
-        await _genericRepository.SaveAsync();   
+        await _userManager.CreateAsync(newUser);
     }
 
-    public async Task UpdateUser(int userId, EditedUserDTO editedUser)
+    public async Task UpdateUser(string userId, EditedUserDTO editedUser)
     {
         var dbRecord = await GetUser(userId);
         Debug.Assert(dbRecord != null, "At this point in the pipeline user should be created");
@@ -72,16 +70,15 @@ public class UserService : IUserService
         dbRecord.Name = editedUser.Name;
         // Not validating the base64. If its invalid the browser can complain
         dbRecord.ProfilePictureBase64 = editedUser.ProfilePictureBase64;
-        await _genericRepository.SaveAsync();
+        await _userManager.UpdateAsync(dbRecord);
     }
 
-    public async Task DeleteUser(int userId)
+    public async Task DeleteUser(string userId)
     {
         var dbRecord = await GetUser(userId);
         Debug.Assert(dbRecord != null, "At this point in the pipeline user should be created");
 
-        _genericRepository.Remove(dbRecord);
-        await _genericRepository.SaveAsync();
+        await _userManager.DeleteAsync(dbRecord);
     }
 
     // These methods are called by the frontend during the onboarding process
@@ -112,8 +109,6 @@ public class UserService : IUserService
             return (false, "Admin user already exists!");
         }
 
-        var hasher = new PasswordHasher<User>();
-
         var adminRoleExists = await _roleManager.RoleExistsAsync("Admin");
         Debug.Assert(adminRoleExists == true, "Admin role should exist (created in db init)!");
 
@@ -125,9 +120,7 @@ public class UserService : IUserService
             NormalizedUserName = email.ToUpper(),
         };
 
-        var hashed = hasher.HashPassword(user, password);
-        user.PasswordHash = hashed;
-        var createResult = await _userManager.CreateAsync(user);
+        var createResult = await _userManager.CreateAsync(user, password);
 
         if (createResult.Succeeded is false)
         {
@@ -142,8 +135,6 @@ public class UserService : IUserService
             var errors = roleResult.Errors.Select(e => e.Description).ToList();
             return (false, string.Join(" ", errors));
         }
-
-        await _genericRepository.SaveAsync();
 
         return (true, "Admin user created!");
     }

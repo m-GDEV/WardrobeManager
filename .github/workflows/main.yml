@@ -37,7 +37,7 @@ jobs:
         run: |
           set -e
           # Run your tests
-          dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=detailed" --results-directory /tmp/test-results/
+          dotnet test --collect:"XPlat Code Coverage" --logger:"console;verbosity=detailed" --settings ./coverlet.runsettings --results-directory /tmp/test-results/
           
           # Install DeepSource CLI
           curl https://deepsource.io/cli | sh

@@ -1,49 +1,103 @@
-﻿@using WardrobeManager.Shared.StaticResources
+﻿@using WardrobeManager.Presentation.Components.Navgiation
+@using WardrobeManager.Shared.StaticResources
+
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
+@inherits MvvmComponentBase<NavBarViewModel>
 
 <nav
-    class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
-    <Text Content="@ProjectConstants.ProjectName" SizeInRem="2" Weight="FontWeights.W100"></Text>
-    <div class="flex flex-wrap">
-        <Button Type="ButtonType.Outline" 
-                Text="Dashboard" 
-                Icon="Home" 
-                class="gap-3 border rounded-xl border-gray-300" />
+        class="w-full flex flex-row justify-between lg:justify-around py-4 px-4 items-center">
+        <div class="flex gap-3 items-center">
+                <AuthorizeView>
+                        <Authorized>
+                                <a href="/dashboard">
+                                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2"
+                                              Weight="FontWeights.W100"/>
+                                </a>
 
-        <Button Type="ButtonType.Outline" 
-                Text="My Wardrobe" 
-                Icon="Person" 
-                class="gap-3 border rounded-xl border-gray-300" />
+                        </Authorized>
+                        <NotAuthorized>
+                                <a href="/">
+                                        <Text Content="@ProjectConstants.ProjectName" SizeInRem="2"
+                                              Weight="FontWeights.W100"/>
+                                </a>
 
-        <Button Type="ButtonType.Outline" 
-                Text="Outfits" 
-                Icon="Palette" 
-                class="gap-3 border rounded-xl border-gray-300" />
 
-        <Button Type="ButtonType.Outline" 
-                Text="Planning" 
-                Icon="Calendar_Month" 
-                class="gap-3 border rounded-xl border-gray-300" />
-
-        <Button Type="ButtonType.Outline" 
-                Text="Analytics" 
-                Icon="ssid_chart" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        
-        <Button Type="ButtonType.Primary" 
-                Text="Add Item" 
-                Icon="Add" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        <Button Type="ButtonType.Secondary" 
-                Text="Photo" 
-                Icon="Camera" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        <Button Type="ButtonType.Ghost" 
-                Icon="Settings" 
-                class="gap-3 border rounded-xl border-gray-300" />
-        
-        <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" />   
-
-    </div>
+                        </NotAuthorized>
+                </AuthorizeView>
+                @if (ViewModel.CanConnectToBackend)
+                {
+                        <Badge Type="BadgeType.Success" Text="Connected"/>
+                }
+                else
+                {
+                        <Badge Type="BadgeType.Destructive" Text="Disconnected"/>
+                }
+        </div>
+        <AuthorizeView>
+                <NotAuthorized>
+                        <div class="flex gap-3">
+                                <a href="/login">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="Log in"/>
+                                </a>
+                                <a href="/signup">
+                                        <Button Type="ButtonType.Primary"
+                                                Text="Sign up"/>
+                                </a>
+                        </div>
+                </NotAuthorized>
+                <Authorized>
+                        <div class="flex flex-wrap gap-3">
+                                <Button Type="ButtonType.Outline"
+                                        Text="Dashboard"
+                                        Icon="Home"
+                                />
+                                <Button Type="ButtonType.Outline"
+                                        Text="My Wardrobe"
+                                        Icon="Person"
+                                />
+                                <Button Type="ButtonType.Outline"
+                                        Text="Outfits"
+                                        Icon="Palette"
+                                />
+                                <Button Type="ButtonType.Outline"
+                                        Text="Planning"
+                                        Icon="Calendar_Month"
+                                />
+                                <Button Type="ButtonType.Outline"
+                                        Text="Analytics"
+                                        Icon="ssid_chart"
+                                />
+                                <Button Type="ButtonType.Primary"
+                                        Text="Add Item"
+                                        Icon="Add"
+                                />
+                                <Button Type="ButtonType.Secondary"
+                                        Text="Photo"
+                                        Icon="Camera"
+                                />
+                                <Button Type="ButtonType.Ghost"
+                                        Icon="Settings"
+                                />
+                                <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" Id="userPopover"
+                                        OnClick="ViewModel.ToggleUserPopover"/>
+                                <Popover Show="ViewModel.ShowUserPopover" ParentId="userPopover"
+                                         Class="mt-[8vh] ml-[85vw]">
+                                        <Card>
+                                                <CardHeader>
+                                                        <h4 class="large">User Settings</h4>
+                                                        <p class="muted">Welcome @ViewModel.UsersName! Configure quick user options from here</p>
+                                                </CardHeader>
+                                                <CardContent>
+                                                        <div class="pb-4">
+                                                                <Button Type="ButtonType.Primary" Text="Log out"
+                                                                        OnClick="@ViewModel.LogoutAsync"/>
+                                                        </div>
+                                                </CardContent>
+                                        </Card>
+                                </Popover>
+                        </div>
+                </Authorized>
+        </AuthorizeView>
 </nav>

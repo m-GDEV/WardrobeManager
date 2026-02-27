@@ -1,5 +1,6 @@
 ﻿#region
 
+using Microsoft.AspNetCore.Components.Authorization;
 using WardrobeManager.Presentation.Identity.Models;
 
 #endregion
@@ -22,8 +23,8 @@ public interface IAccountManagement
     /// <summary>
     /// Log out the logged in user.
     /// </summary>
-    /// <returns>The asynchronous task.</returns>
-    public Task LogoutAsync();
+    /// <returns>Whether the logout was successful</returns>
+    public Task<bool> LogoutAsync();
 
     /// <summary>
     /// Registration service.
@@ -32,6 +33,11 @@ public interface IAccountManagement
     /// <param name="password">User's password.</param>
     /// <returns>The result of the request serialized to <see cref="FormResult"/>.</returns>
     public Task<FormResult> RegisterAsync(string email, string password);
-
-    public Task<bool> CheckAuthenticatedAsync();
+    
+    
+    /// <summary>
+    /// Gets the authentication state of the current user
+    /// </summary>
+    /// <returns>AuthenticationState object</returns>
+    public Task<AuthenticationState> GetAuthenticationStateAsync();
 }

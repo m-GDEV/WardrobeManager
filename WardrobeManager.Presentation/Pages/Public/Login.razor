@@ -1,30 +1,35 @@
 ﻿@page "/login"
-@using WardrobeManager.Presentation.Components.Identity
+@inherits MvvmComponentBase<LoginViewModel>
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Log in</PageTitle>
 
 
-<LoginOrSignup PageHeaderText="Log In" SubmitButtonText="Login" SubmitButtonCallback="LoginMethod" RedirectHeaderText="Don't have an account?" RedirectLinkText="Sign up" RedirectLinkPath="/signup"/>
+<div class="w-full bg-primary grow">
+    <div class="max-w-90 mx-auto flex flex-col items-center justify-center h-full">
+        <h2 class="heading-text text-primary-content">Log in</h2>
+        <EditForm class="w-full py-8 flex flex-col items-center gap-3" @ref="@ViewModel.EditForm"
+                  Model="@ViewModel.AuthenticationCredentialsModel" OnSubmit="@ViewModel.LoginAsync">
+            <Input TItem="string"
+                   Value="@ViewModel.AuthenticationCredentialsModel.Email"
+                   ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
+                   Placeholder="Enter your email"
+            />
+            <Input TItem="string"
+                   Value="@ViewModel.AuthenticationCredentialsModel.Password"
+                   Type="password"
+                   OnKeyDown="@((e) => ViewModel.DetectEnterPressed(e))"
+                   ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"
+                   Placeholder="Enter your password"
+            />
 
-@code {
+            <Button Type="ButtonType.Primary" Text="Log in" OnClick="@ViewModel.LoginAsync"/>
+        </EditForm>
 
-    public async Task LoginMethod(LoginOrSignupModel data)
-    {
-        var res = await _accountManagement.LoginAsync(data.email, data.password);
-
-        if (!res.Succeeded)
-        {
-            foreach (var error in res.ErrorList)
-            {
-                _notificationService.AddNotification(error, NotificationType.Error);
-            }
-
-            return;
-        }
-
-        // For some reason blazor shows the NotAuthorized thing if i redirect too fast
-        await Task.Delay(1000);
-        _navManager.NavigateTo("/dashboard");
-    }
-
-}
+        <div class="flex flex-row items-center gap-3 ">
+            <p class="body-text text-lg text-primary-content">Don't have an account?</p>
+            <a href="/signup">
+                <Button Text="Sign up" Type="ButtonType.Secondary"/>
+            </a>
+        </div>
+    </div>
+</div>
