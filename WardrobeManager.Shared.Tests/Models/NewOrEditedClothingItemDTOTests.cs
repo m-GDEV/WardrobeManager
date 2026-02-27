@@ -57,4 +57,17 @@ public class NewOrEditedClothingItemDTOTests
             dto.Favourited.Should().BeTrue();
         }
     }
+
+    [Test]
+    public void NewOrEditedClothingItemDTO_DefaultConstructor_CanBeInstantiated()
+    {
+        // Arrange
+        // The default constructor exists solely for the deserializer
+
+        // Act
+        var dto = new NewOrEditedClothingItemDTO();
+
+        // Assert
+        dto.Should().NotBeNull();
+    }
 }

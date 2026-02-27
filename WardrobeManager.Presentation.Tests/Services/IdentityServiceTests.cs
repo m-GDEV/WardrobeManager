@@ -237,4 +237,42 @@ public class IdentityServiceTests
     }
 
     #endregion
+
+    #region GetUserInformation
+
+    [Test]
+    public async Task GetUserInformation_WhenCalled_ReturnsPrincipalFromAuthState()
+    {
+        // Arrange
+        var claims = new[] { new Claim(ClaimTypes.Name, "test@test.com") };
+        var identity = new ClaimsIdentity(claims, "TestScheme");
+        var principal = new ClaimsPrincipal(identity);
+        _mockAccountManagement
+            .Setup(a => a.GetAuthenticationStateAsync())
+            .ReturnsAsync(new AuthenticationState(principal));
+
+        // Act
+        var result = await _service.GetUserInformation();
+
+        // Assert
+        result.Should().BeSameAs(principal);
+    }
+
+    [Test]
+    public async Task GetUserInformation_WhenNotAuthenticated_ReturnsAnonymousPrincipal()
+    {
+        // Arrange
+        var principal = new ClaimsPrincipal(new ClaimsIdentity());
+        _mockAccountManagement
+            .Setup(a => a.GetAuthenticationStateAsync())
+            .ReturnsAsync(new AuthenticationState(principal));
+
+        // Act
+        var result = await _service.GetUserInformation();
+
+        // Assert
+        result.Identity?.IsAuthenticated.Should().BeFalse();
+    }
+
+    #endregion
 }

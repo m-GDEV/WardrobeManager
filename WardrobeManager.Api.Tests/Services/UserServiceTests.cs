@@ -234,4 +234,25 @@ public class UserServiceTests
     }
 
     #endregion
+
+    #region CreateUser
+
+    [Test]
+    public async Task CreateUser_WhenCalled_CreatesNewUserWithDefaultClothingItems()
+    {
+        // Arrange
+        _mockUserManager
+            .Setup(m => m.CreateAsync(It.IsAny<User>()))
+            .ReturnsAsync(IdentityResult.Success);
+
+        // Act
+        await _service.CreateUser();
+
+        // Assert
+        _mockUserManager.Verify(m => m.CreateAsync(It.Is<User>(u =>
+            u.ServerClothingItems != null &&
+            u.ServerClothingItems.Count == 2)), Times.Once);
+    }
+
+    #endregion
 }

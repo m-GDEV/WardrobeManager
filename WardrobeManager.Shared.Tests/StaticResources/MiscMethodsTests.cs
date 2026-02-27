@@ -181,4 +181,167 @@ public class MiscMethodsTests
     }
 
     #endregion
+
+    #region GetNameWithSpacesAndEmoji(ClothingCategory)
+
+    [Test]
+    public void GetNameWithSpacesAndEmoji_TShirt_ReturnsTShirtWithEmoji()
+    {
+        // Arrange
+        // Act
+        var result = MiscMethods.GetNameWithSpacesAndEmoji(ClothingCategory.TShirt);
+        // Assert - regex [A-Z][a-z]+ extracts "Shirt" from "TShirt"
+        using (new AssertionScope())
+        {
+            result.Should().Contain("Shirt");
+            result.Should().Contain("👕");
+        }
+    }
+
+    [Test]
+    public void GetNameWithSpacesAndEmoji_DressShirt_ReturnsDressShirtWithEmoji()
+    {
+        // Arrange
+        // Act
+        var result = MiscMethods.GetNameWithSpacesAndEmoji(ClothingCategory.DressShirt);
+        // Assert
+        using (new AssertionScope())
+        {
+            result.Should().Contain("Dress");
+            result.Should().Contain("Shirt");
+            result.Should().Contain("👔");
+        }
+    }
+
+    #endregion
+
+    #region GetNameWithSpacesAndEmoji(Season)
+
+    [Test]
+    public void GetNameWithSpacesAndEmoji_Fall_ReturnsFallWithEmoji()
+    {
+        // Arrange
+        // Act
+        var result = MiscMethods.GetNameWithSpacesAndEmoji(Season.Fall);
+        // Assert
+        using (new AssertionScope())
+        {
+            result.Should().Contain("Fall");
+            result.Should().Contain("🍂");
+        }
+    }
+
+    [Test]
+    public void GetNameWithSpacesAndEmoji_Summer_ReturnsSummerWithEmoji()
+    {
+        // Arrange
+        // Act
+        var result = MiscMethods.GetNameWithSpacesAndEmoji(Season.Summer);
+        // Assert
+        using (new AssertionScope())
+        {
+            result.Should().Contain("Summer");
+            result.Should().Contain("☀️");
+        }
+    }
+
+    #endregion
+
+    #region GetEmoji - remaining categories
+
+    [Test]
+    public void GetEmoji_Sweater_ReturnsCoatEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(ClothingCategory.Sweater);
+        // Assert
+        emoji.Should().Be("🧥");
+    }
+
+    [Test]
+    public void GetEmoji_Shorts_ReturnsShortsEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(ClothingCategory.Shorts);
+        // Assert
+        emoji.Should().Be("🩳");
+    }
+
+    [Test]
+    public void GetEmoji_Sweatpants_ReturnsTrousersEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(ClothingCategory.Sweatpants);
+        // Assert
+        emoji.Should().Be("👖");
+    }
+
+    [Test]
+    public void GetEmoji_DressPants_ReturnsTrousersEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(ClothingCategory.DressPants);
+        // Assert
+        emoji.Should().Be("👖");
+    }
+
+    [Test]
+    public void GetEmoji_NoneCategory_ReturnsEmptyString()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(ClothingCategory.None);
+        // Assert
+        emoji.Should().Be(string.Empty);
+    }
+
+    #endregion
+
+    #region GetEmoji - remaining seasons
+
+    [Test]
+    public void GetEmoji_Spring_ReturnsBlossomEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(Season.Spring);
+        // Assert
+        emoji.Should().Be("🌸");
+    }
+
+    [Test]
+    public void GetEmoji_FallAndWinter_ReturnsCombinedEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(Season.FallAndWinter);
+        // Assert
+        emoji.Should().Be("🍂❄️");
+    }
+
+    [Test]
+    public void GetEmoji_SpringAndSummer_ReturnsCombinedEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(Season.SpringAndSummer);
+        // Assert
+        emoji.Should().Be("🌸☀️");
+    }
+
+    [Test]
+    public void GetEmoji_SummerAndFall_ReturnsCombinedEmoji()
+    {
+        // Arrange
+        // Act
+        var emoji = MiscMethods.GetEmoji(Season.SummerAndFall);
+        // Assert
+        emoji.Should().Be("☀️🍂");
+    }
+
+    #endregion
 }
