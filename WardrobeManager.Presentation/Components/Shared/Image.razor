@@ -1,6 +1,6 @@
 @namespace WardrobeManager.Presentation.Components.Shared
 
-<img src="@_config["WM_BACKEND_URL"]/images/@_imagePath" class="@Css"/>
+<img src="@_config["WM_BACKEND_URL"]/images/@_imagePath" loading="lazy" class="@Css"/>
 
 @code {
     [Parameter] public required string? ImageGuid { get; set; }
