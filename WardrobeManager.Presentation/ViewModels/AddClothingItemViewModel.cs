@@ -21,16 +21,16 @@ public partial class AddClothingItemViewModel(
 {
     // Public Properties
     [ObservableProperty]
-    private NewClothingItemDTO _newNewClothingItem = new NewClothingItemDTO("", ClothingCategory.None, "");
+    private NewClothingItemDTO _newNewClothingItem = new NewClothingItemDTO();
 
-    public ICollection<ClothingCategory> ClothingCategories { get; set; } =
-        MiscMethods.ConvertEnumToCollection<ClothingCategory>();
+    public ICollection<ClothingCategory> ClothingCategories { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingCategory>();
+    public ICollection<ClothingSize> ClothingSizes { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingSize>();
 
     public async Task SubmitAsync()
     {
         await apiService.AddNewClothingItem(NewNewClothingItem);
-        notificationService.AddNotification($"Clothing Item {NewNewClothingItem.Name} Added!", NotificationType.Success);
-        NewNewClothingItem = new NewClothingItemDTO("", ClothingCategory.None, "");
+        notificationService.AddNotification($"Clothing Item \"{NewNewClothingItem.Name}\" Added!", NotificationType.Success);
+        NewNewClothingItem = new NewClothingItemDTO();
     }
     
     public async Task UploadImage(InputFileChangeEventArgs e)
