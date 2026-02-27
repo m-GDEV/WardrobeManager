@@ -34,7 +34,7 @@
                 </DataTableColumn>
                 <DataTableColumn Property="@(x => x.ImageGuid ?? Guid.NewGuid() )">
                     <Template>
-                        <Image ImageGuid="@context.ImageGuid.ToString()" Css="h-full object-contain rounded-xl max-w-[3rem] w-full"/>
+                        <Image ImageGuid="@context.ImageGuid.ToString()" Css="h-full object-contain rounded-xl max-w-[3rem] min-w-[2rem] w-full"/>
                     </Template>
                 </DataTableColumn>
                 <DataTableColumn Property="x => x.Name"/>

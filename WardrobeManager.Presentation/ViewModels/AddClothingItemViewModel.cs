@@ -21,16 +21,22 @@ public partial class AddClothingItemViewModel(
 {
     // Public Properties
     [ObservableProperty]
-    private NewClothingItemDTO _newNewClothingItem = new NewClothingItemDTO();
+    private NewClothingItemDTO _newClothingItem = new NewClothingItemDTO();
 
     public ICollection<ClothingCategory> ClothingCategories { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingCategory>();
     public ICollection<ClothingSize> ClothingSizes { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingSize>();
 
     public async Task SubmitAsync()
     {
-        await apiService.AddNewClothingItem(NewNewClothingItem);
-        notificationService.AddNotification($"Clothing Item \"{NewNewClothingItem.Name}\" Added!", NotificationType.Success);
-        NewNewClothingItem = new NewClothingItemDTO();
+        // Crude error checking, in the future i'd prefer to use a form with error validation
+        if (string.IsNullOrEmpty(NewClothingItem.Name))
+        {
+            notificationService.AddNotification("New item must have name. Please enter a name.", NotificationType.Error);
+            return;
+        }
+        await apiService.AddNewClothingItem(NewClothingItem);
+        notificationService.AddNotification($"Clothing Item \"{NewClothingItem.Name}\" Added!", NotificationType.Success);
+        NewClothingItem = new NewClothingItemDTO();
     }
     
     public async Task UploadImage(InputFileChangeEventArgs e)
@@ -54,9 +60,9 @@ public partial class AddClothingItemViewModel(
             
             await e.File.OpenReadStream(maxAllowedSize: maxFileSizeNum).CopyToAsync(img);
 
-            NewNewClothingItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
+            NewClothingItem.ImageBase64 = Convert.ToBase64String(img.ToArray());
 
-            if (NewNewClothingItem.ImageBase64 == string.Empty)
+            if (NewClothingItem.ImageBase64 == string.Empty)
             {
                 notificationService.AddNotification("Image size too large, try again.", NotificationType.Warning);
             }

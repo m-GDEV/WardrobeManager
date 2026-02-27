@@ -71,7 +71,8 @@ public class FileService(
         var guid = ParseGuid(givenGuid);
         string path = Path.Combine(dataDirectoryService.GetUploadsDirectory(), guid);
         string deletePath = Path.Combine(dataDirectoryService.GetDeletedUploadsDirectory(), guid);
-
+    
+        // Move deleted images to deleted folder (groundwork for "restore deleted items" feature)
         if (File.Exists(path))
         {
             File.Move(path, deletePath);

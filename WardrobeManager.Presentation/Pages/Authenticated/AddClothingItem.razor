@@ -9,31 +9,28 @@
     <h1 class="subheading-text sm:heading-text text-center">Add a clothing item</h1>
     <div class="flex gap-10 w-full">
         <EditForm class="flex flex-col gap-4 w-full sm:max-w-100 mx-auto"
-                  Model="@ViewModel.NewNewClothingItem">
+                  Model="@ViewModel.NewClothingItem">
             <Label Text="Name" Info="Choose a descriptive name for this item"/>
             <Input TItem="string"
-                   Value="@ViewModel.NewNewClothingItem.Name"
-                   ValueChanged="@((newValue) => ViewModel.NewNewClothingItem.Name = newValue ?? "")"
-                   Placeholder="Familiar name for clothing item"
-            />
+                   Value="@ViewModel.NewClothingItem.Name"
+                   ValueChanged="@((newValue) => ViewModel.NewClothingItem.Name = newValue ?? "")"
+                   Placeholder="Familiar name for clothing item"/>
 
             <Label Text="Category" Info="What type of clothing is this?"/>
             <Select TItem="ClothingCategory"
                     Items="@ViewModel.ClothingCategories"
                     Display="x => MiscMethods.GetNameWithSpacesAndEmoji(x)"
-                    SelectedItem="@ViewModel.NewNewClothingItem.Category"
-                    OnItemSelect="@((val) => ViewModel.NewNewClothingItem.Category = val)"
-                    Width="100%"
-            />
-            
-            <Label Text="Size" />
+                    SelectedItem="@ViewModel.NewClothingItem.Category"
+                    OnItemSelect="@((val) => ViewModel.NewClothingItem.Category = val)"
+                    Width="100%"/>
+
+            <Label Text="Size"/>
             <Select TItem="ClothingSize"
                     Items="@ViewModel.ClothingSizes"
                     Display="x => MiscMethods.GetNameWithSpacesFromEnum(x)"
-                    SelectedItem="@ViewModel.NewNewClothingItem.Size"
-                    OnItemSelect="@((val) => ViewModel.NewNewClothingItem.Size = val)"
-                    Width="100%"
-            />
+                    SelectedItem="@ViewModel.NewClothingItem.Size"
+                    OnItemSelect="@((val) => ViewModel.NewClothingItem.Size = val)"
+                    Width="100%"/>
 
             <div class="flex flex-col gap-2 w-full">
                 <Label Text="Upload image" Info="Choose an image you think best represents this item"/>
@@ -46,12 +43,12 @@
                     Class="self-center mt-6"/>
         </EditForm>
 
-        @if (!string.IsNullOrEmpty(ViewModel.NewNewClothingItem.ImageBase64))
+        @if (!string.IsNullOrEmpty(ViewModel.NewClothingItem.ImageBase64))
         {
             <div class="flex flex-col items-center h-full justify-around">
                 <h3 class="subheading-text">Uploaded Image</h3>
                 @{
-                    string src = $"data:image/png;base64, {ViewModel.NewNewClothingItem.ImageBase64}";
+                    string src = $"data:image/png;base64, {ViewModel.NewClothingItem.ImageBase64}";
                     <img src="@src" class="w-5/6 object-contain rounded-xl"/>
                 }
             </div>
