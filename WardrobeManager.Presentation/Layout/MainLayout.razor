@@ -15,6 +15,7 @@
     </ChildContent>
     <ErrorContent Context="ex">
         @{
+            // fixlater: In the future, we should maybe not display raw exceptions to the user
             _notificationService.AddNotification(ex.Message, NotificationType.Error);
             Console.WriteLine(ex.Message);
         }

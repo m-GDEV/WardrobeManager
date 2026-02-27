@@ -121,9 +121,11 @@ public class ClothingServiceTests
     private ClothingItem CreateSampleClothingItem()
     {
         var clothingItem = new ClothingItem("T-shirt", ClothingCategory.TShirt, Season.None,
-            WearLocation.HomeAndOutside, false, 0, Guid.NewGuid());
-        clothingItem.UserId = DefaultUserId;
-        clothingItem.Id = DefaultItemId;
+            WearLocation.HomeAndOutside, false, 0, Guid.NewGuid())
+        {
+            UserId = DefaultUserId,
+            Id = DefaultItemId
+        };
 
         return clothingItem;
     }
