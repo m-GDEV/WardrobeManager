@@ -5,12 +5,8 @@ using WardrobeManager.Api.Repositories.Interfaces;
 
 namespace WardrobeManager.Api.Repositories.Implementation;
 
-public class ClothingRepository: GenericRepository<ClothingItem>, IClothingRepository
+public class ClothingRepository(DatabaseContext context) : GenericRepository<ClothingItem>(context), IClothingRepository
 {
-    public ClothingRepository(DatabaseContext context, DbSet<ClothingItem> clothingItems) : base(context)
-    {
-    }
-
     public async Task<ClothingItem?> GetAsync(string userId, int itemId)
     {
         return await _dbSet.FirstOrDefaultAsync(item => item.Id == itemId && item.UserId == userId);

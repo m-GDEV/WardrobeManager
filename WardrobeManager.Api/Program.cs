@@ -90,7 +90,7 @@ builder.Services.AddAutoMapper(cfg =>
 
 // Entity Services
 builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
-builder.Services.AddScoped<ClothingRepository>();
+builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
 
 // add db context
 builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>
