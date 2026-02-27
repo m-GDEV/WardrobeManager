@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using AutoMapper;
+using FluentAssertions;
 using FluentAssertions.Execution;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Testing;
@@ -18,6 +19,7 @@ public class ClothingServiceTests
     private const int DefaultItemId = 1;
 
     private Mock<IClothingRepository> _mockRepo;
+    private Mock<IMapper> _mockMapper;
     private ClothingService _serviceToTest;
 
     [SetUp]
@@ -25,7 +27,8 @@ public class ClothingServiceTests
     {
         // Mock the service and its dependencies
         _mockRepo = new Mock<IClothingRepository>();
-        _serviceToTest = new ClothingService(_mockRepo.Object);
+        _mockMapper = new Mock<IMapper>();
+        _serviceToTest = new ClothingService(_mockRepo.Object, _mockMapper.Object);
     }
 
     #region GetClothingItem

@@ -8,6 +8,7 @@ using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 

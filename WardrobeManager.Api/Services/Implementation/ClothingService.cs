@@ -1,11 +1,14 @@
 ﻿#region
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using SQLitePCL;
 using WardrobeManager.Api.Database;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Repositories;
 using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.StaticResources;
@@ -14,22 +17,51 @@ using WardrobeManager.Shared.StaticResources;
 
 namespace WardrobeManager.Api.Services.Implementation;
 
-public class ClothingService(IClothingRepository clothingRepository)
+public class ClothingService(IClothingRepository clothingRepository, IMapper mapper, IFileService fileService, ILogger<ClothingService> logger)
     : IClothingService
 {
-
-
     // ---- Methods for multiple clothing items ---
-    public async Task<List<ClothingItem>?> GetAllClothingAsync(string userId)
+    public async Task<List<ClothingItemDTO>?> GetAllClothingAsync(string userId)
     {
-        return await clothingRepository.GetAllAsync(userId);
+        var res = await clothingRepository.GetAllAsync(userId);
+        return mapper.Map<List<ClothingItemDTO>>(res);
     }
 
     // ---- Methods for one clothing item ---
-    public async Task<ClothingItem?> GetClothingItemAsync(string userId, int itemId)
+    public async Task<ClothingItemDTO?> GetClothingItemAsync(string userId, int itemId)
     {
-       return await clothingRepository.GetAsync(userId, itemId);
+        var res = await clothingRepository.GetAsync(userId, itemId);
+        return mapper.Map<ClothingItemDTO>(res);
     }
 
+    public async Task AddNewClothingItem(string userId, NewClothingItemDTO newNewClothingItem)
+    {
+        var res = mapper.Map<ClothingItem>(newNewClothingItem);
+        Guid? newItemGuid = null;
+        if (MiscMethods.IsValidBase64(newNewClothingItem.ImageBase64))
+        {
+            newItemGuid = Guid.NewGuid();
+            // decode and save file to place on disk with guid as name
+            await fileService.SaveImage(newItemGuid, newNewClothingItem.ImageBase64!);
+        }
 
+        res.UserId = userId;
+        res.ImageGuid = newItemGuid;
+        await clothingRepository.CreateAsync(res);
+        await clothingRepository.SaveAsync();
+    }
+
+    public async Task RemoveClothingItem(string userId, int itemId)
+    {
+        var res = await clothingRepository.GetAsync(userId, itemId);
+        if (res != null)
+        {
+            clothingRepository.Remove(res);
+            await clothingRepository.SaveAsync();
+        }
+        else
+        {
+            logger.LogInformation($"Clothing item {itemId} not found");
+        }
+    }
 }

@@ -31,14 +31,14 @@ public class FileService(
         byte[] imageBytes = Convert.FromBase64String(ImageBase64);
 
         // 5MB default max file size
-        var max_file_size = configuration["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"] ?? "5";
-        int max_file_size_num = Convert.ToInt32(max_file_size);
-        max_file_size_num *= 1024;
+        var maxFileSize = configuration["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"] ?? "5";
+        int maxFileSizeNum = Convert.ToInt32(maxFileSize);
+        maxFileSizeNum *= 1024 * 1024;
 
-        if (imageBytes.Length > max_file_size_num)
+        if (imageBytes.Length > maxFileSizeNum)
         {
             throw new Exception(
-                $"File size too large! Received file size: {imageBytes.Length / 1024} MB. Max file size: {max_file_size_num / 1024} MB");
+                $"File size too large! Received file size: {imageBytes.Length / 1024} MB. Max file size: {maxFileSizeNum / 1024} MB");
         }
 
         string path = Path.Combine(dataDirectoryService.GetUploadsDirectory(), ParseGuid(properGuid));

@@ -3,7 +3,7 @@
 <img src="@_config["WM_BACKEND_URL"]/images/@_imagePath" class="@Css"/>
 
 @code {
-    [Parameter] public required Guid? ImageGuid { get; set; }
+    [Parameter] public required string? ImageGuid { get; set; }
     [Parameter] public required string Css { get; set; }
 
     string _imagePath = string.Empty;
@@ -13,7 +13,7 @@
         // the way my api controller matches routes you need to supply a path for /images/{image_id}
         // because some clothing items can have no image the Guid with therefore be null and /images/ will be called which doesn't trigger the api
         // suppress nullable error because it doesn't realize i'm already checking it
-        _imagePath = (string.IsNullOrEmpty(ImageGuid.ToString()) ? "fakepath" : ImageGuid.ToString())!;
+        _imagePath = (string.IsNullOrEmpty(ImageGuid) ? "fakepath" : ImageGuid);
 
         await base.OnParametersSetAsync();
     }

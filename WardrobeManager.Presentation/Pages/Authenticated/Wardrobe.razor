@@ -1,0 +1,31 @@
+﻿@page "/wardrobe"
+@attribute [Authorize]
+@using WardrobeManager.Shared.DTOs
+@inherits MvvmComponentBase<WardrobeViewModel>
+
+<PageTitle>Wardrobe</PageTitle>
+
+<div class="max-w-[80%] mx-auto w-full">
+    <h1 class="heading-text">View your wardrobe here</h1>
+
+    @if (@ViewModel.ClothingItems != null)
+    {
+        <DataTable Items="@ViewModel.ClothingItems" TItem="ClothingItemDTO">
+            <DataColumns>
+                <DataTableColumn>
+                    <Template>
+                        <Button Type="ButtonType.Destructive" Text="Delete" OnClick="@(() => ViewModel.RemoveItem(context.Id))"/>
+                    </Template>
+                </DataTableColumn>
+                <DataTableColumn Property="x => x.ImageGuid">
+                    <Template>
+                        <Image ImageGuid="@context.ImageGuid.ToString()" Css="h-full object-contain rounded-xl mx-auto mt-4 max-w-[5rem]"/>
+                    </Template>
+                </DataTableColumn>
+                <DataTableColumn Property="x => x.Name"/>
+                <DataTableColumn Property="x => x.Category"/>
+            </DataColumns>
+        </DataTable>
+    }
+
+</div>

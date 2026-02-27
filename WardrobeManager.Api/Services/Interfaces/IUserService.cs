@@ -1,4 +1,5 @@
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Api.Services.Interfaces;

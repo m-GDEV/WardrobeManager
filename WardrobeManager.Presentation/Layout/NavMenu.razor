@@ -49,54 +49,74 @@
                 </NotAuthorized>
                 <Authorized>
                         <div class="flex flex-wrap gap-3">
-                                <Button Type="ButtonType.Outline"
-                                        Text="Dashboard"
-                                        Icon="Home"
-                                />
-                                <Button Type="ButtonType.Outline"
-                                        Text="My Wardrobe"
-                                        Icon="Person"
-                                />
-                                <Button Type="ButtonType.Outline"
-                                        Text="Outfits"
-                                        Icon="Palette"
-                                />
-                                <Button Type="ButtonType.Outline"
-                                        Text="Planning"
-                                        Icon="Calendar_Month"
-                                />
-                                <Button Type="ButtonType.Outline"
-                                        Text="Analytics"
-                                        Icon="ssid_chart"
-                                />
-                                <Button Type="ButtonType.Primary"
-                                        Text="Add Item"
-                                        Icon="Add"
-                                />
-                                <Button Type="ButtonType.Secondary"
-                                        Text="Photo"
-                                        Icon="Camera"
-                                />
-                                <Button Type="ButtonType.Ghost"
-                                        Icon="Settings"
-                                />
-                                <Avatar Name="Musa Ahmed" Size="AvatarSize.Regular" Id="userPopover"
+
+                                <a href="/wardrobe">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="My Wardrobe"
+                                                Icon="Person"/>
+                                </a>
+
+                                <a href="/outfits">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="Outfits"
+                                                Icon="Palette"/>
+                                </a>
+
+                                <a href="/planning">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="Planning"
+                                                Icon="Calendar_Month"/>
+                                </a>
+
+                                <a href="/analytics">
+                                        <Button Type="ButtonType.Outline"
+                                                Text="Analytics"
+                                                Icon="ssid_chart"/>
+                                </a>
+
+                                <a href="/add">
+                                        <Button Type="ButtonType.Primary"
+                                                Text="Add Item"
+                                                Icon="Add"/>
+                                </a>
+
+                                <a href="/photo">
+                                        <Button Type="ButtonType.Secondary"
+                                                Text="Photo"
+                                                Icon="Camera"/>
+                                </a>
+
+                                <a href="/settings">
+                                        <Button Type="ButtonType.Ghost"
+                                                Icon="Settings"/>
+                                </a>
+
+                                <Avatar Name="Musa Ahmed"
+                                        Size="AvatarSize.Regular"
+                                        Id="userPopover"
                                         OnClick="ViewModel.ToggleUserPopover"/>
-                                <Popover Show="ViewModel.ShowUserPopover" ParentId="userPopover"
+
+                                <Popover Show="ViewModel.ShowUserPopover"
+                                         ParentId="userPopover"
                                          Class="mt-[8vh] ml-[85vw]">
                                         <Card>
                                                 <CardHeader>
                                                         <h4 class="large">User Settings</h4>
-                                                        <p class="muted">Welcome @ViewModel.UsersName! Configure quick user options from here</p>
+                                                        <p class="muted">
+                                                                Welcome @ViewModel.UsersName! Configure quick user
+                                                                options from here
+                                                        </p>
                                                 </CardHeader>
                                                 <CardContent>
                                                         <div class="pb-4">
-                                                                <Button Type="ButtonType.Primary" Text="Log out"
+                                                                <Button Type="ButtonType.Primary"
+                                                                        Text="Log out"
                                                                         OnClick="@ViewModel.LogoutAsync"/>
                                                         </div>
                                                 </CardContent>
                                         </Card>
                                 </Popover>
+
                         </div>
                 </Authorized>
         </AuthorizeView>

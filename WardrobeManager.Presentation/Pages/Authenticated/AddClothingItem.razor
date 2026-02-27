@@ -1,6 +1,52 @@
 ﻿@page "/add"
 @using WardrobeManager.Presentation.Components.Clothing
-
+@using WardrobeManager.Presentation.Components.FormItems
+@using WardrobeManager.Shared.StaticResources
 @namespace WardrobeManager.Presentation.Pages.Authenticated
+@inherits MvvmComponentBase<AddClothingItemViewModel>
 
-<h1 class="text-4xl">Add Clothing Item!</h1>
+<div class="max-w-[50rem] w-full mx-auto flex flex-col gap-5 items-center">
+    <h1 class="heading-text">Add a clothing item</h1>
+    <div class="flex gap-10">
+        <EditForm class="flex flex-col gap-4 w-full max-w-100 mx-auto"
+                  Model="@ViewModel.NewNewClothingItem">
+            <Label Text="Name" Info="Choose a descriptive name for this item"/>
+            <Input TItem="string"
+                   Value="@ViewModel.NewNewClothingItem.Name"
+                   ValueChanged="@((newValue) => ViewModel.NewNewClothingItem.Name = newValue ?? "")"
+                   Placeholder="Familiar name for clothing item"
+            />
+
+            <Label Text="Category" Info="Why type of clothing is this?"/>
+            <Select TItem="ClothingCategory"
+                    Items="@ViewModel.ClothingCategories"
+                    Display="x => MiscMethods.GetNameWithSpacesAndEmoji(x)"
+                    SelectedItem="@ViewModel.NewNewClothingItem.Category"
+                    OnItemSelect="@((val) => ViewModel.NewNewClothingItem.Category = val)"
+                    Width="25rem"
+            />
+
+            <div class="flex flex-col gap-2 w-full">
+                <Label Text="Upload image" Info="Choose an image you think best represents this item"/>
+                <Button Type="ButtonType.Secondary" Width="100%">
+                    <InputFile accept="image/*" capture OnChange="@ViewModel.UploadImage" class=""/>
+                </Button>
+            </div>
+
+            <Button Type="ButtonType.Primary" Text="Create New Item" OnClick="@ViewModel.SubmitAsync"
+                    Class="self-center mt-6"/>
+        </EditForm>
+
+        @if (!string.IsNullOrEmpty(ViewModel.NewNewClothingItem.ImageBase64))
+        {
+            <div class="flex flex-col items-center h-full justify-around">
+                <h3 class="subheading-text">Uploaded Image</h3>
+                @{
+                    string src = $"data:image/png;base64, {ViewModel.NewNewClothingItem.ImageBase64}";
+                    <img src="@src" class="w-5/6 object-contain rounded-xl"/>
+                }
+            </div>
+        }
+
+    </div>
+</div>

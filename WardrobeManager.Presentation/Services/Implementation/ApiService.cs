@@ -3,6 +3,7 @@
 using System.Net.Http.Json;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
 #endregion
@@ -13,12 +14,34 @@ public class ApiService : IAsyncDisposable, IApiService
 {
     private readonly string _apiEndpoint;
     private readonly HttpClient _httpClient;
+    private readonly INotificationService _notificationService;
 
     public ApiService(string apiEndpoint, IHttpClientFactory factory)
     {
         _apiEndpoint = apiEndpoint;
         _httpClient = factory.CreateClient("Auth");
     }
+
+    #region Clothing
+
+    public async Task<List<ClothingItemDTO>> GetAllClothingItems()
+    {
+        return await _httpClient.GetFromJsonAsync<List<ClothingItemDTO>>("/clothing") ?? [];
+    }
+
+    public async Task AddNewClothingItem(NewClothingItemDTO newNewClothingItem)
+    {
+        await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
+    }
+
+    public async Task RemoveClothingItem(int itemId)
+    {
+        await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
+    }
+
+    #endregion
+
+    #region Misc
 
     public async Task<bool> CheckApiConnection()
     {
@@ -39,6 +62,10 @@ public class ApiService : IAsyncDisposable, IApiService
         HttpResponseMessage con = await _httpClient.PostAsJsonAsync("/add-log", log);
         return con;
     }
+
+    #endregion
+
+    #region Onboarding
 
     public async Task<bool> DoesAdminUserExist()
     {
@@ -63,6 +90,8 @@ public class ApiService : IAsyncDisposable, IApiService
 
         return (res.IsSuccessStatusCode, content);
     }
+
+    #endregion
 
     public async ValueTask DisposeAsync()
     {

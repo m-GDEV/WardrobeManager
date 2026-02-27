@@ -10,4 +10,5 @@ public static class ProjectConstants
     public const string ProfileImage = "https://upload.internal.connectwithmusa.com/file/eel-falcon-pig";
     public const string DefaultItemImage = "/img/defaultItem.webp";
     public const string HomeBackgroundImage = "/img/home-background.webp";
+    public const int MaxImageSizeInMBFallback = 5;
 }

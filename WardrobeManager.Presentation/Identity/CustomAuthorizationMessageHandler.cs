@@ -2,6 +2,8 @@
 
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.Enums;
 
 #endregion
 

@@ -2,6 +2,7 @@
 
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
@@ -79,7 +80,7 @@ public static class MiscMethods
         return $"{withSpaces}";
     }
     
-    public static bool IsValidBase64(string input)
+    public static bool IsValidBase64(string? input)
     {
         try
         {
@@ -95,5 +96,10 @@ public static class MiscMethods
             return false;
 
         }
+    }
+
+    public static ICollection<T> ConvertEnumToCollection<T>() where T : Enum
+    {
+        return Enum.GetValues(typeof(T)).Cast<T>().ToList();
     }
 }

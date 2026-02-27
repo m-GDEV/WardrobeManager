@@ -86,6 +86,8 @@ builder.Services.AddAutoMapper(cfg =>
     
     // Add your maps here directly
     cfg.CreateMap<Log, LogDTO>().ReverseMap();
+    cfg.CreateMap<NewClothingItemDTO, ClothingItem>();
+    cfg.CreateMap<ClothingItemDTO, ClothingItem>().ReverseMap();
 });
 
 // Entity Services

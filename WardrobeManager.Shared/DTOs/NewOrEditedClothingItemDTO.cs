@@ -4,7 +4,7 @@ using WardrobeManager.Shared.Enums;
 
 #endregion
 
-namespace WardrobeManager.Shared.Models;
+namespace WardrobeManager.Shared.DTOs;
 
 /// <summary> DTO that client sends to create new clothing item </summary>
 public class NewOrEditedClothingItemDTO
