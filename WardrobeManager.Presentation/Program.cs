@@ -9,6 +9,7 @@ using WardrobeManager.Presentation;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -46,6 +47,7 @@ builder.Services.AddHttpClient("Auth", opt =>
 builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<IMiscMethods, MiscMethods>();
 
 // Libraries
 builder.Services.AddSysinfocus();

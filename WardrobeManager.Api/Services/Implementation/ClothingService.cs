@@ -21,7 +21,9 @@ public class ClothingService(
     IClothingRepository clothingRepository,
     IMapper mapper,
     IFileService fileService,
-    ILogger<ClothingService> logger)
+    ILogger<ClothingService> logger,
+    IMiscMethods miscMethods
+)
     : IClothingService
 {
     // ---- Methods for multiple clothing items ---
@@ -38,15 +40,15 @@ public class ClothingService(
         return mapper.Map<ClothingItemDTO>(res);
     }
 
-    public async Task AddNewClothingItem(string userId, NewClothingItemDTO newNewClothingItem)
+    public async Task AddNewClothingItem(string userId, NewClothingItemDTO newClothingItem)
     {
-        var res = mapper.Map<ClothingItem>(newNewClothingItem);
+        var res = mapper.Map<ClothingItem>(newClothingItem);
         Guid? newItemGuid = null;
-        if (MiscMethods.IsValidBase64(newNewClothingItem.ImageBase64))
+        if (miscMethods.IsValidBase64(newClothingItem.ImageBase64))
         {
             newItemGuid = Guid.NewGuid();
             // decode and save file to place on disk with guid as name
-            await fileService.SaveImage(newItemGuid, newNewClothingItem.ImageBase64!);
+            await fileService.SaveImage(newItemGuid, newClothingItem.ImageBase64!);
         }
 
         res.UserId = userId;

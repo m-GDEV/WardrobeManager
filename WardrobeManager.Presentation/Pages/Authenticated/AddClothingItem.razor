@@ -20,7 +20,7 @@
             <Label Text="Category" Info="What type of clothing is this?"/>
             <Select TItem="ClothingCategory"
                     Items="@ViewModel.ClothingCategories"
-                    Display="x => MiscMethods.GetNameWithSpacesAndEmoji(x)"
+                    Display="x => ViewModel.GetNameWithSpacesAndEmoji(x)"
                     SelectedItem="@ViewModel.NewClothingItem.Category"
                     OnItemSelect="@((val) => ViewModel.NewClothingItem.Category = val)"
                     Width="100%"/>
@@ -28,7 +28,7 @@
             <Label Text="Size"/>
             <Select TItem="ClothingSize"
                     Items="@ViewModel.ClothingSizes"
-                    Display="x => MiscMethods.GetNameWithSpacesFromEnum(x)"
+                    Display="x => ViewModel.GetNameWithSpacesAndEmoji(x)"
                     SelectedItem="@ViewModel.NewClothingItem.Size"
                     OnItemSelect="@((val) => ViewModel.NewClothingItem.Size = val)"
                     Width="100%"/>

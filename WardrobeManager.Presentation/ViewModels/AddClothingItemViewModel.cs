@@ -15,6 +15,7 @@ public partial class AddClothingItemViewModel(
     IMvvmNavigationManager navManager,
     IApiService apiService,
     INotificationService notificationService,
+    IMiscMethods miscMethods,
     IConfiguration configuration
 )
     : ViewModelBase
@@ -22,10 +23,13 @@ public partial class AddClothingItemViewModel(
     // Public Properties
     [ObservableProperty] private NewClothingItemDTO _newClothingItem = new NewClothingItemDTO();
 
+    public string GetNameWithSpacesAndEmoji<T>(T value) where T : Enum
+        => miscMethods.GetNameWithSpacesFromEnum(value);
+    
     public ICollection<ClothingCategory> ClothingCategories { get; set; } =
-        MiscMethods.ConvertEnumToCollection<ClothingCategory>();
+        miscMethods.ConvertEnumToCollection<ClothingCategory>();
 
-    public ICollection<ClothingSize> ClothingSizes { get; set; } = MiscMethods.ConvertEnumToCollection<ClothingSize>();
+    public ICollection<ClothingSize> ClothingSizes { get; set; } = miscMethods.ConvertEnumToCollection<ClothingSize>();
 
     public async Task SubmitAsync()
     {

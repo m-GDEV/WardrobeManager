@@ -13,6 +13,7 @@ using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -93,6 +94,7 @@ builder.Services.AddAutoMapper(cfg =>
 // Entity Services
 builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
 builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
+builder.Services.AddScoped<IMiscMethods, MiscMethods>();
 
 // add db context
 builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>
