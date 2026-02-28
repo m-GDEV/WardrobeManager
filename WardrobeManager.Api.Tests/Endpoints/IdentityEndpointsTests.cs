@@ -106,10 +106,10 @@ public class IdentityEndpointsTests
         // Arrange
         var userStore = new Mock<IUserStore<User>>();
         var mockSignInManager = new Mock<SignInManager<User>>(
-            new Mock<UserManager<User>>(userStore.Object, null, null, null, null, null, null, null, null).Object,
+            new Mock<UserManager<User>>(userStore.Object, null!, null!, null!, null!, null!, null!, null!, null!).Object,
             new Mock<IHttpContextAccessor>().Object,
             new Mock<IUserClaimsPrincipalFactory<User>>().Object,
-            null, null, null, null);
+            null!, null!, null!, null!);
 
         // Act
         var result = await IdentityEndpoints.LogoutAsync(mockSignInManager.Object, new object());
@@ -125,10 +125,10 @@ public class IdentityEndpointsTests
         // Arrange
         var userStore = new Mock<IUserStore<User>>();
         var mockSignInManager = new Mock<SignInManager<User>>(
-            new Mock<UserManager<User>>(userStore.Object, null, null, null, null, null, null, null, null).Object,
+            new Mock<UserManager<User>>(userStore.Object, null!, null!, null!, null!, null!, null!, null!, null!).Object,
             new Mock<IHttpContextAccessor>().Object,
             new Mock<IUserClaimsPrincipalFactory<User>>().Object,
-            null, null, null, null);
+            null!, null!, null!, null!);
 
         // Act
         var result = await IdentityEndpoints.LogoutAsync(mockSignInManager.Object, null!);

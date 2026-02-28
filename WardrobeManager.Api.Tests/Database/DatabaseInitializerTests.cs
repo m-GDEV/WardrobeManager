@@ -30,7 +30,7 @@ public class DatabaseInitializerTests
         // Setup mock RoleManager
         var roleStore = new Mock<IRoleStore<IdentityRole>>();
         _mockRoleManager = new Mock<RoleManager<IdentityRole>>(
-            roleStore.Object, null, null, null, null);
+            roleStore.Object, null!, null!, null!, null!);
     }
 
     [TearDown]
