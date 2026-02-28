@@ -16,8 +16,6 @@ namespace WardrobeManager.Presentation.Tests.ViewModels;
 
 public class LoginViewModelTests
 {
-    private Mock<IAccountManagement> _mockAccountManagement;
-    private Mock<INotificationService> _mockNotificationService;
     private Mock<IMvvmNavigationManager> _mockNavManager;
     private Mock<IIdentityService> _mockIdentityService;
     private LoginViewModel _viewModel;
@@ -25,14 +23,10 @@ public class LoginViewModelTests
     [SetUp]
     public void Setup()
     {
-        _mockAccountManagement = new Mock<IAccountManagement>();
-        _mockNotificationService = new Mock<INotificationService>();
         _mockNavManager = new Mock<IMvvmNavigationManager>();
         _mockIdentityService = new Mock<IIdentityService>();
 
         _viewModel = new LoginViewModel(
-            _mockAccountManagement.Object,
-            _mockNotificationService.Object,
             _mockNavManager.Object,
             _mockIdentityService.Object
         );

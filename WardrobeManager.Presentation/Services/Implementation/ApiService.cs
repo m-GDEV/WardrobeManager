@@ -14,7 +14,6 @@ public class ApiService : IAsyncDisposable, IApiService
 {
     private readonly string _apiEndpoint;
     private readonly HttpClient _httpClient;
-    private readonly INotificationService _notificationService;
 
     public ApiService(string apiEndpoint, IHttpClientFactory factory)
     {
@@ -31,12 +30,14 @@ public class ApiService : IAsyncDisposable, IApiService
 
     public async Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem)
     {
-        await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
+        var response = await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
+        response.EnsureSuccessStatusCode();
     }
 
     public async Task DeleteClothingItemAsync(int itemId)
     {
-        await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
+        var response = await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
+        response.EnsureSuccessStatusCode();
     }
 
     #endregion

@@ -17,3 +17,67 @@
     border-color: var(--color-gray-200, currentcolor);
   }
 }
+
+@theme {
+    --font-serif: "DM Serif Display", serif;
+    --font-sans: "DM Sans", sans-serif;
+
+    --font-size-title: 6rem;
+    --font-size-heading: 4rem;
+    --font-size-subheading: 2.25rem;
+    --font-size-subtitle: 1.5rem;
+    --font-size-body: 1rem;
+    --font-size-small: 0.7rem;
+}
+
+
+@utility title-text {
+    font-family: theme(--font-serif);
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-title);
+}
+
+@utility title-text-italic {
+    font-family: theme(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    font-size: theme(--font-size-title);
+}
+
+@utility heading-text {
+    font-family: theme(--font-serif);
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-heading);
+}
+
+@utility subheading-text {
+    font-family: theme(--font-serif);
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-subheading);
+}
+
+@utility subtitle-text {
+    font-family: theme(--font-sans);
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-subtitle);
+}
+
+@utility body-text {
+    font-family: theme(--font-sans);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-body);
+}
+
+@utility small-text {
+    font-family: theme(--font-sans);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-size: theme(--font-size-small);
+}

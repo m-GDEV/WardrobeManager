@@ -12,7 +12,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class AddClothingItemViewModel(
-    IMvvmNavigationManager navManager,
     IApiService apiService,
     INotificationService notificationService,
     IMiscMethods miscMethods,
@@ -21,7 +20,7 @@ public partial class AddClothingItemViewModel(
     : ViewModelBase
 {
     // Public Properties
-    [ObservableProperty] private NewClothingItemDTO _newClothingItem = new NewClothingItemDTO();
+    [ObservableProperty] private NewClothingItemDTO _newClothingItem = new();
 
     public string GetNameWithSpacesAndEmoji<T>(T value) where T : Enum
         => miscMethods.GetNameWithSpacesFromEnum(value);
@@ -55,15 +54,9 @@ public partial class AddClothingItemViewModel(
 
             // 5MB default max file size
             var maxFileSize = configuration["WM_MAX_IMAGE_UPLOAD_SIZE_IN_MB"];
-            int maxFileSizeNum;
-            if (maxFileSize == null)
-            {
-                maxFileSizeNum = ProjectConstants.MaxImageSizeInMBFallback;
-            }
-            else
-            {
-                maxFileSizeNum = Convert.ToInt32(maxFileSize);
-            }
+            int maxFileSizeNum = maxFileSize == null
+                ? ProjectConstants.MaxImageSizeInMBFallback
+                : Convert.ToInt32(maxFileSize);
 
             maxFileSizeNum *= 1024 * 1024; // int to megabytes
 

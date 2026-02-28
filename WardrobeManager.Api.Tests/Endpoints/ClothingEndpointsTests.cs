@@ -41,7 +41,7 @@ public class ClothingEndpointsTests
             .ReturnsAsync(clothingItemDtos);
 
         // Act
-        var result = await ClothingEndpoints.GetClothing(httpContext, _mockClothingService.Object);
+        var result = await ClothingEndpoints.GetClothingAsync(httpContext, _mockClothingService.Object);
 
         // Assert
         var okResult = result as Ok<List<ClothingItemDTO>?>;
@@ -65,7 +65,7 @@ public class ClothingEndpointsTests
             .ReturnsAsync(new List<ClothingItemDTO>());
 
         // Act
-        var result = await ClothingEndpoints.GetClothing(httpContext, _mockClothingService.Object);
+        var result = await ClothingEndpoints.GetClothingAsync(httpContext, _mockClothingService.Object);
 
         // Assert
         var okResult = result as Ok<List<ClothingItemDTO>?>;
@@ -95,7 +95,7 @@ public class ClothingEndpointsTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await ClothingEndpoints.AddNewClothingItem(newItem, httpContext, _mockClothingService.Object, null!);
+        var result = await ClothingEndpoints.AddNewClothingItemAsync(newItem, httpContext, _mockClothingService.Object, null!);
 
         // Assert
         result.Should().BeOfType<Ok>();
@@ -112,7 +112,7 @@ public class ClothingEndpointsTests
         httpContext.Items["user"] = user;
 
         // Act
-        var result = await ClothingEndpoints.AddNewClothingItem(newItem, httpContext, _mockClothingService.Object, null!);
+        var result = await ClothingEndpoints.AddNewClothingItemAsync(newItem, httpContext, _mockClothingService.Object, null!);
 
         // Assert
         result.Should().BeOfType<BadRequest<string>>();
@@ -137,7 +137,7 @@ public class ClothingEndpointsTests
             .Returns(Task.CompletedTask);
 
         // Act
-        var result = await ClothingEndpoints.DeleteClothingItem(itemId, httpContext, _mockClothingService.Object, null!);
+        var result = await ClothingEndpoints.DeleteClothingItemAsync(itemId, httpContext, _mockClothingService.Object, null!);
 
         // Assert
         _mockClothingService.Verify(s => s.DeleteClothingItem(user.Id, itemId), Times.Once);

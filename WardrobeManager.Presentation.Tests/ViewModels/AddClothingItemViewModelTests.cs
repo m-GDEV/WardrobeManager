@@ -13,7 +13,6 @@ namespace WardrobeManager.Presentation.Tests.ViewModels;
 
 public class AddClothingItemViewModelTests
 {
-    private Mock<IMvvmNavigationManager> _mockNavManager;
     private Mock<IApiService> _mockApiService;
     private Mock<INotificationService> _mockNotificationService;
     private Mock<IMiscMethods> _mockMiscMethods;
@@ -23,7 +22,6 @@ public class AddClothingItemViewModelTests
     [SetUp]
     public void Setup()
     {
-        _mockNavManager = new Mock<IMvvmNavigationManager>();
         _mockApiService = new Mock<IApiService>();
         _mockNotificationService = new Mock<INotificationService>();
         _mockMiscMethods = new Mock<IMiscMethods>();
@@ -37,7 +35,6 @@ public class AddClothingItemViewModelTests
             .Returns(new List<ClothingSize> { ClothingSize.Small, ClothingSize.Medium });
 
         _viewModel = new AddClothingItemViewModel(
-            _mockNavManager.Object,
             _mockApiService.Object,
             _mockNotificationService.Object,
             _mockMiscMethods.Object,

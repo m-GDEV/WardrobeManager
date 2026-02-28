@@ -12,7 +12,6 @@ namespace WardrobeManager.Presentation.Tests.ViewModels;
 
 public class NavBarViewModelTests
 {
-    private Mock<INotificationService> _mockNotificationService;
     private Mock<IMvvmNavigationManager> _mockNavManager;
     private Mock<IIdentityService> _mockIdentityService;
     private Mock<IApiService> _mockApiService;
@@ -21,13 +20,11 @@ public class NavBarViewModelTests
     [SetUp]
     public void Setup()
     {
-        _mockNotificationService = new Mock<INotificationService>();
         _mockNavManager = new Mock<IMvvmNavigationManager>();
         _mockIdentityService = new Mock<IIdentityService>();
         _mockApiService = new Mock<IApiService>();
 
         _viewModel = new NavBarViewModel(
-            _mockNotificationService.Object,
             _mockNavManager.Object,
             _mockIdentityService.Object,
             _mockApiService.Object

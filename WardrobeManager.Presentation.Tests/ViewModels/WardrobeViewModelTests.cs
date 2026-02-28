@@ -11,7 +11,6 @@ namespace WardrobeManager.Presentation.Tests.ViewModels;
 
 public class WardrobeViewModelTests
 {
-    private Mock<IMvvmNavigationManager> _mockNavManager;
     private Mock<IApiService> _mockApiService;
     private Mock<INotificationService> _mockNotificationService;
     private WardrobeViewModel _viewModel;
@@ -19,12 +18,10 @@ public class WardrobeViewModelTests
     [SetUp]
     public void Setup()
     {
-        _mockNavManager = new Mock<IMvvmNavigationManager>();
         _mockApiService = new Mock<IApiService>();
         _mockNotificationService = new Mock<INotificationService>();
 
         _viewModel = new WardrobeViewModel(
-            _mockNavManager.Object,
             _mockApiService.Object,
             _mockNotificationService.Object
         );

@@ -6,9 +6,9 @@
 <div class="toast toast-top toast-end">
     @foreach (var notification in _notificationService.Notifications)
     {
-        var cssClass = GetNotificationCssClass(notification.Type);
+        var cssClass = GetNotificationButtonType(notification.Type);
 
-        <Toast Show="@true">
+        <Toast Show="@true" >
             @notification.Message 
         </Toast>
     }
@@ -19,7 +19,7 @@
     protected override void OnInitialized()
     {
         _notificationService.OnChange += StateHasChanged;
-        // this runs the callback method suppleid every 5 seconds. it does not wait for the last 
+        // this runs the callback method supplied every 5 seconds. it does not wait for the last 
         // call to the method to finish. this can cause race conditions. it should be fine though
         var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
@@ -50,7 +50,7 @@
         _notificationService.OnChange -= StateHasChanged;
     }
 
-    public ButtonType GetNotificationCssClass(NotificationType type)
+    public ButtonType GetNotificationButtonType(NotificationType type)
     {
         return type switch
         {

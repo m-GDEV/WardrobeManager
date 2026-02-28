@@ -39,7 +39,7 @@ public class FileService(
 
         if (imageBytes.Length > maxFileSizeNum)
         {
-            throw new Exception(
+            throw new ArgumentOutOfRangeException(
                 $"File size too large! Received file size: {imageBytes.Length / 1024} MB. Max file size: {maxFileSizeNum / 1024} MB");
         }
 

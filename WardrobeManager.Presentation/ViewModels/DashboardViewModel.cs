@@ -14,11 +14,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class DashboardViewModel(
-    INotificationService notificationService,
-    NavigationManager navigationManager,
-    IMvvmNavigationManager navManager,
-    
-    IIdentityService identityService
     )
     : ViewModelBase
 {
