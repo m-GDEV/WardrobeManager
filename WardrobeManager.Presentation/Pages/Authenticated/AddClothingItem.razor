@@ -1,6 +1,59 @@
 ﻿@page "/add"
 @using WardrobeManager.Presentation.Components.Clothing
-
+@using WardrobeManager.Presentation.Components.FormItems
+@using WardrobeManager.Shared.StaticResources
 @namespace WardrobeManager.Presentation.Pages.Authenticated
+@attribute [Authorize]
+@inherits MvvmComponentBase<AddClothingItemViewModel>
 
-<h1 class="text-4xl">Add Clothing Item!</h1>
+<div class="max-w-75 sm:max-w-200 w-full mx-auto flex flex-col gap-5 items-center pb-10">
+    <h1 class="subheading-text sm:heading-text text-center">Add a clothing item</h1>
+    <div class="flex gap-10 w-full">
+        <EditForm class="flex flex-col gap-4 w-full sm:max-w-100 mx-auto"
+                  Model="@ViewModel.NewClothingItem">
+            <Label Text="Name" Info="Choose a descriptive name for this item"/>
+            <Input TItem="string"
+                   Value="@ViewModel.NewClothingItem.Name"
+                   ValueChanged="@((newValue) => ViewModel.NewClothingItem.Name = newValue ?? "")"
+                   Placeholder="Familiar name for clothing item"/>
+
+            <Label Text="Category" Info="What type of clothing is this?"/>
+            <Select TItem="ClothingCategory"
+                    Items="@ViewModel.ClothingCategories"
+                    Display="x => ViewModel.GetNameWithSpacesAndEmoji(x)"
+                    SelectedItem="@ViewModel.NewClothingItem.Category"
+                    OnItemSelect="@((val) => ViewModel.NewClothingItem.Category = val)"
+                    Width="100%"/>
+
+            <Label Text="Size"/>
+            <Select TItem="ClothingSize"
+                    Items="@ViewModel.ClothingSizes"
+                    Display="x => ViewModel.GetNameWithSpacesAndEmoji(x)"
+                    SelectedItem="@ViewModel.NewClothingItem.Size"
+                    OnItemSelect="@((val) => ViewModel.NewClothingItem.Size = val)"
+                    Width="100%"/>
+
+            <div class="flex flex-col gap-2 w-full">
+                <Label Text="Upload image" Info="Choose an image you think best represents this item"/>
+                <Button Type="ButtonType.Secondary" Width="100%">
+                    <InputFile accept="image/*" capture OnChange="@ViewModel.UploadImage" class=""/>
+                </Button>
+            </div>
+
+            <Button Type="ButtonType.Primary" Text="Create New Item" OnClick="@ViewModel.SubmitAsync"
+                    Class="self-center mt-6"/>
+        </EditForm>
+
+        @if (!string.IsNullOrEmpty(ViewModel.NewClothingItem.ImageBase64))
+        {
+            <div class="flex flex-col items-center h-full justify-around">
+                <h3 class="subheading-text">Uploaded Image</h3>
+                @{
+                    string src = $"data:image/png;base64, {ViewModel.NewClothingItem.ImageBase64}";
+                    <img src="@src" class="w-5/6 object-contain rounded-xl"/>
+                }
+            </div>
+        }
+
+    </div>
+</div>

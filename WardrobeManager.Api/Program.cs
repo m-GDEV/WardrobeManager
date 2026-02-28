@@ -13,6 +13,7 @@ using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -86,11 +87,14 @@ builder.Services.AddAutoMapper(cfg =>
     
     // Add your maps here directly
     cfg.CreateMap<Log, LogDTO>().ReverseMap();
+    cfg.CreateMap<NewClothingItemDTO, ClothingItem>();
+    cfg.CreateMap<ClothingItemDTO, ClothingItem>().ReverseMap();
 });
 
 // Entity Services
 builder.Services.AddScoped<IGenericRepository<Log>, GenericRepository<Log>>();
-builder.Services.AddScoped<ClothingRepository>();
+builder.Services.AddScoped<IClothingRepository, ClothingRepository>();
+builder.Services.AddScoped<IMiscMethods, MiscMethods>();
 
 // add db context
 builder.Services.AddDbContext<DatabaseContext>((serviceProvider, options) =>

@@ -9,11 +9,9 @@ namespace WardrobeManager.Api.Database.Entities;
 
 public class ClothingItem : IDatabaseEntity
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public ClothingItem()
     {
     } // ONLY FOR DESERIALIZER, DO NOT USE THIS. THIS SHIT BETTER HAVE NO REFERENCES
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
     // deserializer needs a way to create the object without any fields so it can assign them if they exist
 
@@ -50,6 +48,7 @@ public class ClothingItem : IDatabaseEntity
     public string Name { get; set; }
     public ClothingCategory Category { get; set; } = ClothingCategory.None;
     public Season Season { get; set; } = Season.None;
+    public ClothingSize Size { get; set; } = ClothingSize.NotSpecified;
 
     public WearLocation WearLocation { get; set; } = WearLocation.None;
 

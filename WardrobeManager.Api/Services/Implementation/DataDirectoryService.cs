@@ -44,4 +44,10 @@ public class DataDirectoryService : IDataDirectoryService
         Directory.CreateDirectory(path);
         return path;
     }
+    public string GetDeletedUploadsDirectory()
+    {
+        var path = Path.Combine(GetImagesDirectory(), "deleted");
+        Directory.CreateDirectory(path);
+        return path;
+    }
 }

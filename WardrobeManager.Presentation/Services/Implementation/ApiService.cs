@@ -3,6 +3,7 @@
 using System.Net.Http.Json;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
 #endregion
@@ -19,6 +20,29 @@ public class ApiService : IAsyncDisposable, IApiService
         _apiEndpoint = apiEndpoint;
         _httpClient = factory.CreateClient("Auth");
     }
+
+    #region Clothing
+
+    public async Task<List<ClothingItemDTO>> GetAllClothingItemsAsync()
+    {
+        return await _httpClient.GetFromJsonAsync<List<ClothingItemDTO>>("/clothing") ?? [];
+    }
+
+    public async Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem)
+    {
+        var response = await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
+        response.EnsureSuccessStatusCode();
+    }
+
+    public async Task DeleteClothingItemAsync(int itemId)
+    {
+        var response = await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
+        response.EnsureSuccessStatusCode();
+    }
+
+    #endregion
+
+    #region Misc
 
     public async Task<bool> CheckApiConnection()
     {
@@ -39,6 +63,10 @@ public class ApiService : IAsyncDisposable, IApiService
         HttpResponseMessage con = await _httpClient.PostAsJsonAsync("/add-log", log);
         return con;
     }
+
+    #endregion
+
+    #region Onboarding
 
     public async Task<bool> DoesAdminUserExist()
     {
@@ -63,6 +91,8 @@ public class ApiService : IAsyncDisposable, IApiService
 
         return (res.IsSuccessStatusCode, content);
     }
+
+    #endregion
 
     public async ValueTask DisposeAsync()
     {

@@ -1,4 +1,4 @@
-namespace WardrobeManager.Shared.Models;
+namespace WardrobeManager.Shared.DTOs;
 
 /// <summary> DTO that client sends to edit their user details</summary>
 public class EditedUserDTO

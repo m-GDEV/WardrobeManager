@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 #endregion
 
-namespace WardrobeManager.Presentation;
+namespace WardrobeManager.Presentation.Identity;
 
 public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
 {

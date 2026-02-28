@@ -31,11 +31,6 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
     private readonly HttpClient _httpClient;
 
     /// <summary>
-    /// Authentication state.
-    /// </summary>
-    private bool _authenticated = false;
-
-    /// <summary>
     /// Default principal for anonymous (not authenticated) users.
     /// </summary>
     private readonly ClaimsPrincipal Unauthenticated =
@@ -166,8 +161,6 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
     /// <returns>The authentication state asynchronous request.</returns>
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
     {
-        _authenticated = false;
-
         // default to not authenticated
         var user = Unauthenticated;
 
@@ -226,7 +219,6 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
                 // set the principal
                 var id = new ClaimsIdentity(claims, nameof(CookieAuthenticationStateProvider));
                 user = new ClaimsPrincipal(id);
-                _authenticated = true;
             }
         }
         catch

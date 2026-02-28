@@ -8,7 +8,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class NavBarViewModel(
-    INotificationService notificationService,
     IMvvmNavigationManager navManager,
     IIdentityService identityService,
     IApiService apiService
@@ -17,7 +16,7 @@ public partial class NavBarViewModel(
 {
     [ObservableProperty] private bool _showUserPopover;
     [ObservableProperty] private bool _canConnectToBackend;
-    [ObservableProperty] private string _usersName;
+    [ObservableProperty] private string _usersName = string.Empty;
 
     public void ToggleUserPopover() => ShowUserPopover = !ShowUserPopover;
 

@@ -14,11 +14,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class HomeViewModel(
-    INotificationService notificationService,
-    NavigationManager navigationManager,
-    IMvvmNavigationManager navManager,
-    
-    IIdentityService identityService
     )
     : ViewModelBase
 {

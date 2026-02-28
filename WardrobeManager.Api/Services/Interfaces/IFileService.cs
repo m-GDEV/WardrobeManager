@@ -7,5 +7,6 @@ public interface IFileService
     /// <returns>byte array of image </returns>
     Task<byte[]> GetImage(string guid);
     string ParseGuid(Guid guid);
-    Task SaveImage(Guid? guid, string ImageBase64);
+    Task SaveImage(Guid? guid, string imageBase64);
+    Task DeleteImage(Guid givenGuid);
 }
