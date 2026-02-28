@@ -14,5 +14,5 @@ public interface IClothingService
     
     Task<ClothingItemDTO?> GetClothingItemAsync(string userId, int itemId);
     Task AddNewClothingItem(string userId, NewClothingItemDTO newNewClothingItem);
-    Task RemoveClothingItem(string userId, int itemId);
+    Task DeleteClothingItem(string userId, int itemId);
 }

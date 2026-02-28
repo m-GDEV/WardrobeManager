@@ -11,9 +11,9 @@ public interface IApiService
     ValueTask DisposeAsync();
     
     // Clothing
-    Task<List<ClothingItemDTO>> GetAllClothingItems();
-    Task AddNewClothingItem(NewClothingItemDTO newNewClothingItem);
-    Task RemoveClothingItem( int itemId);
+    Task<List<ClothingItemDTO>> GetAllClothingItemsAsync();
+    Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem);
+    Task DeleteClothingItemAsync( int itemId);
     
     // Misc 
     Task<bool> CheckApiConnection();

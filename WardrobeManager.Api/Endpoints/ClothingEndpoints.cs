@@ -23,7 +23,7 @@ public static class ClothingEndpoints
 
         group.MapGet("", GetClothing);
         group.MapPost("/add", AddNewClothingItem);
-        group.MapPost("/delete", RemoveClothingItem);
+        group.MapPost("/delete", DeleteClothingItem);
         // maybe should get a GET request, idc rn
     }
 
@@ -60,7 +60,7 @@ public static class ClothingEndpoints
         return Results.Ok();
     }
     
-    public static async Task<IResult> RemoveClothingItem(
+    public static async Task<IResult> DeleteClothingItem(
         [FromBody] int itemId,
         HttpContext context, IClothingService clothingService, IMapper mapper
     )
@@ -68,7 +68,7 @@ public static class ClothingEndpoints
         User? user = context.Items["user"] as User;
         Debug.Assert(user != null, "Cannot get user");
     
-        await clothingService.RemoveClothingItem(user.Id ,itemId);
+        await clothingService.DeleteClothingItem(user.Id ,itemId);
 
         return Results.Ok();
     }

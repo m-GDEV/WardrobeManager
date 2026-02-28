@@ -57,7 +57,7 @@ public class ClothingService(
         await clothingRepository.SaveAsync();
     }
 
-    public async Task RemoveClothingItem(string userId, int itemId)
+    public async Task DeleteClothingItem(string userId, int itemId)
     {
         var res = await clothingRepository.GetAsync(userId, itemId);
         if (res != null)

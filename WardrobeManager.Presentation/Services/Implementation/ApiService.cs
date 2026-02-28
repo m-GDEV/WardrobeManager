@@ -24,17 +24,17 @@ public class ApiService : IAsyncDisposable, IApiService
 
     #region Clothing
 
-    public async Task<List<ClothingItemDTO>> GetAllClothingItems()
+    public async Task<List<ClothingItemDTO>> GetAllClothingItemsAsync()
     {
         return await _httpClient.GetFromJsonAsync<List<ClothingItemDTO>>("/clothing") ?? [];
     }
 
-    public async Task AddNewClothingItem(NewClothingItemDTO newNewClothingItem)
+    public async Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem)
     {
         await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
     }
 
-    public async Task RemoveClothingItem(int itemId)
+    public async Task DeleteClothingItemAsync(int itemId)
     {
         await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
     }

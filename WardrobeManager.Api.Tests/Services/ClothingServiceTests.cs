@@ -213,7 +213,7 @@ public class ClothingServiceTests
             .Setup(r => r.GetAsync(clothingItem.UserId, clothingItem.Id))
             .ReturnsAsync(null as ClothingItem);
         // Act
-        await _serviceToTest.RemoveClothingItem(clothingItem.UserId, clothingItem.Id);
+        await _serviceToTest.DeleteClothingItem(clothingItem.UserId, clothingItem.Id);
         // Assert
         var latestLog = _fakeLogger.Collector.LatestRecord;
         latestLog.Should().NotBeNull();
@@ -230,7 +230,7 @@ public class ClothingServiceTests
             .Setup(r => r.GetAsync(DefaultUserId, DefaultItemId))
             .ReturnsAsync(clothingItem);
         // Act
-        await _serviceToTest.RemoveClothingItem(DefaultUserId, DefaultItemId);
+        await _serviceToTest.DeleteClothingItem(DefaultUserId, DefaultItemId);
         // Assert
         _mockRepo.Verify(x => x.Remove(clothingItem), Times.Once);
         _mockRepo.Verify(x => x.SaveAsync(), Times.Once);
@@ -247,7 +247,7 @@ public class ClothingServiceTests
             .Setup(r => r.GetAsync(DefaultUserId, DefaultItemId))
             .ReturnsAsync(clothingItem);
         // Act
-        await _serviceToTest.RemoveClothingItem(DefaultUserId, DefaultItemId);
+        await _serviceToTest.DeleteClothingItem(DefaultUserId, DefaultItemId);
         // Assert
         _mockRepo.Verify(x => x.Remove(clothingItem), Times.Once);
         _mockRepo.Verify(x => x.SaveAsync(), Times.Once);

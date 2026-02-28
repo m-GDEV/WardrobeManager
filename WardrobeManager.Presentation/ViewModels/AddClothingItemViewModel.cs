@@ -41,7 +41,7 @@ public partial class AddClothingItemViewModel(
             return;
         }
 
-        await apiService.AddNewClothingItem(NewClothingItem);
+        await apiService.AddNewClothingItemAsync(NewClothingItem);
         notificationService.AddNotification($"Clothing Item \"{NewClothingItem.Name}\" Added!",
             NotificationType.Success);
         NewClothingItem = new NewClothingItemDTO();

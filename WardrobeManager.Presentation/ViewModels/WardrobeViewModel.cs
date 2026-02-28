@@ -32,7 +32,7 @@ public partial class WardrobeViewModel(
 
     public async Task FetchItemAndUpdate()
     {
-        ClothingItems = await apiService.GetAllClothingItems();
+        ClothingItems = await apiService.GetAllClothingItemsAsync();
         // Reset dialogs states (in case items are removed, they wont exist in this anymore)
         ActionDialogStates = new Dictionary<int, ShowActionDialog>();
         foreach (var item in ClothingItems)
@@ -43,7 +43,7 @@ public partial class WardrobeViewModel(
 
     public async Task RemoveItem(int itemId)
     {
-        await apiService.RemoveClothingItem(itemId);
+        await apiService.DeleteClothingItemAsync(itemId);
         await FetchItemAndUpdate();
     }
 
