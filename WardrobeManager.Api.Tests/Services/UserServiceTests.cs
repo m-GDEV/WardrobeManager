@@ -20,11 +20,11 @@ public class UserServiceTests
     {
         var userStore = new Mock<IUserStore<User>>();
         _mockUserManager = new Mock<UserManager<User>>(
-            userStore.Object, null, null, null, null, null, null, null, null);
+            userStore.Object, null!, null!, null!, null!, null!, null!, null!, null!);
 
         var roleStore = new Mock<IRoleStore<IdentityRole>>();
         _mockRoleManager = new Mock<RoleManager<IdentityRole>>(
-            roleStore.Object, null, null, null, null);
+            roleStore.Object, null!, null!, null!, null!);
 
         _service = new UserService(_mockUserManager.Object, _mockRoleManager.Object);
     }
