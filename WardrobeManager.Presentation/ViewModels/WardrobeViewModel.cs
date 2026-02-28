@@ -48,39 +48,45 @@ public partial class WardrobeViewModel(
 
     public void UpdateActionDialogState(int itemId, ActionType actionType, bool value)
     {
-        if (ActionDialogStates.ContainsKey(itemId))
+        if (ActionDialogStates.TryGetValue(itemId, out ShowActionDialog? actionDialog))
         {
-            switch(actionType)
+            switch (actionType)
             {
-               case ActionType.Delete:
-                   ActionDialogStates[itemId].ShowDelete = value;
-                   break;
-               case ActionType.Edit:
-                   ActionDialogStates[itemId].ShowEdit = value;
-                   break;
-               default:
-                   notificationService.AddNotification("Action type not recognized!", NotificationType.Warning);
-                   break;
+                case ActionType.Delete:
+                    actionDialog.ShowDelete = value;
+                    break;
+                case ActionType.Edit:
+                    actionDialog.ShowDelete = value;
+                    break;
+                default:
+                    notificationService.AddNotification("Action type not recognized!", NotificationType.Warning);
+                    break;
             }
         }
         else
         {
-            notificationService.AddNotification("Cannot change dialog state for not existing item!", NotificationType.Error);
+            notificationService.AddNotification("Cannot change dialog state for not existing item!",
+                NotificationType.Error);
         }
     }
 
     public bool GetActionStateSafely(int itemId, ActionType actionType)
     {
-        if (ActionDialogStates.ContainsKey(itemId))
+        if (ActionDialogStates.TryGetValue(itemId, out ShowActionDialog? actionDialog))
         {
             switch (actionType)
             {
                 case ActionType.Delete:
-                    return ActionDialogStates[itemId].ShowDelete;
+                    return actionDialog.ShowDelete;
+
                 case ActionType.Edit:
-                    return ActionDialogStates[itemId].ShowEdit;
+                    return actionDialog.ShowEdit;
+                default:
+                    notificationService.AddNotification("Action type not recognized!", NotificationType.Warning);
+                    break;
             }
         }
+
         return false;
     }
 }

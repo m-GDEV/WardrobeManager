@@ -21,16 +21,16 @@ public static class ClothingEndpoints
     {
         var group = app.MapGroup("/clothing").RequireAuthorization();
 
-        group.MapGet("", GetClothing);
-        group.MapPost("/add", AddNewClothingItem);
-        group.MapPost("/delete", DeleteClothingItem);
+        group.MapGet("", GetClothingAsync);
+        group.MapPost("/add", AddNewClothingItemAsync);
+        group.MapPost("/delete", DeleteClothingItemAsync);
         // maybe should get a GET request, idc rn
     }
 
     // ---------------------
     // Get all clothing items
     // ---------------------
-    public static async Task<IResult> GetClothing(
+    public static async Task<IResult> GetClothingAsync(
         HttpContext context, IClothingService clothingService
     )
     {
@@ -42,7 +42,7 @@ public static class ClothingEndpoints
         return Results.Ok(clothes);
     }
 
-    public static async Task<IResult> AddNewClothingItem(
+    public static async Task<IResult> AddNewClothingItemAsync(
         [FromBody] NewClothingItemDTO newClothingItem,
         HttpContext context, IClothingService clothingService, IMapper mapper
     )
@@ -60,7 +60,7 @@ public static class ClothingEndpoints
         return Results.Ok();
     }
     
-    public static async Task<IResult> DeleteClothingItem(
+    public static async Task<IResult> DeleteClothingItemAsync(
         [FromBody] int itemId,
         HttpContext context, IClothingService clothingService, IMapper mapper
     )
