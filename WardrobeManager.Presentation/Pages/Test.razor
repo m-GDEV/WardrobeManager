@@ -4,93 +4,70 @@
 @page "/test"
 @using WardrobeManager.Shared.DTOs
 
-<Button Text="State Changed" Type="ButtonType.Outline" Class="border" OnClick="ff" />
+<div class="flex-col g1">
+    <h4>Basic Stepper</h4>
+    <Stepper Style="max-width:90%;margin:auto">
+        <StepperStep State="StepperState.Complete" Label="Process has been Initiated">1</StepperStep>
+        <StepperStep State="StepperState.Complete" Label="Data Collection underway">2</StepperStep>
+        <StepperStep State="StepperState.Failed" Label="Processing of collected data">3</StepperStep>
+        <StepperStep State="StepperState.Current" Label="Preparation of Reports">4</StepperStep>
+        <StepperStep State="StepperState.Initiated" Label="Delivery of Reports">5</StepperStep>
+    </Stepper>
 
-<div class="flex">
-    <Button Id="openPopover" Text="Open popover" Type="ButtonType.Outline" Class="border" OnClick="() => show = !show" />
+    <h4 style="margin-top:3rem">Stepper with Icons</h4>
+    <Stepper Style="max-width:600px;margin:auto">
+        <StepperStep State="StepperState.Skipped" Label="Initiated">
+            <Icon Name="start" Size="20px" Color="inherit" />
+        </StepperStep>
+        <StepperStep State="StepperState.Complete" Label="Collection">
+            <Icon Name="bookmark_manager" Size="20px" Color="inherit" />
+        </StepperStep>
+        <StepperStep State="StepperState.Failed" Label="Processing">
+            <Icon Name="cycle" Size="20px" Color="inherit" />
+        </StepperStep>
+        <StepperStep State="StepperState.Current" Label="Reporting">
+            <Icon Name="bar_chart" Size="20px" Color="inherit" />
+        </StepperStep>
+        <StepperStep State="StepperState.Pending" Label="Complete">
+            <Icon Name="check" Size="20px" Color="inherit" />
+        </StepperStep>
+    </Stepper>
 
-    <Popover Show="@show" ParentId="openPopover" OnClose="x => show = x">
-        <Card>
-            <CardHeader>
-                <h4 class="large">Dimensions</h4>
-                <p class="muted">Set the dimensions for the layer.</p>
-            </CardHeader>
-            <CardContent>
-                <style>
-                    .s1 {
-                        width: 125px;
-                        font-size: 14px
-                    }
-                </style>
-                <div class="flex-col g8">
-                    <div class="flex">
-                        <span class="s1">Width</span>
-                        <Input TItem="string" Focus />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Max. width</span>
-                        <Input TItem="string" />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Height</span>
-                        <Input TItem="string" />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Max. height</span>
-                        <Input TItem="string" />
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter>
-            </CardFooter>
-        </Card>
-    </Popover>
-</div>
-<div style="margin-top: 30vh">
-    <Button Id="openPopoverBottom" Text="Open popover" Type="ButtonType.Outline" Class="border" OnClick="() => showBottom = !showBottom" Style="margin-left: 60vw" />
-    <Popover Show="@showBottom" ParentId="openPopoverBottom" OnClose="x => showBottom = x">
-        <Card>
-            <CardHeader>
-                <h4 class="large">Dimensions</h4>
-                <p class="muted">Set the dimensions for the layer.</p>
-            </CardHeader>
-            <CardContent>
-                <style>
-                    .s1 {
-                        width: 125px;
-                        font-size: 14px
-                    }
-                </style>
-                <div class="flex-col g8">
-                    <div class="flex">
-                        <span class="s1">Width</span>
-                        <Input TItem="string" Focus />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Max. width</span>
-                        <Input TItem="string" />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Height</span>
-                        <Input TItem="string" />
-                    </div>
-                    <div class="flex">
-                        <span class="s1">Max. height</span>
-                        <Input TItem="string" />
-                    </div>
-                </div>
-            </CardContent>
-            <CardFooter>
-            </CardFooter>
-        </Card>
-    </Popover>
+
+    <h4 style="margin-top:3rem">Shopping Example</h4>
+    <Stepper Style="max-width:600px;margin:auto">
+        @foreach (var step in shoppings)
+        {
+            <StepperStep State="@step.Status" Label="@step.Label" OnClick="() => UpdateStatus(step)">
+                <Icon Name="@step.Icon" Size="20px" Color="inherit" />
+            </StepperStep>
+        }
+    </Stepper>
 </div>
 
-@code {
-    bool show, showBottom;
+@code
+{
+    private Shopping[] shoppings = [
+        new(1, "shopping_cart", "Add to Cart") { Status = StepperState.Initiated },
+        new(2, "add_home", "Delivery Address"),
+        new(3, "credit_card", "Payment Method"),
+        new(4, "preview", "Preview Order"),
+        new(5, "check", "Complete Order"),
+    ];
 
-    public void ff()
+    private void UpdateStatus(Shopping shopping)
     {
-        StateHasChanged();
+        // Reset all steps to Pending initially
+        foreach (var status in shoppings)
+            status.Status = StepperState.Pending;
+
+        // Mark steps as Complete upto the step number
+        for(int i = 0; i < shopping.No; i++)
+            shoppings[i].Status = StepperState.Complete;        
     }
+
+    private record Shopping(int No, string Icon, string Label)
+    {
+        public StepperState Status { get; set; } = StepperState.Pending;
+    };
 }

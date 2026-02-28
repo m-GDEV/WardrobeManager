@@ -68,9 +68,9 @@ public static class IdentityEndpoints
     }
 
     public static async Task<IResult> CreateAdminIfMissing(IUserService userService,
-        [FromBody] AdminUserCredentials credentials)
+        [FromBody] AuthenticationCredentialsModel credentials)
     {
-        var res = await userService.CreateAdminIfMissing(credentials.email, credentials.password);
+        var res = await userService.CreateAdminIfMissing(credentials);
 
         if (res.Item1)
         {

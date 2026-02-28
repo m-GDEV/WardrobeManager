@@ -1,14 +1,18 @@
 @namespace WardrobeManager.Presentation.Components.Onboarding
 
 <div class="grow w-full flex flex-col items-center gap-5 justify-evenly">
-    <h3 class="subheading-text text-primary">@Title</h3> 
+    <h3 class="subheading-text text-primary">@Title</h3>
     @ChildContent
-    <button @onclick="ButtonClickCallback" class="btn btn-accent btn-wide subtitle-text">@ButtonText</button>
+    <div class="flex gap-6">
+        <Button Type="ButtonType.Secondary" Size="ButtonSize.Large" Text="Back" @onclick="PreviousButtonClickCallback"/>
+        <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" @onclick="NextButtonClickCallback"/>
+    </div>
 </div>
 
 @code {
     [Parameter] public required string Title { get; set; }
     [Parameter] public required RenderFragment ChildContent { get; set; }
     [Parameter] public required string ButtonText { get; set; }
-    [Parameter] public required EventCallback ButtonClickCallback { get; set; }
+    [Parameter] public required EventCallback NextButtonClickCallback { get; set; }
+    [Parameter] public required EventCallback PreviousButtonClickCallback { get; set; }
 }

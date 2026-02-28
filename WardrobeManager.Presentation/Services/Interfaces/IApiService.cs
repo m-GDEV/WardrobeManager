@@ -27,5 +27,5 @@ public interface IApiService
     /// </summary>
     /// <param name="credentials">Onboarding user credentials</param>
     /// <returns>bool: succeeded, string: text description</returns>
-    Task<(bool, string)> CreateAdminUserIfMissing(AdminUserCredentials credentials);
+    Task<(bool, string)> CreateAdminUserIfMissing(AuthenticationCredentialsModel credentials);
 }
