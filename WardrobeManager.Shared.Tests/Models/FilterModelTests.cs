@@ -39,13 +39,14 @@ public class FilterModelTests
     public void FilterModel_WhenPropertiesAreSet_ReflectsChanges()
     {
         // Arrange
-        var model = new FilterModel();
-
-        // Act
-        model.SearchQuery = "blue shirt";
-        model.Favourited = true;
-        model.Category = ClothingCategory.TShirt;
-        model.Season = Season.Summer;
+        var model = new FilterModel
+        {
+            // Act
+            SearchQuery = "blue shirt",
+            Favourited = true,
+            Category = ClothingCategory.TShirt,
+            Season = Season.Summer
+        };
 
         // Assert
         using (new AssertionScope())

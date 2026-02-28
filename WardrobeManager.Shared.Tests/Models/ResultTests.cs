@@ -40,12 +40,13 @@ public class ResultTests
     public void Result_WhenPropertiesAreMutated_ReflectsChanges()
     {
         // Arrange
-        var result = new Result<bool>(false, false, "Initial");
-
-        // Act
-        result.Success = true;
-        result.Message = "Updated";
-        result.Data = true;
+        var result = new Result<bool>(false, false, "Initial")
+        {
+            // Act
+            Success = true,
+            Message = "Updated",
+            Data = true
+        };
 
         // Assert
         using (new AssertionScope())

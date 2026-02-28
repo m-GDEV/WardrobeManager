@@ -250,7 +250,6 @@ public class UserServiceTests
 
         // Assert
         _mockUserManager.Verify(m => m.CreateAsync(It.Is<User>(u =>
-            u.ServerClothingItems != null &&
             u.ServerClothingItems.Count == 2)), Times.Once);
     }
 

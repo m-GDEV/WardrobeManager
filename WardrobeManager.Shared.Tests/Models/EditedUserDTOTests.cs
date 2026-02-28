@@ -33,11 +33,12 @@ public class EditedUserDTOTests
     public void EditedUserDTO_WhenPropertiesAreUpdated_ReflectsChanges()
     {
         // Arrange
-        var dto = new EditedUserDTO("Original Name", "original-pic");
-
-        // Act
-        dto.Name = "Updated Name";
-        dto.ProfilePictureBase64 = "updated-pic";
+        var dto = new EditedUserDTO("Original Name", "original-pic")
+        {
+            // Act
+            Name = "Updated Name",
+            ProfilePictureBase64 = "updated-pic"
+        };
 
         // Assert
         using (new AssertionScope())

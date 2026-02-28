@@ -37,13 +37,14 @@ public class NewOrEditedClothingItemDTOTests
     public void NewClothingItemDTO_WhenPropertiesAreSet_ReflectsValues()
     {
         // Arrange
-        var dto = new NewClothingItemDTO();
-
-        // Act
-        dto.Name = "My T-Shirt";
-        dto.Category = ClothingCategory.TShirt;
-        dto.Size = ClothingSize.Medium;
-        dto.ImageBase64 = "base64data";
+        var dto = new NewClothingItemDTO
+        {
+            // Act
+            Name = "My T-Shirt",
+            Category = ClothingCategory.TShirt,
+            Size = ClothingSize.Medium,
+            ImageBase64 = "base64data"
+        };
 
         // Assert
         using (new AssertionScope())
