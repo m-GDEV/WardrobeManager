@@ -15,12 +15,11 @@
     <h3 class="heading-text">Welcome to WardrobeManager!</h3>
 
     <Stepper Style="max-width:90%;margin:auto" Class="sbc-stepper">
-        @for (int i = 0; i < ViewModel.NumberOfSteps; i++)
+        @for (int i = 0; i < OnboardingViewModel.NumberOfSteps; i++)
         {
             var currentStep = i;
             <StepperStep Class="sbc-stepper-step" State="ViewModel.GetStepperStateSafely(i)" Label="">@currentStep.ToString()</StepperStep>
         }
-        <StepperStep State="StepperState.Complete" Label="">blah</StepperStep>
     </Stepper>
 
     <div class="grow flex ">

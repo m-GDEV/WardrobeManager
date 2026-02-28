@@ -75,7 +75,7 @@ public class ApiService : IAsyncDisposable, IApiService
         return await res.Content.ReadFromJsonAsync<bool>();
     }
 
-    public async Task<(bool, string)> CreateAdminUserIfMissing(AuthenticationCredentialsModel credentials)
+    public async Task<Result<string>> CreateAdminUserIfMissing(AuthenticationCredentialsModel credentials)
     {
         var res = await _httpClient.PostAsJsonAsync("/create-admin-user-if-missing", credentials);
 
@@ -88,8 +88,8 @@ public class ApiService : IAsyncDisposable, IApiService
         {
             content = "Admin user created!";
         }
-
-        return (res.IsSuccessStatusCode, content);
+        
+        return new Result<string>(content, res.IsSuccessStatusCode, content);
     }
 
     #endregion

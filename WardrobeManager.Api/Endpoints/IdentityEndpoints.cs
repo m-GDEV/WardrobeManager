@@ -7,6 +7,7 @@ using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -70,15 +71,21 @@ public static class IdentityEndpoints
     public static async Task<IResult> CreateAdminIfMissing(IUserService userService,
         [FromBody] AuthenticationCredentialsModel credentials)
     {
-        var res = await userService.CreateAdminIfMissing(credentials);
+        var res = StaticValidators.Validate(credentials);
+        if (!res.Success)
+        {
+            return Results.BadRequest(res.Message);
+        }
+        
+        var result = await userService.CreateAdminIfMissing(credentials);
 
-        if (res.Item1)
+        if (result.Item1)
         {
             return Results.Created();
         }
         else
         {
-            return Results.Conflict(res.Item2);
+            return Results.Conflict(result.Item2);
         }
     }
 }

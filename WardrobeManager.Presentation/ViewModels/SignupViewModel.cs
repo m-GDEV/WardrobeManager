@@ -7,6 +7,7 @@ using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.StaticResources;
 
 namespace WardrobeManager.Presentation.ViewModels;
 
@@ -46,6 +47,12 @@ public partial class SignupViewModel(
 
     public async Task SignupAsync()
     {
+        var res = StaticValidators.Validate(AuthenticationCredentialsModel);
+        if (!res.Success)
+        {
+            notificationService.AddNotification(res.Message, NotificationType.Error);
+        }
+        
         var signupSuccess = await identityService.SignupAsync(AuthenticationCredentialsModel);
         if (!signupSuccess) return;
         

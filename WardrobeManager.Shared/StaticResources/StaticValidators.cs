@@ -10,7 +10,8 @@ public static class StaticValidators
     // A registry of validators (Map Type -> Validator Instance)
     private static readonly Dictionary<Type, IValidator> _validators = new()
     {
-        { typeof(NewClothingItemDTO), new NewClothingItemDTOValidator() }
+        { typeof(NewClothingItemDTO), new NewClothingItemDTOValidator() },
+        { typeof(AuthenticationCredentialsModel), new AuthenticationCredentialsModelValidator()}
     };
 
     public static Result<T> Validate<T>(T input)
@@ -38,6 +39,7 @@ public static class StaticValidators
 
 
 // All static validators below (in one file to stay clean)
+// Note: put a period at the end of each message so the frontend can split up the error into mulitple notifications
 public class NewClothingItemDTOValidator : AbstractValidator<NewClothingItemDTO>
 {
     public NewClothingItemDTOValidator()
@@ -45,5 +47,19 @@ public class NewClothingItemDTOValidator : AbstractValidator<NewClothingItemDTO>
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("New clothing item must have a name.")
             .MaximumLength(50).WithMessage("Name is too long.");
+    }
+}
+public class AuthenticationCredentialsModelValidator: AbstractValidator<AuthenticationCredentialsModel>
+{
+    public AuthenticationCredentialsModelValidator()
+    {
+        RuleFor(x => x.Email)
+            .EmailAddress().WithMessage("Invalid email address.");
+        RuleFor(x => x.Password)
+            .NotEmpty().WithMessage("Password must not be empty.")
+            .MinimumLength(6).WithMessage("Password must have at least 6 characters.")
+            .MaximumLength(50).WithMessage("Password is too long.")
+            .Must(x => x.Any(char.IsDigit)).WithMessage("Password must have at least one digit.")
+            .Must(x => x.Any(char.IsUpper)).WithMessage("Password must have at least one uppercase.");
     }
 }
