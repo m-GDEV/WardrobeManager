@@ -15,7 +15,8 @@
       "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "DOTNET_WATCH_RESTART_ON_RUDE_EDIT": "1"
       },
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7026;http://localhost:5054"
