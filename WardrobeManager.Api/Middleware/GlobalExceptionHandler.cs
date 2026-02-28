@@ -10,7 +10,7 @@ using WardrobeManager.Shared.Enums;
 
 namespace WardrobeManager.Api.Middleware;
 
-internal sealed class GlobalExceptionHandler : IExceptionHandler
+public sealed class GlobalExceptionHandler : IExceptionHandler
 {
     private readonly ILogger<GlobalExceptionHandler> _logger;
     private readonly IServiceScopeFactory _scopeFactory;

@@ -56,7 +56,7 @@ public partial class WardrobeViewModel(
                     actionDialog.ShowDelete = value;
                     break;
                 case ActionType.Edit:
-                    actionDialog.ShowDelete = value;
+                    actionDialog.ShowEdit = value;
                     break;
                 default:
                     notificationService.AddNotification("Action type not recognized!", NotificationType.Warning);
