@@ -13,7 +13,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class WardrobeViewModel(
-    IMvvmNavigationManager navManager,
     IApiService apiService,
     INotificationService notificationService
 )

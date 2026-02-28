@@ -14,7 +14,6 @@ public class ApiService : IAsyncDisposable, IApiService
 {
     private readonly string _apiEndpoint;
     private readonly HttpClient _httpClient;
-    private readonly INotificationService _notificationService;
 
     public ApiService(string apiEndpoint, IHttpClientFactory factory)
     {

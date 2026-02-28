@@ -12,7 +12,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class AddClothingItemViewModel(
-    IMvvmNavigationManager navManager,
     IApiService apiService,
     INotificationService notificationService,
     IMiscMethods miscMethods,

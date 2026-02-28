@@ -12,7 +12,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class SignupViewModel(
-    IAccountManagement accountManagement,
     INotificationService notificationService,
     IMvvmNavigationManager navManager,
     IIdentityService identityService

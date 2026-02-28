@@ -12,8 +12,6 @@ namespace WardrobeManager.Presentation.ViewModels;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class LoginViewModel(
-    IAccountManagement accountManagement,
-    INotificationService notificationService,
     IMvvmNavigationManager navManager,
     IIdentityService identityService
     )
