@@ -247,4 +247,95 @@ public class ApiServiceTests
             result.Item2.Should().Be("Admin user already exists!");
         }
     }
+
+    [Test]
+    public async Task GetAllClothingItemsAsync_WhenCalled_ReturnsClothingItems()
+    {
+        // Arrange
+        var items = new List<WardrobeManager.Shared.DTOs.ClothingItemDTO>
+        {
+            new WardrobeManager.Shared.DTOs.ClothingItemDTO { Id = 1, Name = "T-Shirt" },
+            new WardrobeManager.Shared.DTOs.ClothingItemDTO { Id = 2, Name = "Jeans" }
+        };
+        var mockResponse = new HttpResponseMessage
+        {
+            StatusCode = HttpStatusCode.OK,
+            Content = JsonContent.Create(items)
+        };
+        _mockHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req =>
+                    req.Method == HttpMethod.Get &&
+                    req.RequestUri != null &&
+                    req.RequestUri.AbsolutePath.Contains("/clothing")),
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(mockResponse);
+
+        // Act
+        var result = await _apiService.GetAllClothingItemsAsync();
+
+        // Assert
+        result.Should().HaveCount(2);
+    }
+
+    [Test]
+    public async Task AddNewClothingItemAsync_WhenCalled_PostsToClothingAddEndpoint()
+    {
+        // Arrange
+        var newItem = new WardrobeManager.Shared.DTOs.NewClothingItemDTO
+        {
+            Name = "My T-Shirt",
+            Category = WardrobeManager.Shared.Enums.ClothingCategory.TShirt
+        };
+        var mockResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        _mockHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req =>
+                    req.Method == HttpMethod.Post &&
+                    req.RequestUri != null &&
+                    req.RequestUri.AbsolutePath.Contains("/clothing/add")),
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(mockResponse);
+
+        // Act & Assert (no exception = success)
+        await _apiService.Invoking(s => s.AddNewClothingItemAsync(newItem)).Should().NotThrowAsync();
+        _mockHandler.Protected().Verify(
+            "SendAsync",
+            Times.Once(),
+            ItExpr.Is<HttpRequestMessage>(req => req.RequestUri!.AbsolutePath.Contains("/clothing/add")),
+            ItExpr.IsAny<CancellationToken>());
+    }
+
+    [Test]
+    public async Task DeleteClothingItemAsync_WhenCalled_PostsToClothingDeleteEndpoint()
+    {
+        // Arrange
+        var itemId = 42;
+        var mockResponse = new HttpResponseMessage { StatusCode = HttpStatusCode.OK };
+        _mockHandler
+            .Protected()
+            .Setup<Task<HttpResponseMessage>>(
+                "SendAsync",
+                ItExpr.Is<HttpRequestMessage>(req =>
+                    req.Method == HttpMethod.Post &&
+                    req.RequestUri != null &&
+                    req.RequestUri.AbsolutePath.Contains("/clothing/delete")),
+                ItExpr.IsAny<CancellationToken>()
+            )
+            .ReturnsAsync(mockResponse);
+
+        // Act & Assert (no exception = success)
+        await _apiService.Invoking(s => s.DeleteClothingItemAsync(itemId)).Should().NotThrowAsync();
+        _mockHandler.Protected().Verify(
+            "SendAsync",
+            Times.Once(),
+            ItExpr.Is<HttpRequestMessage>(req => req.RequestUri!.AbsolutePath.Contains("/clothing/delete")),
+            ItExpr.IsAny<CancellationToken>());
+    }
 }

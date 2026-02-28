@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Models;
 
 #endregion

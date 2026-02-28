@@ -1,10 +1,14 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Shared.Tests.Models;
 
+/// <summary>
+/// Tests for NewClothingItemDTO (formerly NewOrEditedClothingItemDTO).
+/// The old NewOrEditedClothingItemDTO was split into NewClothingItemDTO (add) and EditedUserDTO (edit user).
+/// </summary>
 public class NewOrEditedClothingItemDTOTests
 {
     [SetUp]
@@ -13,61 +17,54 @@ public class NewOrEditedClothingItemDTOTests
     }
 
     [Test]
-    public void NewOrEditedClothingItemDTO_InitializeWithProperties_HasPropertiesSet()
+    public void NewClothingItemDTO_DefaultConstructor_HasExpectedDefaults()
     {
-        // Arrange
-        const string name = "Favourite Green T-Shirt";
-        const ClothingCategory category = ClothingCategory.TShirt;
-        const Season season = Season.Fall;
-        const bool favourited = true;
-        const WearLocation wearLocation = WearLocation.HomeAndOutside;
-        const int desiredTimesWornBeforeWash = 5;
-        const string imageBase64 = "base64image";
-
         // Act
-        var dto = new NewOrEditedClothingItemDTO(name, category, season, favourited, wearLocation, desiredTimesWornBeforeWash, imageBase64);
+        var dto = new NewClothingItemDTO();
 
         // Assert
         using (new AssertionScope())
         {
-            dto.Name.Should().Be(name);
-            dto.Category.Should().Be(category);
-            dto.Season.Should().Be(season);
-            dto.Favourited.Should().Be(favourited);
-            dto.WearLocation.Should().Be(wearLocation);
-            dto.DesiredTimesWornBeforeWash.Should().Be(desiredTimesWornBeforeWash);
-            dto.ImageBase64.Should().Be(imageBase64);
+            dto.Should().NotBeNull();
+            dto.Name.Should().Be(string.Empty);
+            dto.Category.Should().Be(ClothingCategory.None);
+            dto.Size.Should().Be(ClothingSize.NotSpecified);
+            dto.ImageBase64.Should().BeNull();
         }
     }
 
     [Test]
-    public void NewOrEditedClothingItemDTO_WhenPropertiesAreUpdated_ReflectsChanges()
+    public void NewClothingItemDTO_WhenPropertiesAreSet_ReflectsValues()
     {
         // Arrange
-        var dto = new NewOrEditedClothingItemDTO("Original", ClothingCategory.TShirt, Season.Fall, false, WearLocation.Home, 3, string.Empty);
+        var dto = new NewClothingItemDTO();
 
         // Act
-        dto.Name = "Updated";
-        dto.Favourited = true;
+        dto.Name = "My T-Shirt";
+        dto.Category = ClothingCategory.TShirt;
+        dto.Size = ClothingSize.Medium;
+        dto.ImageBase64 = "base64data";
 
         // Assert
         using (new AssertionScope())
         {
-            dto.Name.Should().Be("Updated");
-            dto.Favourited.Should().BeTrue();
+            dto.Name.Should().Be("My T-Shirt");
+            dto.Category.Should().Be(ClothingCategory.TShirt);
+            dto.Size.Should().Be(ClothingSize.Medium);
+            dto.ImageBase64.Should().Be("base64data");
         }
     }
 
     [Test]
-    public void NewOrEditedClothingItemDTO_DefaultConstructor_CanBeInstantiated()
+    public void NewClothingItemDTO_ImageBase64_CanBeSetToNull()
     {
         // Arrange
-        // The default constructor exists solely for the deserializer
+        var dto = new NewClothingItemDTO { ImageBase64 = "some-base64" };
 
         // Act
-        var dto = new NewOrEditedClothingItemDTO();
+        dto.ImageBase64 = null;
 
         // Assert
-        dto.Should().NotBeNull();
+        dto.ImageBase64.Should().BeNull();
     }
 }

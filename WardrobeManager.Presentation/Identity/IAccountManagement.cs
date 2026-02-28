@@ -23,7 +23,7 @@ public interface IAccountManagement
     /// <summary>
     /// Log out the logged in user.
     /// </summary>
-    /// <returns>Whether the logout was sucessful</returns>
+    /// <returns>Whether the logout was successful</returns>
     public Task<bool> LogoutAsync();
 
     /// <summary>

@@ -13,6 +13,6 @@ public static class ActionEndpoints
 {
     public static void MapActionEndpoints(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/actions").RequireAuthorization();
+        // var group = app.MapGroup("/actions").RequireAuthorization();
     }
 }

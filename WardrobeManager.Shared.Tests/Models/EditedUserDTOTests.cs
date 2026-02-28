@@ -1,6 +1,6 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
-using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.DTOs;
 
 namespace WardrobeManager.Shared.Tests.Models;
 

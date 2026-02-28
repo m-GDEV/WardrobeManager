@@ -95,6 +95,21 @@ public class DataDirectoryServiceTests
     }
 
     [Test]
+    public void GetDeletedUploadsDirectory_WhenCalled_CreatesAndReturnsDeletedSubdirectory()
+    {
+        // Act
+        var result = _service.GetDeletedUploadsDirectory();
+
+        // Assert
+        using (new AssertionScope())
+        {
+            result.Should().EndWith("deleted");
+            result.Should().StartWith(_tempBaseDir);
+            Directory.Exists(result).Should().BeTrue();
+        }
+    }
+
+    [Test]
     public void DataDirectoryService_WhenDataDirectoryNotConfigured_ThrowsException()
     {
         // Arrange

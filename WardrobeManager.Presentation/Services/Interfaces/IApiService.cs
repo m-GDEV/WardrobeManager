@@ -9,14 +9,23 @@ namespace WardrobeManager.Presentation.Services.Interfaces;
 public interface IApiService
 {
     ValueTask DisposeAsync();
-
+    
+    // Clothing
+    Task<List<ClothingItemDTO>> GetAllClothingItemsAsync();
+    Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem);
+    Task DeleteClothingItemAsync( int itemId);
+    
     // Misc 
     Task<bool> CheckApiConnection();
     Task<HttpResponseMessage> AddLog(LogDTO log);
     
-    // User Management
+    // Onboarding
     Task<bool> DoesAdminUserExist();
     
-    // bool: succeeded?, string: text description
+    /// <summary>
+    /// Creates an admin user if one doesn't exist (used for onboarding) 
+    /// </summary>
+    /// <param name="credentials">Onboarding user credentials</param>
+    /// <returns>bool: succeeded, string: text description</returns>
     Task<(bool, string)> CreateAdminUserIfMissing(AdminUserCredentials credentials);
 }

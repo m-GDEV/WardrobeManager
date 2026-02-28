@@ -50,6 +50,7 @@ public class ClothingItem : IDatabaseEntity
     public string Name { get; set; }
     public ClothingCategory Category { get; set; } = ClothingCategory.None;
     public Season Season { get; set; } = Season.None;
+    public ClothingSize Size { get; set; } = ClothingSize.NotSpecified;
 
     public WearLocation WearLocation { get; set; } = WearLocation.None;
 

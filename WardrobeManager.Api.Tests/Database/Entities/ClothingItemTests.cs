@@ -99,6 +99,7 @@ public class ClothingItemTests
             _clothingItem.DesiredTimesWornBeforeWash.Should().Be(3);
             _clothingItem.TimesWornTotal.Should().Be(0);
             _clothingItem.TimesWornSinceWash.Should().Be(0);
+            _clothingItem.Size.Should().Be(ClothingSize.NotSpecified); // added in US-003
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿#region
 
 using WardrobeManager.Api.Database.Entities;
+using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
@@ -9,7 +10,9 @@ using WardrobeManager.Shared.Models;
 namespace WardrobeManager.Api.Services.Interfaces;
 public interface IClothingService
 {
-    Task<List<ClothingItem>?> GetAllClothingAsync(string userId);
+    Task<List<ClothingItemDTO>?> GetAllClothingAsync(string userId);
     
-    Task<ClothingItem?> GetClothingItemAsync(string userId, int itemId);
+    Task<ClothingItemDTO?> GetClothingItemAsync(string userId, int itemId);
+    Task AddNewClothingItem(string userId, NewClothingItemDTO newNewClothingItem);
+    Task DeleteClothingItem(string userId, int itemId);
 }

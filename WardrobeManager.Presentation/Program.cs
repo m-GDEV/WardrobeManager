@@ -9,6 +9,7 @@ using WardrobeManager.Presentation;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -19,13 +20,11 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 // https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/?view=aspnetcore-8.0
 string BackendUrl = builder.Configuration["WM_BACKEND_URL"] ?? throw new Exception("WM_BACKEND_URL: configuration value not set");
 
-Console.WriteLine("Hello man" + BackendUrl);
-
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 // Kind of like HttpClient middleware that adds a cookie to the request 
-builder.Services.AddTransient<CookieHandler>();
+builder.Services.AddTransient<CustomHttpMessageHandler>();
 
 // Setup authorization
 builder.Services.AddAuthorizationCore();
@@ -42,12 +41,13 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(BackendU
 // configure client for auth interactions
 builder.Services.AddHttpClient("Auth", opt => 
         opt.BaseAddress = new Uri(BackendUrl))
-    .AddHttpMessageHandler<CookieHandler>();
+    .AddHttpMessageHandler<CustomHttpMessageHandler>();
 
 // My Services
 builder.Services.AddScoped<IApiService, ApiService>(sp => new ApiService(BackendUrl, sp.GetRequiredService<IHttpClientFactory>()));
 builder.Services.AddSingleton<INotificationService, NotificationService>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<IMiscMethods, MiscMethods>();
 
 // Libraries
 builder.Services.AddSysinfocus();

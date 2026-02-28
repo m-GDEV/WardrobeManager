@@ -23,8 +23,6 @@ public partial class LoginViewModel(
     [ObservableProperty]
     private AuthenticationCredentialsModel _authenticationCredentialsModel = new();
 
-    public EditForm? EditForm { get; set; }
-
     // Public Methods
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
     public void SetEmail(string email)

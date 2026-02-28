@@ -23,8 +23,8 @@ public class ClothingRepositoryTests
 
         _context = new DatabaseContext(options);
 
-        // ClothingRepository constructor requires a DbSet<ClothingItem> parameter
-        _repo = new ClothingRepository(_context, _context.ClothingItems);
+        // ClothingRepository constructor only takes DatabaseContext
+        _repo = new ClothingRepository(_context);
 
         // Seed a user so foreign key constraint is satisfied
         var user = new User { Id = DefaultUserId, UserName = "testuser" };

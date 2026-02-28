@@ -5,7 +5,7 @@ using Moq;
 using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Tests.Helpers;
-using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.DTOs;
 
 namespace WardrobeManager.Api.Tests.Services;
 
