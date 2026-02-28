@@ -1,7 +1,22 @@
 /* Replacing Sysinfocus css styles.css file because it is override default tailwind styles */
 /* this is hacky since if the library styles change in the future something might break but what can you do? */
+
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,300,0,0);
 @import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap');
+
+/* Custom modifications */
+/* 
+   So basically this line that connects Stepper steps is not being displayed
+   because the z-index is being weird so i'm manually overriding it here
+*/
+.sbc-stepper-step {
+    z-index: 2 !important;
+}
+/* ::before is where the line is */
+.sbc-stepper::before {
+    z-index: 1 !important;
+}
+
 
 :root {
     --grid-height: 200px;
