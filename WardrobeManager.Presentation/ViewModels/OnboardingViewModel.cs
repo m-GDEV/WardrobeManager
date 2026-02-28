@@ -114,4 +114,15 @@ public partial class OnboardingViewModel(
     {
         return StepperStates.GetValueOrDefault(key, StepperState.Failed);
     }
+    
+    // Stupid that i'm doing this but its the easiest solution and idk what the best method is
+    public void SetEmail(string email)
+    {
+        NewAdminCredentials.Email = email;
+    }
+
+    public void SetPassword(string password)
+    {
+        NewAdminCredentials.Password = password;
+    }
 }

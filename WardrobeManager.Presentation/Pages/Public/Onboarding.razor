@@ -18,7 +18,8 @@
         @for (int i = 0; i < OnboardingViewModel.NumberOfSteps; i++)
         {
             var currentStep = i;
-            <StepperStep Class="sbc-stepper-step" State="ViewModel.GetStepperStateSafely(i)" Label="">@currentStep.ToString()</StepperStep>
+            <StepperStep Class="sbc-stepper-step" State="ViewModel.GetStepperStateSafely(i)"
+                         Label="">@currentStep.ToString()</StepperStep>
         }
     </Stepper>
 
@@ -44,19 +45,18 @@
                                    NextButtonClickCallback="ViewModel.CreateAdminUser"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                 >
-                    <div>
-                        <LabelAndElement Label="Username" Orientation="vertical">
-                            <InputText @bind-Value="ViewModel.NewAdminCredentials.Email" required
-                                       class="bg-base-200 text-base-content p-3 rounded-xl"
-                                       placeholder="@("email@example.com")" type="email"/>
-                        </LabelAndElement>
-                        <LabelAndElement Label="Password" Orientation="vertical">
-                            <InputText @bind-Value="ViewModel.NewAdminCredentials.Password" required
-                                       class="bg-base-200 text-base-content p-3 rounded-xl" placeholder="............"
-                                       type="password"/>
-                        </LabelAndElement>
-
-
+                    <div class="flex flex-col gap-3 w-full max-w-80">
+                        <Label Text="Enter a valid email" Info="This is for the Admin account only" />
+                        <Input TItem="string"
+                               Value="@ViewModel.NewAdminCredentials.Email"
+                               ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
+                               Placeholder="Enter your email"/>
+                        <Label Text="Enter a valid password" Info="This is for the Admin account only" />
+                        <Input TItem="string"
+                               Value="@ViewModel.NewAdminCredentials.Password"
+                               Type="password"
+                               ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"
+                               Placeholder="Enter your password"/>
                     </div>
                 </OnboardingSection>
                 break;
@@ -68,10 +68,10 @@
                                    NextButtonClickCallback="ViewModel.GoToNextSection"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                 >
-                <p class="subtitle-text">
-                    If you encounter any issues, please open an issue on the <a
-                        href="@ProjectConstants.ProjectGitRepo" class="text-accent">GitHub repo</a>
-                </p>
+                    <p class="subtitle-text">
+                        If you encounter any issues, please open an issue on the <a
+                            href="@ProjectConstants.ProjectGitRepo" class="text-accent">GitHub repo</a>
+                    </p>
                 </OnboardingSection>
                 break;
             }

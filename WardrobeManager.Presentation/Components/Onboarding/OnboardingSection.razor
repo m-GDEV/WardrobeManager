@@ -1,8 +1,10 @@
 @namespace WardrobeManager.Presentation.Components.Onboarding
 
-<div class="grow w-full flex flex-col items-center gap-5 justify-evenly">
-    <h3 class="subheading-text text-primary">@Title</h3>
-    @ChildContent
+<div class="grow w-full flex flex-col items-center gap-5 py-12">
+    <div class="grow flex flex-col items-center gap-5 justify-evenly">
+        <h3 class="text-4xl text-primary">@Title</h3>
+        @ChildContent
+    </div>
     <div class="flex gap-6">
         <Button Type="ButtonType.Secondary" Size="ButtonSize.Large" Text="Back" @onclick="PreviousButtonClickCallback"/>
         <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" @onclick="NextButtonClickCallback"/>
