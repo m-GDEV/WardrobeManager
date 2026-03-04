@@ -32,6 +32,11 @@
             <Icon Name="check" Size="20px" Color="inherit" />
         </StepperStep>
     </Stepper>
+    
+    <Button Type="ButtonType.Primary" Text="Info Notification" OnClick="@(() => _notificationService.AddNotification("Info", NotificationType.Info))" />
+    <Button Type="ButtonType.Primary" Text="Success Notification" OnClick="@(() => _notificationService.AddNotification("Success", NotificationType.Success))" />
+    <Button Type="ButtonType.Primary" Text="Warning Notification" OnClick="@(() => _notificationService.AddNotification("Warning", NotificationType.Warning))" />
+    <Button Type="ButtonType.Primary" Text="Error Notification" OnClick="@(() => _notificationService.AddNotification("Error", NotificationType.Error))" />
 
 
     <h4 style="margin-top:3rem">Shopping Example</h4>

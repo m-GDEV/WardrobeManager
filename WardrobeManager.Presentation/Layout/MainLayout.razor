@@ -5,7 +5,7 @@
 @inject Initialization sysinfocusComponentsinit
 @inject BrowserExtensions browserExtensions
 
-<body class="dark h-full body-text transition-all duration-300 flex flex-col"
+<body class="dark h-full body-text transition-all duration-300 flex flex-col relative"
       @onclick="sysinfocusComponentsinit.HandleMainLayoutClickEvent">
 <ErrorBoundary @ref="errorBoundary">
     <ChildContent>
@@ -21,8 +21,8 @@
         }
     </ErrorContent>
 </ErrorBoundary>
-</body>
 <Notifications/>
+</body>
 
 @code {
     private ErrorBoundary? errorBoundary;

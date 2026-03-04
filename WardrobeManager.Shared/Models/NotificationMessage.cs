@@ -9,5 +9,6 @@ namespace WardrobeManager.Shared.Models;
 public class NotificationMessage(string message, NotificationType type) {
     public readonly string Message = message;
     public readonly NotificationType Type = type;
-    public DateTime CreationDate = DateTime.UtcNow;
+    public bool DialogOpen = false;
+    public readonly DateTime CreationDate = DateTime.UtcNow;
 }

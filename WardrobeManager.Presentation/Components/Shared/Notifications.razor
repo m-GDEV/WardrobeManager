@@ -3,20 +3,41 @@
 @inject INotificationService _notificationService
 
 
-<div class="toast toast-top toast-end">
+<div class="flex flex-col  gap-2 absolute bottom-0 right-0 p-6 z-10">
     @foreach (var notification in _notificationService.Notifications)
     {
-        var cssClass = GetNotificationButtonType(notification.Type);
+        var cssClass = GetNotificationCss(notification.Type);
+        var message = GetTruncatedMessage(notification);
 
-        <Toast Show="@true" >
-            @notification.Message 
-        </Toast>
+        <Button Type="ButtonType.Outline" class="!bg-[#111]" Width="100%" >
+            <div class="flex flex-row gap-2 rounded-md items-center justify-between w-full">
+                <span class="@cssClass w-full" @onclick="() => notification.DialogOpen = true">@message</span>
+                <Button Icon="Close" Size="ButtonSize.Small" Type="ButtonType.Ghost" OnClick="() => Dismiss(notification)"/>
+            </div>
+        </Button>
+        
+        <Dialog Show="@notification.DialogOpen" Width="500px" OnClose="() => notification.DialogOpen = false">
+            <Header>
+                <div class="flex-col g4">
+                    <p class="large">Notification</p>
+                    <p class="muted">Type: @notification.Type.ToString()</p>
+                    <p class="muted">Created: @notification.CreationDate</p>
+                </div>
+            </Header>
+            <Content>
+                <Text>Message: @notification.Message</Text>
+            </Content>
+            <Footer>
+                <div style="width: 100%; display: flex">
+                    <Button Text="Close" Type="ButtonType.Secondary" OnClick="() => notification.DialogOpen = false" />        
+                </div>
+            </Footer>
+        </Dialog>
     }
 </div>
 
 @code {
-
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         _notificationService.OnChange += StateHasChanged;
         // this runs the callback method supplied every 5 seconds. it does not wait for the last 
@@ -57,6 +78,27 @@
             NotificationType.Error => ButtonType.Destructive,
             _ => ButtonType.Outline
         };
+    }
+
+    public string GetNotificationCss(NotificationType type)
+    {
+        return type switch
+        {
+            NotificationType.Success => "text-[#28a745]",
+            NotificationType.Warning => "text-[#ffc107]",
+            NotificationType.Error => "text-[#dc3545]",
+            _ => "text-[#007bff]", // default is 'info' colour
+        };
+    }
+
+    private string GetTruncatedMessage(NotificationMessage notification)
+    {
+        if (notification.Message.Length >= 40)
+        {
+            return notification.Message.Substring(0, 36) + "...";
+        }
+
+        return notification.Message;
     }
 
 }
