@@ -1,18 +1,13 @@
 using Blazing.Mvvm.ComponentModel;
 using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Components.Web;
 using Sysinfocus.AspNetCore.Components;
-using WardrobeManager.Presentation.Identity;
-using WardrobeManager.Presentation.Pages.Public;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.StaticResources;
 
-namespace WardrobeManager.Presentation.ViewModels;
+namespace WardrobeManager.Presentation.ViewModels.Pages;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class OnboardingViewModel(
@@ -93,7 +88,7 @@ public partial class OnboardingViewModel(
 
     public async Task CreateAdminUser()
     {
-        var valid = StaticValidators.Validate(NewAdminCredentials);
+        var valid = StaticValidators.Validate<AuthenticationCredentialsModel>(NewAdminCredentials);
         if (!valid.Success)
         {
             foreach (var error in valid.Message.Split("."))
@@ -118,7 +113,7 @@ public partial class OnboardingViewModel(
 
     public StepperState GetStepperStateSafely(int key)
     {
-        return StepperStates.GetValueOrDefault(key, StepperState.Failed);
+        return CollectionExtensions.GetValueOrDefault(StepperStates, key, StepperState.Failed);
     }
     
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is

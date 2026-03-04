@@ -9,6 +9,7 @@ using WardrobeManager.Presentation;
 using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
 #endregion

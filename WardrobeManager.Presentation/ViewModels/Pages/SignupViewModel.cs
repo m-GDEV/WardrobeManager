@@ -3,13 +3,12 @@ using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
-using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 using WardrobeManager.Shared.StaticResources;
 
-namespace WardrobeManager.Presentation.ViewModels;
+namespace WardrobeManager.Presentation.ViewModels.Pages;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class SignupViewModel(
@@ -47,7 +46,7 @@ public partial class SignupViewModel(
 
     public async Task SignupAsync()
     {
-        var res = StaticValidators.Validate(AuthenticationCredentialsModel);
+        var res = StaticValidators.Validate<AuthenticationCredentialsModel>(AuthenticationCredentialsModel);
         if (!res.Success)
         {
             notificationService.AddNotification(res.Message, NotificationType.Error);

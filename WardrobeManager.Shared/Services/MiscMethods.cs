@@ -2,13 +2,11 @@
 
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
-using WardrobeManager.Shared.Models;
 
 #endregion
 
-namespace WardrobeManager.Shared.StaticResources;
+namespace WardrobeManager.Shared.Services;
 
 public class MiscMethods : IMiscMethods
 {

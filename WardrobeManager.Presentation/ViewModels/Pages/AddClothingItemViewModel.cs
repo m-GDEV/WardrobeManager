@@ -1,14 +1,13 @@
 using Blazing.Mvvm.ComponentModel;
-using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.ComponentModel.__Internals;
 using Microsoft.AspNetCore.Components.Forms;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
-namespace WardrobeManager.Presentation.ViewModels;
+namespace WardrobeManager.Presentation.ViewModels.Pages;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class AddClothingItemViewModel(
@@ -33,7 +32,7 @@ public partial class AddClothingItemViewModel(
     public async Task SubmitAsync()
     {
         // Crude error checking, in the future i'd prefer to use a form with error validation
-        var res = StaticValidators.Validate(NewClothingItem);
+        var res = StaticValidators.Validate<NewClothingItemDTO>(NewClothingItem);
         if (!res.Success)
         {
             notificationService.AddNotification(res.Message, NotificationType.Error);

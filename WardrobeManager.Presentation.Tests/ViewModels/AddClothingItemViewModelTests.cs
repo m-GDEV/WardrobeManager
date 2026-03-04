@@ -8,6 +8,8 @@ using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.StaticResources;
 using Blazing.Mvvm.Components;
 using Microsoft.Extensions.Configuration;
+using WardrobeManager.Presentation.ViewModels.Pages;
+using WardrobeManager.Shared.Services;
 
 namespace WardrobeManager.Presentation.Tests.ViewModels;
 

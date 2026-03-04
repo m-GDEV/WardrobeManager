@@ -1,12 +1,11 @@
 using Blazing.Mvvm.ComponentModel;
 using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Sysinfocus.AspNetCore.Components;
 using WardrobeManager.Presentation.Services.Interfaces;
 
-namespace WardrobeManager.Presentation.ViewModels;
+namespace WardrobeManager.Presentation.ViewModels.Pages;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class MainLayoutViewModel(

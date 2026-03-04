@@ -6,6 +6,7 @@ using WardrobeManager.Presentation.ViewModels;
 using WardrobeManager.Presentation.Tests.Helpers;
 using WardrobeManager.Shared.DTOs;
 using Blazing.Mvvm.Components;
+using WardrobeManager.Presentation.ViewModels.Pages;
 
 namespace WardrobeManager.Presentation.Tests.ViewModels;
 

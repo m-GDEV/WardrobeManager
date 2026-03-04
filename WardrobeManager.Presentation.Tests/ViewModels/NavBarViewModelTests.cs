@@ -7,6 +7,8 @@ using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Presentation.ViewModels;
 using WardrobeManager.Presentation.Tests.Helpers;
 using Microsoft.AspNetCore.Components.Authorization;
+using WardrobeManager.Presentation.ViewModels.Components;
+using WardrobeManager.Presentation.ViewModels.Pages;
 
 namespace WardrobeManager.Presentation.Tests.ViewModels;
 

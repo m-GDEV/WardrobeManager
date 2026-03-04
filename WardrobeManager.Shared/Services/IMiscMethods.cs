@@ -1,6 +1,6 @@
 using WardrobeManager.Shared.Enums;
 
-namespace WardrobeManager.Shared.StaticResources;
+namespace WardrobeManager.Shared.Services;
 
 public interface IMiscMethods
 {

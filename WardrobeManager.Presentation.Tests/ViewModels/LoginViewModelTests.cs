@@ -11,6 +11,7 @@ using WardrobeManager.Presentation.Tests.Helpers;
 using WardrobeManager.Shared.Models;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.Security.Claims;
+using WardrobeManager.Presentation.ViewModels.Pages;
 
 namespace WardrobeManager.Presentation.Tests.ViewModels;
 

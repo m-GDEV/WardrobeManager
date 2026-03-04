@@ -7,6 +7,7 @@ using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Identity.Models;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Presentation.ViewModels;
+using WardrobeManager.Presentation.ViewModels.Pages;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 

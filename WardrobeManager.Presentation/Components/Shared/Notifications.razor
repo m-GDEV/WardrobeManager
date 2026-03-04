@@ -1,25 +1,24 @@
 @namespace WardrobeManager.Presentation.Components.Shared
 
-@inject INotificationService _notificationService
-
+@inherits MvvmComponentBase<NotificationsViewModel>
 
 <div class="flex flex-col items-end gap-2 absolute top-0 right-0 p-6 z-10 max-h-dvh overflow-y-scroll">
 
     @if (_notificationService.Notifications.Count > 5)
     {
-        <Button Type="ButtonType.Destructive" Text="Clear All Notifications" OnClick="ClearAllNotifications"/>
+        <Button Type="ButtonType.Destructive" Text="Clear All Notifications" OnClick="ViewModel.ClearAllNotifications"/>
     }
 
     @foreach (var notification in _notificationService.Notifications)
     {
-        var cssClass = GetNotificationCss(notification.Type);
-        var message = GetTruncatedMessage(notification);
+        var cssClass = ViewModel.GetNotificationCss(notification.Type);
+        var message = ViewModel.GetTruncatedMessage(notification);
 
         <Button Type="ButtonType.Outline" class="!bg-[#111]" Width="100%">
             <div class="flex flex-row gap-2 rounded-md items-center justify-between w-full">
                 <span class="@cssClass " @onclick="() => notification.DialogOpen = true">@message</span>
                 <Button Icon="Close" Size="ButtonSize.Small" Type="ButtonType.Ghost"
-                        OnClick="() => Dismiss(notification)"/>
+                        OnClick="() => ViewModel.Dismiss(notification)"/>
             </div>
         </Button>
 
@@ -47,76 +46,5 @@
 
 @code {
 
-    protected override async Task OnInitializedAsync()
-    {
-        _notificationService.OnChange += StateHasChanged;
-        // this runs the callback method supplied every 5 seconds. it does not wait for the last 
-        // call to the method to finish. this can cause race conditions. it should be fine though
-        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-    }
-
-    // Go through all notifications and try to remove the non-critical ones
-    private void TryToClearNotifications(object? state)
-    {
-        var notifications = _notificationService.Notifications;
-
-        foreach (var notification in notifications)
-        {
-            TimeSpan difference = DateTime.UtcNow - notification.CreationDate;
-
-            if (difference.TotalSeconds > 10 && notification.Type != NotificationType.Warning && notification.Type != NotificationType.Error)
-            {
-                _notificationService.RemoveNotification(notification);
-            }
-        }
-    }
-
-    private void ClearAllNotifications()
-    {
-        foreach (var notification in _notificationService.Notifications)
-        {
-            _notificationService.RemoveNotification(notification);
-        }
-    }
-
-    private void Dismiss(NotificationMessage notification)
-    {
-        _notificationService.RemoveNotification(notification);
-    }
-
-    public void Dispose()
-    {
-        _notificationService.OnChange -= StateHasChanged;
-    }
-
-    public ButtonType GetNotificationButtonType(NotificationType type)
-    {
-        return type switch
-        {
-            NotificationType.Error => ButtonType.Destructive,
-            _ => ButtonType.Outline
-        };
-    }
-
-    public string GetNotificationCss(NotificationType type)
-    {
-        return type switch
-        {
-            NotificationType.Success => "text-[#28a745]",
-            NotificationType.Warning => "text-[#ffc107]",
-            NotificationType.Error => "text-[#dc3545]",
-            _ => "text-[#007bff]", // default is 'info' colour
-        };
-    }
-
-    private string GetTruncatedMessage(NotificationMessage notification)
-    {
-        if (notification.Message.Length >= 40)
-        {
-            return notification.Message.Substring(0, 36) + "...";
-        }
-
-        return notification.Message;
-    }
 
 }
