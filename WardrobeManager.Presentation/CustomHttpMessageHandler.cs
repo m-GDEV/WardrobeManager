@@ -1,5 +1,6 @@
 #region
 
+using System.Net;
 using Microsoft.AspNetCore.Components.WebAssembly.Http;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.Enums;
@@ -29,9 +30,11 @@ public class CustomHttpMessageHandler(INotificationService notificationService) 
         {
             // This sends the actual HTTP request
             var response = await base.SendAsync(request, cancellationToken);
-
-            // 1. Check for standard HTTP errors (like 404 Not Found, 500 Server Error)
-            if (!response.IsSuccessStatusCode)
+            
+            // The application continually checks the authentication state of the user via GetAuthenticationStateAsync 
+            // The method calls the backend. If the user is not authenticated the backend returns HTTP 401. 
+            // We don't want to notify the user of this as it is benign
+            if (!response.IsSuccessStatusCode && response.StatusCode != HttpStatusCode.Unauthorized)
             {
                 notificationService.AddNotification($"Server Error: {(int)response.StatusCode}", NotificationType.Error);
             }

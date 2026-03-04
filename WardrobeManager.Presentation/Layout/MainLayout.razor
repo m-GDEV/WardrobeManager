@@ -11,7 +11,7 @@
     <ErrorContent Context="ex">
         @{
             // fixlater: In the future, we should maybe not display raw exceptions to the user
-            _notificationService.AddNotification(ex.Message, NotificationType.Error);
+            _notificationService.AddNotification($"Unhandled Exception: {ex.Message}", NotificationType.Error);
         }
     </ErrorContent>
 </ErrorBoundary>

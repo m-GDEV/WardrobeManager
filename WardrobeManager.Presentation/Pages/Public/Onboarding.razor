@@ -53,7 +53,7 @@
                         <Label Text="Enter a valid password" Info="This is for the Admin account only"/>
                         <Input TItem="string"
                                Value="@ViewModel.NewAdminCredentials.Password"
-                               Type="string"
+                               Type="password"
                                ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"
                                Placeholder="Enter your password"/>
                     </div>
