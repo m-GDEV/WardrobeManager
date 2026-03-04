@@ -109,6 +109,7 @@ public class SignupViewModelTests
     public async Task SignupAsync_WhenSignupSucceedsButLoginFails_AddsErrorNotification()
     {
         // Arrange
+        _viewModel.AuthenticationCredentialsModel = new AuthenticationCredentialsModel { Email = "test@gmail.com", Password = "SecurePassword1!" };
         _mockIdentityService
             .Setup(s => s.SignupAsync(It.IsAny<AuthenticationCredentialsModel>()))
             .ReturnsAsync(true);

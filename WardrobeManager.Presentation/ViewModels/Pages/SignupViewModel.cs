@@ -60,6 +60,7 @@ public partial class SignupViewModel(
         if (!loginSuccess)
         {
             notificationService.AddNotification("Account created, but could not log you in. Please try again.", NotificationType.Error);
+            navManager.NavigateTo<LoginViewModel>();
         }
         
         notificationService.AddNotification("Account created and logged in successfully!", NotificationType.Success);
