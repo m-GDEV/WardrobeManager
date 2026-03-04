@@ -88,7 +88,6 @@ public partial class OnboardingViewModel(
 
     public void FinishOnboardingAsync()
     {
-        Console.WriteLine("here!");
         navManager.NavigateTo<LoginViewModel>();
     }
 
