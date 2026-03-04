@@ -6,6 +6,7 @@ using WardrobeManager.Api.Database.Entities;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Tests.Helpers;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Api.Tests.Services;
 
@@ -196,9 +197,14 @@ public class UserServiceTests
         _mockUserManager.Setup(m => m.Users).Returns(users);
         _mockRoleManager.Setup(m => m.RoleExistsAsync("Admin")).ReturnsAsync(true);
         _mockUserManager.Setup(m => m.IsInRoleAsync(adminUser, "Admin")).ReturnsAsync(true);
+        var credentials = new AuthenticationCredentialsModel
+        {
+            Email = "admin@test.com",
+            Password = "password"
+        };
 
         // Act
-        var result = await _service.CreateAdminIfMissing("admin@test.com", "password");
+        var result = await _service.CreateAdminIfMissing(credentials);
 
         // Assert
         using (new AssertionScope())
@@ -221,9 +227,14 @@ public class UserServiceTests
         _mockUserManager
             .Setup(m => m.AddToRoleAsync(It.IsAny<User>(), "Admin"))
             .ReturnsAsync(IdentityResult.Success);
+        var credentials = new AuthenticationCredentialsModel
+        {
+            Email = "admin@test.com",
+            Password = "SecurePass1!"
+        };
 
         // Act
-        var result = await _service.CreateAdminIfMissing("admin@test.com", "SecurePass1!");
+        var result = await _service.CreateAdminIfMissing(credentials);
 
         // Assert
         using (new AssertionScope())

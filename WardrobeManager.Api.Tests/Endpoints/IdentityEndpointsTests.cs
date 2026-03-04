@@ -68,9 +68,9 @@ public class IdentityEndpointsTests
     public async Task CreateAdminIfMissing_WhenCreatedSuccessfully_ReturnsCreated()
     {
         // Arrange
-        var credentials = new AdminUserCredentials { email = "admin@test.com", password = "SecurePass1!" };
+        var credentials = new AuthenticationCredentialsModel { Email = "admin@test.com", Password = "SecurePass1!" };
         _mockUserService
-            .Setup(s => s.CreateAdminIfMissing("admin@test.com", "SecurePass1!"))
+            .Setup(s => s.CreateAdminIfMissing(credentials))
             .ReturnsAsync((true, "Admin user created!"));
 
         // Act
@@ -84,9 +84,9 @@ public class IdentityEndpointsTests
     public async Task CreateAdminIfMissing_WhenAdminAlreadyExists_ReturnsConflict()
     {
         // Arrange
-        var credentials = new AdminUserCredentials { email = "admin@test.com", password = "SecurePass1!" };
+        var credentials = new AuthenticationCredentialsModel { Email = "admin@test.com", Password = "SecurePass1!" };
         _mockUserService
-            .Setup(s => s.CreateAdminIfMissing("admin@test.com", "SecurePass1!"))
+            .Setup(s => s.CreateAdminIfMissing(credentials))
             .ReturnsAsync((false, "Admin user already exists!"));
 
         // Act
