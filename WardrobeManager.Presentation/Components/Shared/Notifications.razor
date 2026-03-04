@@ -9,13 +9,14 @@
         var cssClass = GetNotificationCss(notification.Type);
         var message = GetTruncatedMessage(notification);
 
-        <Button Type="ButtonType.Outline" class="!bg-[#111]" Width="100%" >
+        <Button Type="ButtonType.Outline" class="!bg-[#111]" Width="100%">
             <div class="flex flex-row gap-2 rounded-md items-center justify-between w-full">
-                <span class="@cssClass w-full" @onclick="() => notification.DialogOpen = true">@message</span>
-                <Button Icon="Close" Size="ButtonSize.Small" Type="ButtonType.Ghost" OnClick="() => Dismiss(notification)"/>
+                <span class="@cssClass " @onclick="() => notification.DialogOpen = true">@message</span>
+                <Button Icon="Close" Size="ButtonSize.Small" Type="ButtonType.Ghost"
+                        OnClick="() => Dismiss(notification)"/>
             </div>
         </Button>
-        
+
         <Dialog Show="@notification.DialogOpen" Width="500px" OnClose="() => notification.DialogOpen = false">
             <Header>
                 <div class="flex-col g4">
@@ -25,11 +26,13 @@
                 </div>
             </Header>
             <Content>
-                <Text>Message: @notification.Message</Text>
+                <Text Weight="FontWeights.W700">Message:
+                    <Text Weight="FontWeights.W400">@notification.Message</Text>
+                </Text>
             </Content>
             <Footer>
                 <div style="width: 100%; display: flex">
-                    <Button Text="Close" Type="ButtonType.Secondary" OnClick="() => notification.DialogOpen = false" />        
+                    <Button Text="Close" Type="ButtonType.Secondary" OnClick="() => notification.DialogOpen = false"/>
                 </div>
             </Footer>
         </Dialog>
@@ -37,6 +40,7 @@
 </div>
 
 @code {
+
     protected override async Task OnInitializedAsync()
     {
         _notificationService.OnChange += StateHasChanged;
