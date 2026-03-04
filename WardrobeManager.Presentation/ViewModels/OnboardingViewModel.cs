@@ -23,11 +23,11 @@ public partial class OnboardingViewModel(
 )
     : ViewModelBase
 {
-    [ObservableProperty] private int _currentStepIndex;
+    [ObservableProperty] private int _currentStepIndex = 0;
     [ObservableProperty] private Dictionary<int, StepperState> _stepperStates = new();
     [ObservableProperty] private AuthenticationCredentialsModel _newAdminCredentials = new();
 
-    public const int NumberOfSteps = 3;
+    public const int NumberOfSteps = 4;
 
     public override async Task OnInitializedAsync()
     {
@@ -67,8 +67,9 @@ public partial class OnboardingViewModel(
 
     public void GoToPreviousSection()
     {
-        if (CurrentStepIndex == NumberOfSteps)
+        if (CurrentStepIndex == NumberOfSteps || CurrentStepIndex == 0)
         {
+            FinishOnboardingAsync();
             return;
         }
 
@@ -83,6 +84,12 @@ public partial class OnboardingViewModel(
         {
             StepperStates[CurrentStepIndex] = StepperState.Current;
         }
+    }
+
+    public void FinishOnboardingAsync()
+    {
+        Console.WriteLine("here!");
+        navManager.NavigateTo<LoginViewModel>();
     }
 
     public async Task CreateAdminUser()

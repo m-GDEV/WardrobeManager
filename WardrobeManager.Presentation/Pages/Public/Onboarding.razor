@@ -26,11 +26,11 @@
     <div class="grow flex ">
         @switch (ViewModel.CurrentStepIndex)
         {
+            // These steps are mandatory and cannot be skipped
             case 0:
             {
                 <OnboardingSection
                     Title="@($"{ProjectConstants.ProjectName} is an all-in-one solution to clothing management.")"
-                    ButtonText="Next"
                     NextButtonClickCallback="ViewModel.GoToNextSection"
                     PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                 >
@@ -40,18 +40,17 @@
             }
             case 1:
             {
-                <OnboardingSection Title="@($"Enter the credentials for the administrator account")"
-                                   ButtonText="Next"
+                <OnboardingSection Title="@($"First, lets make an administrator account before we get started")"
                                    NextButtonClickCallback="ViewModel.CreateAdminUser"
-                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
-                >
+                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection">
+                    <h3 class="large">Please enter the credentials for the administrator account</h3>
                     <div class="flex flex-col gap-3 w-full max-w-80">
-                        <Label Text="Enter a valid email" Info="This is for the Admin account only" />
+                        <Label Text="Enter a valid email" Info="This is for the Admin account only"/>
                         <Input TItem="string"
                                Value="@ViewModel.NewAdminCredentials.Email"
                                ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
                                Placeholder="Enter your email"/>
-                        <Label Text="Enter a valid password" Info="This is for the Admin account only" />
+                        <Label Text="Enter a valid password" Info="This is for the Admin account only"/>
                         <Input TItem="string"
                                Value="@ViewModel.NewAdminCredentials.Password"
                                Type="password"
@@ -61,16 +60,31 @@
                 </OnboardingSection>
                 break;
             }
+            // These steps are tutorials and can be skipped
             case 2:
             {
-                <OnboardingSection Title="@($"Enjoy using {ProjectConstants.ProjectName}!")"
-                                   ButtonText="Go To Dashboard"
+                <OnboardingSection Title="Tutorial: how to add a clothing item and view it in your wardrobe!"
                                    NextButtonClickCallback="ViewModel.GoToNextSection"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboardingAsync"
+                                   >
+                    <div class="flex flex-col items-center">
+                        <h3 class="subtitle-text">Please watch this video on how to do this</h3>
+                        <img src="@ProjectConstants.HomeBackgroundImage" class="h-96   object-contain rounded-2xl"/>
+                    </div>
+                </OnboardingSection>
+                break;
+            }
+            case 3:
+            {
+                <OnboardingSection Title="@($"Enjoy using {ProjectConstants.ProjectName}!")"
+                                   NextButtonClickCallback="ViewModel.GoToNextSection"
+                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboardingAsync"
                 >
                     <p class="subtitle-text">
                         If you encounter any issues, please open an issue on the <a
-                            href="@ProjectConstants.ProjectGitRepo" class="text-accent">GitHub repo</a>
+                            href="@ProjectConstants.ProjectGitRepo" class="text-blue-500">GitHub repo</a>
                     </p>
                 </OnboardingSection>
                 break;

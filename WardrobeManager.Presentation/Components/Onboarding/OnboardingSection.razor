@@ -1,20 +1,42 @@
 @namespace WardrobeManager.Presentation.Components.Onboarding
 
 <div class="grow w-full flex flex-col items-center gap-5 py-12">
-    <div class="grow flex flex-col items-center gap-5 justify-evenly">
-        <h3 class="text-4xl text-primary">@Title</h3>
+    <div class="grow flex flex-col items-center gap-5 justify-evenly h-[35rem] w-[70rem]">
+        <h3 class="text-4xl text-primary text-center">@Title</h3>
         @ChildContent
     </div>
-    <div class="flex gap-6">
+    <div class="flex gap-6 w-full justify-center">
         <Button Type="ButtonType.Secondary" Size="ButtonSize.Large" Text="Back" @onclick="PreviousButtonClickCallback"/>
         <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" @onclick="NextButtonClickCallback"/>
+        @if (SkipTutorialButtonClickCallback.HasDelegate)
+        {
+            <Button Type="ButtonType.Outline" Size="ButtonSize.Large" Text="Skip Tutorial" class="ml-auto"
+                    @onclick="() => ShowSkipTutorialDialog = true"/>
+            <Dialog Show="@ShowSkipTutorialDialog" Width="500px" OnClose="() => ShowSkipTutorialDialog = false">
+                <Header>
+                    <div class="flex-col g4">
+                        <p class="large">Are you sure you want to skip the tutorial?</p>
+                        <p class="muted">The tutorial has important information that helps you start using the app.</p>
+                    </div>
+                </Header>
+                <Content>
+                    <span></span>
+                </Content>
+                <Footer>
+                    <div style="width: 100%; display: flex">
+                        <Button Text="Skip Tutorial" Type="ButtonType.Secondary" OnClick="SkipTutorialButtonClickCallback" />        
+                    </div>
+                </Footer>
+            </Dialog>
+        }
     </div>
 </div>
 
 @code {
     [Parameter] public required string Title { get; set; }
     [Parameter] public required RenderFragment ChildContent { get; set; }
-    [Parameter] public required string ButtonText { get; set; }
     [Parameter] public required EventCallback NextButtonClickCallback { get; set; }
     [Parameter] public required EventCallback PreviousButtonClickCallback { get; set; }
+    [Parameter] public EventCallback SkipTutorialButtonClickCallback { get; set; }
+    private bool ShowSkipTutorialDialog { get; set; }
 }
