@@ -13,5 +13,5 @@ public static class ProjectConstants
     public const string DefaultItemImage = "/img/defaultItem.webp";
     public const string HomeBackgroundImage = "/img/home-background.webp";
     public const int MaxImageSizeInMBFallback = 5;
-    public static CultureInfo DefaultCultureInfo = new CultureInfo("en-CA");
+    public static CultureInfo DefaultCultureInfo = new("en-CA");
 }

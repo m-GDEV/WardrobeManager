@@ -79,7 +79,7 @@ public partial class NotificationsViewModel(
     {
         if (notification.Message.Length >= 40)
         {
-            return notification.Message[0..37] + "...";
+            return notification.Message[37] + "...";
         }
 
         return notification.Message;
