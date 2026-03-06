@@ -1,8 +1,32 @@
-@page "/view/{itemId}"
+@page "/view/{ItemId}"
 @inherits MvvmComponentBase<ViewClothingItemViewModel>
 
-<h3>Viewing Clothing Item</h3>
+<PageTitle>Viewing clothing item: @ViewModel.Item?.Name</PageTitle>
 
-<div class="flex flex-col gap5">
-    <h1>hello!</h1>
-</div>
+@if (ViewModel.Item == null)
+{
+    <div class="flex flex-col gap5 w-full max-w-[200rem] items-center mx-auto">
+        <Text Weight="FontWeights.W700">Loading...</Text>
+    </div>
+}
+else
+{
+    <div class="flex flex-col gap5 w-full max-w-[200rem] items-center mx-auto">
+        <Card>
+            <CardHeader>
+                <Text Class="large">@ViewModel.Item.Name</Text>
+                <Text Class="muted">@ViewModel.Item.Id</Text>
+            </CardHeader>
+            <CardContent>
+                <Label Text="Category" For="Things"></Label>
+                <Text>@miscMethods.GetNameWithSpacesAndEmoji(ViewModel.Item.Category)</Text>
+            </CardContent>
+        </Card>
+    </div>
+}
+
+@code {
+
+    [Parameter] public string? ItemId { get; set; }
+
+}

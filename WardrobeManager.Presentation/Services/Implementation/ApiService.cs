@@ -25,18 +25,23 @@ public class ApiService : IAsyncDisposable, IApiService
 
     public async Task<List<ClothingItemDTO>> GetAllClothingItemsAsync()
     {
-        return await _httpClient.GetFromJsonAsync<List<ClothingItemDTO>>("/clothing") ?? [];
+        return await _httpClient.GetFromJsonAsync<List<ClothingItemDTO>?>("/clothing") ?? [];
+    }
+
+    public async Task<ClothingItemDTO?> GetClothingItemsAsync(int itemId)
+    {
+        return await _httpClient.GetFromJsonAsync<ClothingItemDTO?>($"/clothing/{itemId}");
     }
 
     public async Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem)
     {
-        var response = await _httpClient.PostAsJsonAsync<NewClothingItemDTO>("/clothing/add", newNewClothingItem);
+        var response = await _httpClient.PostAsJsonAsync("/clothing/add", newNewClothingItem);
         response.EnsureSuccessStatusCode();
     }
 
     public async Task DeleteClothingItemAsync(int itemId)
     {
-        var response = await _httpClient.PostAsJsonAsync<int>("/clothing/delete", itemId);
+        var response = await _httpClient.DeleteAsync($"/clothing/delete/{itemId}");
         response.EnsureSuccessStatusCode();
     }
 

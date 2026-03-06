@@ -55,6 +55,7 @@ builder.Services.AddSysinfocus();
 builder.Services.AddMvvm(options =>
 {
     options.HostingModelType = BlazorHostingModelType.WebAssembly;
+    options.ParameterResolutionMode = ParameterResolutionMode.ViewAndViewModel;
 });
 
 

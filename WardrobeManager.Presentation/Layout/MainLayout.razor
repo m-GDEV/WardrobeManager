@@ -1,4 +1,5 @@
 ﻿@inherits MvvmLayoutComponentBase<WardrobeManager.Presentation.ViewModels.Pages.MainLayoutViewModel>
+@inject INotificationService _notificationService
 
 <body class="dark min-h-full  body-text transition-all duration-300 flex flex-col relative"
       @onclick="ViewModel.HandleMainLayoutClickEvent">

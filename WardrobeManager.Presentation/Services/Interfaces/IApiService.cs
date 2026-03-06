@@ -12,6 +12,7 @@ public interface IApiService
     
     // Clothing
     Task<List<ClothingItemDTO>> GetAllClothingItemsAsync();
+    Task<ClothingItemDTO?> GetClothingItemsAsync(int itemId);
     Task AddNewClothingItemAsync(NewClothingItemDTO newNewClothingItem);
     Task DeleteClothingItemAsync( int itemId);
     

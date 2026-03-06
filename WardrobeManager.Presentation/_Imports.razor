@@ -27,15 +27,12 @@
 @using WardrobeManager.Presentation.ViewModels.Pages
 
 @* My Services *@
-@inject IApiService _apiService
-@inject INotificationService _notificationService
-@inject IAccountManagement _accountManagement
-@inject IIdentityService _identityService
-@inject IConfiguration _config
+@inject IMiscMethods miscMethods
 
 @* External Library Imports *@
 @using Sysinfocus.AspNetCore.Components
 @using Blazing.Mvvm.Components;
+@using WardrobeManager.Shared.Services
 
 @* External Library Services *@
 @inject IMvvmNavigationManager _navManager
