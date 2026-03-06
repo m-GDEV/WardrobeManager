@@ -12,5 +12,5 @@ public interface IUserService
     Task UpdateUser(string userId, EditedUserDTO editedUser);
     Task DeleteUser(string userId);
     Task<bool> DoesAdminUserExist();
-    Task<(bool, string)> CreateAdminIfMissing(string email, string password);
+    Task<(bool, string)> CreateAdminIfMissing(AuthenticationCredentialsModel credentials);
 }

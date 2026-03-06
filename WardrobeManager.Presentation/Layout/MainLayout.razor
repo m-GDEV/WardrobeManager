@@ -1,13 +1,8 @@
-﻿@inherits LayoutComponentBase
+﻿@inherits MvvmLayoutComponentBase<WardrobeManager.Presentation.ViewModels.Pages.MainLayoutViewModel>
 
-@inject IJSRuntime JSRuntime
-@inject INotificationService _notificationService
-@inject Initialization sysinfocusComponentsinit
-@inject BrowserExtensions browserExtensions
-
-<body class="dark h-full body-text transition-all duration-300 flex flex-col"
-      @onclick="sysinfocusComponentsinit.HandleMainLayoutClickEvent">
-<ErrorBoundary @ref="errorBoundary">
+<body class="dark min-h-full  body-text transition-all duration-300 flex flex-col relative"
+      @onclick="ViewModel.HandleMainLayoutClickEvent">
+<ErrorBoundary @ref="ViewModel.ErrorBoundary">
     <ChildContent>
         <NavMenu/>
         @Body
@@ -16,42 +11,9 @@
     <ErrorContent Context="ex">
         @{
             // fixlater: In the future, we should maybe not display raw exceptions to the user
-            _notificationService.AddNotification(ex.Message, NotificationType.Error);
-            Console.WriteLine(ex.Message);
+            _notificationService.AddNotification($"Unhandled Exception: {ex.Message}", NotificationType.Error);
         }
     </ErrorContent>
 </ErrorBoundary>
-</body>
 <Notifications/>
-
-@code {
-    private ErrorBoundary? errorBoundary;
-
-
-    // This runs every time any page is (fully) reloaded (in the browser)
-    protected override async Task OnInitializedAsync()
-    {
-        // var res = await _apiService.DoesAdminUserExist();
-        // if (res is false)
-        // {
-        //     _navManager.NavigateTo("/onboarding");
-        // }
-        //
-        // await base.OnInitializedAsync();
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await browserExtensions.SetToLocalStorage("theme", "dark");
-            await sysinfocusComponentsinit.InitializeTheme();
-        }
-    }
-
-    protected override void OnParametersSet()
-    {
-        errorBoundary?.Recover();
-    }
-
-}
+</body>

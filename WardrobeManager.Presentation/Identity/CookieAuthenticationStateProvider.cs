@@ -164,7 +164,6 @@ public class CookieAuthenticationStateProvider : AuthenticationStateProvider, IA
         // default to not authenticated
         var user = Unauthenticated;
 
-
         try
         {
             // the user info endpoint is secured, so if the user isn't logged in this will fail

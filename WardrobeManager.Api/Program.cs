@@ -13,6 +13,7 @@ using WardrobeManager.Api.Repositories.Interfaces;
 using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
 #endregion

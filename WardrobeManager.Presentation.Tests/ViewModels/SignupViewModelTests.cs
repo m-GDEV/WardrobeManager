@@ -7,6 +7,7 @@ using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Identity.Models;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Presentation.ViewModels;
+using WardrobeManager.Presentation.ViewModels.Pages;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
@@ -108,6 +109,7 @@ public class SignupViewModelTests
     public async Task SignupAsync_WhenSignupSucceedsButLoginFails_AddsErrorNotification()
     {
         // Arrange
+        _viewModel.AuthenticationCredentialsModel = new AuthenticationCredentialsModel { Email = "test@gmail.com", Password = "SecurePassword1!" };
         _mockIdentityService
             .Setup(s => s.SignupAsync(It.IsAny<AuthenticationCredentialsModel>()))
             .ReturnsAsync(true);

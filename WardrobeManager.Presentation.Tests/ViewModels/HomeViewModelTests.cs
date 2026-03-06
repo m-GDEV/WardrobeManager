@@ -1,5 +1,6 @@
 using FluentAssertions;
 using WardrobeManager.Presentation.ViewModels;
+using WardrobeManager.Presentation.ViewModels.Pages;
 
 namespace WardrobeManager.Presentation.Tests.ViewModels;
 

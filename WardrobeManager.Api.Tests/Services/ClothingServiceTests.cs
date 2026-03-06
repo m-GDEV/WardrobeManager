@@ -11,6 +11,7 @@ using WardrobeManager.Api.Services.Implementation;
 using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
 namespace WardrobeManager.Api.Tests.Services;

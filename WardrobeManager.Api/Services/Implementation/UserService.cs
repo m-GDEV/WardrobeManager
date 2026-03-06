@@ -11,6 +11,7 @@ using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.StaticResources;
 
 #endregion
 
@@ -103,7 +104,7 @@ public class UserService : IUserService
         return false;
     }
 
-    public async Task<(bool, string)> CreateAdminIfMissing(string email, string password)
+    public async Task<(bool, string)> CreateAdminIfMissing(AuthenticationCredentialsModel credentials)
     {
         if (await DoesAdminUserExist())
         {
@@ -115,13 +116,13 @@ public class UserService : IUserService
 
         var user = new User
         {
-            Email = email,
-            NormalizedEmail = email.ToUpper(),
-            UserName = email.ToUpper(),
-            NormalizedUserName = email.ToUpper(),
+            Email = credentials.Email,
+            NormalizedEmail =  credentials.Email.ToUpper(ProjectConstants.DefaultCultureInfo),
+            UserName =  credentials.Email.ToUpper(ProjectConstants.DefaultCultureInfo),
+            NormalizedUserName =  credentials.Email.ToUpper(ProjectConstants.DefaultCultureInfo),
         };
 
-        var createResult = await _userManager.CreateAsync(user, password);
+        var createResult = await _userManager.CreateAsync(user, credentials.Password);
 
         if (createResult.Succeeded is false)
         {

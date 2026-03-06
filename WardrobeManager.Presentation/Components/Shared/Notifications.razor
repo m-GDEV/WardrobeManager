@@ -1,62 +1,50 @@
 @namespace WardrobeManager.Presentation.Components.Shared
 
-@inject INotificationService _notificationService
+@inherits MvvmComponentBase<NotificationsViewModel>
 
+<div class="flex flex-col items-end gap-2 absolute top-0 right-0 p-6 z-10 max-h-dvh overflow-y-scroll">
 
-<div class="toast toast-top toast-end">
+    @if (_notificationService.Notifications.Count > 5)
+    {
+        <Button Type="ButtonType.Destructive" Text="Clear All Notifications" OnClick="ViewModel.ClearAllNotifications"/>
+    }
+
     @foreach (var notification in _notificationService.Notifications)
     {
-        var cssClass = GetNotificationButtonType(notification.Type);
+        var cssClass = ViewModel.GetNotificationCss(notification.Type);
+        var message = ViewModel.GetTruncatedMessage(notification);
 
-        <Toast Show="@true" >
-            @notification.Message 
-        </Toast>
+        <Button Type="ButtonType.Outline" class="!bg-[#111]" Width="100%">
+            <div class="flex flex-row gap-2 rounded-md items-center justify-between w-full">
+                <span class="@cssClass " @onclick="() => notification.DialogOpen = true">@message</span>
+                <Button Icon="Close" Size="ButtonSize.Small" Type="ButtonType.Ghost"
+                        OnClick="() => ViewModel.Dismiss(notification)"/>
+            </div>
+        </Button>
+
+        <Dialog Show="@notification.DialogOpen" Width="500px" OnClose="() => notification.DialogOpen = false">
+            <Header>
+                <div class="flex-col g4">
+                    <p class="large">Notification</p>
+                    <p class="muted">Type: @notification.Type.ToString()</p>
+                    <p class="muted">Created: @notification.CreationDate</p>
+                </div>
+            </Header>
+            <Content>
+                <Text Weight="FontWeights.W700">Message:
+                    <Text Weight="FontWeights.W400" Class="wrap-anywhere">@notification.Message</Text>
+                </Text>
+            </Content>
+            <Footer>
+                <div style="width: 100%; display: flex">
+                    <Button Text="Close" Type="ButtonType.Secondary" OnClick="() => notification.DialogOpen = false"/>
+                </div>
+            </Footer>
+        </Dialog>
     }
 </div>
 
 @code {
 
-    protected override void OnInitialized()
-    {
-        _notificationService.OnChange += StateHasChanged;
-        // this runs the callback method supplied every 5 seconds. it does not wait for the last 
-        // call to the method to finish. this can cause race conditions. it should be fine though
-        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
-    }
-
-    // Go through all notifications and try to remove the non-critical ones
-    private void TryToClearNotifications(object? state)
-    {
-        var notifications = _notificationService.Notifications;
-
-        foreach (var notification in notifications)
-        {
-            TimeSpan difference = DateTime.UtcNow - notification.CreationDate;
-
-            if (difference.TotalSeconds > 10 && notification.Type != NotificationType.Warning && notification.Type != NotificationType.Error)
-            {
-                _notificationService.RemoveNotification(notification);
-            }
-        }
-    }
-
-    private void Dismiss(NotificationMessage notification)
-    {
-        _notificationService.RemoveNotification(notification);
-    }
-
-    public void Dispose()
-    {
-        _notificationService.OnChange -= StateHasChanged;
-    }
-
-    public ButtonType GetNotificationButtonType(NotificationType type)
-    {
-        return type switch
-        {
-            NotificationType.Error => ButtonType.Destructive,
-            _ => ButtonType.Outline
-        };
-    }
 
 }

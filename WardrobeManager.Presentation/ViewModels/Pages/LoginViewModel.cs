@@ -1,28 +1,22 @@
 using Blazing.Mvvm.ComponentModel;
 using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
-using WardrobeManager.Presentation.Identity;
 using WardrobeManager.Presentation.Services.Interfaces;
-using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
 
-namespace WardrobeManager.Presentation.ViewModels;
+namespace WardrobeManager.Presentation.ViewModels.Pages;
 
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
-public partial class SignupViewModel(
-    INotificationService notificationService,
+public partial class LoginViewModel(
     IMvvmNavigationManager navManager,
     IIdentityService identityService
-)
+    )
     : ViewModelBase
 {
     // Public Properties
     [ObservableProperty]
     private AuthenticationCredentialsModel _authenticationCredentialsModel = new();
-
-    public EditForm? EditForm { get; set; }
 
     // Public Methods
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
@@ -40,23 +34,24 @@ public partial class SignupViewModel(
     {
         if (e.Key == "Enter")
         {
-            await SignupAsync();
+            await LoginAsync();
         }
     }
 
-    public async Task SignupAsync()
+    public override async Task OnInitializedAsync()
     {
-        var signupSuccess = await identityService.SignupAsync(AuthenticationCredentialsModel);
-        if (!signupSuccess) return;
-        
-        // Automatically log the user in after they create an account
-        var loginSuccess = await identityService.LoginAsync(AuthenticationCredentialsModel);
-        if (!loginSuccess)
+        var isAuthenticated = await identityService.IsAuthenticated();
+        if (isAuthenticated)
         {
-            notificationService.AddNotification("Account created, but could not log you in. Please try again.", NotificationType.Error);
+            navManager.NavigateTo<DashboardViewModel>();
         }
+    }
+
+    public async Task LoginAsync()
+    {
+        var success = await identityService.LoginAsync(AuthenticationCredentialsModel);
+        if (!success) return;
         
-        notificationService.AddNotification("Account created and logged in successfully!", NotificationType.Success);
         navManager.NavigateTo<DashboardViewModel>();
     }
 }

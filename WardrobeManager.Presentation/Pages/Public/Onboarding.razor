@@ -1,10 +1,97 @@
 @page "/onboarding"
-@using WardrobeManager.Presentation.Components.FormItems
+
+@using System.Linq.Expressions
 @using WardrobeManager.Presentation.Components.Onboarding
+@using WardrobeManager.Presentation.Components.FormItems
 @using WardrobeManager.Shared.StaticResources
+@using OnboardingViewModel = WardrobeManager.Presentation.ViewModels.Pages.OnboardingViewModel
 @namespace WardrobeManager.Presentation.Pages.Public
+
+@inherits MvvmComponentBase<WardrobeManager.Presentation.ViewModels.Pages.OnboardingViewModel>
 
 <PageTitle>Onboarding - WardrobeManager</PageTitle>
 
 
-<h1 class="text-4xl">Onboarding!</h1>
+<div class="h-full flex flex-col items-center bg-primary-content gap-10 text-center">
+    <h3 class="subheading-text  sm:heading-text">Welcome to WardrobeManager!</h3>
+
+    <Stepper Style="max-width:90%;margin:auto" Class="sbc-stepper">
+        @for (int i = 0; i < OnboardingViewModel.NumberOfSteps; i++)
+        {
+            var currentStep = i + 1; // Start at 1
+            <StepperStep Class="sbc-stepper-step" State="ViewModel.GetStepperStateSafely(i)"
+                         Label="">@currentStep.ToString()</StepperStep>
+        }
+    </Stepper>
+
+    <div class="grow flex ">
+        @switch (ViewModel.CurrentStepIndex)
+        {
+            // These steps are mandatory and cannot be skipped
+            case 0:
+            {
+                <OnboardingSection
+                    Title="@($"{ProjectConstants.ProjectName} is an all-in-one solution to clothing management.")"
+                    NextButtonClickCallback="ViewModel.GoToNextSection"
+                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
+                >
+                    <img src="@ProjectConstants.HomeBackgroundImage" class="h-48 sm:h-96 object-contain rounded-2xl"/>
+                </OnboardingSection>
+                break;
+            }
+            case 1:
+            {
+                <OnboardingSection Title="@($"First, lets make an administrator account before we get started")"
+                                   NextButtonClickCallback="ViewModel.CreateAdminUser"
+                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection">
+                    <h3 class="text-md sm:large">Please enter the credentials for the administrator account</h3>
+                    <div class="flex flex-col gap-3 w-full max-w-80">
+                        <Label Text="Enter a valid email" Info="This is for the Admin account only"/>
+                        <Input TItem="string"
+                               Value="@ViewModel.NewAdminCredentials.Email"
+                               ValueChanged="@((email) => ViewModel.SetEmail(email ?? ""))"
+                               Placeholder="Enter your email"/>
+                        <Label Text="Enter a valid password" Info="This is for the Admin account only"/>
+                        <Input TItem="string"
+                               Value="@ViewModel.NewAdminCredentials.Password"
+                               Type="password"
+                               ValueChanged="@((password) => ViewModel.SetPassword(password ?? ""))"
+                               Placeholder="Enter your password"/>
+                    </div>
+                </OnboardingSection>
+                break;
+            }
+            // These steps are tutorials and can be skipped
+            case 2:
+            {
+                <OnboardingSection Title="Tutorial: how to add a clothing item and view it in your wardrobe!"
+                                   NextButtonClickCallback="ViewModel.GoToNextSection"
+                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
+                                   >
+                    <div class="flex flex-col items-center gap-3">
+                        <h3 class="body-text sm:subtitle-text">Please watch this video on how to do this</h3>
+                        <img src="@ProjectConstants.HomeBackgroundImage" class="h-48 sm:h-96 object-contain rounded-2xl"/>
+                    </div>
+                </OnboardingSection>
+                break;
+            }
+            case 3:
+            {
+                <OnboardingSection Title="@($"Enjoy using {ProjectConstants.ProjectName}!")"
+                                   NextButtonClickCallback="ViewModel.GoToNextSection"
+                                   PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
+                >
+                    <p class="body-text sm:subtitle-text">
+                        If you encounter any issues, please open an issue on the <a
+                            href="@ProjectConstants.ProjectGitRepo" class="text-blue-500">GitHub repo</a>
+                    </p>
+                </OnboardingSection>
+                break;
+            }
+        }
+
+    </div>
+
+</div>

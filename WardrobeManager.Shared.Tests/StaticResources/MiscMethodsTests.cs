@@ -1,6 +1,7 @@
 using FluentAssertions;
 using FluentAssertions.Execution;
 using WardrobeManager.Shared.Enums;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
 namespace WardrobeManager.Shared.Tests.StaticResources;

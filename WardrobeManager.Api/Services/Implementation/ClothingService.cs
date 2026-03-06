@@ -11,6 +11,7 @@ using WardrobeManager.Api.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
 using WardrobeManager.Shared.Enums;
 using WardrobeManager.Shared.Models;
+using WardrobeManager.Shared.Services;
 using WardrobeManager.Shared.StaticResources;
 
 #endregion

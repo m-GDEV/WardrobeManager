@@ -5,6 +5,7 @@ using Moq;
 using Moq.Protected;
 using WardrobeManager.Presentation.Services.Implementation;
 using WardrobeManager.Presentation.Services.Interfaces;
+using WardrobeManager.Shared.Models;
 
 namespace WardrobeManager.Presentation.Tests;
 
@@ -178,10 +179,10 @@ public class ApiServiceTests
     public async Task CreateAdminUserIfMissing_WhenSuccessful_ReturnsTrueWithMessage()
     {
         // Arrange
-        var credentials = new WardrobeManager.Shared.Models.AdminUserCredentials
+        var credentials = new AuthenticationCredentialsModel()
         {
-            email = "admin@test.com",
-            password = "SecurePass1!"
+            Email = "admin@test.com",
+            Password = "SecurePass1!"
         };
         var mockResponse = new HttpResponseMessage
         {
@@ -206,8 +207,8 @@ public class ApiServiceTests
         // Assert
         using (new FluentAssertions.Execution.AssertionScope())
         {
-            result.Item1.Should().BeTrue();
-            result.Item2.Should().Be("Admin user created!");
+            result.Success.Should().BeTrue();
+            result.Message.Should().Be("Admin user created!");
         }
     }
 
@@ -215,10 +216,10 @@ public class ApiServiceTests
     public async Task CreateAdminUserIfMissing_WhenAdminAlreadyExists_ReturnsFalseWithMessage()
     {
         // Arrange
-        var credentials = new WardrobeManager.Shared.Models.AdminUserCredentials
+        var credentials = new AuthenticationCredentialsModel
         {
-            email = "admin@test.com",
-            password = "SecurePass1!"
+            Email = "admin@test.com",
+            Password = "SecurePass1!"
         };
         var mockResponse = new HttpResponseMessage
         {
@@ -243,8 +244,8 @@ public class ApiServiceTests
         // Assert
         using (new FluentAssertions.Execution.AssertionScope())
         {
-            result.Item1.Should().BeFalse();
-            result.Item2.Should().Be("Admin user already exists!");
+            result.Success.Should().BeFalse();
+            result.Message.Should().Be("Admin user already exists!");
         }
     }
 
