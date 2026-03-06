@@ -18,7 +18,7 @@
     <Stepper Style="max-width:90%;margin:auto" Class="sbc-stepper">
         @for (int i = 0; i < OnboardingViewModel.NumberOfSteps; i++)
         {
-            var currentStep = i;
+            var currentStep = i + 1; // Start at 1
             <StepperStep Class="sbc-stepper-step" State="ViewModel.GetStepperStateSafely(i)"
                          Label="">@currentStep.ToString()</StepperStep>
         }
@@ -42,7 +42,7 @@
             case 1:
             {
                 <OnboardingSection Title="@($"First, lets make an administrator account before we get started")"
-                                   NextButtonClickCallback="ViewModel.CreateAdminUser"
+                                   NextButtonClickCallback="ViewModel.GoToNextSection"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection">
                     <h3 class="large">Please enter the credentials for the administrator account</h3>
                     <div class="flex flex-col gap-3 w-full max-w-80">
@@ -67,7 +67,7 @@
                 <OnboardingSection Title="Tutorial: how to add a clothing item and view it in your wardrobe!"
                                    NextButtonClickCallback="ViewModel.GoToNextSection"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
-                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboardingAsync"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
                                    >
                     <div class="flex flex-col items-center">
                         <h3 class="subtitle-text">Please watch this video on how to do this</h3>
@@ -81,7 +81,7 @@
                 <OnboardingSection Title="@($"Enjoy using {ProjectConstants.ProjectName}!")"
                                    NextButtonClickCallback="ViewModel.GoToNextSection"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
-                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboardingAsync"
+                                   SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
                 >
                     <p class="subtitle-text">
                         If you encounter any issues, please open an issue on the <a

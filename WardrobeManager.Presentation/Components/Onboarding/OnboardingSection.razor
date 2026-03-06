@@ -6,12 +6,12 @@
         @ChildContent
     </div>
     <div class="flex gap-6 w-full justify-center">
-        <Button Type="ButtonType.Secondary" Size="ButtonSize.Large" Text="Back" @onclick="PreviousButtonClickCallback"/>
-        <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" @onclick="NextButtonClickCallback"/>
+        <Button Type="ButtonType.Secondary" Size="ButtonSize.Large" Text="Back" OnClick="PreviousButtonClickCallback"/>
+        <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" OnClick="NextButtonClickCallback"/>
         @if (SkipTutorialButtonClickCallback.HasDelegate)
         {
             <Button Type="ButtonType.Outline" Size="ButtonSize.Large" Text="Skip Tutorial" class="ml-auto"
-                    @onclick="() => ShowSkipTutorialDialog = true"/>
+                    OnClick="() => ShowSkipTutorialDialog = true"/>
             <Dialog Show="@ShowSkipTutorialDialog" Width="500px" OnClose="() => ShowSkipTutorialDialog = false">
                 <Header>
                     <div class="flex-col g4">

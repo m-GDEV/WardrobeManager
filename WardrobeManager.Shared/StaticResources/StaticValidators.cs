@@ -39,7 +39,7 @@ public static class StaticValidators
 
 
 // All static validators below (in one file to stay clean)
-// Note: put a period at the end of each message so the frontend can split up the error into mulitple notifications
+// Note: put a period at the end of each message so the frontend can split up the error into multiple notifications
 public class NewClothingItemDTOValidator : AbstractValidator<NewClothingItemDTO>
 {
     public NewClothingItemDTOValidator()
@@ -54,9 +54,10 @@ public class AuthenticationCredentialsModelValidator: AbstractValidator<Authenti
     public AuthenticationCredentialsModelValidator()
     {
         RuleFor(x => x.Email)
+            .NotNull().NotEmpty().WithMessage("Email is required")
             .EmailAddress().WithMessage("Invalid email address.");
         RuleFor(x => x.Password)
-            .NotEmpty().WithMessage("Password must not be empty.")
+            .NotNull().NotEmpty().WithMessage("Password must not be empty.")
             .MinimumLength(6).WithMessage("Password must have at least 6 characters.")
             .MaximumLength(50).WithMessage("Password is too long.")
             .Must(x => x.Any(char.IsDigit)).WithMessage("Password must have at least one digit.")

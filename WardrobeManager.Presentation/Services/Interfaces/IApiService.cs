@@ -26,6 +26,6 @@ public interface IApiService
     /// Creates an admin user if one doesn't exist (used for onboarding) 
     /// </summary>
     /// <param name="credentials">Onboarding user credentials</param>
-    /// <returns>bool: succeeded, string: text description</returns>
+    /// <returns>Result: string: text description</returns>
     Task<Result<string>> CreateAdminUserIfMissing(AuthenticationCredentialsModel credentials);
 }

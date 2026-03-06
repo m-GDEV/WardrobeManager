@@ -13,12 +13,14 @@ public partial class NotificationsViewModel(
 )
     : ViewModelBase
 {
+    private Timer? _timer; 
+    
     public override async Task OnInitializedAsync()
     {
         notificationService.OnChange += NotifyStateChanged;
         // this runs the callback method supplied every 5 seconds. it does not wait for the last 
         // call to the method to finish. this can cause race conditions. it should be fine though
-        var _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
+        _timer = new Timer(TryToClearNotifications, null, TimeSpan.Zero, TimeSpan.FromSeconds(5));
     }
 
     // Go through all notifications and try to remove the non-critical ones
@@ -50,9 +52,10 @@ public partial class NotificationsViewModel(
         notificationService.RemoveNotification(notification);
     }
 
-    public void Dispose()
+    public new void Dispose()
     {
         notificationService.OnChange -= NotifyStateChanged;
+        _timer?.Dispose();
     }
 
     public ButtonType GetNotificationButtonType(NotificationType type)
@@ -79,7 +82,7 @@ public partial class NotificationsViewModel(
     {
         if (notification.Message.Length >= 40)
         {
-            return notification.Message[37] + "...";
+            return notification.Message[..37] + "...";
         }
 
         return notification.Message;

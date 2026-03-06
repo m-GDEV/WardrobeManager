@@ -62,9 +62,8 @@ public partial class OnboardingViewModel(
 
     public void GoToPreviousSection()
     {
-        if (CurrentStepIndex == NumberOfSteps || CurrentStepIndex == 0)
+        if (CurrentStepIndex == 0)
         {
-            FinishOnboardingAsync();
             return;
         }
 
@@ -81,7 +80,7 @@ public partial class OnboardingViewModel(
         }
     }
 
-    public void FinishOnboardingAsync()
+    public void FinishOnboarding()
     {
         navManager.NavigateTo<LoginViewModel>();
     }
@@ -91,9 +90,9 @@ public partial class OnboardingViewModel(
         var valid = StaticValidators.Validate<AuthenticationCredentialsModel>(NewAdminCredentials);
         if (!valid.Success)
         {
-            foreach (var error in valid.Message.Split("."))
+            foreach (var error in valid.Message.Split(".", StringSplitOptions.RemoveEmptyEntries))
             {
-                if (string.IsNullOrEmpty(error)) return; // catches the last element in the split
+                if (string.IsNullOrEmpty(error)) continue; // catches any blanks (i.e. last element)
                 notificationService.AddNotification(error, NotificationType.Error);
             }
 
@@ -115,7 +114,7 @@ public partial class OnboardingViewModel(
     {
         return CollectionExtensions.GetValueOrDefault(StepperStates, key, StepperState.Failed);
     }
-    
+
     // Stupid that i'm doing this but its the easiest solution and idk what the best method is
     public void SetEmail(string email)
     {
