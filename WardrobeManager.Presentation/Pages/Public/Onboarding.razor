@@ -12,8 +12,8 @@
 <PageTitle>Onboarding - WardrobeManager</PageTitle>
 
 
-<div class="h-full flex flex-col items-center bg-primary-content gap-10">
-    <h3 class="heading-text">Welcome to WardrobeManager!</h3>
+<div class="h-full flex flex-col items-center bg-primary-content gap-10 text-center">
+    <h3 class="subheading-text  sm:heading-text">Welcome to WardrobeManager!</h3>
 
     <Stepper Style="max-width:90%;margin:auto" Class="sbc-stepper">
         @for (int i = 0; i < OnboardingViewModel.NumberOfSteps; i++)
@@ -35,16 +35,16 @@
                     NextButtonClickCallback="ViewModel.GoToNextSection"
                     PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                 >
-                    <img src="@ProjectConstants.HomeBackgroundImage" class="h-96   object-contain rounded-2xl"/>
+                    <img src="@ProjectConstants.HomeBackgroundImage" class="h-48 sm:h-96 object-contain rounded-2xl"/>
                 </OnboardingSection>
                 break;
             }
             case 1:
             {
                 <OnboardingSection Title="@($"First, lets make an administrator account before we get started")"
-                                   NextButtonClickCallback="ViewModel.GoToNextSection"
+                                   NextButtonClickCallback="ViewModel.CreateAdminUser"
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection">
-                    <h3 class="large">Please enter the credentials for the administrator account</h3>
+                    <h3 class="text-md sm:large">Please enter the credentials for the administrator account</h3>
                     <div class="flex flex-col gap-3 w-full max-w-80">
                         <Label Text="Enter a valid email" Info="This is for the Admin account only"/>
                         <Input TItem="string"
@@ -69,9 +69,9 @@
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                                    SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
                                    >
-                    <div class="flex flex-col items-center">
-                        <h3 class="subtitle-text">Please watch this video on how to do this</h3>
-                        <img src="@ProjectConstants.HomeBackgroundImage" class="h-96   object-contain rounded-2xl"/>
+                    <div class="flex flex-col items-center gap-3">
+                        <h3 class="body-text sm:subtitle-text">Please watch this video on how to do this</h3>
+                        <img src="@ProjectConstants.HomeBackgroundImage" class="h-48 sm:h-96 object-contain rounded-2xl"/>
                     </div>
                 </OnboardingSection>
                 break;
@@ -83,7 +83,7 @@
                                    PreviousButtonClickCallback="ViewModel.GoToPreviousSection"
                                    SkipTutorialButtonClickCallback="ViewModel.FinishOnboarding"
                 >
-                    <p class="subtitle-text">
+                    <p class="body-text sm:subtitle-text">
                         If you encounter any issues, please open an issue on the <a
                             href="@ProjectConstants.ProjectGitRepo" class="text-blue-500">GitHub repo</a>
                     </p>

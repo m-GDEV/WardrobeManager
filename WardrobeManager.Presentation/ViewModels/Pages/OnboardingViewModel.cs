@@ -13,8 +13,7 @@ namespace WardrobeManager.Presentation.ViewModels.Pages;
 public partial class OnboardingViewModel(
     INotificationService notificationService,
     IApiService apiService,
-    IMvvmNavigationManager navManager,
-    ILogger<OnboardingViewModel> logger
+    IMvvmNavigationManager navManager
 )
     : ViewModelBase
 {
@@ -26,13 +25,14 @@ public partial class OnboardingViewModel(
 
     public override async Task OnInitializedAsync()
     {
-        var exists = await apiService.DoesAdminUserExist();
-        if (exists)
-        {
-            navManager.NavigateTo<LoginViewModel>();
-        }
+        // var exists = await apiService.DoesAdminUserExist();
+        // if (exists)
+        // {
+        //     navManager.NavigateTo<LoginViewModel>();
+        // }
 
         // Initialize all stepper states as not completed
+        CurrentStepIndex = 0; // handles edgecase where you go to login page but navigate back and CurrentStepIndex is still whatever it was
         for (int i = 0; i < NumberOfSteps; i++)
         {
             StepperStates[i] = i == 0 ? StepperState.Current : StepperState.Pending;

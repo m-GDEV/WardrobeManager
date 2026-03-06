@@ -11,7 +11,6 @@ namespace WardrobeManager.Presentation.ViewModels.Pages;
 public partial class MainLayoutViewModel(
     IMvvmNavigationManager navManager,
     IApiService apiService,
-    INotificationService _notificationService,
     Initialization sysinfocusComponentsinit,
     BrowserExtensions browserExtensions
 )

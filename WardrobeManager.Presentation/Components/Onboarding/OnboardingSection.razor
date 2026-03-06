@@ -1,8 +1,8 @@
 @namespace WardrobeManager.Presentation.Components.Onboarding
 
-<div class="grow w-full flex flex-col items-center gap-5 py-12">
-    <div class="grow flex flex-col items-center gap-5 justify-evenly h-[30rem] w-[70rem]">
-        <h3 class="text-4xl text-primary text-center">@Title</h3>
+<div class="grow w-full flex flex-col items-center gap-3 smj:gap-5 py-4 sm:py-12 px-4 sm:px-0">
+    <div class="grow flex flex-col items-center gap-5 justify-evenly min-h-[15rem] h-full sm:h-[30rem] w-full xl:w-[70rem]">
+        <h3 class="text-xl sm:text-4xl text-primary text-center">@Title</h3>
         @ChildContent
     </div>
     <div class="flex gap-6 w-full justify-center">
@@ -10,7 +10,7 @@
         <Button Type="ButtonType.Primary" Size="ButtonSize.Large" Text="Next" OnClick="NextButtonClickCallback"/>
         @if (SkipTutorialButtonClickCallback.HasDelegate)
         {
-            <Button Type="ButtonType.Outline" Size="ButtonSize.Large" Text="Skip Tutorial" class="ml-auto"
+            <Button Type="ButtonType.Outline" Size="ButtonSize.Large" Text="Skip Tutorial" class="sm:ml-auto"
                     OnClick="() => ShowSkipTutorialDialog = true"/>
             <Dialog Show="@ShowSkipTutorialDialog" Width="500px" OnClose="() => ShowSkipTutorialDialog = false">
                 <Header>
