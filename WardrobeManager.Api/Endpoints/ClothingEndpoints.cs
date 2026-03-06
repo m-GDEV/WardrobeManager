@@ -41,7 +41,7 @@ public static class ClothingEndpoints
     }
     
     public static async Task<IResult> GetClothingItemAsync(
-        HttpContext context, IClothingService clothingService, [FromQuery] int itemId
+        HttpContext context, IClothingService clothingService, [FromRoute] int itemId
     )
     {
         User? user = context.Items["user"] as User;

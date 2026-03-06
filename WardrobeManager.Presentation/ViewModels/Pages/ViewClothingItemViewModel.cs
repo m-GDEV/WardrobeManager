@@ -26,9 +26,10 @@ public partial class ViewClothingItemViewModel(
         if (ViewItemId == null)
         {
             notificationService.AddNotification("Clothing item Id cannot be null!", NotificationType.Error);
-            navManager.NavigateTo<WardrobeViewModel>();
+            // navManager.NavigateTo<WardrobeViewModel>();
         }
         ItemId = Convert.ToInt32(ViewItemId);
+        Console.WriteLine($"Item id = {ItemId} | View item id = {ViewItemId}");
         Item = await apiService.GetClothingItemsAsync(ItemId); 
     }
 }

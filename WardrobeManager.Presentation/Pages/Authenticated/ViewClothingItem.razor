@@ -1,25 +1,32 @@
-@page "/view/{ItemId}"
+@page "/view/{ViewItemId}"
 @inherits MvvmComponentBase<ViewClothingItemViewModel>
 
 <PageTitle>Viewing clothing item: @ViewModel.Item?.Name</PageTitle>
 
 @if (ViewModel.Item == null)
 {
-    <div class="flex flex-col gap5 w-full max-w-[200rem] items-center mx-auto">
+    <div class="flex flex-col gap5 w-full items-center mx-auto">
         <Text Weight="FontWeights.W700">Loading...</Text>
     </div>
 }
 else
 {
-    <div class="flex flex-col gap5 w-full max-w-[200rem] items-center mx-auto">
-        <Card>
-            <CardHeader>
-                <Text Class="large">@ViewModel.Item.Name</Text>
-                <Text Class="muted">@ViewModel.Item.Id</Text>
-            </CardHeader>
+    <div class="flex flex-col grow items-center pt-12 gap-5">
+        <h1 class="heading-text">Viewing Clothing Item</h1>
+        <Card Style="max-height: 40rem; width: 100%; max-width: 40rem;">
             <CardContent>
-                <Label Text="Category" For="Things"></Label>
-                <Text>@miscMethods.GetNameWithSpacesAndEmoji(ViewModel.Item.Category)</Text>
+                <p Class="subheading-text">@ViewModel.Item.Name</p>
+                
+                <Label Text="Category"></Label>
+                <Text>@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Category)</Text>
+                
+                <Label Text="Season"></Label>
+                <Text>@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Size)</Text>
+                
+                <Label Text="Image"></Label>
+                <Image ImageGuid="@ViewModel.Item.ImageGuid.ToString()"
+                       Css="h-full object-contain rounded-xl w-full"/>
+                
             </CardContent>
         </Card>
     </div>
@@ -27,6 +34,6 @@ else
 
 @code {
 
-    [Parameter] public string? ItemId { get; set; }
+    [Parameter] public string? ViewItemId { get; set; }
 
 }
