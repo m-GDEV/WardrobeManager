@@ -1,4 +1,5 @@
 using Blazing.Mvvm.ComponentModel;
+using Blazing.Mvvm.Components;
 using CommunityToolkit.Mvvm.ComponentModel;
 using WardrobeManager.Presentation.Services.Interfaces;
 using WardrobeManager.Shared.DTOs;
@@ -9,7 +10,8 @@ namespace WardrobeManager.Presentation.ViewModels.Pages;
 [ViewModelDefinition(Lifetime = ServiceLifetime.Scoped)]
 public partial class WardrobeViewModel(
     IApiService apiService,
-    INotificationService notificationService
+    INotificationService notificationService,
+    IMvvmNavigationManager navManager
 )
     : ViewModelBase
 {
@@ -39,6 +41,12 @@ public partial class WardrobeViewModel(
     {
         await apiService.DeleteClothingItemAsync(itemId);
         await FetchItemAndUpdate();
+    }
+
+    public async Task ViewItem(int itemId)
+    {
+        // Goes to ViewClothingItem page with the itemId as a slug: https://github.com/gragra33/Blazing.Mvvm?tab=readme-ov-file#single-parameter-routes
+        navManager.NavigateTo<ViewClothingItemViewModel>(itemId.ToString());
     }
 
     public void UpdateActionDialogState(int itemId, ActionType actionType, bool value)

@@ -43,7 +43,7 @@ public class CustomHttpMessageHandler(INotificationService notificationService) 
         }
         catch (HttpRequestException ex) // 2. Catch network failures (offline, CORS, server dead)
         {
-            notificationService.AddNotification($"HttpRequestException: {ex.Message}", NotificationType.Error);
+            notificationService.AddNotification($"HttpRequestException: {ex.Message}", NotificationType.Error, ex.ToString());
             // rethrow so exception is not lost, we just want to log it here.
             // If we don't rethrow code called after the http request will still run
             throw;  

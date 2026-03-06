@@ -26,15 +26,16 @@ public class NotificationService : INotificationService
         }
     }
 
-    public void AddNotification(string message)
+    public void AddNotification(string title, NotificationType type = NotificationType.Info, string message = "")
     {
-        AddNotification(message, NotificationType.Info);
+        _addNotification(title, type, message);
     }
-    public void AddNotification(string message, NotificationType type)
+    
+    private void _addNotification(string title, NotificationType type, string message = "")
     {
         lock (_lock)
         {
-            var notification = new NotificationMessage(message, type);
+            var notification = new NotificationMessage(title, type, message);
             _notifications.Add(notification);
         }
         NotifyStateChanged();

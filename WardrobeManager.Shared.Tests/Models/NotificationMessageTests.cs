@@ -20,7 +20,7 @@ public class NotificationMessageTests
         // Act
         var model = new NotificationMessage(message, type);
         // Assert
-        model.Message.Should().Be(message);
+        model.Title.Should().Be(message);
         model.Type.Should().Be(type);
         model.CreationDate.Date.Should().Be(DateTime.UtcNow.Date);
     }

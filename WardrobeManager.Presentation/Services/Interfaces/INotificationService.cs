@@ -13,7 +13,6 @@ public interface INotificationService
 
     event Action OnChange;
 
-    void AddNotification(string message);
-    void AddNotification(string message, NotificationType type);
+    void AddNotification(string title, NotificationType type = NotificationType.Info, string message = "");
     void RemoveNotification(NotificationMessage message);
 }

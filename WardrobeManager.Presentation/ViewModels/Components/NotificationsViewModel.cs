@@ -80,12 +80,12 @@ public partial class NotificationsViewModel(
 
     public string GetTruncatedMessage(NotificationMessage notification)
     {
-        if (notification.Message.Length >= 40)
+        if (notification.Title.Length >= 40)
         {
-            return notification.Message[..37] + "...";
+            return notification.Title[..37] + "...";
         }
 
-        return notification.Message;
+        return notification.Title;
     }
     
 }

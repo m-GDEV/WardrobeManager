@@ -15,8 +15,14 @@
             <DataColumns>
                 <DataTableColumn Property="x => x.Id" Header="Actions">
                     <Template>
-                        <Button Type="ButtonType.Destructive" Text="Delete" OnClick="() => ViewModel.UpdateActionDialogState(context.Id, ActionType.Delete, true)"/>
-                        <Dialog Show="ViewModel.GetActionStateSafely(context.Id, ActionType.Delete)" OnClose="() => ViewModel.UpdateActionDialogState(context.Id, ActionType.Delete, false)">
+                        <div class="flex gap-1">
+                            <Button Type="ButtonType.Destructive" Text="Delete"
+                                    OnClick="() => ViewModel.UpdateActionDialogState(context.Id, ActionType.Delete, true)"/>
+                            <Button Type="ButtonType.Primary" Text="View"
+                                    OnClick="() => ViewModel.ViewItem(context.Id)"/>
+                        </div>
+                        <Dialog Show="ViewModel.GetActionStateSafely(context.Id, ActionType.Delete)"
+                                OnClose="() => ViewModel.UpdateActionDialogState(context.Id, ActionType.Delete, false)">
                             <Header>
                                 <div class="flex-col flex g4">
                                     <p class="large">Are you sure you want to delete this item?</p>
@@ -27,14 +33,16 @@
                                 <p>Item Name: @context.Name</p>
                             </Content>
                             <Footer>
-                                <Button Type="ButtonType.Destructive" Text="Delete" OnClick="() => ViewModel.RemoveItem(context.Id)"/>
+                                <Button Type="ButtonType.Destructive" Text="Delete"
+                                        OnClick="() => ViewModel.RemoveItem(context.Id)"/>
                             </Footer>
                         </Dialog>
                     </Template>
                 </DataTableColumn>
-                <DataTableColumn Property="@(x => x.ImageGuid ?? Guid.NewGuid() )">
+                <DataTableColumn Property="@(x => x.ImageGuid ?? Guid.NewGuid())">
                     <Template>
-                        <Image ImageGuid="@context.ImageGuid.ToString()" Css="h-full object-contain rounded-xl max-w-[3rem] min-w-[2rem] w-full"/>
+                        <Image ImageGuid="@context.ImageGuid.ToString()"
+                               Css="h-full object-contain rounded-xl max-w-[3rem] min-w-[2rem] w-full"/>
                     </Template>
                 </DataTableColumn>
                 <DataTableColumn Property="x => x.Name"/>

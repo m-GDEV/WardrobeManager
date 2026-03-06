@@ -34,7 +34,7 @@ public class NotificationServiceTests
         using (new AssertionScope())
         {
             _service.Notifications.Should().HaveCount(1);
-            _service.Notifications[0].Message.Should().Be(message);
+            _service.Notifications[0].Title.Should().Be(message);
             _service.Notifications[0].Type.Should().Be(NotificationType.Info);
         }
     }
@@ -56,7 +56,7 @@ public class NotificationServiceTests
         using (new AssertionScope())
         {
             _service.Notifications.Should().HaveCount(1);
-            _service.Notifications[0].Message.Should().Be(message);
+            _service.Notifications[0].Title.Should().Be(message);
             _service.Notifications[0].Type.Should().Be(NotificationType.Error);
         }
     }
@@ -120,7 +120,7 @@ public class NotificationServiceTests
         using (new AssertionScope())
         {
             _service.Notifications.Should().HaveCount(1);
-            _service.Notifications[0].Message.Should().Be("Keep this");
+            _service.Notifications[0].Title.Should().Be("Keep this");
         }
     }
 
