@@ -89,6 +89,16 @@ public class MiscMethods : IMiscMethods
         return Enum.GetValues(typeof(T)).Cast<T>().ToList();
     }
 
+    public string GetDefaultStringDateFormatIfSet(DateTime? date)
+    {
+        if (date == null || date == DateTime.MinValue)
+        {
+            return "Never";
+        }
+
+        return date.Value.ToString("dddd MMMM d, yyyy");
+    }
+
     #region Private Methods
 
     public string GetNameWithSpacesAndEmoji(ClothingCategory category)

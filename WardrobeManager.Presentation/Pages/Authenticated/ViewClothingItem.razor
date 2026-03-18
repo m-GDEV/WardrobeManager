@@ -3,7 +3,7 @@
 
 <PageTitle>Viewing clothing item: @ViewModel.Item?.Name</PageTitle>
 
-@if (ViewModel.Item == null)
+@if (ViewModel.IsLoading)
 {
     <div class="flex flex-col gap5 w-full items-center mx-auto">
         <Text Weight="FontWeights.W700">Loading...</Text>
@@ -12,28 +12,45 @@
 else
 {
     <div class="flex flex-col grow items-center pt-12 gap-5">
+        <Breadcrumb Items="ViewModel.breadcrumbItems"></Breadcrumb>
         <h1 class="heading-text">Viewing Clothing Item</h1>
         <Card Style="max-height: 40rem; width: 100%; max-width: 40rem;">
             <CardContent>
-                <p Class="subheading-text">@ViewModel.Item.Name</p>
+                <div class="flex flex-row gap-3 w-full items-center">
+                    @if (ViewModel.Item!.Favourited)
+                    {
+                        <Icon Name="kid_star" Color="yellow" Tooltip="Item is favourited!" Class="hover:cursor-pointer"/>
+                    }
+                    @if (!ViewModel.Item!.Favourited)
+                    {
+                        <Icon Name="kid_star" Tooltip="Item is not favourited." Class="hover:cursor-pointer"/>
+                    }
+                    <p Class="subheading-text">@ViewModel.Item.Name</p>
+                </div>
                 
-                <Label Text="Category"></Label>
-                <Text>@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Category)</Text>
+                <div class="flex flex-row gap-3 justify-around">
+                    <Label Text="Last Worn" Info="@miscMethods.GetDefaultStringDateFormatIfSet(ViewModel.Item.LastWorn)" />
+                    <Label Text="Last Updated" Info="@miscMethods.GetDefaultStringDateFormatIfSet(ViewModel.Item.DateUpdated)" />
+                    <Label Text="Date Added" Info="@miscMethods.GetDefaultStringDateFormatIfSet(ViewModel.Item.DateAdded)" />
+                </div>
                 
-                <Label Text="Season"></Label>
-                <Text>@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Size)</Text>
+                <div class="grid grid-flow-col gap-10">
+                    <Label Text="Category" Info="@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Category)" />
+                    <Label Text="Season" Info="@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Season)" />
+                    <Label Text="Size" Info="@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.Size)" />
+                    <Label Text="Wear Location" Info="@miscMethods.GetNameWithSpacesFromEnum(ViewModel.Item.WearLocation)" />
+                    <Label Text="Times Worn" Info="@ViewModel.Item.TimesWornTotal.ToString()" />
+                </div>
                 
                 <Label Text="Image"></Label>
                 <Image ImageGuid="@ViewModel.Item.ImageGuid.ToString()"
                        Css="h-full object-contain rounded-xl w-full"/>
-                
+
             </CardContent>
         </Card>
     </div>
 }
 
 @code {
-
     [Parameter] public string? ViewItemId { get; set; }
-
 }

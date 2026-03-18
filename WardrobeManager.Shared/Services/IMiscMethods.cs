@@ -12,4 +12,5 @@ public interface IMiscMethods
     string GetNameWithSpacesFromEnum<T>(T givenEnum) where T : Enum;
     bool IsValidBase64(string? input);
     ICollection<T> ConvertEnumToCollection<T>() where T : Enum;
+    string GetDefaultStringDateFormatIfSet(DateTime? date);
 }
